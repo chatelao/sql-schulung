@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1Z0-171 Interactive SQL Studio — 200-Lesson Beginner Curriculum</title>
+  <meta name="description" content="Interactive SQL learning studio for Oracle AI Database SQL Associate (1Z0-171): 200-lesson tracker, 6 identical checkpoints (CP-0 to CP-5), SCOTT/TIGER join visualizer, string slicer, SQL*Plus simulator, flashcards, and timed 60-question mock exam." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-code">1Z0-171</span>
+        <div>
+          <span class="brand-title">Oracle SQL Learning Studio</span>
+          <span class="brand-sub">200-Lesson Beginner Curriculum &middot; SCOTT/TIGER &amp; HR</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary sections">
+        <button class="nav-btn active" data-view="curriculum" id="nav-curriculum">200 Lessons</button>
+        <button class="nav-btn" data-view="checkpoints" id="nav-checkpoints">Checkpoints (CP-0..5)</button>
+        <button class="nav-btn" data-view="labs" id="nav-labs">Interactive Labs</button>
+        <button class="nav-btn" data-view="flashcards" id="nav-flashcards">Flashcards</button>
+        <button class="nav-btn" data-view="mock" id="nav-mock">Mock Exam</button>
+      </nav>
+
+      <div class="header-actions">
+        <a class="docs-link" href="https://sql-schulung.readthedocs.io/" target="_blank" rel="noopener">Read the Docs Handbook &nearr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <!-- VIEW 1: 200-LESSON CURRICULUM TRACKER -->
+    <section id="view-curriculum" class="view active" aria-labelledby="curriculum-heading">
+      <div class="section-head">
+        <div>
+          <h1 id="curriculum-heading">200-Lesson Beginner Roadmap</h1>
+          <p class="lead">Track every 45-minute lesson from zero knowledge (`L001`) to exam readiness (`L200`). Progress saves automatically in your browser.</p>
+        </div>
+        <div class="progress-summary" id="lesson-progress-summary">
+          <div class="metric-value"><span id="lessons-done-count">0</span> / 200</div>
+          <div class="metric-label">Lessons Completed (<span id="lessons-done-pct">0%</span>)</div>
+          <div class="progress-track"><div class="progress-fill" id="lessons-progress-bar"></div></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filter-group">
+          <label for="phase-filter">Phase:</label>
+          <select id="phase-filter"></select>
+        </div>
+        <div class="filter-group">
+          <label for="lesson-search">Search:</label>
+          <input type="search" id="lesson-search" placeholder="Search topic, SCOTT, JOIN, ORA-..." />
+        </div>
+        <div class="filter-group">
+          <label for="variant-select">Lab Mode:</label>
+          <select id="variant-select">
+            <option value="A">Variant A: In-House Oracle DB</option>
+            <option value="B">Variant B: Free Online (FreeSQL + OCI)</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary" id="reset-lessons-btn">Reset Progress</button>
+      </div>
+
+      <div id="variant-banner" class="callout callout-info"></div>
+      <div id="phases-container" class="phases-list"></div>
+    </section>
+
+    <!-- VIEW 2: REPEATING IDENTICAL CHECKPOINTS (CP-0 to CP-5) -->
+    <section id="view-checkpoints" class="view" aria-labelledby="checkpoints-heading">
+      <div class="section-head">
+        <div>
+          <h1 id="checkpoints-heading">Identical Progress Checkpoints (CP-0 to CP-5)</h1>
+          <p class="lead">Take the exact same 22-question standardized benchmark + 3 Gold Standard SQL tasks six times across the course to measure genuine skill growth.</p>
+        </div>
+        <div class="checkpoint-actions">
+          <button class="btn btn-secondary" id="export-cp-md">Export Markdown</button>
+          <button class="btn btn-secondary" id="export-cp-json">Export JSON</button>
+        </div>
+      </div>
+
+      <div class="cp-selector-strip" id="cp-selector-strip"></div>
+
+      <div class="cp-layout">
+        <div class="cp-panel" id="cp-workspace"></div>
+        <aside class="cp-sidebar">
+          <div class="panel-box">
+            <h2>Longitudinal Growth (CP-0 &rarr; CP-5)</h2>
+            <p class="muted-sm">Overall score (%) and confidence calibration across attempts.</p>
+            <div id="cp-chart-container" class="chart-box"></div>
+          </div>
+          <div class="panel-box">
+            <h2>Domain Mastery Matrix</h2>
+            <div id="cp-domain-matrix"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- VIEW 3: INTERACTIVE LABS & VISUALIZERS -->
+    <section id="view-labs" class="view" aria-labelledby="labs-heading">
+      <div class="section-head">
+        <div>
+          <h1 id="labs-heading">Interactive SQL Labs &amp; Visualizers</h1>
+          <p class="lead">Visual intuition builders designed for beginners using the classic 14-row <code>SCOTT/TIGER</code> dataset and Oracle 23ai syntax rules.</p>
+        </div>
+      </div>
+
+      <div class="subtabs" role="tablist">
+        <button class="subtab-btn active" data-lab="joins" id="tab-lab-joins">Join &amp; SET Visualizer (SCOTT)</button>
+        <button class="subtab-btn" data-lab="slicer" id="tab-lab-slicer">1-Based SUBSTR / INSTR Slicer</button>
+        <button class="subtab-btn" data-lab="sqlplus" id="tab-lab-sqlplus">SQL*Plus &amp; / &amp;&amp; Simulator</button>
+        <button class="subtab-btn" data-lab="compiler" id="tab-lab-compiler">Human Compiler (No-IDE Drill)</button>
+      </div>
+
+      <!-- Lab A: Join & Set Visualizer -->
+      <div class="lab-pane active" id="lab-joins">
+        <div class="lab-controls">
+          <label for="join-mode-select">Operation:</label>
+          <select id="join-mode-select">
+            <option value="INNER">INNER JOIN (EMP &amp; DEPT on deptno)</option>
+            <option value="LEFT">LEFT OUTER JOIN (EMP left join DEPT)</option>
+            <option value="RIGHT">RIGHT OUTER JOIN (Preserves DEPT 40 OPERATIONS)</option>
+            <option value="FULL">FULL OUTER JOIN</option>
+            <option value="CROSS">CROSS JOIN (Cartesian Product: 14 &times; 4 = 56)</option>
+            <option value="SELF">SELF JOIN (EMP e LEFT JOIN EMP m ON e.mgr = m.empno)</option>
+            <option value="NONEQUI">NON-EQUIJOIN (EMP JOIN SALGRADE ON sal BETWEEN losal AND hisal)</option>
+            <option value="UNION">SET: DEPTNOs in EMP UNION DEPT</option>
+            <option value="UNION_ALL">SET: DEPTNOs in EMP UNION ALL DEPT</option>
+            <option value="INTERSECT">SET: DEPTNOs in EMP INTERSECT DEPT</option>
+            <option value="MINUS">SET: DEPTNOs in DEPT MINUS EMP (Finds 40!)</option>
+          </select>
+        </div>
+        <div class="sql-preview-box">
+          <pre><code id="join-sql-code"></code></pre>
+          <p id="join-explanation" class="callout callout-info"></p>
+        </div>
+        <div class="join-visual-grid">
+          <div class="table-card">
+            <h3>Left Source</h3>
+            <div class="table-scroll" id="join-left-table"></div>
+          </div>
+          <div class="table-card">
+            <h3>Right Source</h3>
+            <div class="table-scroll" id="join-right-table"></div>
+          </div>
+        </div>
+        <div class="table-card result-card">
+          <h3>Result Set (<span id="join-result-count">0</span> rows)</h3>
+          <div class="table-scroll" id="join-result-table"></div>
+        </div>
+      </div>
+
+      <!-- Lab B: 1-Based SUBSTR & INSTR Slicer -->
+      <div class="lab-pane" id="lab-slicer">
+        <div class="slicer-controls">
+          <div class="field">
+            <label for="slicer-text">Input String</label>
+            <input type="text" id="slicer-text" value="SALESMAN" maxlength="28" />
+          </div>
+          <div class="field">
+            <label for="slicer-start">SUBSTR Start Pos (1-based or negative)</label>
+            <input type="number" id="slicer-start" value="-3" min="-28" max="28" />
+          </div>
+          <div class="field">
+            <label for="slicer-len">SUBSTR Length (optional, 0 = to end)</label>
+            <input type="number" id="slicer-len" value="2" min="0" max="28" />
+          </div>
+          <div class="field">
+            <label for="instr-needle">INSTR Search Substring</label>
+            <input type="text" id="instr-needle" value="A" maxlength="10" />
+          </div>
+          <div class="field">
+            <label for="instr-occ">INSTR Occurrence</label>
+            <input type="number" id="instr-occ" value="2" min="1" max="10" />
+          </div>
+        </div>
+        <div id="slicer-grid" class="char-grid"></div>
+        <div class="slicer-outputs">
+          <div class="output-tile">
+            <div class="output-label" id="substr-formula"></div>
+            <div class="output-val" id="substr-result"></div>
+          </div>
+          <div class="output-tile">
+            <div class="output-label" id="instr-formula"></div>
+            <div class="output-val" id="instr-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lab C: SQL*Plus Substitution Simulator -->
+      <div class="lab-pane" id="lab-sqlplus">
+        <div class="callout callout-info">
+          <strong>Variant B Bridge:</strong> Practice how command-line <code>sqlplus</code> handles <code>&amp;</code>, <code>&amp;&amp;</code>, <code>DEFINE</code>, <code>UNDEFINE</code>, and <code>SET VERIFY ON/OFF</code>—exactly as tested on 1Z0-171.
+        </div>
+        <div class="sqlplus-layout">
+          <div class="sqlplus-editor">
+            <div class="preset-bar">
+              <span>Presets:</span>
+              <button class="btn btn-sm" data-preset="single">&amp; Single Ampersand</button>
+              <button class="btn btn-sm" data-preset="double">&amp;&amp; Double Ampersand</button>
+              <button class="btn btn-sm" data-preset="define">DEFINE + VERIFY</button>
+            </div>
+            <textarea id="sqlplus-input" rows="7" spellcheck="false"></textarea>
+            <div class="sqlplus-controls">
+              <label><input type="checkbox" id="sqlplus-verify" checked /> SET VERIFY ON</label>
+              <button class="btn btn-primary" id="sqlplus-run-btn">Execute in SQL*Plus Simulator</button>
+              <button class="btn btn-secondary" id="sqlplus-clear-vars">UNDEFINE ALL</button>
+            </div>
+            <div id="sqlplus-defined-vars" class="defined-vars"></div>
+          </div>
+          <div class="sqlplus-terminal">
+            <div class="terminal-bar">SQL*Plus 23ai Transcript</div>
+            <pre id="sqlplus-output"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lab D: Human Compiler No-IDE Drill -->
+      <div class="lab-pane" id="lab-compiler">
+        <div class="compiler-head">
+          <div>
+            <h2>Human Compiler Drill (No IDE Allowed)</h2>
+            <p class="muted-sm">Read each SQL snippet on <code>SCOTT.EMP</code> / <code>HR.EMPLOYEES</code> and predict whether it succeeds with rows, returns 0 rows, or throws an <code>ORA-</code> error.</p>
+          </div>
+          <div class="compiler-score">Score: <strong id="compiler-score-val">0 / 0</strong></div>
+        </div>
+        <div id="compiler-list" class="compiler-list"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: FLASHCARDS -->
+    <section id="view-flashcards" class="view" aria-labelledby="flashcards-heading">
+      <div class="section-head">
+        <div>
+          <h1 id="flashcards-heading">1Z0-171 Concept &amp; Exam-Trap Flashcards</h1>
+          <p class="lead">Quick active-recall cards for the 5-minute warm-up at the start of every 45-minute lesson.</p>
+        </div>
+        <div class="filter-group">
+          <label for="fc-domain-filter">Domain:</label>
+          <select id="fc-domain-filter"></select>
+          <button class="btn btn-secondary" id="fc-shuffle-btn">Shuffle</button>
+        </div>
+      </div>
+
+      <div class="flashcard-stage">
+        <div class="flashcard" id="flashcard-card" tabindex="0" role="button" aria-label="Flip flashcard">
+          <div class="fc-meta">
+            <span id="fc-domain-tag"></span>
+            <span id="fc-counter"></span>
+          </div>
+          <div class="fc-body" id="fc-body"></div>
+          <div class="fc-hint">Click card or press <kbd>Space</kbd> to flip</div>
+        </div>
+        <div class="fc-controls">
+          <button class="btn btn-secondary" id="fc-prev-btn">&larr; Previous</button>
+          <button class="btn btn-primary" id="fc-flip-btn">Flip Card</button>
+          <button class="btn btn-secondary" id="fc-next-btn">Next &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: TIMED MOCK EXAM -->
+    <section id="view-mock" class="view" aria-labelledby="mock-heading">
+      <div class="section-head">
+        <div>
+          <h1 id="mock-heading">1Z0-171 Timed Mock Exam Simulator</h1>
+          <p class="lead">60 multiple-choice &amp; multi-select questions in 120 minutes (passing score: 65% / 39 correct, target readiness: 75%+).</p>
+        </div>
+      </div>
+      <div id="mock-root"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>Oracle 1Z0-171 Zero-to-Certified Curriculum &middot; Read the Docs + GitHub Pages</span>
+      <span>Tip: Always test your queries live on <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> or your local Oracle 23ai Free PDB.</span>
+    </div>
+  </footer>
+
+  <script src="js/data-curriculum.js"></script>
+  <script src="js/data-checkpoints.js"></script>
+  <script src="js/data-questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

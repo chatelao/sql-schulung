@@ -1,0 +1,76 @@
+site_name: "Oracle 1Z0-171 SQL Zero-to-Certified Handbook"
+site_description: "200-Lesson Beginner Curriculum for Oracle AI Database SQL Associate (1Z0-171) using SCOTT/TIGER and HR schemas"
+site_url: "https://sql-schulung.readthedocs.io/"
+repo_url: "https://github.com/chatelao/sql-schulung"
+repo_name: "chatelao/sql-schulung"
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - tables
+  - attr_list
+  - def_list
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Variant A (In-House Oracle DB): getting-started/variant-a-inhouse.md
+      - Variant B (Free Online Cloud): getting-started/variant-b-online.md
+      - 200-Lesson Pacing & Schedules: getting-started/lesson-schedule.md
+  - Sample Schemas:
+      - Classic SCOTT/TIGER Schema: schemas/scott-tiger.md
+      - Modern HR Schema Overview: schemas/hr-schema.md
+  - 200-Lesson Textbook:
+      - "Phase 1 (L001–L020): Foundations & SELECT": phases/phase-01-foundations.md
+      - "Phase 2 (L021–L042): Filtering, Sorting & Variables": phases/phase-02-filtering-sorting.md
+      - "Phase 3 (L043–L068): Single-Row & Conversion Functions": phases/phase-03-functions.md
+      - "Phase 4 (L069–L082): Grouping & Aggregating": phases/phase-04-aggregation.md
+      - "Phase 5 (L083–L102): Multi-Table Joins": phases/phase-05-joins.md
+      - "Phase 6 (L103–L122): Subqueries & SET Operators": phases/phase-06-subqueries-set.md
+      - "Phase 7 (L123–L138): DML & Transactions": phases/phase-07-dml-tcl.md
+      - "Phase 8 (L139–L162): DDL, Constraints, Views & Indexes": phases/phase-08-ddl-objects.md
+      - "Phase 9 (L163–L178): Data Dictionary, Time Zones & DCL": phases/phase-09-dict-tz-dcl.md
+      - "Phase 10 (L179–L200): Exam Mastery & Mock Prep": phases/phase-10-exam-prep.md
+  - Checkpoints & Cheat Sheets:
+      - Identical Checkpoints (CP-0 to CP-5): checkpoints/benchmark-guide.md
+      - SQL Syntax & Clause Order: cheatsheets/sql-syntax.md
+      - Functions & Format Models: cheatsheets/functions-reference.md
+      - ORA Error Troubleshooting: cheatsheets/ora-errors.md
+      - Top 1Z0-171 Exam Traps: cheatsheets/exam-traps.md
