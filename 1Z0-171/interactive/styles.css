@@ -276,6 +276,10 @@ h3 {
   color: #fff;
 }
 
+.btn-teal:hover {
+  background: #0b5656;
+}
+
 select,
 input[type="text"],
 input[type="number"],
@@ -1040,4 +1044,88 @@ textarea {
 
 .footer-inner a {
   color: var(--accent-teal);
+}
+
+/* Oracle FreeSQL Launcher & Preview Actions */
+.sql-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.freesql-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.freesql-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.freesql-editor-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.freesql-editor-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-teal);
+}
+
+#freesql-sql-editor {
+  background: var(--bg-terminal);
+  color: #edf2f7;
+  border-color: #2f3a48;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.freesql-embed-container {
+  margin-top: 1.15rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.freesql-embed-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-hairline);
+  font-size: 0.82rem;
+  color: var(--ink-secondary);
+}
+
+#freesql-embed-frame {
+  display: block;
+  width: 100%;
+  height: 620px;
+  border: 0;
+  background: #fff;
 }

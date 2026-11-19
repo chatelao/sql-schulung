@@ -1,5 +1,8 @@
 # Oracle AI Database SQL Associate (1Z0-171)
 
+[![Read the Docs Handbook](https://img.shields.io/badge/Read%20the%20Docs-Handbook-8CA1AF?logo=readthedocs&logoColor=white)](https://sql-schulung.readthedocs.io/)
+[![GitHub Pages Interactive Studio](https://img.shields.io/badge/GitHub%20Pages-Interactive%20Studio-222222?logo=githubpages&logoColor=white)](https://chatelao.github.io/sql-schulung/)
+
 ## Exam Overview
 
 The **Oracle AI Database SQL Associate (1Z0-171)** certification (also known as **Oracle Database 23ai SQL Associate**) validates a candidate's foundational understanding of SQL concepts and practical skills required to query, manipulate, and manage database objects in an Oracle Database environment.

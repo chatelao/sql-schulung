@@ -20,6 +20,7 @@ Use this setup if you have no local admin rights, are on a Chromebook/locked-dow
    SELECT first_name, last_name, salary FROM hr.employees FETCH FIRST 5 ROWS ONLY;
    ```
 5. For **Phase 7 (DML)** and **Phase 8 (DDL)**, you will create writable tables inside your own personal schema by pasting [`scott_tiger.sql`](../schemas/scott_tiger.sql) into the worksheet.
+6. Or jump straight into any module using our pre-packaged [**FreeSQL Lab Pack & Live Sandboxes**](../labs/freesql-upload-pack.md) (one-click `freesql.com/embedded/` links and downloadable `.sql` scripts for **My Content → Upload Script**).
 
 !!! note "Optional External Connection"
     FreeSQL also provides **SQL*Net connection details** for your personal schema if you later choose to connect from VS Code or SQLcl.

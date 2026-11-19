@@ -118,6 +118,7 @@
         <button class="subtab-btn" data-lab="slicer" id="tab-lab-slicer">1-Based SUBSTR / INSTR Slicer</button>
         <button class="subtab-btn" data-lab="sqlplus" id="tab-lab-sqlplus">SQL*Plus &amp; / &amp;&amp; Simulator</button>
         <button class="subtab-btn" data-lab="compiler" id="tab-lab-compiler">Human Compiler (No-IDE Drill)</button>
+        <button class="subtab-btn" data-lab="freesql" id="tab-lab-freesql">Oracle FreeSQL (23ai) Launcher</button>
       </div>
 
       <!-- Lab A: Join & Set Visualizer -->
@@ -140,6 +141,10 @@
         </div>
         <div class="sql-preview-box">
           <pre><code id="join-sql-code"></code></pre>
+          <div class="sql-preview-actions">
+            <button class="btn btn-sm btn-teal" id="join-run-freesql-btn" type="button">Run Query in Oracle 23ai FreeSQL &nearr;</button>
+            <button class="btn btn-sm" id="join-open-launcher-btn" type="button">Edit in FreeSQL Launcher</button>
+          </div>
           <p id="join-explanation" class="callout callout-info"></p>
         </div>
         <div class="join-visual-grid">
@@ -234,6 +239,39 @@
         </div>
         <div id="compiler-list" class="compiler-list"></div>
       </div>
+
+      <!-- Lab E: Oracle FreeSQL (23ai) Launcher -->
+      <div class="lab-pane" id="lab-freesql">
+        <div class="callout callout-info">
+          <strong>Oracle FreeSQL (23ai) Launcher:</strong> Pick any Phase Lab Pack (or edit your own SQL below), then open it directly in a pre-filled Oracle Database 23ai browser sandbox (<code>freesql.com/embedded/</code>), embed the live worksheet right here, or download the <code>.sql</code> file for <strong>My Content &rarr; Upload Script</strong>.
+        </div>
+        <div class="freesql-toolbar">
+          <div class="filter-group">
+            <label for="freesql-pack-select">Lab Script:</label>
+            <select id="freesql-pack-select"></select>
+          </div>
+          <div class="freesql-actions">
+            <button class="btn btn-primary" id="freesql-open-tab-btn" type="button">Open in FreeSQL (New Tab) &nearr;</button>
+            <button class="btn btn-teal" id="freesql-embed-btn" type="button">Embed Live Worksheet Below</button>
+            <button class="btn btn-secondary" id="freesql-download-btn" type="button">Download .sql</button>
+            <button class="btn btn-secondary" id="freesql-copy-btn" type="button">Copy SQL</button>
+          </div>
+        </div>
+        <div class="freesql-editor-card">
+          <div class="freesql-editor-bar">
+            <span id="freesql-active-filename" class="mono-label">phase-01-foundations.sql</span>
+            <span id="freesql-status" class="muted-sm" style="margin:0;"></span>
+          </div>
+          <textarea id="freesql-sql-editor" rows="13" spellcheck="false" aria-label="SQL script for Oracle FreeSQL"></textarea>
+        </div>
+        <div id="freesql-embed-container" class="freesql-embed-container" hidden>
+          <div class="freesql-embed-bar">
+            <span>Embedded Oracle FreeSQL (23ai) Sandbox &middot; If sign-in prompts are blocked in an iframe, click <strong>Open in FreeSQL (New Tab) &nearr;</strong> above.</span>
+            <button class="btn btn-sm" id="freesql-hide-embed-btn" type="button">Hide Sandbox</button>
+          </div>
+          <iframe id="freesql-embed-frame" title="Oracle FreeSQL 23ai Live Sandbox" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
     </section>
 
     <!-- VIEW 4: FLASHCARDS -->
@@ -289,6 +327,7 @@
   <script src="js/data-curriculum.js"></script>
   <script src="js/data-checkpoints.js"></script>
   <script src="js/data-questions.js"></script>
+  <script src="js/data-freesql-labs.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

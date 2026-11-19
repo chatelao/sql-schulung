@@ -68,14 +68,62 @@
     return v === null || v === undefined ? '<span class="null-pill">NULL</span>' : escapeHtml(v);
   }
 
+  function switchView(view) {
+    document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
+    document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === `view-${view}`));
+  }
+
+  function switchLabPane(lab) {
+    document.querySelectorAll(".subtab-btn").forEach((b) => b.classList.toggle("active", b.dataset.lab === lab));
+    document.querySelectorAll(".lab-pane").forEach((p) => p.classList.toggle("active", p.id === `lab-${lab}`));
+  }
+
+  async function buildFreeSqlEmbedUrl(sqlText) {
+    const clean = String(sqlText || "").replace(/\s+$/, "");
+    if (!clean) return "https://freesql.com/";
+    if (typeof CompressionStream === "undefined") {
+      return "https://freesql.com/";
+    }
+    try {
+      const payload = new TextEncoder().encode(clean + "--EOC");
+      const cs = new CompressionStream("gzip");
+      const writer = cs.writable.getWriter();
+      writer.write(payload);
+      writer.close();
+      const gzBuffer = await new Response(cs.readable).arrayBuffer();
+      const bytes = new Uint8Array(gzBuffer);
+      let binary = "";
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+      }
+      const b64 = btoa(binary);
+      const encoded = encodeURIComponent(b64);
+      return `https://freesql.com/embedded/?layout=vertical&compressed_code=${encoded}&code_language=PL_SQL&code_format=false`;
+    } catch (_) {
+      return "https://freesql.com/";
+    }
+  }
+
+  async function openInFreeSqlTab(sqlText) {
+    const win = window.open("about:blank", "_blank");
+    const url = await buildFreeSqlEmbedUrl(sqlText);
+    if (win) {
+      try {
+        win.opener = null;
+      } catch (_) {}
+      win.location.href = url;
+    } else {
+      window.open(url, "_blank", "noopener");
+    }
+  }
+
   // =========================================================================
   // NAVIGATION
   // =========================================================================
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const view = btn.dataset.view;
-      document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b === btn));
-      document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === `view-${view}`));
+      switchView(btn.dataset.view);
     });
   });
 
@@ -150,6 +198,7 @@
               </div>
               <div class="phase-stats">
                 <span><strong>${phaseDone}</strong> / ${p.lessons.length} done</span>
+                <button type="button" class="btn btn-sm btn-teal phase-freesql-btn" data-phase-id="${p.id}">Lab in FreeSQL &nearr;</button>
                 <a class="docs-link" href="${p.docsUrl}" target="_blank" rel="noopener">Read Chapter &nearr;</a>
               </div>
             </div>
@@ -183,6 +232,11 @@
         state.completedLessons = Array.from(set);
         saveState();
         renderPhases();
+      });
+    });
+    phasesContainer.querySelectorAll(".phase-freesql-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openPhaseInFreeSqlLauncher(Number(btn.dataset.phaseId));
       });
     });
   }
@@ -578,9 +632,7 @@
   function initLabs() {
     document.querySelectorAll(".subtab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const target = btn.dataset.lab;
-        document.querySelectorAll(".subtab-btn").forEach((b) => b.classList.toggle("active", b === btn));
-        document.querySelectorAll(".lab-pane").forEach((p) => p.classList.toggle("active", p.id === `lab-${target}`));
+        switchLabPane(btn.dataset.lab);
       });
     });
 
@@ -588,12 +640,22 @@
     initStringSlicer();
     initSqlPlusSimulator();
     initHumanCompiler();
+    initFreeSqlLauncher();
   }
 
   // Lab A: Join & Set Visualizer
   function initJoinVisualizer() {
     const sel = document.getElementById("join-mode-select");
     sel.addEventListener("change", renderJoinVisualizer);
+    document.getElementById("join-run-freesql-btn").addEventListener("click", () => {
+      const sql = document.getElementById("join-sql-code").textContent;
+      openInFreeSqlTab(sql);
+    });
+    document.getElementById("join-open-launcher-btn").addEventListener("click", () => {
+      const mode = sel.value.toLowerCase();
+      const sql = document.getElementById("join-sql-code").textContent;
+      openCustomSqlInFreeSqlLauncher(`scott-${mode}-lab.sql`, sql);
+    });
     renderJoinVisualizer();
   }
 
@@ -929,6 +991,108 @@
         saveState();
         renderHumanCompiler();
       });
+    });
+  }
+
+  // Lab E: Oracle FreeSQL (23ai) Launcher
+  let freeSqlActiveFilename = "phase-01-foundations.sql";
+
+  function setFreeSqlStatus(msg) {
+    const el = document.getElementById("freesql-status");
+    if (el) el.textContent = msg || "";
+  }
+
+  function loadFreeSqlPackByKey(key) {
+    const packs = window.FREESQL_LAB_PACKS || [];
+    const pack = packs.find((p) => p.key === key) || packs[0];
+    if (!pack) return;
+    const sel = document.getElementById("freesql-pack-select");
+    const editor = document.getElementById("freesql-sql-editor");
+    const fileLabel = document.getElementById("freesql-active-filename");
+    if (sel) sel.value = pack.key;
+    if (editor) editor.value = pack.sql;
+    freeSqlActiveFilename = pack.filename;
+    if (fileLabel) fileLabel.textContent = pack.filename;
+    setFreeSqlStatus("");
+  }
+
+  function openPhaseInFreeSqlLauncher(phaseId) {
+    loadFreeSqlPackByKey(`phase-${phaseId}`);
+    switchView("labs");
+    switchLabPane("freesql");
+  }
+
+  function openCustomSqlInFreeSqlLauncher(filename, sqlText) {
+    const editor = document.getElementById("freesql-sql-editor");
+    const fileLabel = document.getElementById("freesql-active-filename");
+    if (editor) editor.value = sqlText;
+    freeSqlActiveFilename = filename || "custom-lab.sql";
+    if (fileLabel) fileLabel.textContent = freeSqlActiveFilename;
+    setFreeSqlStatus("Loaded query from Join & SET Visualizer.");
+    switchView("labs");
+    switchLabPane("freesql");
+  }
+
+  function initFreeSqlLauncher() {
+    const packs = window.FREESQL_LAB_PACKS || [];
+    const sel = document.getElementById("freesql-pack-select");
+    const editor = document.getElementById("freesql-sql-editor");
+    const embedContainer = document.getElementById("freesql-embed-container");
+    const embedFrame = document.getElementById("freesql-embed-frame");
+    if (!sel || !editor) return;
+
+    sel.innerHTML = packs.map((p) => `<option value="${escapeHtml(p.key)}">${escapeHtml(p.title)}</option>`).join("");
+    if (packs.length > 0) {
+      loadFreeSqlPackByKey(packs[0].key);
+    }
+
+    sel.addEventListener("change", () => {
+      loadFreeSqlPackByKey(sel.value);
+      if (embedContainer && !embedContainer.hidden && embedFrame) {
+        buildFreeSqlEmbedUrl(editor.value).then((url) => {
+          embedFrame.src = url;
+        });
+      }
+    });
+
+    document.getElementById("freesql-open-tab-btn").addEventListener("click", () => {
+      setFreeSqlStatus("Launching Oracle 23ai FreeSQL in a new tab...");
+      openInFreeSqlTab(editor.value);
+    });
+
+    document.getElementById("freesql-embed-btn").addEventListener("click", async () => {
+      setFreeSqlStatus("Compressing SQL and loading embedded FreeSQL sandbox...");
+      const url = await buildFreeSqlEmbedUrl(editor.value);
+      embedFrame.src = url;
+      embedContainer.hidden = false;
+      setFreeSqlStatus("Embedded Oracle 23ai FreeSQL sandbox loaded below.");
+    });
+
+    document.getElementById("freesql-hide-embed-btn").addEventListener("click", () => {
+      embedContainer.hidden = true;
+      embedFrame.src = "about:blank";
+      setFreeSqlStatus("Embedded sandbox hidden.");
+    });
+
+    document.getElementById("freesql-download-btn").addEventListener("click", () => {
+      const blob = new Blob([editor.value], { type: "text/sql;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = freeSqlActiveFilename || "lab-script.sql";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      setFreeSqlStatus(`Downloaded ${freeSqlActiveFilename} (upload via FreeSQL -> My Content -> Upload Script).`);
+    });
+
+    document.getElementById("freesql-copy-btn").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(editor.value);
+        setFreeSqlStatus("SQL copied to clipboard.");
+      } catch (_) {
+        editor.select();
+        document.execCommand("copy");
+        setFreeSqlStatus("SQL copied to clipboard.");
+      }
     });
   }
 

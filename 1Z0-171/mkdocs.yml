@@ -53,6 +53,7 @@ nav:
   - Getting Started:
       - Variant A (In-House Oracle DB): getting-started/variant-a-inhouse.md
       - Variant B (Free Online Cloud): getting-started/variant-b-online.md
+      - FreeSQL Lab Pack & Live Sandboxes: labs/freesql-upload-pack.md
       - 200-Lesson Pacing & Schedules: getting-started/lesson-schedule.md
   - Sample Schemas:
       - Classic SCOTT/TIGER Schema: schemas/scott-tiger.md
