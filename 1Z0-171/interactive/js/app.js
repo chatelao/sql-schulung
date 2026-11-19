@@ -212,6 +212,7 @@
                       <span class="lesson-id">${l.id} &middot; 45 Min.</span>
                       <span class="lesson-title">${escapeHtml(l.title)}</span>
                       <span class="lesson-meta">${escapeHtml(l.tag)}</span>
+                      ${l.refUrl ? `<a class="lesson-ref-link" href="${l.refUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">SQL Ref: ${escapeHtml(l.refLabel)} &nearr;</a>` : ""}
                     </div>
                   </label>
                 `;

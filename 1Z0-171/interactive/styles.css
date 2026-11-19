@@ -473,6 +473,19 @@ textarea {
   color: var(--ink-muted);
 }
 
+.lesson-ref-link {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.lesson-ref-link:hover {
+  text-decoration: underline;
+}
+
 /* Checkpoints */
 .cp-selector-strip {
   display: grid;

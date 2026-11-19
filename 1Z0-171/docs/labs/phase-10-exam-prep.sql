@@ -1,5 +1,5 @@
 -- ============================================================================
--- Phase 10 Lab Pack (L179-L200): Gold Standard Benchmark & Exam Trap Checks
+-- Phase 10 Lab Pack (L179-L200): Gold Standard Benchmark and Exam Trap Checks
 -- ============================================================================
 
 -- Gold Standard Task 1: SCOTT Join + Salgrade + Null-Safe Compensation
@@ -23,7 +23,7 @@ WHERE e.sal > (
 )
 ORDER BY e.deptno, e.sal DESC;
 
--- Gold Standard Task 3: Exam Trap Verification (Nested Aggregates & WITH TIES)
+-- Gold Standard Task 3: Exam Trap Verification (Nested Aggregates and WITH TIES)
 SELECT MAX(AVG(sal)) AS max_dept_avg FROM scott.emp GROUP BY deptno;
 
 SELECT ename, sal

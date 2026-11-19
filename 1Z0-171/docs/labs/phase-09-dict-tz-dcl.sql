@@ -1,9 +1,9 @@
 -- ============================================================================
--- Phase 9 Lab Pack (L163-L178): Data Dictionary & Time Zones / Intervals
+-- Phase 9 Lab Pack (L163-L178): Data Dictionary and Time Zones / Intervals
 -- Hinweis: Multi-User GRANT/REVOKE-Cascade-Labs erfordern OCI Always Free oder PDB!
 -- ============================================================================
 
--- L163-L166: Data Dictionary Views & COMMENT ON
+-- L163-L166: Data Dictionary Views und COMMENT ON
 SELECT object_name, object_type, status
 FROM user_objects
 ORDER BY object_type, object_name;
@@ -12,7 +12,7 @@ SELECT table_name, constraint_name, constraint_type, search_condition
 FROM user_constraints
 ORDER BY table_name, constraint_name;
 
--- L167-L171: Time Zones & INTERVAL Data Types
+-- L167-L171: Time Zones and INTERVAL Data Types
 SELECT DBTIMEZONE, SESSIONTIMEZONE, TZ_OFFSET('America/New_York') FROM dual;
 
 SELECT CURRENT_DATE,

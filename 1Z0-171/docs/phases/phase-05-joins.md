@@ -9,15 +9,18 @@
 
 ### `L083` — Warum Joins existieren & Row-Matching-Intuition
 - Nutze den **Join Visualizer** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/), um zu beobachten, wie jede der 14 Zeilen aus `SCOTT.EMP` ihre passende Zeile in `SCOTT.DEPT` nachschlägt.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L084` — Cartesian Products (`CROSS JOIN`)
 ```sql
 -- 14 employees x 4 departments = 56 rows!
 SELECT e.ename, d.dname FROM scott.emp e CROSS JOIN scott.dept d;
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L085` — Mehrdeutige Spalten auflösen (`ORA-00918`)
 - Sowohl `EMP` als auch `DEPT` besitzen eine Spalte `DEPTNO`. Wird `DEPTNO` ohne Table Alias (`e.deptno`) selektiert, erscheint `ORA-00918: column ambiguously defined`.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ---
 
@@ -30,6 +33,7 @@ FROM scott.emp e
 INNER JOIN scott.dept d ON e.deptno = d.deptno;
 ```
 - Hinweis: `DEPT 40 (OPERATIONS)` verschwindet aus dem Ergebnis, weil kein Employee `deptno = 40` hat.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L087` — Drei oder mehr Tabellen joinen (`HR`)
 ```sql
@@ -39,9 +43,11 @@ JOIN hr.departments d ON e.department_id = d.department_id
 JOIN hr.locations l   ON d.location_id = l.location_id
 JOIN hr.countries c   ON l.country_id = c.country_id;
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L088` — `WHERE` & `GROUP BY` mit Joins kombinieren
 - Filtere gejointe Zeilen mit `WHERE` (oder zusätzlichem `AND` in `ON`) und gruppiere nach `d.dname`.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L089` — `NATURAL JOIN` & seine versteckte Multi-Column-Falle
 ```sql
@@ -52,6 +58,7 @@ SELECT empno, ename, dname FROM scott.emp NATURAL JOIN scott.dept;
 SELECT employee_id, last_name, department_name
 FROM hr.employees NATURAL JOIN hr.departments;
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L090` — `JOIN ... USING (col)`
 ```sql
@@ -59,12 +66,15 @@ SELECT e.ename, deptno, d.dname
 FROM scott.emp e
 JOIN scott.dept d USING (deptno);
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L091` — Die `ORA-25154`-Regel (`USING`-Qualifier-Falle)
 - **Exam Trap**: Setze vor eine in `USING (...)` aufgeführte Spalte **niemals** einen Tabellennamen oder Alias – weder in `SELECT`, `WHERE`, `GROUP BY` noch in `ORDER BY`! `SELECT e.deptno` bei `USING (deptno)` wirft `ORA-25154`.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L092` — Vergleich: `ON`, `USING` und `NATURAL JOIN`
 - `ON` erlaubt beliebige Join-Bedingungen und erfordert Table Qualifiers; `USING` verknüpft gleichnamige Spalten ohne Qualifier; `NATURAL JOIN` verknüpft automatisch *alle* namensgleichen Spalten.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ---
 
@@ -77,6 +87,7 @@ SELECT e.last_name, d.department_name
 FROM hr.employees e
 LEFT OUTER JOIN hr.departments d ON e.department_id = d.department_id;
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L094` — `RIGHT OUTER JOIN` (`SCOTT.DEPT` #40 `OPERATIONS` erhalten)
 ```sql
@@ -85,9 +96,11 @@ SELECT e.ename, d.deptno, d.dname
 FROM scott.emp e
 RIGHT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L095` — `FULL OUTER JOIN`
 - Bewahrt nicht zugeordnete Zeilen aus **beiden** Tabellen (z. B. Kimberely Grant *und* Departments ohne Employees).
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L096` — Outer Join `ON`- vs. `WHERE`-Filter-Falle
 ```sql
@@ -98,6 +111,7 @@ RIGHT JOIN scott.dept d ON e.deptno = d.deptno AND e.job = 'CLERK';
 
 -- TRAP: Filtering e.job = 'CLERK' in WHERE eliminates DEPT 40 (where e.job is NULL)!
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ---
 
@@ -110,6 +124,7 @@ FROM scott.emp e
 LEFT JOIN scott.emp m ON e.mgr = m.empno;
 ```
 - Durch `LEFT JOIN` bleibt auch `KING` (`mgr IS NULL`) im Ergebnis erhalten!
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L098` — Non-Equijoin (`SCOTT.EMP` + `SCOTT.SALGRADE`)
 ```sql
@@ -118,12 +133,16 @@ FROM scott.emp e
 JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal
 ORDER BY s.grade, e.sal;
 ```
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L099` — Legacy Oracle `(+)` Join-Syntax erkennen
 - Erkenne `(+)` in bestehendem Code: `WHERE e.deptno = d.deptno(+)` entspricht `e LEFT OUTER JOIN d`. (`(+)` darf nicht für einen `FULL` Join auf beiden Seiten stehen.)
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L100` — Multi-Way Join aus `EMP`, `DEPT`, `MGR` & `SALGRADE`
 - Kombiniere Employee-Daten, Department, Manager und Salary Grade in einer einzigen Query.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L101`–`L102` — Multi-Table Reporting Lab (`SCOTT` & `HR`)
 - Schreibe Berichte zur Grade-Verteilung pro Department und zu Headcounts je Manager.
+- **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)

@@ -1,6 +1,6 @@
 -- ============================================================================
--- Phase 1 Lab Pack (L001-L020): Relational Foundations & Basic SELECT
--- Kompatibel mit Oracle FreeSQL (My Content -> Upload Script) & SQLcl/SQL*Plus
+-- Phase 1 Lab Pack (L001-L020): Relational Foundations and Basic SELECT
+-- Kompatibel mit Oracle FreeSQL (My Content -> Upload Script) und SQLcl/SQL*Plus
 -- ============================================================================
 
 -- L010: SCOTT-Schema-Tabellen inspizieren
@@ -13,7 +13,7 @@ SELECT employee_id, first_name, last_name, salary
 FROM hr.employees
 FETCH FIRST 10 ROWS ONLY;
 
--- L013-L015: Projections, Arithmetik & Operator Precedence
+-- L013-L015: Projections, Arithmetik und Operator Precedence
 SELECT ename,
        sal,
        sal * 12 AS annual_sal,
@@ -29,7 +29,7 @@ SELECT ename AS employee_name,
        sal * 12 "Annual Salary"
 FROM scott.emp;
 
--- L018: Concatenation (||), Literals & Alternative Quote Operator q'[...]'
+-- L018: Concatenation (||), Literals and Alternative Quote Operator q'[...]'
 SELECT ename || ' works as a ' || job AS summary
 FROM scott.emp;
 

@@ -13,6 +13,7 @@ SELECT ename, sal
 FROM scott.emp
 WHERE sal > (SELECT sal FROM scott.emp WHERE ename = 'JONES');
 ```
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ### `L104` — Subqueries in `HAVING` und Scalar Subqueries in `SELECT`
 ```sql
@@ -22,15 +23,19 @@ FROM scott.emp
 GROUP BY deptno
 HAVING MIN(sal) > (SELECT MIN(sal) FROM scott.emp WHERE deptno = 30);
 ```
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ### `L105` — Der `ORA-01427`-Fehler (Single-Row Operator, Multi-Row Result)
 - Wird `=` oder `>` mit einer Subquery verwendet, die 2 oder mehr Zeilen zurückgibt, erscheint `ORA-01427: single-row subquery returns more than one row`.
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ### `L106` — Verhalten leerer Subqueries (liefert `NULL`)
 - Gibt die innere Query 0 Zeilen zurück (`WHERE ename = 'NOBODY'`), wertet das äußere `WHERE sal > (SELECT ...)` zu `sal > NULL` aus -> liefert sauber 0 Zeilen (kein Fehler!).
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ### `L107` — Single-Row Subquery Practice Lab
 - Finde alle Employees, die denselben Job wie `SCOTT` haben, aber weniger verdienen als `BLAKE`.
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ---
 
@@ -42,6 +47,7 @@ HAVING MIN(sal) > (SELECT MIN(sal) FROM scott.emp WHERE deptno = 30);
 SELECT ename, sal FROM scott.emp
 WHERE sal > ALL (SELECT sal FROM scott.emp WHERE job = 'SALESMAN');
 ```
+- **SQL Reference**: [IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/IN-Condition.html)
 
 ### `L109` — Die `NOT IN` + `NULL`-Falle auf `SCOTT.EMP` beweisen
 ```sql
@@ -53,13 +59,16 @@ WHERE empno NOT IN (SELECT mgr FROM scott.emp);
 SELECT ename FROM scott.emp
 WHERE empno NOT IN (SELECT mgr FROM scott.emp WHERE mgr IS NOT NULL);
 ```
+- **SQL Reference**: [IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/IN-Condition.html)
 
 ### `L110` — Warum `IN` mit `NULL` funktioniert, `NOT IN` aber scheitert
 - `x IN (7839, NULL)` entspricht `(x = 7839) OR (x = NULL)` -> `TRUE OR UNKNOWN` = `TRUE`.
 - `x NOT IN (7839, NULL)` entspricht `(x <> 7839) AND (x <> NULL)` -> `TRUE AND UNKNOWN` = `UNKNOWN`!
+- **SQL Reference**: [IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/IN-Condition.html)
 
 ### `L111`–`L112` — Multi-Row Subquery Drills (`HR.EMPLOYEES`)
 - Trainiere `< ANY`, `> ALL` und Null-sicheres `NOT IN` auf Gehälter und Manager-IDs in `HR.EMPLOYEES`.
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ---
 
@@ -74,6 +83,7 @@ JOIN (SELECT deptno, ROUND(AVG(sal), 2) AS avg_sal
   ON e.deptno = d.deptno
 WHERE e.sal > d.avg_sal;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L114` — Pairwise vs. Non-Pairwise Multi-Column Subqueries
 ```sql
@@ -81,6 +91,7 @@ WHERE e.sal > d.avg_sal;
 SELECT ename, job, deptno FROM scott.emp
 WHERE (job, deptno) IN (SELECT job, deptno FROM scott.emp WHERE sal > 2900);
 ```
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ### `L115` — Correlated Subqueries
 - Wird einmal pro äußerer Kandidatenzeile ausgeführt:
@@ -88,6 +99,7 @@ WHERE (job, deptno) IN (SELECT job, deptno FROM scott.emp WHERE sal > 2900);
   SELECT e.ename, e.sal, e.deptno FROM scott.emp e
   WHERE e.sal > (SELECT AVG(sal) FROM scott.emp i WHERE i.deptno = e.deptno);
   ```
+- **SQL Reference**: [Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
 
 ### `L116` — `EXISTS` und `NOT EXISTS` (Null-Safe!)
 ```sql
@@ -95,6 +107,7 @@ WHERE (job, deptno) IN (SELECT job, deptno FROM scott.emp WHERE sal > 2900);
 SELECT d.deptno, d.dname FROM scott.dept d
 WHERE NOT EXISTS (SELECT 1 FROM scott.emp e WHERE e.deptno = d.deptno);
 ```
+- **SQL Reference**: [EXISTS Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/EXISTS-Condition.html)
 
 ---
 
@@ -102,6 +115,7 @@ WHERE NOT EXISTS (SELECT 1 FROM scott.emp e WHERE e.deptno = d.deptno);
 
 ### `L117` — `UNION` vs. `UNION ALL`
 - `UNION` sortiert und entfernt doppelte Zeilen; `UNION ALL` hängt Zeilen unverändert an und ist schneller.
+- **SQL Reference**: [The Set Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html)
 
 ### `L118` — `INTERSECT` & `MINUS` (`EXCEPT` in 23ai)
 ```sql
@@ -110,13 +124,16 @@ SELECT employee_id, job_id FROM hr.employees
 INTERSECT
 SELECT employee_id, job_id FROM hr.job_history;
 ```
+- **SQL Reference**: [The Set Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html)
 
 ### `L119` — Spaltenabgleich, Dummy Columns & `ORDER BY`-Platzierung
 - Jedes `SELECT` muss die **gleiche Anzahl an Spalten** und **kompatible Datentypen** haben (`TO_CHAR(NULL)` oder `TO_NUMBER(NULL)` als Platzhalter).
 - Spaltenüberschriften stammen vom **ersten `SELECT`**; `ORDER BY` darf nur **einmal ganz am Ende** stehen.
+- **SQL Reference**: [The Set Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html)
 
 ### `L120` — Compound Query Lab (`HR.EMPLOYEES` + `HR.JOB_HISTORY`)
 - Kombiniere aktuelle Jobs und Job-Historie mit `UNION ALL`, `INTERSECT` und `MINUS`.
+- **SQL Reference**: [The Set Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html)
 
 ---
 

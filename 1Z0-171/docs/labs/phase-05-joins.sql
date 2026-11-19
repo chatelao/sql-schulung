@@ -1,5 +1,5 @@
 -- ============================================================================
--- Phase 5 Lab Pack (L083-L102): Multi-Table Joins, Self-Joins & Non-Equijoins
+-- Phase 5 Lab Pack (L083-L102): Multi-Table Joins, Self-Joins and Non-Equijoins
 -- ============================================================================
 
 -- L084: CROSS JOIN (14 x 4 = 56 Zeilen)
@@ -21,7 +21,7 @@ JOIN hr.locations l   ON d.location_id = l.location_id
 JOIN hr.countries c   ON l.country_id = c.country_id
 FETCH FIRST 15 ROWS ONLY;
 
--- L089-L091: NATURAL JOIN & USING (Eine USING-Spalte niemals qualifizieren!)
+-- L089-L091: NATURAL JOIN und USING (Eine USING-Spalte niemals qualifizieren!)
 SELECT empno, ename, deptno, dname
 FROM scott.emp
 JOIN scott.dept USING (deptno);

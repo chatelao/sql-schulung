@@ -1,5 +1,5 @@
 -- ============================================================================
--- Phase 6 Lab Pack (L103-L122): Subqueries & SET Operators
+-- Phase 6 Lab Pack (L103-L122): Subqueries and SET Operators
 -- ============================================================================
 
 -- L103: Single-Row Subquery
@@ -13,7 +13,7 @@ FROM scott.emp
 GROUP BY deptno
 HAVING MIN(sal) > (SELECT MIN(sal) FROM scott.emp WHERE deptno = 30);
 
--- L108-L110: Multi-Row Subqueries & Nachweis der NOT IN + NULL-Falle!
+-- L108-L110: Multi-Row Subqueries und Nachweis der NOT IN + NULL-Falle!
 SELECT ename, sal
 FROM scott.emp
 WHERE sal > ALL (SELECT sal FROM scott.emp WHERE job = 'SALESMAN');
@@ -24,7 +24,7 @@ SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp);
 -- Korrigiert (liefert 8 Nicht-Manager):
 SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp WHERE mgr IS NOT NULL);
 
--- L113-L116: Inline Views, Correlated Subqueries & NOT EXISTS
+-- L113-L116: Inline Views, Correlated Subqueries and NOT EXISTS
 SELECT e.ename, e.sal, e.deptno
 FROM scott.emp e
 WHERE e.sal > (SELECT AVG(i.sal) FROM scott.emp i WHERE i.deptno = e.deptno);

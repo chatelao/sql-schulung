@@ -8,6 +8,7 @@
 
 ### `L139` — Object Naming Rules & zentrale Oracle Data Types
 - `VARCHAR2(n)`, `CHAR(n)`, `NUMBER(p, s)` (was passiert bei negativem `s`, z. B. rundet `NUMBER(5, -2)` auf den nächsten Hunderter!), `DATE`, `CLOB`, `BLOB` sowie das native `BOOLEAN` in 23ai.
+- **SQL Reference**: [Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html)
 
 ### `L140` — `CREATE TABLE` & `DEFAULT` Values
 ```sql
@@ -18,12 +19,15 @@ CREATE TABLE projects (
     is_active  BOOLEAN DEFAULT TRUE
 );
 ```
+- **SQL Reference**: [CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-TABLE.html)
 
 ### `L141` — `CREATE TABLE ... AS SELECT` (`CTAS`) Falle
 - **Exam Trap**: `CTAS` kopiert Spaltennamen, Datentypen, Zeilen und **nur explizite `NOT NULL`-Constraints**. Es kopiert **keine** `PRIMARY KEY`-, `FOREIGN KEY`-, `UNIQUE`-, `CHECK`- oder `DEFAULT`-Definitionen!
+- **SQL Reference**: [CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-TABLE.html)
 
 ### `L142` — `ALTER TABLE` (`ADD`, `MODIFY`, `DROP`, `RENAME`)
 - Die Länge einer `VARCHAR2`-Spalte lässt sich nur verkleinern, wenn die Tabelle leer ist oder alle vorhandenen Werte in die neue Größe passen.
+- **SQL Reference**: [ALTER TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/ALTER-TABLE.html)
 
 ### `L143` — `SET UNUSED` & `DROP UNUSED COLUMNS`
 ```sql
@@ -31,9 +35,11 @@ ALTER TABLE projects SET UNUSED (start_date);
 ALTER TABLE projects DROP UNUSED COLUMNS;
 ```
 - Das Markieren einer Spalte als `UNUSED` erfolgt sofort und verbirgt sie dauerhaft, bevor der Speicherplatz später offline freigegeben wird.
+- **SQL Reference**: [ALTER TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/ALTER-TABLE.html)
 
 ### `L144` — `TRUNCATE TABLE` vs. `DELETE` vs. `DROP TABLE ... PURGE`
 - `TRUNCATE` ist **DDL** (auto-committet, kann nicht zurückgerollt werden, setzt die High-Water Mark zurück, löst keine DML Trigger aus). `DROP TABLE ... PURGE` umgeht den Recycle Bin.
+- **SQL Reference**: [TRUNCATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TRUNCATE-TABLE.html)
 
 ---
 
@@ -41,6 +47,7 @@ ALTER TABLE projects DROP UNUSED COLUMNS;
 
 ### `L145` — `NOT NULL`, `UNIQUE` & `PRIMARY KEY`
 - `UNIQUE` legt einen Unique Index an und erlaubt **mehrere `NULL`-Werte**; `PRIMARY KEY` = `NOT NULL + UNIQUE`.
+- **SQL Reference**: [constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
 
 ### `L146` — `FOREIGN KEY` (`ON DELETE CASCADE` vs. `ON DELETE SET NULL`)
 ```sql
@@ -51,18 +58,23 @@ CREATE TABLE tasks (
     status  VARCHAR2(12) CONSTRAINT chk_status CHECK (status IN ('OPEN', 'DONE'))
 );
 ```
+- **SQL Reference**: [constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
 
 ### `L147` — Inline- vs. Out-of-Line-Constraint-Syntax
 - `NOT NULL` kann **nur** inline definiert werden (oder per `ALTER TABLE ... MODIFY`); Multi-Column Constraints (`PRIMARY KEY (a, b)`) müssen out-of-line stehen.
+- **SQL Reference**: [constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
 
 ### `L148` — `CHECK` Constraints & verbotene Ausdrücke
 - `CHECK` Constraints **dürfen nicht** auf `SYSDATE`, `USER`, `CURRVAL`/`NEXTVAL` oder Subqueries verweisen (`ORA-02436`).
+- **SQL Reference**: [constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
 
 ### `L149` — `ENABLE`, `DISABLE`, `NOVALIDATE` & `DEFERRABLE`
 - `INITIALLY DEFERRED` prüft Constraints erst beim `COMMIT` statt sofort beim einzelnen Statement.
+- **SQL Reference**: [constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
 
 ### `L150` — `DROP TABLE ... CASCADE CONSTRAINTS` & Schema-Build-Lab
 - Erstelle und verknüpfe eine komplette Mini-Projektstruktur und räume Parent Tables sauber mit `CASCADE CONSTRAINTS` auf.
+- **SQL Reference**: [DROP TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/DROP-TABLE.html)
 
 ---
 
@@ -74,9 +86,11 @@ CREATE GLOBAL TEMPORARY TABLE cart_items (
     item_id NUMBER, qty NUMBER
 ) ON COMMIT PRESERVE ROWS; -- vs ON COMMIT DELETE ROWS (default!)
 ```
+- **SQL Reference**: [CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-TABLE.html)
 
 ### `L152` — Private Temporary Tables (`ORA$PTT_`)
 - Session-gebundene In-Memory-Tabellen, deren **Definition selbst** am Transaktions- oder Session-Ende verschwindet (`ON COMMIT DROP DEFINITION` vs. `ON COMMIT PRESERVE DEFINITION`).
+- **SQL Reference**: [CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-TABLE.html)
 
 ### `L153` — External Tables (`ORGANIZATION EXTERNAL`)
 ```sql
@@ -89,6 +103,7 @@ ORGANIZATION EXTERNAL (
 );
 ```
 - Read-only über `ORACLE_LOADER` (unterstützt `SELECT`, kein `INSERT`/`UPDATE`/`DELETE` und keine Indexes).
+- **SQL Reference**: [CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-TABLE.html)
 
 ---
 
@@ -96,9 +111,11 @@ ORGANIZATION EXTERNAL (
 
 ### `L154` — `CREATE OR REPLACE [FORCE] VIEW`
 - `FORCE` legt die View selbst dann an, wenn die zugrunde liegende Base Table noch nicht existiert oder Rechte darauf fehlen.
+- **SQL Reference**: [CREATE VIEW](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-VIEW.html)
 
 ### `L155` — Simple vs. Complex Views & DML-Regeln
 - DML (`DELETE`/`UPDATE`/`INSERT`) ist auf Views mit `DISTINCT`, `GROUP BY`, Group Functions, `SET` Operators oder Joins gesperrt (außer unter Key-Preserved-Regeln).
+- **SQL Reference**: [CREATE VIEW](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-VIEW.html)
 
 ### `L156` — `WITH CHECK OPTION` & `WITH READ ONLY`
 ```sql
@@ -107,9 +124,11 @@ SELECT empno, ename, sal, deptno FROM my_emp WHERE deptno = 20
 WITH CHECK OPTION CONSTRAINT chk_dept20;
 ```
 - `WITH CHECK OPTION` verhindert Inserts/Updates über die View, durch welche die Zeile nicht mehr der `WHERE`-Klausel der View entspräche (`deptno = 30` schlägt fehl!).
+- **SQL Reference**: [CREATE VIEW](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-VIEW.html)
 
 ### `L157` — View Management & `DROP VIEW` Lab
 - Teste DML durch eine View mit und ohne `WITH CHECK OPTION` sowie `WITH READ ONLY`.
+- **SQL Reference**: [DROP VIEW](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/DROP-VIEW.html)
 
 ---
 
@@ -122,13 +141,16 @@ SELECT emp_seq.NEXTVAL FROM dual;
 SELECT emp_seq.CURRVAL FROM dual; -- Fails with ORA-08002 if NEXTVAL not yet called in session!
 ```
 - `GENERATED ALWAYS AS IDENTITY` vs. `GENERATED BY DEFAULT ON NULL AS IDENTITY`.
+- **SQL Reference**: [CREATE SEQUENCE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-SEQUENCE.html)
 
 ### `L159` — Indexes (B-Tree, Unique, Composite, Function-Based, Invisible)
 - Oracle erstellt Unique Indexes **automatisch** für `PRIMARY KEY` und `UNIQUE` Constraints.
 - `CREATE INDEX idx_upper_ename ON my_emp(UPPER(ename)) INVISIBLE;`
+- **SQL Reference**: [CREATE INDEX](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-INDEX.html)
 
 ### `L160` — Private & Public Synonyms
 - `CREATE SYNONYM e FOR scott.emp;` vs. `CREATE PUBLIC SYNONYM dept FOR scott.dept;`
+- **SQL Reference**: [CREATE SYNONYM](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-SYNONYM.html)
 
 ---
 

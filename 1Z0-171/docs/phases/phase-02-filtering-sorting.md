@@ -11,18 +11,22 @@
 ```sql
 SELECT ename, job, sal FROM scott.emp WHERE deptno = 10;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L022` — Comparison Operators (`=`, `<>`, `!=`, `<`, `>`, `<=`, `>=`)
 - SQL-Schlüsselwörter sind case-insensitive (`select`/`SELECT`), **Zeichenketten innerhalb von `'...'` sind dagegen case-sensitive** (`'CLERK'` != `'clerk'`).
+- **SQL Reference**: [Comparison Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Comparison-Conditions.html)
 
 ### `L023` — Date Literals in `WHERE`
 ```sql
 SELECT ename, hiredate FROM scott.emp
 WHERE hiredate >= DATE '1982-01-01';
 ```
+- **SQL Reference**: [Literals](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Literals.html)
 
 ### `L024` — Warum `SELECT`-Aliases in `WHERE` fehlschlagen
 - Die Abfrage `SELECT ename, sal * 12 annual FROM scott.emp WHERE annual > 30000;` wirft **`ORA-00904: "ANNUAL": invalid identifier`**, weil Oracle die `WHERE`-Klausel *vor* `SELECT` auswertet.
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ---
 
@@ -33,11 +37,13 @@ WHERE hiredate >= DATE '1982-01-01';
 SELECT ename, sal FROM scott.emp WHERE sal BETWEEN 1250 AND 2850;
 ```
 - **Exam Trap**: Die Untergrenze muss **zuerst** stehen (`BETWEEN 2850 AND 1250` liefert 0 Zeilen!). Beide Grenzen sind inklusive.
+- **SQL Reference**: [BETWEEN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/BETWEEN-Condition.html)
 
 ### `L026` — Mengenzugehörigkeit mit `IN` und `NOT IN`
 ```sql
 SELECT ename, job FROM scott.emp WHERE job IN ('MANAGER', 'ANALYST');
 ```
+- **SQL Reference**: [IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/IN-Condition.html)
 
 ### `L027` — Pattern Matching mit `LIKE` (`%`, `_`, `ESCAPE`)
 ```sql
@@ -48,12 +54,14 @@ SELECT ename FROM scott.emp WHERE ename LIKE '___TH';
 -- Escaping a literal underscore in HR.EMPLOYEES.JOB_ID
 SELECT job_id FROM hr.jobs WHERE job_id LIKE 'SA\_%' ESCAPE '\';
 ```
+- **SQL Reference**: [About SQL Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/About-SQL-Conditions.html)
 
 ### `L028` — Null-Werte filtern (`IS NULL` / `IS NOT NULL`)
 ```sql
 SELECT ename, comm FROM scott.emp WHERE comm IS NULL;
 ```
 - **Exam Trap**: `WHERE comm = NULL` oder `WHERE comm <> NULL` wirft **keinen** Fehler – es liefert stillschweigend **0 Zeilen**!
+- **SQL Reference**: [Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Nulls.html)
 
 ---
 
@@ -63,14 +71,17 @@ SELECT ename, comm FROM scott.emp WHERE comm IS NULL;
 ```sql
 SELECT ename, job, sal FROM scott.emp WHERE deptno = 30 AND sal >= 1500;
 ```
+- **SQL Reference**: [Logical Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Logical-Conditions.html)
 
 ### `L030` — Bedingungen erweitern mit `OR`
 ```sql
 SELECT ename, deptno, job FROM scott.emp WHERE deptno = 10 OR job = 'CLERK';
 ```
+- **SQL Reference**: [Logical Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Logical-Conditions.html)
 
 ### `L031` — Negieren mit `NOT` & 3-Valued Logic
 - `NOT (TRUE)` = `FALSE`, `NOT (FALSE)` = `TRUE`, `NOT (UNKNOWN)` = **`UNKNOWN`**!
+- **SQL Reference**: [Logical Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Logical-Conditions.html)
 
 ### `L032` — Precedence Rules (`NOT` -> `AND` -> `OR`)
 ```sql
@@ -82,9 +93,11 @@ WHERE job = 'SALESMAN' OR job = 'PRESIDENT' AND sal > 1500;
 SELECT ename, job, sal FROM scott.emp
 WHERE (job = 'SALESMAN' OR job = 'PRESIDENT') AND sal > 1500;
 ```
+- **SQL Reference**: [About SQL Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/About-SQL-Conditions.html)
 
 ### `L033` — Interaktives Precedence-Training
 - Übe 10 `AND`/`OR`/`NOT`-Grenzfälle auf `HR.EMPLOYEES` und überprüfe die Ausgaben im Interactive Studio.
+- **SQL Reference**: [Logical Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Logical-Conditions.html)
 
 ---
 
@@ -94,6 +107,7 @@ WHERE (job = 'SALESMAN' OR job = 'PRESIDENT') AND sal > 1500;
 ```sql
 SELECT ename, deptno, sal FROM scott.emp ORDER BY deptno ASC, sal DESC;
 ```
+- **SQL Reference**: [Sorting Query Results](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Sorting-Query-Results.html)
 
 ### `L035` — Sortieren nach Alias, Spaltenposition & `NULLS FIRST/LAST`
 ```sql
@@ -102,6 +116,7 @@ FROM scott.emp
 ORDER BY annual_sal DESC, comm NULLS FIRST;
 ```
 - Standardmäßig sortiert Oracle **`NULL` bei `ASC` zuletzt (LAST) und bei `DESC` zuerst (FIRST)**.
+- **SQL Reference**: [Sorting Query Results](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Sorting-Query-Results.html)
 
 ### `L036` — Row Limiting (`OFFSET` & `FETCH FIRST ... ONLY`)
 ```sql
@@ -115,6 +130,7 @@ SELECT ename, sal FROM scott.emp
 ORDER BY sal DESC
 OFFSET 3 ROWS FETCH NEXT 3 ROWS ONLY;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L037` — `ONLY` vs. `WITH TIES` & `PERCENT`
 ```sql
@@ -123,6 +139,7 @@ SELECT ename, sal FROM scott.emp
 ORDER BY sal DESC
 FETCH FIRST 3 ROWS WITH TIES;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ---
 

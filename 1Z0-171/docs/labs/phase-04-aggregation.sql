@@ -1,8 +1,8 @@
 -- ============================================================================
--- Phase 4 Lab Pack (L069-L082): Grouping & Aggregating Data
+-- Phase 4 Lab Pack (L069-L082): Grouping and Aggregating Data
 -- ============================================================================
 
--- L069-L071: Aggregate Functions & Nachweis AVG(comm) vs. AVG(NVL(comm, 0))
+-- L069-L071: Aggregate Functions und Nachweis AVG(comm) vs. AVG(NVL(comm, 0))
 SELECT COUNT(*) AS total_employees,
        COUNT(comm) AS comm_recipients,
        COUNT(DISTINCT job) AS unique_jobs,
@@ -10,7 +10,7 @@ SELECT COUNT(*) AS total_employees,
        ROUND(AVG(NVL(comm, 0)), 2) AS avg_all_staff
 FROM scott.emp;
 
--- L074-L075: GROUP BY mit einer & mehreren Spalten
+-- L074-L075: GROUP BY mit einer und mehreren Spalten
 SELECT deptno,
        job,
        COUNT(*) AS headcount,

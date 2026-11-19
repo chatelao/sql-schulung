@@ -1,5 +1,5 @@
 -- ============================================================================
--- Phase 7 Lab Pack (L123-L138): Data Manipulation (DML) & Transactions (TCL)
+-- Phase 7 Lab Pack (L123-L138): Data Manipulation (DML) and Transactions (TCL)
 -- Sicher ausführbar im eigenen FreeSQL-Schema oder PDB-Student-Schema!
 -- ============================================================================
 
@@ -12,7 +12,7 @@ BEGIN EXECUTE IMMEDIATE 'DROP TABLE my_dept PURGE'; EXCEPTION WHEN OTHERS THEN N
 CREATE TABLE my_dept AS SELECT * FROM scott.dept;
 CREATE TABLE my_emp  AS SELECT * FROM scott.emp;
 
--- L124-L125: INSERT & UPDATE
+-- L124-L125: INSERT und UPDATE
 INSERT INTO my_dept (deptno, dname, loc) VALUES (50, 'ENGINEERING', 'BERLIN');
 INSERT INTO my_dept (deptno, dname) VALUES (60, 'DESIGN');
 
@@ -32,7 +32,7 @@ WHEN NOT MATCHED THEN
   INSERT (empno, ename, job, sal, deptno)
   VALUES (src.empno, src.ename, src.job, src.sal, src.deptno);
 
--- L133: SAVEPOINT & ROLLBACK TO SAVEPOINT
+-- L133: SAVEPOINT und ROLLBACK TO SAVEPOINT
 SAVEPOINT sp_before_cleanup;
 DELETE FROM my_emp WHERE deptno = 30;
 SELECT COUNT(*) AS count_during_delete FROM my_emp;

@@ -1,5 +1,5 @@
 -- ============================================================================
--- Phase 3 Lab Pack (L043-L068): Single-Row, Conversion & Conditional Functions
+-- Phase 3 Lab Pack (L043-L068): Single-Row, Conversion and Conditional Functions
 -- ============================================================================
 
 -- L043-L046: Case, TRIM, REPLACE
@@ -27,7 +27,7 @@ SELECT ROUND(45.926, 2) AS r2,
        FLOOR(-4.2) AS floor_neg
 FROM dual;
 
--- L056-L059: Date Arithmetic & Functions
+-- L056-L059: Date Arithmetic and Functions
 SELECT ename,
        hiredate,
        ROUND(MONTHS_BETWEEN(SYSDATE, hiredate) / 12, 1) AS years_since_hire,

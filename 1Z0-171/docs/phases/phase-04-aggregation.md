@@ -12,6 +12,7 @@
 SELECT MIN(sal), MAX(sal), ROUND(AVG(sal), 2), SUM(sal) FROM scott.emp;
 ```
 - `MIN` und `MAX` funktionieren auf Zahlen, Strings und Datumsangaben; `SUM` und `AVG` nur auf Zahlen.
+- **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ### `L070` — `COUNT(*)`, `COUNT(col)` & `COUNT(DISTINCT col)`
 ```sql
@@ -21,6 +22,7 @@ SELECT COUNT(*) AS total_rows,
 FROM scott.emp;
 -- Results: 14 | 4 | 5
 ```
+- **SQL Reference**: [COUNT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/COUNT.html)
 
 ### `L071` — Die `AVG` + `NULL`-Falle auf `SCOTT.EMP.COMM` beweisen
 ```sql
@@ -30,12 +32,15 @@ SELECT AVG(comm) AS avg_recipients_only,
        ROUND(AVG(NVL(comm, 0)), 2) AS avg_all_staff
 FROM scott.emp;
 ```
+- **SQL Reference**: [AVG](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/AVG.html)
 
 ### `L072` — Group Functions mit Single-Row Columns kombinieren (`ORA-00937`)
 - `SELECT ename, MAX(sal) FROM scott.emp;` schlägt mit `ORA-00937: not a single-group group function` fehl, sofern kein `GROUP BY` oder keine Subquery verwendet wird.
+- **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ### `L073` — Aggregate Practice Lab auf `HR.EMPLOYEES`
 - Vergleiche `COUNT(*)`, `COUNT(commission_pct)` und `AVG(NVL(commission_pct, 0))` auf `HR.EMPLOYEES`.
+- **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ---
 
@@ -48,6 +53,7 @@ FROM scott.emp
 GROUP BY deptno
 ORDER BY deptno;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L075` — Gruppieren nach mehreren Spalten & `ORA-00979` beheben
 ```sql
@@ -57,6 +63,7 @@ GROUP BY deptno, job
 ORDER BY deptno, job;
 ```
 - **Regel**: Jede nicht aggregierte Spalte in `SELECT` **muss** in `GROUP BY` stehen (Spalten aus `GROUP BY` müssen aber *nicht* zwingend in `SELECT` erscheinen).
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L076` — `WHERE` vs. `HAVING`
 ```sql
@@ -67,6 +74,7 @@ GROUP BY deptno
 HAVING AVG(sal) > 2000;           -- Filters groups AFTER grouping
 ```
 - **Exam Trap**: Group Functions (`AVG(sal) > 2000`) dürfen niemals in `WHERE` stehen (`ORA-00934`).
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L077` — Verschachtelte Group Functions (Maximale Tiefe = 2)
 ```sql
@@ -74,9 +82,11 @@ HAVING AVG(sal) > 2000;           -- Filters groups AFTER grouping
 SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;
 ```
 - **Exam Trap**: Beim Verschachteln zweier Group Functions ist `GROUP BY` Pflicht, und es darf **keine** unaggregierte Spalte (wie `deptno`) in der `SELECT`-Liste stehen!
+- **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ### `L078` — Payroll Summary Lab (`HR.EMPLOYEES`)
 - Erstelle je `department_id` und `job_id` eine Übersicht über Headcount, Min/Max/Avg Salary und Gesamt-Payroll.
+- **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ---
 
@@ -84,6 +94,7 @@ SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;
 
 ### `L079` — Konsolidierungs-Lab (Functions + Grouping)
 - Baue formatierte Zusammenfassungen, die `TO_CHAR`, `NVL`, `CASE`, `GROUP BY` und `HAVING` kombinieren.
+- **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ### `L080` — "Human Compiler" Drill #1 (Code lesen ohne IDE)
 - Löse 15 Code-Reading-Fragen auf [GitHub Pages](https://chatelao.github.io/sql-schulung/) zu den Phasen 1–4, ohne sie vorab in einer Datenbank auszuführen.

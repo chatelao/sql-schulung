@@ -23,9 +23,11 @@
 
 ### `L004` — Tables, Rows, Columns & Primary Keys
 - **Konzept**: Eine **Table** (`SCOTT.DEPT`) besteht aus **Rows** (Tupel/Datensätze) und **Columns** (Attribute/Felder). Jede Zeile benötigt eine eindeutige Kennung, den **Primary Key (PK)** – wie z. B. `DEPTNO` (`10, 20, 30, 40`).
+- **SQL Reference**: [Database Objects](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Database-Objects.html)
 
 ### `L005` — Tables mit Foreign Keys verknüpfen
 - **Konzept**: `SCOTT.EMP` speichert nur `DEPTNO` (`10, 20, 30`), statt fünfmal `'DALLAS'` zu wiederholen. `EMP.DEPTNO` ist ein **Foreign Key (FK)**, der auf `DEPT.DEPTNO` verweist.
+- **SQL Reference**: [constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
 
 ### `L006` — Entity-Relationship Diagrams (ERDs) lesen
 - **Konzept**: Crow's-Foot-Notation (`1:1`, `1:M`, `M:N`). Ein einzelnes `DEPT` hat null, eine oder viele `EMP`-Zeilen (`||--o{`), während jeder `EMP` genau zu einem `DEPT` gehört.
@@ -35,6 +37,7 @@
   - **Entity** -> Table (`FROM dept`)
   - **Attribute** -> Column (`SELECT dname, loc`)
   - **Relationship** -> Join Condition (`EMP.DEPTNO = DEPT.DEPTNO`)
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L008` — Die vier SQL Statement Families
 | Familie | Vollständiger Name | Kernbefehle | Auto-Commit? |
@@ -43,6 +46,7 @@
 | **DDL** | Data Definition Language | `CREATE`, `ALTER`, `DROP`, `TRUNCATE`, `RENAME` | **Ja** |
 | **DCL** | Data Control Language | `GRANT`, `REVOKE` | **Ja** |
 | **TCL** | Transaction Control Language | `COMMIT`, `ROLLBACK`, `SAVEPOINT` | Beendet/steuert Transaktion |
+- **SQL Reference**: [Types of SQL Statements](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Types-of-SQL-Statements.html)
 
 ---
 
@@ -58,6 +62,7 @@ DESCRIBE scott.dept;
 SELECT * FROM scott.dept;
 ```
 - **Aufgabe**: Betrachte alle 4 Departments (`10 ACCOUNTING` bis `40 OPERATIONS`) und führe anschließend `SELECT * FROM scott.emp;` (14 Zeilen) aus.
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L011` — `ORA-`-Fehlermeldungen gelassen lesen
 - Vertippe dich absichtlich bei `SELECT * FROM scott.empp;` -> beobachte `ORA-00942: table or view does not exist`.
@@ -67,6 +72,7 @@ SELECT * FROM scott.dept;
 ```sql
 SELECT employee_id, first_name, last_name, salary FROM hr.employees;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ---
 
@@ -76,15 +82,18 @@ SELECT employee_id, first_name, last_name, salary FROM hr.employees;
 ```sql
 SELECT empno, ename, job, sal FROM scott.emp;
 ```
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L014` — Arithmetische Ausdrücke (`+`, `-`, `*`, `/`)
 ```sql
 SELECT ename, sal, sal * 12 AS annual_sal, sal * 12 + 500 AS with_bonus
 FROM scott.emp;
 ```
+- **SQL Reference**: [Arithmetic Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Arithmetic-Operators.html)
 
 ### `L015` — Operator Precedence (Punkt vor Strich)
 - `*` und `/` werden vor `+` und `-` ausgewertet. Setze immer Klammern, wenn vor der Multiplikation addiert werden soll: `(sal + 200) * 12`.
+- **SQL Reference**: [About SQL Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/About-SQL-Operators.html)
 
 ### `L016` — Die goldene Regel für `NULL`
 - `NULL` ist **weder** Null (`0`) **noch** ein Leerzeichen – es bedeutet *unbekannt / nicht vorhanden*.
@@ -95,6 +104,7 @@ FROM scott.emp;
   FROM scott.emp;
   ```
   `TURNER` (`1500 + 0 = 1500`) erhält eine Zahl, während `SMITH` (`800 + NULL = NULL`) `NULL` bekommt!
+- **SQL Reference**: [Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Nulls.html)
 
 ---
 
@@ -106,6 +116,7 @@ SELECT ename AS employee_name, sal * 12 "Annual Salary"
 FROM scott.emp;
 ```
 - **Exam Trap**: Aliases ohne Anführungszeichen werden `UPPERCASE`. Leerzeichen oder gemischte Groß-/Kleinschreibung erfordern `"Double Quotes"`, **niemals** `'Single Quotes'`.
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L018` — Concatenation (`||`), Literals & Alternative Quotes (`q'[...]'`)
 ```sql
@@ -113,6 +124,7 @@ SELECT ename || ' works as a ' || job AS summary FROM scott.emp;
 SELECT q'[Department's Name: ]' || dname FROM scott.dept;
 ```
 - Anders als bei Arithmetik liefert `'Hello' || NULL` wieder `'Hello'`!
+- **SQL Reference**: [Concatenation Operator](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Concatenation-Operator.html)
 
 ### `L019` — Duplikate entfernen mit `DISTINCT`
 ```sql
@@ -120,9 +132,11 @@ SELECT DISTINCT deptno FROM scott.emp;
 SELECT DISTINCT deptno, job FROM scott.emp;
 ```
 - **Exam Trap**: `DISTINCT` gilt immer für die **Kombination aller Spalten** in der `SELECT`-Liste und darf nur einmal direkt nach `SELECT` stehen.
+- **SQL Reference**: [SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
 
 ### `L020` — Die `DUAL`-Tabelle & Phase-1-Review
 ```sql
 SELECT 24 * 60 AS mins_per_day, SYSDATE FROM dual;
 ```
 - *(23ai-Hinweis)*: Oracle 23ai erlaubt sowohl `SELECT 24 * 60 FROM dual;` als auch das Weglassen von `FROM dual` (`SELECT 24 * 60;`), für `1Z0-171` bleibt `FROM dual` jedoch der Prüfungsstandard.
+- **SQL Reference**: [Selecting from the DUAL Table](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Selecting-from-the-DUAL-Table.html)
