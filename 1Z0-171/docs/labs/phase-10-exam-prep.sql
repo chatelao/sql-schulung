@@ -13,7 +13,7 @@ GROUP BY d.dname
 HAVING COUNT(e.empno) >= 2
 ORDER BY avg_total_comp DESC;
 
--- Gold Standard Task 2: Correlated Subquery (Above Dept Average)
+-- Gold Standard Task 2: Correlated Subquery (über dem Department-Durchschnitt)
 SELECT e.empno, e.ename, e.deptno, e.sal
 FROM scott.emp e
 WHERE e.sal > (

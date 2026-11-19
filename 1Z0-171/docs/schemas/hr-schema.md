@@ -1,10 +1,10 @@
-# Modern `HR` Sample Schema Overview
+# Modernes `HR` Sample Schema (Überblick)
 
-Once beginners master a SQL concept on the 14-row `SCOTT.EMP` table, every phase scales up to Oracle's standard **`HR` (Human Resources)** schema (107 employees, 27 departments, multi-country locations, and `JOB_HISTORY`).
+Sobald Einsteiger ein SQL-Konzept auf der 14-zeiligen Tabelle `SCOTT.EMP` sicher beherrschen, skaliert jede Phase auf das offizielle Oracle-Standardschema **`HR` (Human Resources)** (107 Employees, 27 Departments, Standorte in mehreren Ländern sowie `JOB_HISTORY`).
 
 ---
 
-## Entity-Relationship Diagram
+## Entity-Relationship Diagram (ERD)
 
 ```mermaid
 erDiagram
@@ -21,12 +21,12 @@ erDiagram
 
 ---
 
-## Key Exam Quirks in `HR`
+## Wichtige Prüfungsbesonderheiten in `HR`
 
 1. **`NATURAL JOIN` Trap (`EMPLOYEES` & `DEPARTMENTS`)**:
-   - Both `EMPLOYEES` and `DEPARTMENTS` share **two** identically named columns: `DEPARTMENT_ID` **and** `MANAGER_ID`.
-   - Running `SELECT * FROM hr.employees NATURAL JOIN hr.departments` joins on **both** columns—returning only employees who work in a department managed by their *own direct manager*!
+   - Sowohl `EMPLOYEES` als auch `DEPARTMENTS` besitzen **zwei** gleichnamige Columns: `DEPARTMENT_ID` **und** `MANAGER_ID`.
+   - `SELECT * FROM hr.employees NATURAL JOIN hr.departments` verknüpft über **beide** Spalten – und liefert nur Employees, die in einem Department arbeiten, das von ihrem *eigenen direkten Manager* geleitet wird!
 2. **Kimberely Grant (`EMPLOYEE_ID = 178`)**:
-   - Has `DEPARTMENT_ID IS NULL`—making her the classic test case for `LEFT OUTER JOIN` and `FULL OUTER JOIN` against `HR.DEPARTMENTS`.
-3. **`JOB_HISTORY` + `EMPLOYEES` for `SET` Operators**:
-   - `EMPLOYEE_ID` + `JOB_ID` appear in both `EMPLOYEES` and `JOB_HISTORY`, making them ideal for `UNION`, `UNION ALL`, `INTERSECT`, and `MINUS` labs.
+   - Hat `DEPARTMENT_ID IS NULL` – der klassische Testfall für `LEFT OUTER JOIN` und `FULL OUTER JOIN` mit `HR.DEPARTMENTS`.
+3. **`JOB_HISTORY` + `EMPLOYEES` für `SET` Operators**:
+   - `EMPLOYEE_ID` + `JOB_ID` kommen sowohl in `EMPLOYEES` als auch in `JOB_HISTORY` vor und eignen sich ideal für `UNION`-, `UNION ALL`-, `INTERSECT`- und `MINUS`-Übungen.

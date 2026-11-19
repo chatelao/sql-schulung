@@ -1,19 +1,19 @@
 # Phase 2: Filtering, Sorting & Substitution Variables (`L021`–`L042`)
 
-**Exam Domain**: Domain 2 (*Retrieving and Sorting Data*, 15% total)  
-**Schemas Used**: `SCOTT.EMP`, `HR.EMPLOYEES`
+**Exam Domain**: Domain 2 (*Retrieving and Sorting Data*, 15 % gesamt)  
+**Verwendete Schemas**: `SCOTT.EMP`, `HR.EMPLOYEES`
 
 ---
 
-## `WHERE` Clause & Basic Comparisons (`L021`–`L024`)
+## `WHERE`-Klausel & einfache Vergleiche (`L021`–`L024`)
 
-### `L021` — Filtering Rows with `WHERE`
+### `L021` — Zeilen filtern mit `WHERE`
 ```sql
 SELECT ename, job, sal FROM scott.emp WHERE deptno = 10;
 ```
 
 ### `L022` — Comparison Operators (`=`, `<>`, `!=`, `<`, `>`, `<=`, `>=`)
-- SQL keywords are case-insensitive (`select`/`SELECT`), **character data inside `'...'` is case-sensitive** (`'CLERK'` != `'clerk'`).
+- SQL-Schlüsselwörter sind case-insensitive (`select`/`SELECT`), **Zeichenketten innerhalb von `'...'` sind dagegen case-sensitive** (`'CLERK'` != `'clerk'`).
 
 ### `L023` — Date Literals in `WHERE`
 ```sql
@@ -21,25 +21,25 @@ SELECT ename, hiredate FROM scott.emp
 WHERE hiredate >= DATE '1982-01-01';
 ```
 
-### `L024` — Why `SELECT` Aliases Fail in `WHERE`
-- Running `SELECT ename, sal * 12 annual FROM scott.emp WHERE annual > 30000;` throws **`ORA-00904: "ANNUAL": invalid identifier`** because Oracle evaluates `WHERE` *before* `SELECT`.
+### `L024` — Warum `SELECT`-Aliases in `WHERE` fehlschlagen
+- Die Abfrage `SELECT ename, sal * 12 annual FROM scott.emp WHERE annual > 30000;` wirft **`ORA-00904: "ANNUAL": invalid identifier`**, weil Oracle die `WHERE`-Klausel *vor* `SELECT` auswertet.
 
 ---
 
-## Range, List, Pattern & Null Filters (`L025`–`L028`)
+## Range-, List-, Pattern- & Null-Filter (`L025`–`L028`)
 
-### `L025` — Inclusive Ranges with `BETWEEN ... AND ...`
+### `L025` — Inklusive Bereiche mit `BETWEEN ... AND ...`
 ```sql
 SELECT ename, sal FROM scott.emp WHERE sal BETWEEN 1250 AND 2850;
 ```
-- **Exam Trap**: Lower bound must come **first** (`BETWEEN 2850 AND 1250` returns 0 rows!). Both endpoints are inclusive.
+- **Exam Trap**: Die Untergrenze muss **zuerst** stehen (`BETWEEN 2850 AND 1250` liefert 0 Zeilen!). Beide Grenzen sind inklusive.
 
-### `L026` — Set Membership with `IN` and `NOT IN`
+### `L026` — Mengenzugehörigkeit mit `IN` und `NOT IN`
 ```sql
 SELECT ename, job FROM scott.emp WHERE job IN ('MANAGER', 'ANALYST');
 ```
 
-### `L027` — Pattern Matching with `LIKE` (`%`, `_`, `ESCAPE`)
+### `L027` — Pattern Matching mit `LIKE` (`%`, `_`, `ESCAPE`)
 ```sql
 -- Names starting with A, or 5-letter names ending in TH
 SELECT ename FROM scott.emp WHERE ename LIKE 'A%';
@@ -49,27 +49,27 @@ SELECT ename FROM scott.emp WHERE ename LIKE '___TH';
 SELECT job_id FROM hr.jobs WHERE job_id LIKE 'SA\_%' ESCAPE '\';
 ```
 
-### `L028` — Filtering Nulls (`IS NULL` / `IS NOT NULL`)
+### `L028` — Null-Werte filtern (`IS NULL` / `IS NOT NULL`)
 ```sql
 SELECT ename, comm FROM scott.emp WHERE comm IS NULL;
 ```
-- **Exam Trap**: `WHERE comm = NULL` or `WHERE comm <> NULL` does **not** error—it silently returns **0 rows**!
+- **Exam Trap**: `WHERE comm = NULL` oder `WHERE comm <> NULL` wirft **keinen** Fehler – es liefert stillschweigend **0 Zeilen**!
 
 ---
 
 ## Boolean Logic & Operator Precedence (`L029`–`L033`)
 
-### `L029` — Combining Conditions with `AND`
+### `L029` — Bedingungen kombinieren mit `AND`
 ```sql
 SELECT ename, job, sal FROM scott.emp WHERE deptno = 30 AND sal >= 1500;
 ```
 
-### `L030` — Broadening Conditions with `OR`
+### `L030` — Bedingungen erweitern mit `OR`
 ```sql
 SELECT ename, deptno, job FROM scott.emp WHERE deptno = 10 OR job = 'CLERK';
 ```
 
-### `L031` — Negating with `NOT` & 3-Valued Logic
+### `L031` — Negieren mit `NOT` & 3-Valued Logic
 - `NOT (TRUE)` = `FALSE`, `NOT (FALSE)` = `TRUE`, `NOT (UNKNOWN)` = **`UNKNOWN`**!
 
 ### `L032` — Precedence Rules (`NOT` -> `AND` -> `OR`)
@@ -83,25 +83,25 @@ SELECT ename, job, sal FROM scott.emp
 WHERE (job = 'SALESMAN' OR job = 'PRESIDENT') AND sal > 1500;
 ```
 
-### `L033` — Interactive Precedence Drill
-- Practice 10 `AND`/`OR`/`NOT` edge cases on `HR.EMPLOYEES` and verify outputs in the Interactive Studio.
+### `L033` — Interaktives Precedence-Training
+- Übe 10 `AND`/`OR`/`NOT`-Grenzfälle auf `HR.EMPLOYEES` und überprüfe die Ausgaben im Interactive Studio.
 
 ---
 
 ## Sorting & Row Limiting (`L034`–`L037`)
 
-### `L034` — Sorting with `ORDER BY` (`ASC` / `DESC`)
+### `L034` — Sortieren mit `ORDER BY` (`ASC` / `DESC`)
 ```sql
 SELECT ename, deptno, sal FROM scott.emp ORDER BY deptno ASC, sal DESC;
 ```
 
-### `L035` — Sorting by Alias, Column Position & `NULLS FIRST/LAST`
+### `L035` — Sortieren nach Alias, Spaltenposition & `NULLS FIRST/LAST`
 ```sql
 SELECT ename, sal * 12 AS annual_sal, comm
 FROM scott.emp
 ORDER BY annual_sal DESC, comm NULLS FIRST;
 ```
-- By default in Oracle, **`NULL` sorts LAST in `ASC` and FIRST in `DESC`**.
+- Standardmäßig sortiert Oracle **`NULL` bei `ASC` zuletzt (LAST) und bei `DESC` zuerst (FIRST)**.
 
 ### `L036` — Row Limiting (`OFFSET` & `FETCH FIRST ... ONLY`)
 ```sql
@@ -146,18 +146,18 @@ SET VERIFY ON
 SELECT ename, sal FROM scott.emp WHERE deptno = &target_dept;
 UNDEFINE target_dept
 ```
-- When `VERIFY` is `ON`, `sqlplus` prints `old 1:` and `new 1:` lines showing the exact substituted SQL.
+- Wenn `VERIFY` auf `ON` steht, gibt `sqlplus` die Zeilen `old 1:` und `new 1:` mit dem exakt ersetzten SQL aus.
 
-### `L040` — Variant A CLI Lab vs. Variant B Simulator
-- **Variant A**: Run `L038–L039` directly in `sqlcl`/`sqlplus`.
-- **Variant B**: Open the **SQL\*Plus Substitution Simulator** on [GitHub Pages](https://chatelao.github.io/sql-schulung/) to practice `old:`/`new:` trace outputs interactively.
+### `L040` — Variante A CLI-Lab vs. Variante B Simulator
+- **Variante A**: Führe `L038–L039` direkt in `sqlcl`/`sqlplus` aus.
+- **Variante B**: Öffne den **SQL\*Plus Substitution Simulator** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/), um `old:`/`new:`-Ausgaben interaktiv zu üben.
 
 ---
 
 ## Checkpoint #1 (`L041`–`L042`)
 
 ### `L041` — Identical Checkpoint #1 (Assessment)
-- Re-take the identical 22-question assessment + 3 SQL tasks on GitHub Pages. Expect Domains 1–2 to jump dramatically!
+- Wiederhole das identische Assessment (22 Fragen + 3 Gold Standard SQL-Aufgaben) auf GitHub Pages. In Domains 1–2 solltest du jetzt einen deutlichen Sprung sehen!
 
-### `L042` — Progress Comparison & Reflection (`CP-1` vs. `CP-0`)
-- Inspect your longitudinal chart on GitHub Pages and record your 4-question reflection log.
+### `L042` — Fortschrittsvergleich & Reflexion (`CP-1` vs. `CP-0`)
+- Analysiere dein Verlaufsdiagramm auf GitHub Pages und dokumentiere dein 4-Fragen-Reflexionsprotokoll.

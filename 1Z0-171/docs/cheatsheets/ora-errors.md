@@ -1,17 +1,17 @@
-# ORA Error Troubleshooting Dictionary for Beginners
+# ORA-Fehlerbehebung für Einsteiger
 
-Learning to read `ORA-` errors turns scary red text into exact clues.
+Wer `ORA-`-Meldungen lesen lernt, verwandelt roten Fehlertext in präzise Hinweise.
 
-| Error Code | Message | Common Beginner Cause | How to Fix |
+| Error Code | Oracle-Meldung (EN) | Typische Einsteiger-Ursache | Lösung |
 | :--- | :--- | :--- | :--- |
-| `ORA-00904` | `invalid identifier` | Misspelled column name, or referencing a `SELECT` alias in `WHERE` | Check `DESCRIBE table`, or move expression out of alias |
-| `ORA-00918` | `column ambiguously defined` | Same column name exists in 2 joined tables without a table alias | Prefix with `e.deptno` or `d.deptno` (unless using `USING`) |
-| `ORA-00933` | `SQL command not properly ended` | Missing `AND`, extra comma, or `ORDER BY` placed in first branch of `UNION` | Check commas and move `ORDER BY` to the end |
-| `ORA-00942` | `table or view does not exist` | Typo in table name, or missing schema prefix (`scott.emp`) or `SELECT` privilege | Verify schema prefix (`scott.emp`) & permissions |
-| `ORA-00979` | `not a GROUP BY expression` | Non-aggregated column in `SELECT` is missing from `GROUP BY` | Add the column to `GROUP BY` or wrap it in `MAX`/`COUNT` |
-| `ORA-01400` | `cannot insert NULL into (...)` | Missing value for a `NOT NULL` or `PRIMARY KEY` column | Provide a non-null value in `INSERT` |
-| `ORA-01427` | `single-row subquery returns more than one row` | Used `=`, `<`, or `>` with a subquery returning 2+ rows | Switch to `IN`, `ANY`, `ALL`, or aggregate inside subquery |
-| `ORA-01722` | `invalid number` | `NVL(comm, 'None')` or comparing number column to non-numeric string | Convert number to string first: `NVL(TO_CHAR(comm), 'None')` |
-| `ORA-02292` | `integrity constraint violated - child record found` | Tried to `DELETE` a parent row (`DEPT 10`) while children exist in `EMP` | Delete children first, or define FK with `ON DELETE CASCADE`/`SET NULL` |
-| `ORA-08002` | `sequence SEQ.CURRVAL is not yet defined in this session` | Referenced `CURRVAL` before calling `NEXTVAL` in the current session | Call `seq.NEXTVAL` at least once first |
-| `ORA-25154` | `column part of USING clause cannot have qualifier` | Wrote `SELECT e.deptno ... JOIN dept d USING (deptno)` | Remove the qualifier: `SELECT deptno` |
+| `ORA-00904` | `invalid identifier` | Tippfehler im Column Name oder ein `SELECT`-Alias wurde in `WHERE` verwendet | `DESCRIBE table` prüfen oder Ausdruck direkt statt Alias schreiben |
+| `ORA-00918` | `column ambiguously defined` | Gleicher Column Name existiert in 2 gejointen Tabellen ohne Table Alias | Mit `e.deptno` oder `d.deptno` qualifizieren (außer bei `USING`) |
+| `ORA-00933` | `SQL command not properly ended` | Fehlendes `AND`, überzähliges Komma oder `ORDER BY` im ersten Zweig von `UNION` | Kommas prüfen und `ORDER BY` ans Ende verschieben |
+| `ORA-00942` | `table or view does not exist` | Tippfehler im Tabellennamen, fehlender Schema-Prefix (`scott.emp`) oder fehlendes `SELECT`-Recht | Schema-Prefix (`scott.emp`) & Privileges prüfen |
+| `ORA-00979` | `not a GROUP BY expression` | Nicht-aggregierte Spalte in `SELECT` fehlt in `GROUP BY` | Spalte in `GROUP BY` aufnehmen oder mit `MAX`/`COUNT` aggregieren |
+| `ORA-01400` | `cannot insert NULL into (...)` | Fehlender Wert für eine `NOT NULL`- oder `PRIMARY KEY`-Spalte | Nicht-`NULL`-Wert im `INSERT` angeben |
+| `ORA-01427` | `single-row subquery returns more than one row` | `=`, `<` oder `>` mit einer Subquery verwendet, die 2+ Zeilen liefert | Auf `IN`, `ANY`, `ALL` wechseln oder in der Subquery aggregieren |
+| `ORA-01722` | `invalid number` | `NVL(comm, 'None')` oder Vergleich einer Zahlenspalte mit nicht-numerischem String | Zahl zuerst in Text wandeln: `NVL(TO_CHAR(comm), 'None')` |
+| `ORA-02292` | `integrity constraint violated - child record found` | Versuch, einen Parent-Datensatz (`DEPT 10`) zu löschen, solange Child Rows in `EMP` existieren | Zuerst Child Rows löschen oder FK mit `ON DELETE CASCADE`/`SET NULL` definieren |
+| `ORA-08002` | `sequence SEQ.CURRVAL is not yet defined in this session` | `CURRVAL` wurde vor dem ersten `NEXTVAL` in derselben Session abgefragt | Zuerst mindestens einmal `seq.NEXTVAL` aufrufen |
+| `ORA-25154` | `column part of USING clause cannot have qualifier` | `SELECT e.deptno ... JOIN dept d USING (deptno)` geschrieben | Qualifier weglassen: `SELECT deptno` |

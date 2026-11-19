@@ -1,37 +1,37 @@
 # Phase 7: Data Manipulation (DML) & Transactions (`L123`–`L138`)
 
-**Exam Domain**: Domain 7 (*Managing Tables with DML*, 5%)  
-**Schemas Used**: Personal writable copies of `SCOTT` (`my_dept`, `my_emp`, `my_salgrade`)
+**Exam Domain**: Domain 7 (*Managing Tables with DML*, 5 %)  
+**Verwendete Schemas**: Persönliche beschreibbare Kopien von `SCOTT` (`my_dept`, `my_emp`, `my_salgrade`)
 
 ---
 
-## `INSERT`, `UPDATE`, `DELETE` Basics (`L123`–`L126`)
+## `INSERT`, `UPDATE`, `DELETE` Grundlagen (`L123`–`L126`)
 
-### `L123` — Setting Up Your Writable Sandbox (`my_emp` & `my_dept`)
-- Both **Variant A** and **Variant B (FreeSQL)** create personal writable copies:
+### `L123` — Deine beschreibbare Sandbox einrichten (`my_emp` & `my_dept`)
+- Sowohl in **Variante A** als auch in **Variante B (FreeSQL)** legst du persönliche beschreibbare Kopien an:
   ```sql
   CREATE TABLE my_dept AS SELECT * FROM scott.dept;
   CREATE TABLE my_emp  AS SELECT * FROM scott.emp;
   ```
 
-### `L124` — `INSERT INTO ... VALUES` (Explicit & Implicit `NULL`, `DEFAULT`)
+### `L124` — `INSERT INTO ... VALUES` (Explizites & implizites `NULL`, `DEFAULT`)
 ```sql
 INSERT INTO my_dept (deptno, dname, loc) VALUES (50, 'ENGINEERING', 'BERLIN');
 INSERT INTO my_dept (deptno, dname) VALUES (60, 'DESIGN'); -- loc becomes NULL
 ```
 
-### `L125` — `UPDATE` Statements & `WHERE` Safety Habits
+### `L125` — `UPDATE` Statements & `WHERE`-Sicherheitsgewohnheiten
 ```sql
 -- Always preview with SELECT before running UPDATE/DELETE!
 UPDATE my_emp SET sal = sal * 1.10 WHERE deptno = 20;
 ```
 
 ### `L126` — `DELETE` vs. Referential Integrity Errors (`ORA-02292`)
-- Deleting a parent row in `DEPT` while child rows exist in `EMP` raises `ORA-02292`.
+- Das Löschen einer Parent Row in `DEPT`, solange noch Child Rows in `EMP` existieren, wirft `ORA-02292`.
 
 ---
 
-## Subquery-Driven & Correlated DML (`L127`–`L128`)
+## Subquery-gestütztes & Correlated DML (`L127`–`L128`)
 
 ### `L127` — `INSERT INTO ... SELECT`
 ```sql
@@ -41,7 +41,7 @@ FROM hr.employees
 WHERE department_id = 60;
 ```
 
-### `L128` — Correlated `UPDATE` and Correlated `DELETE`
+### `L128` — Correlated `UPDATE` und Correlated `DELETE`
 ```sql
 UPDATE my_emp e
 SET sal = (SELECT MAX(sal) FROM my_emp m WHERE m.deptno = e.deptno)
@@ -64,10 +64,10 @@ SELECT empno, ename, sal FROM scott.emp WHERE sal >= 2500;
 ```
 
 ### `L130` — Conditional `INSERT ALL` vs. `INSERT FIRST`
-- `INSERT ALL` evaluates **every `WHEN`** clause for each row (one row can land in multiple tables).
-- `INSERT FIRST` stops at the **first matching `WHEN`** (plus optional `ELSE` clause).
+- `INSERT ALL` wertet **jede `WHEN`**-Klausel für jede Zeile aus (eine Zeile kann in mehreren Zieltabellen landen).
+- `INSERT FIRST` stoppt beim **ersten zutreffenden `WHEN`** (plus optionaler `ELSE`-Klausel).
 
-### `L131` — The `MERGE` Statement (Upsert)
+### `L131` — Das `MERGE` Statement (Upsert)
 ```sql
 MERGE INTO my_emp tgt
 USING scott.emp src ON (tgt.empno = src.empno)
@@ -78,9 +78,10 @@ WHEN NOT MATCHED THEN
   INSERT (empno, ename, job, sal, deptno)
   VALUES (src.empno, src.ename, src.job, src.sal, src.deptno);
 ```
-- **Exam Trap**: `DELETE WHERE` inside `MERGE` only deletes rows that were **matched and updated** in that `MERGE` (evaluated against their *new* values).
+- **Exam Trap**: `DELETE WHERE` innerhalb eines `MERGE` löscht ausschließlich Zeilen, die in genau diesem `MERGE` **gematcht und aktualisiert** wurden (ausgewertet anhand ihrer *neuen* Werte).
 
 ### `L132` — `MERGE` & Multi-Table Insert Lab
+- Synchronisiere `my_emp` gegen `scott.emp` mit `MERGE` und verteile Gehaltsklassen über `INSERT FIRST`.
 
 ---
 
@@ -96,15 +97,15 @@ COMMIT;
 ```
 
 ### `L134` — Implicit `COMMIT` & `ROLLBACK` Triggers
-- **Auto-`COMMIT`**: Any DDL (`CREATE`, `ALTER`, `DROP`, `TRUNCATE`), any DCL (`GRANT`, `REVOKE`), or normal `EXIT` from `sqlplus`.
-- **Auto-`ROLLBACK`**: Abnormal termination, session crash, or rollback statement.
+- **Auto-`COMMIT`**: Jedes DDL (`CREATE`, `ALTER`, `DROP`, `TRUNCATE`), jedes DCL (`GRANT`, `REVOKE`) oder ein reguläres `EXIT` aus `sqlplus`.
+- **Auto-`ROLLBACK`**: Abbruch der Verbindung, Session-Absturz oder explizites `ROLLBACK`.
 
 ### `L135` — Read Consistency (Readers Never Block Writers)
-- Before `COMMIT`, your session sees uncommitted changes, while all other sessions see the consistent pre-change snapshot.
+- Vor einem `COMMIT` sieht deine eigene Session unbestätigte Änderungen, während alle anderen Sessions den konsistenten Snapshot vor der Änderung sehen.
 
 ### `L136` — Row-Level Locking & `SELECT ... FOR UPDATE`
-- Oracle locks only modified rows, not entire tables; `SELECT ... FOR UPDATE [NOWAIT | WAIT n | SKIP LOCKED]` acquires row locks before updating.
+- Oracle sperrt nur geänderte Zeilen, nicht ganze Tabellen; `SELECT ... FOR UPDATE [NOWAIT | WAIT n | SKIP LOCKED]` setzt Row Locks bereits vor dem `UPDATE`.
 
 ### `L137`–`L138` — Two-Session Concurrency Lab
-- **Variant A**: Two local sessions (`sqlcl` + VS Code) testing Read Consistency and row-lock blocking.
-- **Variant B**: Two browser tabs in **OCI Always Free Database Actions** + `SAVEPOINT` labs in FreeSQL.
+- **Variante A**: Zwei lokale Sessions (`sqlcl` + VS Code) testen Read Consistency und Row-Lock-Blocking.
+- **Variante B**: Zwei Browser-Tabs in **OCI Always Free Database Actions** + `SAVEPOINT`-Labs in FreeSQL.

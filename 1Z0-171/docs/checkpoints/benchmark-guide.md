@@ -1,31 +1,31 @@
-# Repeating Identical Checkpoints (`CP-0` to `CP-5`)
+# Wiederkehrende identische Checkpoints (`CP-0` bis `CP-5`)
 
-Instead of taking six different quizzes—where you can never tell if a higher score came from an easier test or real learning—you take the **exact same standardized benchmark ("The 1Z0-171 Benchmark") six times**:
+Statt sechs völlig unterschiedliche Tests zu schreiben – bei denen unklar bleibt, ob ein besserer Score durch leichtere Fragen oder echtes Lernen entstanden ist –, durchläufst du **sechsmal exakt denselben standardisierten Benchmark („The 1Z0-171 Benchmark“)**:
 
-| Checkpoint | Lessons | When You Take It | Answer Key Status | Expected Overall Score |
+| Checkpoint | Lektionen | Zeitpunkt | Answer Key Status | Erwarteter Gesamtscore |
 | :---: | :---: | :--- | :---: | :---: |
-| **CP-0** | `L001–L002` | Very start of course (zero knowledge) | Locked | 10–25% |
-| **CP-1** | `L041–L042` | After Phase 2 (Foundations, `SELECT`, Filtering, Variables) | Locked | 30–40% |
-| **CP-2** | `L081–L082` | After Phase 4 (Functions & Grouping) | Locked | 50–60% |
-| **CP-3** | `L121–L122` | After Phase 6 (Joins, Subqueries & `SET` Operators) | Locked | 65–72% |
-| **CP-4** | `L161–L162` | After Phase 8 (DML, TCL, DDL, Constraints, Views, Indexes) | Locked | 75–85% |
-| **CP-5** | `L199–L200` | End of Phase 10 (Final Readiness) | **Unlocked** | **≥ 85%** |
+| **CP-0** | `L001–L002` | Kursbeginn (ohne Vorkenntnisse) | Gesperrt | 10–25 % |
+| **CP-1** | `L041–L042` | Nach Phase 2 (Foundations, `SELECT`, Filtering, Variables) | Gesperrt | 30–40 % |
+| **CP-2** | `L081–L082` | Nach Phase 4 (Functions & Grouping) | Gesperrt | 50–60 % |
+| **CP-3** | `L121–L122` | Nach Phase 6 (Joins, Subqueries & `SET` Operators) | Gesperrt | 65–72 % |
+| **CP-4** | `L161–L162` | Nach Phase 8 (DML, TCL, DDL, Constraints, Views, Indexes) | Gesperrt | 75–85 % |
+| **CP-5** | `L199–L200` | Ende von Phase 10 (Final Readiness) | **Freigeschaltet** | **≥ 85 %** |
 
 ---
 
-## How Each 90-Minute Checkpoint Works
+## Ablauf jedes 90-Minuten-Checkpoints
 
-1. **First 45 Minutes — Take the Benchmark (on GitHub Pages)**:
-   - **Part A (22 Fixed Questions)**: 2 identical exam-style questions per each of the 11 `1Z0-171` domains.
+1. **Erste 45 Minuten — Benchmark absolvieren (auf GitHub Pages)**:
+   - **Part A (22 feste Fragen)**: 2 identische Fragen im Prüfungsstil pro Exam Domain (11 Domains).
    - **Part B (3 Gold Standard SQL Tasks)**:
-     1. *Query Task (`SCOTT`)*: Multi-table join (`EMP`, `DEPT`, `SALGRADE`) with `NULL`-safe pay (`NVL(comm, 0)`) and `GROUP BY`/`HAVING`.
-     2. *Subquery / Set Task (`HR`)*: Find departments with no employees or employees earning above their department average.
-     3. *Schema Task*: Write a `CREATE TABLE` DDL statement with `PRIMARY KEY`, `FOREIGN KEY (ON DELETE SET NULL)`, and `CHECK`.
-   - **Part C (Confidence Calibration)**: Rate your confidence (1–5) for each domain *before* seeing your score.
-2. **Second 45 Minutes — Delta Review & Reflection**:
-   - Inspect your domain-by-domain growth chart in the GitHub Pages Checkpoint Studio.
-   - Identify **blind spots** (domains where your confidence was `≥ 4/5` but your score was `< 50%`).
-   - Save your 4-question reflection log and export a Markdown/JSON snapshot.
+     1. *Query Task (`SCOTT`)*: Multi-Table Join (`EMP`, `DEPT`, `SALGRADE`) mit `NULL`-sicherem Pay (`NVL(comm, 0)`) und `GROUP BY`/`HAVING`.
+     2. *Subquery / Set Task (`HR`)*: Departments ohne Employees oder Employees über ihrem Department-Durchschnitt finden.
+     3. *Schema Task*: Ein `CREATE TABLE`-DDL-Statement mit `PRIMARY KEY`, `FOREIGN KEY (ON DELETE SET NULL)` und `CHECK` schreiben.
+   - **Part C (Confidence Calibration)**: Bewerte deine Sicherheit (1–5) pro Domain *bevor* dein Score angezeigt wird.
+2. **Zweite 45 Minuten — Delta-Review & Reflexion**:
+   - Prüfe dein Domain-Wachstumsdiagramm im GitHub Pages Checkpoint Studio.
+   - Identifiziere **Blind Spots** (Domains mit Confidence `≥ 4/5`, aber Score `< 50 %`).
+   - Speichere dein 4-Fragen-Reflexionslog und exportiere einen Markdown-/JSON-Snapshot.
 
-!!! warning "Why Answer Keys Stay Locked Until `CP-5`"
-    During `CP-0` through `CP-4`, you see your **per-domain percentage scores** (e.g., *Domain 3: 75%*), not the specific question answers. That ensures your score jumps reflect genuine SQL understanding rather than memorizing 22 answers. At `CP-5` (`L199–L200`), the full answer key and explanations unlock automatically.
+!!! warning "Warum der Answer Key bis `CP-5` gesperrt bleibt"
+    Bei `CP-0` bis `CP-4` siehst du deine **Prozentwerte je Domain** (z. B. *Domain 3: 75 %*), nicht jedoch die einzelnen Musterlösungen. So spiegeln deine Punktesprünge echtes SQL-Verständnis wider und kein Auswendiglernen von 22 Antworten. Bei `CP-5` (`L199–L200`) werden alle Lösungen und Erklärungen automatisch freigeschaltet.

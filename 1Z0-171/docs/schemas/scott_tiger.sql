@@ -1,11 +1,11 @@
 -- ============================================================================
--- Classic SCOTT/TIGER Sample Schema for Oracle Database 19c / 23ai / FreeSQL
--- Adapted from Oracle utlsampl.sql for 1Z0-171 Beginner SQL Training
+-- Klassisches SCOTT/TIGER-Beispielschema für Oracle Database 19c / 23ai / FreeSQL
+-- Angepasst aus Oracle utlsampl.sql für das 1Z0-171 Beginner SQL Training
 -- ============================================================================
--- Note: If running as a privileged DBA in an In-House PDB (Variant A),
--- uncomment the user creation block below.
--- If running inside your own personal schema (e.g., Oracle FreeSQL / STUDENT_01),
--- run starting directly from the DROP / CREATE TABLE statements.
+-- Hinweis: Bei Ausführung als privilegierter DBA in einer In-House PDB (Variante A)
+-- den Block zum Erstellen des Users unten einkommentieren.
+-- Bei Ausführung im eigenen Schema (z. B. Oracle FreeSQL / STUDENT_01)
+-- direkt ab den DROP- / CREATE-TABLE-Anweisungen starten.
 -- ============================================================================
 
 /*
@@ -18,7 +18,7 @@ GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE, CREATE SYNONYM
 ALTER SESSION SET CURRENT_SCHEMA = scott;
 */
 
--- Clean up existing tables if re-running
+-- Vorhandene Tabellen bei erneutem Ausführen bereinigen
 BEGIN
    EXECUTE IMMEDIATE 'DROP TABLE bonus PURGE';
 EXCEPTION WHEN OTHERS THEN NULL;
@@ -70,13 +70,13 @@ CREATE TABLE salgrade (
     hisal NUMBER
 );
 
--- Insert Departments (Note: Dept 40 OPERATIONS intentionally has 0 employees!)
+-- Departments einfügen (Hinweis: Dept 40 OPERATIONS hat bewusst 0 Employees!)
 INSERT INTO dept VALUES (10, 'ACCOUNTING', 'NEW YORK');
 INSERT INTO dept VALUES (20, 'RESEARCH',   'DALLAS');
 INSERT INTO dept VALUES (30, 'SALES',      'CHICAGO');
 INSERT INTO dept VALUES (40, 'OPERATIONS', 'BOSTON');
 
--- Insert 14 Classic Employees
+-- 14 klassische Employees einfügen
 INSERT INTO emp VALUES (7369, 'SMITH',  'CLERK',     7902, DATE '1980-12-17',  800, NULL, 20);
 INSERT INTO emp VALUES (7499, 'ALLEN',  'SALESMAN',  7698, DATE '1981-02-20', 1600,  300, 30);
 INSERT INTO emp VALUES (7521, 'WARD',   'SALESMAN',  7698, DATE '1981-02-22', 1250,  500, 30);
@@ -92,7 +92,7 @@ INSERT INTO emp VALUES (7900, 'JAMES',  'CLERK',     7698, DATE '1981-12-03',  9
 INSERT INTO emp VALUES (7902, 'FORD',   'ANALYST',   7566, DATE '1981-12-03', 3000, NULL, 20);
 INSERT INTO emp VALUES (7934, 'MILLER', 'CLERK',     7782, DATE '1982-01-23', 1300, NULL, 10);
 
--- Insert 5 Salary Grades (for Non-Equijoin exercises)
+-- 5 Salary Grades einfügen (für Non-Equijoin-Übungen)
 INSERT INTO salgrade VALUES (1,  700, 1200);
 INSERT INTO salgrade VALUES (2, 1201, 1400);
 INSERT INTO salgrade VALUES (3, 1401, 2000);

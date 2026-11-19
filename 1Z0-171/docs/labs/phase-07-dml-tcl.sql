@@ -1,9 +1,9 @@
 -- ============================================================================
 -- Phase 7 Lab Pack (L123-L138): Data Manipulation (DML) & Transactions (TCL)
--- Safe to run in your personal FreeSQL schema or PDB student schema!
+-- Sicher ausführbar im eigenen FreeSQL-Schema oder PDB-Student-Schema!
 -- ============================================================================
 
--- L123: Create personal writable copies of SCOTT
+-- L123: Persönliche beschreibbare Kopien von SCOTT erstellen
 BEGIN EXECUTE IMMEDIATE 'DROP TABLE my_emp PURGE'; EXCEPTION WHEN OTHERS THEN NULL; END;
 /
 BEGIN EXECUTE IMMEDIATE 'DROP TABLE my_dept PURGE'; EXCEPTION WHEN OTHERS THEN NULL; END;
@@ -18,11 +18,11 @@ INSERT INTO my_dept (deptno, dname) VALUES (60, 'DESIGN');
 
 UPDATE my_emp SET sal = sal * 1.10 WHERE deptno = 20;
 
--- L128: Correlated DELETE (removes unused departments)
+-- L128: Correlated DELETE (entfernt ungenutzte Departments)
 DELETE FROM my_dept d
 WHERE NOT EXISTS (SELECT 1 FROM my_emp e WHERE e.deptno = d.deptno);
 
--- L131: MERGE (Upsert + conditional DELETE on updated rows)
+-- L131: MERGE (Upsert + bedingtes DELETE auf aktualisierten Zeilen)
 MERGE INTO my_emp tgt
 USING scott.emp src ON (tgt.empno = src.empno)
 WHEN MATCHED THEN

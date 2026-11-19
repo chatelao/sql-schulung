@@ -1,54 +1,54 @@
-# Variant B: Free Online Cloud Environment (Zero Installation)
+# Variante B: Kostenlose Online-Cloud-Umgebung (Zero Installation)
 
-Use this setup if you have no local admin rights, are on a Chromebook/locked-down laptop, or want to start writing Oracle 23ai SQL within 60 seconds with **zero software installation**.
+Nutze dieses Setup, wenn du keine lokalen Admin-Rechte hast, auf einem Chromebook oder gesperrten Laptop arbeitest oder innerhalb von 60 Sekunden ohne Software-Installation echtes Oracle-23ai-SQL schreiben möchtest.
 
 ---
 
-## 1. Daily Sandbox: Oracle FreeSQL (`Live SQL v2`)
+## 1. Tägliche Sandbox: Oracle FreeSQL (`Live SQL v2`)
 
-- **URL**: [https://freesql.com/](https://freesql.com/) (also reachable via [https://livesql.oracle.com/](https://livesql.oracle.com/))
-- **Cost**: 100% Free, no time limit, no credit card required.
-- **Engine**: Powered by a real **Oracle Database 23ai** instance.
+- **URL**: [https://freesql.com/](https://freesql.com/) (auch erreichbar über [https://livesql.oracle.com/](https://livesql.oracle.com/))
+- **Kosten**: 100 % kostenlos, kein Zeitlimit, keine Kreditkarte erforderlich.
+- **Engine**: Läuft auf einer echten **Oracle Database 23ai**-Instanz.
 
-### Step-by-Step Quickstart
-1. Open [freesql.com](https://freesql.com/) in your browser.
-2. Sign in with a free Oracle account (SSO) so your scripts and personal schema tables persist.
-3. Open a new **SQL Worksheet**.
-4. Test the pre-loaded `SCOTT` and `HR` schemas immediately:
+### Schritt-für-Schritt-Quickstart
+1. Öffne [freesql.com](https://freesql.com/) im Browser.
+2. Melde dich mit einem kostenlosen Oracle-Account (SSO) an, damit deine Skripte und eigenen Schema-Tabellen gespeichert bleiben.
+3. Öffne ein neues **SQL Worksheet**.
+4. Teste sofort die vorinstallierten `SCOTT`- und `HR`-Schemas:
    ```sql
    SELECT empno, ename, job, sal, comm FROM scott.emp ORDER BY sal DESC;
    SELECT first_name, last_name, salary FROM hr.employees FETCH FIRST 5 ROWS ONLY;
    ```
-5. For **Phase 7 (DML)** and **Phase 8 (DDL)**, you will create writable tables inside your own personal schema by pasting [`scott_tiger.sql`](../schemas/scott_tiger.sql) into the worksheet.
-6. Or jump straight into any module using our pre-packaged [**FreeSQL Lab Pack & Live Sandboxes**](../labs/freesql-upload-pack.md) (one-click `freesql.com/embedded/` links and downloadable `.sql` scripts for **My Content → Upload Script**).
+5. Für **Phase 7 (DML)** und **Phase 8 (DDL)** legst du schreibbare Tabellen in deinem persönlichen Schema an, indem du [`scott_tiger.sql`](../schemas/scott_tiger.sql) im Worksheet ausführst.
+6. Oder starte direkt aus jedem Modul über unser vorbereitetes [**FreeSQL Lab Pack & Live-Sandboxes**](../labs/freesql-upload-pack.md) (Ein-Klick-Links für `freesql.com/embedded/` sowie `.sql`-Dateien zum Download für **My Content → Upload Script**).
 
-!!! note "Optional External Connection"
-    FreeSQL also provides **SQL*Net connection details** for your personal schema if you later choose to connect from VS Code or SQLcl.
+!!! note "Optionale externe Verbindung"
+    FreeSQL stellt für dein persönliches Schema auch **SQL*Net-Verbindungsdaten** bereit, falls du später aus VS Code oder SQLcl zugreifen möchtest.
 
 ---
 
 ## 2. Multi-User & Locking Lab: OCI Always Free Autonomous Database
 
-FreeSQL gives each learner a single personal schema. To run **two-session locking** (Phase 7) and **multi-user `GRANT`/`REVOKE` cascades** (Phase 9) hands-on:
+FreeSQL bietet jedem Lernenden genau ein persönliches Schema. Um **Two-Session Locking** (Phase 7) und **Multi-User `GRANT`/`REVOKE`-Kaskaden** (Phase 9) praktisch durchzuführen:
 
 - **URL**: [https://www.oracle.com/cloud/free/](https://www.oracle.com/cloud/free/)
-- **What you get**: 2 **Always Free Oracle Autonomous Databases (23ai)** that never expire, complete with browser-based **Database Actions (SQL Developer Web)**.
-- **How we use it**: Create two extra users (`APP_USER_B`, `APP_USER_C`) inside Database Actions and open two browser tabs to observe `WITH GRANT OPTION` vs. `WITH ADMIN OPTION` revocation behavior live.
+- **Was du bekommst**: 2 **Always Free Oracle Autonomous Databases (23ai)** ohne Ablaufdatum inklusive browserbasiertem **Database Actions (SQL Developer Web)**.
+- **Einsatz im Kurs**: Lege in Database Actions zwei zusätzliche User (`APP_USER_B`, `APP_USER_C`) an und öffne zwei Browser-Tabs, um `WITH GRANT OPTION` vs. `WITH ADMIN OPTION` beim `REVOKE` live zu beobachten.
 
 ---
 
-## 3. Quick Shareable Scratchpad: db<>fiddle
+## 3. Schneller teilbarer Scratchpad: db<>fiddle
 
 - **URL**: [https://dbfiddle.uk/?rdbms=oracle_23](https://dbfiddle.uk/?rdbms=oracle_23)
-- **Best for**: Zero-login troubleshooting. Paste a tiny `CREATE TABLE` + `SELECT`, run it on Oracle 23ai, and share the URL with your instructor or study group.
+- **Ideal für**: Fehlersuche ohne Login. Kleines `CREATE TABLE` + `SELECT` einfügen, auf Oracle 23ai ausführen und die URL mit Trainer oder Lerngruppe teilen.
 
 ---
 
-## Bridging Browser Differences (Important for 1Z0-171!)
+## Browser-Unterschiede überbrücken (Wichtig für `1Z0-171`!)
 
-Browser worksheets behave slightly differently from command-line `sqlplus` on two exam topics:
+Browser-Worksheets verhalten sich bei zwei Prüfungsthemen leicht anders als die Kommandozeile `sqlplus`:
 
-| Exam Topic | In Browser (FreeSQL) | On the 1Z0-171 Exam (`sqlplus`) | How Variant B Covers It |
+| Prüfungsthema | Im Browser (FreeSQL) | Im `1Z0-171`-Examen (`sqlplus`) | So deckt Variante B es ab |
 | :--- | :--- | :--- | :--- |
-| **Substitution Variables** (`&`, `&&`, `DEFINE`, `VERIFY`) | May show a web modal or differ in `old:`/`new:` output | Prompts interactively in CLI; `&&` defines session variable; `SET VERIFY ON` prints `old`/`new` lines | Use the **SQL\*Plus Simulator** on our [GitHub Pages Interactive Studio](https://chatelao.github.io/sql-schulung/) (`L038–L040`) |
-| **External Tables** (`ORGANIZATION EXTERNAL`) | Cannot read host OS directories in multi-tenant cloud sandbox | Tested via DDL syntax & `DEFAULT DIRECTORY` / `ACCESS PARAMETERS` | Covered via annotated DDL walkthrough & "Human Compiler" questions (`L151–L153`) |
+| **Substitution Variables** (`&`, `&&`, `DEFINE`, `VERIFY`) | Zeigt Web-Dialog oder weicht bei `old:`/`new:` ab | Fragt interaktiv im CLI; `&&` definiert Session Variable; `SET VERIFY ON` druckt `old`/`new` | Nutze den **SQL\*Plus Simulator** in unserem [GitHub Pages Interactive Studio](https://chatelao.github.io/sql-schulung/) (`L038–L040`) |
+| **External Tables** (`ORGANIZATION EXTERNAL`) | Kein Zugriff auf Host-OS-Verzeichnisse in der Multi-Tenant-Cloud | Abgeprüft über DDL-Syntax & `DEFAULT DIRECTORY` / `ACCESS PARAMETERS` | Abgedeckt durch kommentierte DDL-Beispiele & „Human Compiler“-Fragen (`L151–L153`) |

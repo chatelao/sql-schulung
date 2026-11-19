@@ -30,7 +30,7 @@ ALTER TABLE lab_projects ADD notes VARCHAR2(100);
 ALTER TABLE lab_projects SET UNUSED (notes);
 ALTER TABLE lab_projects DROP UNUSED COLUMNS;
 
--- L154-L156: View with WITH CHECK OPTION
+-- L154-L156: View mit WITH CHECK OPTION
 CREATE TABLE my_emp_ddl AS SELECT * FROM scott.emp;
 CREATE OR REPLACE VIEW v_dept20_emps AS
 SELECT empno, ename, sal, deptno
@@ -38,7 +38,7 @@ FROM my_emp_ddl
 WHERE deptno = 20
 WITH CHECK OPTION CONSTRAINT chk_v_dept20;
 
--- L158: Sequence (Must call NEXTVAL before CURRVAL!)
+-- L158: Sequence (Vor CURRVAL muss NEXTVAL aufgerufen werden!)
 CREATE SEQUENCE lab_seq START WITH 100 INCREMENT BY 10 NOCACHE;
 SELECT lab_seq.NEXTVAL AS first_val FROM dual;
 SELECT lab_seq.CURRVAL AS curr_val  FROM dual;

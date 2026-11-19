@@ -2,7 +2,7 @@
 -- Phase 6 Lab Pack (L103-L122): Subqueries & SET Operators
 -- ============================================================================
 
--- L103: Single-row subquery
+-- L103: Single-Row Subquery
 SELECT ename, sal
 FROM scott.emp
 WHERE sal > (SELECT sal FROM scott.emp WHERE ename = 'JONES');
@@ -13,15 +13,15 @@ FROM scott.emp
 GROUP BY deptno
 HAVING MIN(sal) > (SELECT MIN(sal) FROM scott.emp WHERE deptno = 30);
 
--- L108-L110: Multi-row subqueries & Proving NOT IN + NULL Trap!
+-- L108-L110: Multi-Row Subqueries & Nachweis der NOT IN + NULL-Falle!
 SELECT ename, sal
 FROM scott.emp
 WHERE sal > ALL (SELECT sal FROM scott.emp WHERE job = 'SALESMAN');
 
--- Returns 0 rows because KING has mgr = NULL:
+-- Liefert 0 Zeilen, weil KING mgr = NULL hat:
 SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp);
 
--- Fixed (returns 8 non-managers):
+-- Korrigiert (liefert 8 Nicht-Manager):
 SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp WHERE mgr IS NOT NULL);
 
 -- L113-L116: Inline Views, Correlated Subqueries & NOT EXISTS

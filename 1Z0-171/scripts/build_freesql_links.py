@@ -20,7 +20,7 @@ OUTPUT_MD = DOCS_LABS_DIR / "freesql-upload-pack.md"
 OUTPUT_JS = ROOT_1Z0_171 / "interactive" / "js" / "data-freesql-labs.js"
 
 PHASE_PACKS = [
-    (1, "phase-01-foundations.sql", "Phase 1 (L001–L020): Foundations & Basic SELECT"),
+    (1, "phase-01-foundations.sql", "Phase 1 (L001–L020): Grundlagen & Basic SELECT"),
     (2, "phase-02-filtering-sorting.sql", "Phase 2 (L021–L042): Filtering, Sorting & Row Limiting"),
     (3, "phase-03-functions.sql", "Phase 3 (L043–L068): Single-Row, Conversion & Conditional Functions"),
     (4, "phase-04-aggregation.sql", "Phase 4 (L069–L082): Grouping & Aggregating Data"),
@@ -46,21 +46,21 @@ def encode_freesql_url(sql_text: str) -> str:
 
 def main() -> None:
     lines = [
-        "# Oracle FreeSQL Lab Pack & Live Embedded Sandboxes",
+        "# Oracle FreeSQL Lab Pack & Live-Sandboxes",
         "",
-        "Every phase of the 200-lesson curriculum includes a ready-to-run `.sql` script that you can either:",
+        "Zu jeder Phase des 200-Lektionen-Curriculums gibt es ein direkt ausführbares `.sql`-Skript, das du auf zwei Arten nutzen kannst:",
         "",
-        "1. **Launch Live in One Click**: Click **Open Live in FreeSQL 23ai** to open an interactive, pre-filled browser sandbox powered by Oracle Database 23ai (`freesql.com/embedded/`), or",
-        "2. **Upload to Your FreeSQL Account**: Download any `.sql` file below and upload it at [freesql.com](https://freesql.com/) via **My Content → Upload Script** (or run it locally in `sqlcl`/`sqlplus` for Variant A).",
+        "1. **Mit einem Klick live starten**: Klicke auf **Live in FreeSQL 23ai öffnen ↗**, um eine interaktive, vorausgefüllte Browser-Sandbox mit Oracle Database 23ai (`freesql.com/embedded/`) zu starten, oder",
+        "2. **In deinen FreeSQL-Account hochladen**: Lade eine beliebige `.sql`-Datei herunter und lade sie auf [freesql.com](https://freesql.com/) über **My Content → Upload Script** hoch (bzw. führe sie für Variante A lokal in `sqlcl`/`sqlplus` aus).",
         "",
-        "!!! tip \"Installing `SCOTT/TIGER` in Your Personal FreeSQL Schema\"",
-        "    For Phases 1–6, `scott.emp`, `scott.dept`, and `scott.salgrade` are already pre-loaded in FreeSQL. For writable DML/DDL labs (Phases 7–8), upload or run [`scott_tiger.sql`](../schemas/scott_tiger.sql) first.",
+        "!!! tip \"`SCOTT/TIGER` im eigenen FreeSQL-Schema installieren\"",
+        "    Für die Phasen 1–6 sind `scott.emp`, `scott.dept` und `scott.salgrade` in FreeSQL bereits vorinstalliert. Für schreibende DML-/DDL-Übungen (Phasen 7–8) lade zuerst [`scott_tiger.sql`](../schemas/scott_tiger.sql) hoch oder führe es im Worksheet aus.",
         "",
         "---",
         "",
-        "## Per-Phase Lab Scripts & One-Click Sandboxes",
+        "## Lab-Skripte je Phase & Ein-Klick-Sandboxes",
         "",
-        "| Phase | Download `.sql` (For Upload Script / `sqlcl`) | Live Browser Sandbox |",
+        "| Phase | `.sql` herunterladen (Upload Script / `sqlcl`) | Live-Browser-Sandbox |",
         "| :--- | :--- | :--- |",
     ]
 
@@ -71,7 +71,7 @@ def main() -> None:
         sql_text = sql_path.read_text(encoding="utf-8")
         live_url = encode_freesql_url(sql_text)
         lines.append(
-            f"| **{title}** | [`{fname}`]({fname}) | [Open Live in FreeSQL 23ai ↗]({live_url}) |"
+            f"| **{title}** | [`{fname}`]({fname}) | [Live in FreeSQL 23ai öffnen ↗]({live_url}) |"
         )
         js_packs.append({
             "key": f"phase-{phase_id}",
@@ -84,13 +84,13 @@ def main() -> None:
     scott_sql = SCOTT_SQL_PATH.read_text(encoding="utf-8")
     scott_url = encode_freesql_url(scott_sql)
     lines.append(
-        f"| **Schema Setup: Classic `SCOTT/TIGER` (`EMP`, `DEPT`, `SALGRADE`, `BONUS`)** | [`scott_tiger.sql`](../schemas/scott_tiger.sql) | [Open Live in FreeSQL 23ai ↗]({scott_url}) |"
+        f"| **Schema Setup: Klassisches `SCOTT/TIGER` (`EMP`, `DEPT`, `SALGRADE`, `BONUS`)** | [`scott_tiger.sql`](../schemas/scott_tiger.sql) | [Live in FreeSQL 23ai öffnen ↗]({scott_url}) |"
     )
     js_packs.append({
         "key": "scott",
         "phaseId": None,
         "filename": "scott_tiger.sql",
-        "title": "Schema Setup: Classic SCOTT/TIGER (EMP, DEPT, SALGRADE, BONUS)",
+        "title": "Schema Setup: Klassisches SCOTT/TIGER (EMP, DEPT, SALGRADE, BONUS)",
         "sql": scott_sql,
     })
 
@@ -98,9 +98,9 @@ def main() -> None:
         "",
         "---",
         "",
-        "## Regenerating Embedded URLs & Interactive Data After Editing `.sql` Files",
+        "## Embedded-URLs & Studio-Daten nach Änderungen neu generieren",
         "",
-        "Run the generator script from the repository root:",
+        "Führe das Generator-Skript im Repository-Root aus:",
         "",
         "```bash",
         "python3 1Z0-171/scripts/build_freesql_links.py",
@@ -111,7 +111,7 @@ def main() -> None:
     OUTPUT_MD.write_text("\n".join(lines), encoding="utf-8")
 
     js_content = (
-        "// Auto-generated by 1Z0-171/scripts/build_freesql_links.py — do not edit manually.\n"
+        "// Automatisch generiert durch 1Z0-171/scripts/build_freesql_links.py — nicht manuell bearbeiten.\n"
         f"window.FREESQL_LAB_PACKS = {json.dumps(js_packs, indent=2, ensure_ascii=False)};\n"
     )
     OUTPUT_JS.write_text(js_content, encoding="utf-8")

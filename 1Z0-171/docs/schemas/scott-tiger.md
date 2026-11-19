@@ -1,10 +1,10 @@
-# Classic `SCOTT/TIGER` Schema
+# Klassisches `SCOTT/TIGER` Schema
 
-The **`SCOTT/TIGER`** schema (named after Bruce Scott, one of Oracle's earliest employees, and his daughter's cat, Tiger) has taught generations of developers Oracle SQL. In this curriculum, every concept is introduced on `SCOTT` first because all **14 employees** and **4 departments** fit on a single screen—letting true beginners verify joins, `NULL` arithmetic, and `GROUP BY` sums by eye.
+Das Schema **`SCOTT/TIGER`** (benannt nach Bruce Scott, einem der ersten Mitarbeiter von Oracle, und der Katze seiner Tochter, Tiger) hat Generationen von Entwicklern Oracle SQL beigebracht. In diesem Curriculum wird jedes neue Konzept zuerst an `SCOTT` eingeführt, weil alle **14 Employees** und **4 Departments** auf einen einzigen Bildschirm passen – so können echte Einsteiger Joins, `NULL`-Arithmetik und `GROUP BY`-Summen direkt mit dem Auge nachrechnen.
 
 ---
 
-## Entity-Relationship Diagram
+## Entity-Relationship Diagram (ERD)
 
 ```mermaid
 erDiagram
@@ -42,21 +42,21 @@ erDiagram
 
 ---
 
-## Why `SCOTT` Is Pedagogical Gold for `1Z0-171`
+## Warum `SCOTT` didaktisches Gold für `1Z0-171` ist
 
-1. **`DEPT 40 (OPERATIONS, BOSTON)` has zero employees**: Perfect for testing `LEFT OUTER JOIN` / `RIGHT OUTER JOIN` / `NOT EXISTS`.
-2. **`EMP.COMM` contains `NULL`, `0`, and positive numbers**:
-   - `TURNER` has `comm = 0` (not `NULL`!)
-   - `ALLEN`, `WARD`, `MARTIN` have positive commissions
-   - The other 10 employees have `comm IS NULL`
-   - Proves `AVG(comm)` ignores the 10 `NULL`s (divides by 4!), whereas `AVG(NVL(comm, 0))` divides by 14!
-3. **`KING` (`EMPNO 7839`) has `MGR IS NULL`**:
-   - Crucial for the classic **`NOT IN` + `NULL` trap**: `WHERE empno NOT IN (SELECT mgr FROM emp)` returns **0 rows**!
-4. **`SALGRADE` (5 rows)**: Designed specifically for **Non-Equijoins** (`BETWEEN losal AND hisal`).
+1. **`DEPT 40 (OPERATIONS, BOSTON)` hat null Employees**: Perfekt zum Testen von `LEFT OUTER JOIN` / `RIGHT OUTER JOIN` / `NOT EXISTS`.
+2. **`EMP.COMM` enthält `NULL`, `0` und positive Beträge**:
+   - `TURNER` hat `comm = 0` (nicht `NULL`!)
+   - `ALLEN`, `WARD`, `MARTIN` haben positive Commissions
+   - Die übrigen 10 Employees haben `comm IS NULL`
+   - Beweist anschaulich: `AVG(comm)` ignoriert die 10 `NULL`s (teilt durch 4!), während `AVG(NVL(comm, 0))` durch 14 teilt!
+3. **`KING` (`EMPNO 7839`) hat `MGR IS NULL`**:
+   - Entscheidend für die klassische **`NOT IN` + `NULL` Trap**: `WHERE empno NOT IN (SELECT mgr FROM emp)` liefert **0 Rows**!
+4. **`SALGRADE` (5 Rows)**: Speziell gedacht für **Non-Equijoins** (`BETWEEN losal AND hisal`).
 
 ---
 
-## Complete Dataset Reference
+## Vollständige Datenreferenz
 
 ### `DEPT` (4 Rows)
 | `DEPTNO` | `DNAME` | `LOC` |
@@ -93,4 +93,4 @@ erDiagram
 | `4` | `2001` | `3000` |
 | `5` | `3001` | `9999` |
 
-Download the standalone setup script: [`scott_tiger.sql`](scott_tiger.sql)
+Eigenständiges Setup-Skript herunterladen: [`scott_tiger.sql`](scott_tiger.sql)

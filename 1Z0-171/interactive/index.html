@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1Z0-171 Interactive SQL Studio — 200-Lesson Beginner Curriculum</title>
-  <meta name="description" content="Interactive SQL learning studio for Oracle AI Database SQL Associate (1Z0-171): 200-lesson tracker, 6 identical checkpoints (CP-0 to CP-5), SCOTT/TIGER join visualizer, string slicer, SQL*Plus simulator, flashcards, and timed 60-question mock exam." />
+  <title>1Z0-171 Interactive SQL Studio — 200-Lektionen-Einsteiger-Curriculum</title>
+  <meta name="description" content="Interaktives SQL-Lernstudio für Oracle AI Database SQL Associate (1Z0-171): 200-Lektionen-Tracker, 6 identische Checkpoints (CP-0 bis CP-5), SCOTT/TIGER Join Visualizer, String Slicer, SQL*Plus Simulator, Flashcards, FreeSQL Launcher und Timed Mock Exam." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -17,20 +17,20 @@
         <span class="brand-code">1Z0-171</span>
         <div>
           <span class="brand-title">Oracle SQL Learning Studio</span>
-          <span class="brand-sub">200-Lesson Beginner Curriculum &middot; SCOTT/TIGER &amp; HR</span>
+          <span class="brand-sub">200-Lektionen-Einsteiger-Curriculum &middot; SCOTT/TIGER &amp; HR</span>
         </div>
       </div>
 
-      <nav class="main-nav" aria-label="Primary sections">
-        <button class="nav-btn active" data-view="curriculum" id="nav-curriculum">200 Lessons</button>
+      <nav class="main-nav" aria-label="Hauptbereiche">
+        <button class="nav-btn active" data-view="curriculum" id="nav-curriculum">200 Lektionen</button>
         <button class="nav-btn" data-view="checkpoints" id="nav-checkpoints">Checkpoints (CP-0..5)</button>
-        <button class="nav-btn" data-view="labs" id="nav-labs">Interactive Labs</button>
+        <button class="nav-btn" data-view="labs" id="nav-labs">Interaktive Labs</button>
         <button class="nav-btn" data-view="flashcards" id="nav-flashcards">Flashcards</button>
         <button class="nav-btn" data-view="mock" id="nav-mock">Mock Exam</button>
       </nav>
 
       <div class="header-actions">
-        <a class="docs-link" href="https://sql-schulung.readthedocs.io/" target="_blank" rel="noopener">Read the Docs Handbook &nearr;</a>
+        <a class="docs-link" href="https://sql-schulung.readthedocs.io/" target="_blank" rel="noopener">Read the Docs Handbuch &nearr;</a>
       </div>
     </div>
   </header>
@@ -40,12 +40,12 @@
     <section id="view-curriculum" class="view active" aria-labelledby="curriculum-heading">
       <div class="section-head">
         <div>
-          <h1 id="curriculum-heading">200-Lesson Beginner Roadmap</h1>
-          <p class="lead">Track every 45-minute lesson from zero knowledge (`L001`) to exam readiness (`L200`). Progress saves automatically in your browser.</p>
+          <h1 id="curriculum-heading">200-Lektionen-Lernplan für Einsteiger</h1>
+          <p class="lead">Verfolge jede 45-Minuten-Lektion von null Vorkenntnissen (<code>L001</code>) bis zur Prüfungsreife (<code>L200</code>). Dein Fortschritt wird automatisch im Browser gespeichert.</p>
         </div>
         <div class="progress-summary" id="lesson-progress-summary">
           <div class="metric-value"><span id="lessons-done-count">0</span> / 200</div>
-          <div class="metric-label">Lessons Completed (<span id="lessons-done-pct">0%</span>)</div>
+          <div class="metric-label">Lektionen abgeschlossen (<span id="lessons-done-pct">0%</span>)</div>
           <div class="progress-track"><div class="progress-fill" id="lessons-progress-bar"></div></div>
         </div>
       </div>
@@ -56,17 +56,17 @@
           <select id="phase-filter"></select>
         </div>
         <div class="filter-group">
-          <label for="lesson-search">Search:</label>
-          <input type="search" id="lesson-search" placeholder="Search topic, SCOTT, JOIN, ORA-..." />
+          <label for="lesson-search">Suche:</label>
+          <input type="search" id="lesson-search" placeholder="Thema, SCOTT, JOIN, ORA- suchen..." />
         </div>
         <div class="filter-group">
-          <label for="variant-select">Lab Mode:</label>
+          <label for="variant-select">Lab-Modus:</label>
           <select id="variant-select">
-            <option value="A">Variant A: In-House Oracle DB</option>
-            <option value="B">Variant B: Free Online (FreeSQL + OCI)</option>
+            <option value="A">Variante A: In-House Oracle DB</option>
+            <option value="B">Variante B: Kostenlos Online (FreeSQL + OCI)</option>
           </select>
         </div>
-        <button class="btn btn-secondary" id="reset-lessons-btn">Reset Progress</button>
+        <button class="btn btn-secondary" id="reset-lessons-btn">Fortschritt zurücksetzen</button>
       </div>
 
       <div id="variant-banner" class="callout callout-info"></div>
@@ -77,12 +77,12 @@
     <section id="view-checkpoints" class="view" aria-labelledby="checkpoints-heading">
       <div class="section-head">
         <div>
-          <h1 id="checkpoints-heading">Identical Progress Checkpoints (CP-0 to CP-5)</h1>
-          <p class="lead">Take the exact same 22-question standardized benchmark + 3 Gold Standard SQL tasks six times across the course to measure genuine skill growth.</p>
+          <h1 id="checkpoints-heading">Identische Fortschritts-Checkpoints (CP-0 bis CP-5)</h1>
+          <p class="lead">Absolviere sechsmal im Kursverlauf denselben standardisierten Benchmark (22 Fragen + 3 Gold Standard SQL-Aufgaben), um deinen echten Kompetenzzuwachs objektiv zu messen.</p>
         </div>
         <div class="checkpoint-actions">
-          <button class="btn btn-secondary" id="export-cp-md">Export Markdown</button>
-          <button class="btn btn-secondary" id="export-cp-json">Export JSON</button>
+          <button class="btn btn-secondary" id="export-cp-md">Markdown exportieren</button>
+          <button class="btn btn-secondary" id="export-cp-json">JSON exportieren</button>
         </div>
       </div>
 
@@ -92,8 +92,8 @@
         <div class="cp-panel" id="cp-workspace"></div>
         <aside class="cp-sidebar">
           <div class="panel-box">
-            <h2>Longitudinal Growth (CP-0 &rarr; CP-5)</h2>
-            <p class="muted-sm">Overall score (%) and confidence calibration across attempts.</p>
+            <h2>Lernverlauf (CP-0 &rarr; CP-5)</h2>
+            <p class="muted-sm">Gesamtscore (%) und Confidence-Kalibrierung über alle Durchläufe.</p>
             <div id="cp-chart-container" class="chart-box"></div>
           </div>
           <div class="panel-box">
@@ -108,16 +108,16 @@
     <section id="view-labs" class="view" aria-labelledby="labs-heading">
       <div class="section-head">
         <div>
-          <h1 id="labs-heading">Interactive SQL Labs &amp; Visualizers</h1>
-          <p class="lead">Visual intuition builders designed for beginners using the classic 14-row <code>SCOTT/TIGER</code> dataset and Oracle 23ai syntax rules.</p>
+          <h1 id="labs-heading">Interaktive SQL-Labs &amp; Visualisierer</h1>
+          <p class="lead">Visuelle Lernwerkzeuge für Einsteiger auf Basis des klassischen 14-Zeilen-Schemas <code>SCOTT/TIGER</code> und der Oracle-23ai-Syntaxregeln.</p>
         </div>
       </div>
 
       <div class="subtabs" role="tablist">
         <button class="subtab-btn active" data-lab="joins" id="tab-lab-joins">Join &amp; SET Visualizer (SCOTT)</button>
-        <button class="subtab-btn" data-lab="slicer" id="tab-lab-slicer">1-Based SUBSTR / INSTR Slicer</button>
+        <button class="subtab-btn" data-lab="slicer" id="tab-lab-slicer">1-basierter SUBSTR / INSTR Slicer</button>
         <button class="subtab-btn" data-lab="sqlplus" id="tab-lab-sqlplus">SQL*Plus &amp; / &amp;&amp; Simulator</button>
-        <button class="subtab-btn" data-lab="compiler" id="tab-lab-compiler">Human Compiler (No-IDE Drill)</button>
+        <button class="subtab-btn" data-lab="compiler" id="tab-lab-compiler">Human Compiler (Ohne IDE)</button>
         <button class="subtab-btn" data-lab="freesql" id="tab-lab-freesql">Oracle FreeSQL (23ai) Launcher</button>
       </div>
 
@@ -126,9 +126,9 @@
         <div class="lab-controls">
           <label for="join-mode-select">Operation:</label>
           <select id="join-mode-select">
-            <option value="INNER">INNER JOIN (EMP &amp; DEPT on deptno)</option>
+            <option value="INNER">INNER JOIN (EMP &amp; DEPT über deptno)</option>
             <option value="LEFT">LEFT OUTER JOIN (EMP left join DEPT)</option>
-            <option value="RIGHT">RIGHT OUTER JOIN (Preserves DEPT 40 OPERATIONS)</option>
+            <option value="RIGHT">RIGHT OUTER JOIN (Bewahrt DEPT 40 OPERATIONS)</option>
             <option value="FULL">FULL OUTER JOIN</option>
             <option value="CROSS">CROSS JOIN (Cartesian Product: 14 &times; 4 = 56)</option>
             <option value="SELF">SELF JOIN (EMP e LEFT JOIN EMP m ON e.mgr = m.empno)</option>
@@ -136,29 +136,29 @@
             <option value="UNION">SET: DEPTNOs in EMP UNION DEPT</option>
             <option value="UNION_ALL">SET: DEPTNOs in EMP UNION ALL DEPT</option>
             <option value="INTERSECT">SET: DEPTNOs in EMP INTERSECT DEPT</option>
-            <option value="MINUS">SET: DEPTNOs in DEPT MINUS EMP (Finds 40!)</option>
+            <option value="MINUS">SET: DEPTNOs in DEPT MINUS EMP (Findet 40!)</option>
           </select>
         </div>
         <div class="sql-preview-box">
           <pre><code id="join-sql-code"></code></pre>
           <div class="sql-preview-actions">
-            <button class="btn btn-sm btn-teal" id="join-run-freesql-btn" type="button">Run Query in Oracle 23ai FreeSQL &nearr;</button>
-            <button class="btn btn-sm" id="join-open-launcher-btn" type="button">Edit in FreeSQL Launcher</button>
+            <button class="btn btn-sm btn-teal" id="join-run-freesql-btn" type="button">Query in Oracle 23ai FreeSQL ausführen &nearr;</button>
+            <button class="btn btn-sm" id="join-open-launcher-btn" type="button">Im FreeSQL Launcher bearbeiten</button>
           </div>
           <p id="join-explanation" class="callout callout-info"></p>
         </div>
         <div class="join-visual-grid">
           <div class="table-card">
-            <h3>Left Source</h3>
+            <h3>Linke Quelle (Left Source)</h3>
             <div class="table-scroll" id="join-left-table"></div>
           </div>
           <div class="table-card">
-            <h3>Right Source</h3>
+            <h3>Rechte Quelle (Right Source)</h3>
             <div class="table-scroll" id="join-right-table"></div>
           </div>
         </div>
         <div class="table-card result-card">
-          <h3>Result Set (<span id="join-result-count">0</span> rows)</h3>
+          <h3>Result Set (<span id="join-result-count">0</span> Zeilen)</h3>
           <div class="table-scroll" id="join-result-table"></div>
         </div>
       </div>
@@ -167,23 +167,23 @@
       <div class="lab-pane" id="lab-slicer">
         <div class="slicer-controls">
           <div class="field">
-            <label for="slicer-text">Input String</label>
+            <label for="slicer-text">Eingabe-String</label>
             <input type="text" id="slicer-text" value="SALESMAN" maxlength="28" />
           </div>
           <div class="field">
-            <label for="slicer-start">SUBSTR Start Pos (1-based or negative)</label>
+            <label for="slicer-start">SUBSTR Startposition (1-basiert oder negativ)</label>
             <input type="number" id="slicer-start" value="-3" min="-28" max="28" />
           </div>
           <div class="field">
-            <label for="slicer-len">SUBSTR Length (optional, 0 = to end)</label>
+            <label for="slicer-len">SUBSTR Länge (optional, 0 = bis Ende)</label>
             <input type="number" id="slicer-len" value="2" min="0" max="28" />
           </div>
           <div class="field">
-            <label for="instr-needle">INSTR Search Substring</label>
+            <label for="instr-needle">INSTR Such-Substring</label>
             <input type="text" id="instr-needle" value="A" maxlength="10" />
           </div>
           <div class="field">
-            <label for="instr-occ">INSTR Occurrence</label>
+            <label for="instr-occ">INSTR Occurrence (n-tes Vorkommen)</label>
             <input type="number" id="instr-occ" value="2" min="1" max="10" />
           </div>
         </div>
@@ -203,12 +203,12 @@
       <!-- Lab C: SQL*Plus Substitution Simulator -->
       <div class="lab-pane" id="lab-sqlplus">
         <div class="callout callout-info">
-          <strong>Variant B Bridge:</strong> Practice how command-line <code>sqlplus</code> handles <code>&amp;</code>, <code>&amp;&amp;</code>, <code>DEFINE</code>, <code>UNDEFINE</code>, and <code>SET VERIFY ON/OFF</code>—exactly as tested on 1Z0-171.
+          <strong>Variante-B-Brücke:</strong> Übe hier, wie das Kommandozeilen-Tool <code>sqlplus</code> die Konstrukte <code>&amp;</code>, <code>&amp;&amp;</code>, <code>DEFINE</code>, <code>UNDEFINE</code> und <code>SET VERIFY ON/OFF</code> verarbeitet – genau wie in der Prüfung 1Z0-171.
         </div>
         <div class="sqlplus-layout">
           <div class="sqlplus-editor">
             <div class="preset-bar">
-              <span>Presets:</span>
+              <span>Vorlagen:</span>
               <button class="btn btn-sm" data-preset="single">&amp; Single Ampersand</button>
               <button class="btn btn-sm" data-preset="double">&amp;&amp; Double Ampersand</button>
               <button class="btn btn-sm" data-preset="define">DEFINE + VERIFY</button>
@@ -216,7 +216,7 @@
             <textarea id="sqlplus-input" rows="7" spellcheck="false"></textarea>
             <div class="sqlplus-controls">
               <label><input type="checkbox" id="sqlplus-verify" checked /> SET VERIFY ON</label>
-              <button class="btn btn-primary" id="sqlplus-run-btn">Execute in SQL*Plus Simulator</button>
+              <button class="btn btn-primary" id="sqlplus-run-btn">Im SQL*Plus Simulator ausführen</button>
               <button class="btn btn-secondary" id="sqlplus-clear-vars">UNDEFINE ALL</button>
             </div>
             <div id="sqlplus-defined-vars" class="defined-vars"></div>
@@ -232,10 +232,10 @@
       <div class="lab-pane" id="lab-compiler">
         <div class="compiler-head">
           <div>
-            <h2>Human Compiler Drill (No IDE Allowed)</h2>
-            <p class="muted-sm">Read each SQL snippet on <code>SCOTT.EMP</code> / <code>HR.EMPLOYEES</code> and predict whether it succeeds with rows, returns 0 rows, or throws an <code>ORA-</code> error.</p>
+            <h2>Human Compiler Drill (Ohne IDE)</h2>
+            <p class="muted-sm">Lies jedes SQL-Snippet auf <code>SCOTT.EMP</code> / <code>HR.EMPLOYEES</code> und sage voraus, ob es Zeilen zurückgibt, 0 Zeilen liefert oder einen <code>ORA-</code>-Fehler auslöst.</p>
           </div>
-          <div class="compiler-score">Score: <strong id="compiler-score-val">0 / 0</strong></div>
+          <div class="compiler-score">Punkte: <strong id="compiler-score-val">0 / 0</strong></div>
         </div>
         <div id="compiler-list" class="compiler-list"></div>
       </div>
@@ -243,18 +243,18 @@
       <!-- Lab E: Oracle FreeSQL (23ai) Launcher -->
       <div class="lab-pane" id="lab-freesql">
         <div class="callout callout-info">
-          <strong>Oracle FreeSQL (23ai) Launcher:</strong> Pick any Phase Lab Pack (or edit your own SQL below), then open it directly in a pre-filled Oracle Database 23ai browser sandbox (<code>freesql.com/embedded/</code>), embed the live worksheet right here, or download the <code>.sql</code> file for <strong>My Content &rarr; Upload Script</strong>.
+          <strong>Oracle FreeSQL (23ai) Launcher:</strong> Wähle ein beliebiges Phase Lab Pack (oder bearbeite dein eigenes SQL unten) und öffne es direkt vorausgefüllt in einer Oracle Database 23ai Browser-Sandbox (<code>freesql.com/embedded/</code>), bette das Live-Worksheet unten ein oder lade die <code>.sql</code>-Datei für <strong>My Content &rarr; Upload Script</strong> herunter.
         </div>
         <div class="freesql-toolbar">
           <div class="filter-group">
-            <label for="freesql-pack-select">Lab Script:</label>
+            <label for="freesql-pack-select">Lab-Skript:</label>
             <select id="freesql-pack-select"></select>
           </div>
           <div class="freesql-actions">
-            <button class="btn btn-primary" id="freesql-open-tab-btn" type="button">Open in FreeSQL (New Tab) &nearr;</button>
-            <button class="btn btn-teal" id="freesql-embed-btn" type="button">Embed Live Worksheet Below</button>
-            <button class="btn btn-secondary" id="freesql-download-btn" type="button">Download .sql</button>
-            <button class="btn btn-secondary" id="freesql-copy-btn" type="button">Copy SQL</button>
+            <button class="btn btn-primary" id="freesql-open-tab-btn" type="button">In FreeSQL öffnen (Neuer Tab) &nearr;</button>
+            <button class="btn btn-teal" id="freesql-embed-btn" type="button">Live-Worksheet unten einbetten</button>
+            <button class="btn btn-secondary" id="freesql-download-btn" type="button">.sql herunterladen</button>
+            <button class="btn btn-secondary" id="freesql-copy-btn" type="button">SQL kopieren</button>
           </div>
         </div>
         <div class="freesql-editor-card">
@@ -262,12 +262,12 @@
             <span id="freesql-active-filename" class="mono-label">phase-01-foundations.sql</span>
             <span id="freesql-status" class="muted-sm" style="margin:0;"></span>
           </div>
-          <textarea id="freesql-sql-editor" rows="13" spellcheck="false" aria-label="SQL script for Oracle FreeSQL"></textarea>
+          <textarea id="freesql-sql-editor" rows="13" spellcheck="false" aria-label="SQL-Skript für Oracle FreeSQL"></textarea>
         </div>
         <div id="freesql-embed-container" class="freesql-embed-container" hidden>
           <div class="freesql-embed-bar">
-            <span>Embedded Oracle FreeSQL (23ai) Sandbox &middot; If sign-in prompts are blocked in an iframe, click <strong>Open in FreeSQL (New Tab) &nearr;</strong> above.</span>
-            <button class="btn btn-sm" id="freesql-hide-embed-btn" type="button">Hide Sandbox</button>
+            <span>Eingebettete Oracle FreeSQL (23ai) Sandbox &middot; Falls der Login im Iframe blockiert wird, klicke oben auf <strong>In FreeSQL öffnen (Neuer Tab) &nearr;</strong>.</span>
+            <button class="btn btn-sm" id="freesql-hide-embed-btn" type="button">Sandbox ausblenden</button>
           </div>
           <iframe id="freesql-embed-frame" title="Oracle FreeSQL 23ai Live Sandbox" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
@@ -278,29 +278,29 @@
     <section id="view-flashcards" class="view" aria-labelledby="flashcards-heading">
       <div class="section-head">
         <div>
-          <h1 id="flashcards-heading">1Z0-171 Concept &amp; Exam-Trap Flashcards</h1>
-          <p class="lead">Quick active-recall cards for the 5-minute warm-up at the start of every 45-minute lesson.</p>
+          <h1 id="flashcards-heading">1Z0-171 Konzept- &amp; Exam-Trap-Flashcards</h1>
+          <p class="lead">Kompakte Active-Recall-Lernkarten für das 5-minütige Warm-up zu Beginn jeder 45-Minuten-Lektion.</p>
         </div>
         <div class="filter-group">
           <label for="fc-domain-filter">Domain:</label>
           <select id="fc-domain-filter"></select>
-          <button class="btn btn-secondary" id="fc-shuffle-btn">Shuffle</button>
+          <button class="btn btn-secondary" id="fc-shuffle-btn">Mischen</button>
         </div>
       </div>
 
       <div class="flashcard-stage">
-        <div class="flashcard" id="flashcard-card" tabindex="0" role="button" aria-label="Flip flashcard">
+        <div class="flashcard" id="flashcard-card" tabindex="0" role="button" aria-label="Flashcard umdrehen">
           <div class="fc-meta">
             <span id="fc-domain-tag"></span>
             <span id="fc-counter"></span>
           </div>
           <div class="fc-body" id="fc-body"></div>
-          <div class="fc-hint">Click card or press <kbd>Space</kbd> to flip</div>
+          <div class="fc-hint">Karte anklicken oder <kbd>Leertaste</kbd> drücken zum Umdrehen</div>
         </div>
         <div class="fc-controls">
-          <button class="btn btn-secondary" id="fc-prev-btn">&larr; Previous</button>
-          <button class="btn btn-primary" id="fc-flip-btn">Flip Card</button>
-          <button class="btn btn-secondary" id="fc-next-btn">Next &rarr;</button>
+          <button class="btn btn-secondary" id="fc-prev-btn">&larr; Zurück</button>
+          <button class="btn btn-primary" id="fc-flip-btn">Karte umdrehen</button>
+          <button class="btn btn-secondary" id="fc-next-btn">Weiter &rarr;</button>
         </div>
       </div>
     </section>
@@ -310,7 +310,7 @@
       <div class="section-head">
         <div>
           <h1 id="mock-heading">1Z0-171 Timed Mock Exam Simulator</h1>
-          <p class="lead">60 multiple-choice &amp; multi-select questions in 120 minutes (passing score: 65% / 39 correct, target readiness: 75%+).</p>
+          <p class="lead">60 Multiple-Choice- &amp; Multi-Select-Fragen in 120 Minuten (Bestehensgrenze: 65 % / 39 richtig, Ziel für Prüfungsreife: &ge; 75 %).</p>
         </div>
       </div>
       <div id="mock-root"></div>
@@ -320,7 +320,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <span>Oracle 1Z0-171 Zero-to-Certified Curriculum &middot; Read the Docs + GitHub Pages</span>
-      <span>Tip: Always test your queries live on <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> or your local Oracle 23ai Free PDB.</span>
+      <span>Tipp: Teste deine Queries immer live in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> oder deiner lokalen Oracle 23ai Free PDB.</span>
     </div>
   </footer>
 

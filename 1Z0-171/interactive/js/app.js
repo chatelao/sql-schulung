@@ -137,7 +137,7 @@
   const phasesContainer = document.getElementById("phases-container");
 
   function initCurriculum() {
-    phaseFilter.innerHTML = `<option value="ALL">All 10 Phases (200 Lessons)</option>` +
+    phaseFilter.innerHTML = `<option value="ALL">Alle 10 Phasen (200 Lektionen)</option>` +
       window.CURRICULUM_PHASES.map((p) => `<option value="${p.id}">Phase ${p.id}: ${escapeHtml(p.title.replace(/^Phase \d+: /, ""))}</option>`).join("");
 
     variantSelect.value = state.variant || "B";
@@ -150,7 +150,7 @@
     phaseFilter.addEventListener("change", renderPhases);
     lessonSearch.addEventListener("input", renderPhases);
     document.getElementById("reset-lessons-btn").addEventListener("click", () => {
-      if (confirm("Reset all 200 lesson completion checkboxes?")) {
+      if (confirm("Alle 200 Lektions-Häkchen zurücksetzen?")) {
         state.completedLessons = [];
         saveState();
         renderPhases();
@@ -163,9 +163,9 @@
 
   function renderVariantBanner() {
     if (state.variant === "A") {
-      variantBanner.innerHTML = `<strong>Variant A (In-House Oracle DB):</strong> Run <code>SCOTT/TIGER</code> &amp; <code>HR</code> labs in VS Code / SQL Developer and test <code>&amp;</code>/<code>&amp;&amp;</code> + multi-user DCL natively in <code>sqlcl</code>/<code>sqlplus</code>.`;
+      variantBanner.innerHTML = `<strong>Variante A (In-House Oracle DB):</strong> Führe die <code>SCOTT/TIGER</code>- &amp; <code>HR</code>-Labs in VS Code / SQL Developer aus und teste <code>&amp;</code>/<code>&amp;&amp;</code> sowie Multi-User-DCL nativ in <code>sqlcl</code>/<code>sqlplus</code>.`;
     } else {
-      variantBanner.innerHTML = `<strong>Variant B (Free Online Cloud):</strong> Run daily SQL queries in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> (23ai, preloaded <code>SCOTT</code> &amp; <code>HR</code>), use our <strong>SQL*Plus Simulator</strong> tab for <code>&amp;</code>/<code>&amp;&amp;</code>, and use <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">OCI Always Free</a> for multi-user DCL.`;
+      variantBanner.innerHTML = `<strong>Variante B (Kostenlose Online-Cloud):</strong> Führe tägliche SQL-Queries in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> (23ai, mit vorgeladenem <code>SCOTT</code> &amp; <code>HR</code>) aus, nutze unseren Tab <strong>SQL*Plus Simulator</strong> für <code>&amp;</code>/<code>&amp;&amp;</code> und <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">OCI Always Free</a> für Multi-User-DCL.`;
     }
   }
 
@@ -197,9 +197,9 @@
                 <span class="muted-sm" style="margin:0;">(${escapeHtml(p.examNote)})</span>
               </div>
               <div class="phase-stats">
-                <span><strong>${phaseDone}</strong> / ${p.lessons.length} done</span>
+                <span><strong>${phaseDone}</strong> / ${p.lessons.length} erledigt</span>
                 <button type="button" class="btn btn-sm btn-teal phase-freesql-btn" data-phase-id="${p.id}">Lab in FreeSQL &nearr;</button>
-                <a class="docs-link" href="${p.docsUrl}" target="_blank" rel="noopener">Read Chapter &nearr;</a>
+                <a class="docs-link" href="${p.docsUrl}" target="_blank" rel="noopener">Kapitel lesen &nearr;</a>
               </div>
             </div>
             <div class="lesson-grid">
@@ -209,7 +209,7 @@
                   <label class="lesson-item ${isDone ? "done" : ""}">
                     <input type="checkbox" data-lesson-id="${l.id}" ${isDone ? "checked" : ""} />
                     <div>
-                      <span class="lesson-id">${l.id} &middot; 45m</span>
+                      <span class="lesson-id">${l.id} &middot; 45 Min.</span>
                       <span class="lesson-title">${escapeHtml(l.title)}</span>
                       <span class="lesson-meta">${escapeHtml(l.tag)}</span>
                     </div>
@@ -222,7 +222,7 @@
       })
       .join("");
 
-    phasesContainer.innerHTML = html || `<p class="muted-sm">No lessons matched "${escapeHtml(q)}".</p>`;
+    phasesContainer.innerHTML = html || `<p class="muted-sm">Keine Lektionen gefunden für "${escapeHtml(q)}".</p>`;
     phasesContainer.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
       cb.addEventListener("change", () => {
         const id = cb.dataset.lessonId;
@@ -298,8 +298,8 @@
     cpStrip.innerHTML = window.CHECKPOINT_SLOTS.map((slot) => {
       const d = state.checkpoints[slot.id];
       const statusText = d && d.submitted
-        ? `Score: <strong>${gradeCheckpoint(d).pct}%</strong> (${gradeCheckpoint(d).totalCorrect}/22)`
-        : `Not taken &middot; Expected: ${slot.expected}`;
+        ? `Ergebnis: <strong>${gradeCheckpoint(d).pct}%</strong> (${gradeCheckpoint(d).totalCorrect}/22)`
+        : `Noch nicht absolviert &middot; Erwartet: ${slot.expected}`;
       return `
         <button class="cp-card-btn ${slot.id === activeId ? "active" : ""}" data-cp="${slot.id}">
           <div class="cp-card-code">${slot.id} (${slot.lessons})</div>
@@ -338,12 +338,12 @@
 
       resultBanner = `
         <div class="callout ${grades.pct >= 65 ? "callout-success" : "callout-warn"}">
-          <strong>${cpId} Submitted:</strong> ${grades.totalCorrect} / ${grades.total} (<strong>${grades.pct}%</strong>)
+          <strong>${cpId} eingereicht:</strong> ${grades.totalCorrect} / ${grades.total} (<strong>${grades.pct}%</strong>)
           ${cpId !== "CP-5" && !cpData.unlockOverride
-            ? `<div style="margin-top:0.35rem;font-size:0.84rem;">Answer keys stay locked during ${cpId} to prevent memorization before CP-5. Check the Domain Mastery Matrix on the right! <button class="btn btn-sm" id="cp-unlock-btn">Instructor Override: Show Key</button></div>`
-            : `<div style="margin-top:0.35rem;font-size:0.84rem;">Full answer key &amp; explanations unlocked below.</div>`}
+            ? `<div style="margin-top:0.35rem;font-size:0.84rem;">Die Lösungen bleiben bei ${cpId} gesperrt, um Auswendiglernen vor CP-5 zu vermeiden. Sieh dir rechts die Domain Mastery Matrix an! <button class="btn btn-sm" id="cp-unlock-btn">Trainer-Freigabe: Lösung zeigen</button></div>`
+            : `<div style="margin-top:0.35rem;font-size:0.84rem;">Vollständige Lösungen &amp; Erklärungen sind unten freigeschaltet.</div>`}
           ${blindSpots.length > 0
-            ? `<div style="margin-top:0.4rem;"><strong>Blind-Spot Alert:</strong> High confidence (&ge;4/5) yet &lt;50% score in: ${blindSpots.map((b) => escapeHtml(b.name)).join(", ")}.</div>`
+            ? `<div style="margin-top:0.4rem;"><strong>Blind-Spot-Warnung:</strong> Hohe Sicherheit (&ge;4/5), aber &lt;50% Trefferquote in: ${blindSpots.map((b) => escapeHtml(b.name)).join(", ")}.</div>`
             : ""}
         </div>
       `;
@@ -356,7 +356,7 @@
       return `
         <div class="question-block">
           <div class="q-header">
-            <span>Question ${idx + 1} of 22 ${q.multi ? "(Select Two)" : ""}</span>
+            <span>Frage ${idx + 1} von 22 ${q.multi ? "(Zwei auswählen)" : ""}</span>
             <span class="q-domain-badge">D${dom.id}: ${escapeHtml(dom.name)}</span>
           </div>
           <div class="q-prompt">${escapeHtml(q.prompt)}</div>
@@ -376,7 +376,7 @@
               `;
             }).join("")}
           </div>
-          ${showKey ? `<p class="muted-sm" style="margin-top:0.5rem;"><strong>Explanation:</strong> ${escapeHtml(q.explanation)}</p>` : ""}
+          ${showKey ? `<p class="muted-sm" style="margin-top:0.5rem;"><strong>Erklärung:</strong> ${escapeHtml(q.explanation)}</p>` : ""}
         </div>
       `;
     }).join("");
@@ -389,9 +389,9 @@
           <p style="font-size:0.9rem;margin:0.3rem 0 0.6rem;">${escapeHtml(t.prompt)}</p>
           <label style="font-size:0.86rem;display:flex;align-items:center;gap:0.45rem;margin-bottom:0.5rem;">
             <input type="checkbox" class="cp-task-cb" data-task="${t.id}" ${done ? "checked" : ""} />
-            I wrote &amp; verified this query/DDL cleanly in Oracle DB
+            Ich habe diese Query bzw. dieses DDL sauber in einer Oracle DB geschrieben &amp; geprüft
           </label>
-          ${showKey ? `<pre><code>${escapeHtml(t.reference)}</code></pre>` : `<span class="muted-sm">Reference solution unlocks at CP-5 (or Instructor Override).</span>`}
+          ${showKey ? `<pre><code>${escapeHtml(t.reference)}</code></pre>` : `<span class="muted-sm">Musterlösung wird bei CP-5 (oder über Trainer-Freigabe) freigeschaltet.</span>`}
         </div>
       `;
     }).join("");
@@ -413,37 +413,37 @@
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
         <div>
           <h2 style="margin:0;">${slot.id}: ${escapeHtml(slot.label)}</h2>
-          <span class="muted-sm">${slot.lessons} &middot; Expected Band: ${slot.expected}</span>
+          <span class="muted-sm">${slot.lessons} &middot; Erwartetes Niveau: ${slot.expected}</span>
         </div>
         <div style="display:flex;gap:0.5rem;">
           ${cpData.submitted
-            ? `<button class="btn btn-secondary" id="cp-retake-btn">Retake ${cpId}</button>`
-            : `<button class="btn btn-primary" id="cp-submit-btn">Submit ${cpId} &amp; Score</button>`}
+            ? `<button class="btn btn-secondary" id="cp-retake-btn">${cpId} wiederholen</button>`
+            : `<button class="btn btn-primary" id="cp-submit-btn">${cpId} einreichen &amp; auswerten</button>`}
         </div>
       </div>
       ${resultBanner}
-      <h3>Part A — 22 Fixed Domain Questions</h3>
+      <h3>Teil A — 22 feste Domain-Fragen</h3>
       ${questionsHtml}
-      <h3 style="margin-top:1.25rem;">Part B — 3 Gold Standard SQL Tasks</h3>
+      <h3 style="margin-top:1.25rem;">Teil B — 3 Gold Standard SQL Tasks</h3>
       ${tasksHtml}
-      <h3 style="margin-top:1.25rem;">Part C — Domain Confidence Rating (1 = Guessing, 5 = Exam Ready)</h3>
+      <h3 style="margin-top:1.25rem;">Teil C — Selbsteinschätzung je Domain (1 = Raten, 5 = Prüfungsreif)</h3>
       <div class="confidence-grid">${confHtml}</div>
-      <h3>Lesson 2 — Structured Reflection Log</h3>
+      <h3>Lektion 2 — Strukturiertes Reflexionsprotokoll</h3>
       <div style="display:grid;gap:0.75rem;">
         <div class="field">
-          <label>1. Which 2 domains improved most since the previous checkpoint, and what clicked?</label>
+          <label>1. Welche 2 Domains haben sich seit dem letzten Checkpoint am stärksten verbessert, und wobei hat es Klick gemacht?</label>
           <textarea rows="2" class="cp-refl" data-rk="r1">${escapeHtml(cpData.reflection.r1 || "")}</textarea>
         </div>
         <div class="field">
-          <label>2. Where was my confidence high, yet my score low (blind spots / exam traps)?</label>
+          <label>2. Wo war meine Sicherheit hoch, mein Ergebnis aber niedrig (Blind Spots / Exam Traps)?</label>
           <textarea rows="2" class="cp-refl" data-rk="r2">${escapeHtml(cpData.reflection.r2 || "")}</textarea>
         </div>
         <div class="field">
-          <label>3. Which Part B SQL task felt noticeably faster or easier to write from memory?</label>
+          <label>3. Welcher Teil-B-SQL-Task ließ sich spürbar schneller oder sicherer aus dem Gedächtnis schreiben?</label>
           <textarea rows="2" class="cp-refl" data-rk="r3">${escapeHtml(cpData.reflection.r3 || "")}</textarea>
         </div>
         <div class="field">
-          <label>4. Concrete study target before the next checkpoint:</label>
+          <label>4. Konkretes Lernziel bis zum nächsten Checkpoint:</label>
           <textarea rows="2" class="cp-refl" data-rk="r4">${escapeHtml(cpData.reflection.r4 || "")}</textarea>
         </div>
       </div>
@@ -497,7 +497,7 @@
     const retakeBtn = document.getElementById("cp-retake-btn");
     if (retakeBtn) {
       retakeBtn.addEventListener("click", () => {
-        if (confirm(`Clear ${cpId} submission so you can retake it?`)) {
+        if (confirm(`Abgabe für ${cpId} löschen, um den Checkpoint zu wiederholen?`)) {
           cpData.submitted = false;
           cpData.answers = {};
           cpData.unlockOverride = false;
@@ -542,11 +542,11 @@
       : "";
 
     cpChart.innerHTML = `
-      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Checkpoint progress chart">
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Checkpoint-Verlaufsdiagramm">
         <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + plotH}" stroke="#c8c0b2" />
         <line x1="${padL}" y1="${padT + plotH}" x2="${W - padR}" y2="${padT + plotH}" stroke="#c8c0b2" />
         <line x1="${padL}" y1="${passY}" x2="${W - padR}" y2="${passY}" stroke="#0f6e6e" stroke-dasharray="4 3" />
-        <text x="${W - padR}" y="${passY - 4}" text-anchor="end" font-size="9" fill="#0f6e6e" font-weight="600">65% Pass</text>
+        <text x="${W - padR}" y="${passY - 4}" text-anchor="end" font-size="9" fill="#0f6e6e" font-weight="600">65% Bestehen</text>
         <text x="${padL - 5}" y="${padT + 4}" text-anchor="end" font-size="9" fill="#707c8c">100%</text>
         <text x="${padL - 5}" y="${padT + plotH}" text-anchor="end" font-size="9" fill="#707c8c">0%</text>
         ${polyline}
@@ -565,7 +565,7 @@
     const grades = cpData.submitted ? gradeCheckpoint(cpData) : null;
     cpMatrix.innerHTML = `
       <table class="matrix-table">
-        <thead><tr><th>Domain</th><th>Wt</th><th>${activeId}</th><th>Conf</th></tr></thead>
+        <thead><tr><th>Domain</th><th>Gew.</th><th>${activeId}</th><th>Sicherheit</th></tr></thead>
         <tbody>
           ${window.DOMAINS_1Z0_171.map((d) => {
             let scStr = "—";
@@ -606,13 +606,13 @@
       content = JSON.stringify(payload, null, 2);
     } else {
       mime = "text/markdown";
-      const lines = [`# 1Z0-171 Longitudinal Checkpoint Report`, `Exported: ${payload.exportedAt}`, `Lessons Completed: ${payload.completedLessonsCount} / 200`, ""];
+      const lines = [`# 1Z0-171 Checkpoint-Verlaufsbericht`, `Exportiert: ${payload.exportedAt}`, `Abgeschlossene Lektionen: ${payload.completedLessonsCount} / 200`, ""];
       Object.entries(payload.checkpoints).forEach(([cpId, info]) => {
         lines.push(`## ${cpId} — ${info.score.pct}% (${info.score.totalCorrect}/22)`);
-        lines.push(`- Reflection 1 (Improved): ${info.reflection.r1 || "-"}`);
-        lines.push(`- Reflection 2 (Blind spots): ${info.reflection.r2 || "-"}`);
-        lines.push(`- Reflection 3 (Task speed): ${info.reflection.r3 || "-"}`);
-        lines.push(`- Reflection 4 (Next goal): ${info.reflection.r4 || "-"}`);
+        lines.push(`- Reflexion 1 (Verbessert): ${info.reflection.r1 || "-"}`);
+        lines.push(`- Reflexion 2 (Blind Spots): ${info.reflection.r2 || "-"}`);
+        lines.push(`- Reflexion 3 (Task-Tempo): ${info.reflection.r3 || "-"}`);
+        lines.push(`- Reflexion 4 (Nächstes Ziel): ${info.reflection.r4 || "-"}`);
         lines.push("");
       });
       content = lines.join("\n");
@@ -700,21 +700,21 @@
 
       if (mode === "INNER") {
         sql = `SELECT e.empno, e.ename, e.deptno, d.dname, d.loc\nFROM scott.emp e\nINNER JOIN scott.dept d ON e.deptno = d.deptno;`;
-        exp = "Only matching deptno values appear. Notice DEPT 40 (OPERATIONS) is excluded because 0 employees belong to deptno 40.";
+        exp = "Nur übereinstimmende deptno-Werte erscheinen. Beachte: DEPT 40 (OPERATIONS) fehlt, weil 0 Employees zu deptno 40 gehören.";
         resRows = SCOTT_EMP.map((e) => {
           const d = SCOTT_DEPT.find((x) => x.deptno === e.deptno);
           return d ? { empno: e.empno, ename: e.ename, deptno: e.deptno, dname: d.dname, loc: d.loc } : null;
         }).filter(Boolean);
       } else if (mode === "LEFT") {
         sql = `SELECT e.empno, e.ename, e.deptno, d.dname, d.loc\nFROM scott.emp e\nLEFT OUTER JOIN scott.dept d ON e.deptno = d.deptno;`;
-        exp = "Preserves all 14 rows from EMP (left). Because every employee in SCOTT has a valid deptno (10, 20, 30), DEPT 40 still does not appear.";
+        exp = "Behält alle 14 Zeilen aus EMP (links). Da jeder Employee in SCOTT eine gültige deptno (10, 20, 30) hat, erscheint DEPT 40 weiterhin nicht.";
         resRows = SCOTT_EMP.map((e) => {
           const d = SCOTT_DEPT.find((x) => x.deptno === e.deptno) || {};
           return { empno: e.empno, ename: e.ename, deptno: e.deptno, dname: d.dname ?? null, loc: d.loc ?? null };
         });
       } else if (mode === "RIGHT") {
         sql = `SELECT e.empno, e.ename, d.deptno, d.dname, d.loc\nFROM scott.emp e\nRIGHT OUTER JOIN scott.dept d ON e.deptno = d.deptno;`;
-        exp = "Preserves all 4 rows from DEPT (right)! DEPT 40 (OPERATIONS, BOSTON) now appears with NULL for empno and ename.";
+        exp = "Behält alle 4 Zeilen aus DEPT (rechts)! DEPT 40 (OPERATIONS, BOSTON) erscheint nun mit NULL für empno und ename.";
         SCOTT_DEPT.forEach((d) => {
           const emps = SCOTT_EMP.filter((e) => e.deptno === d.deptno);
           if (emps.length === 0) resRows.push({ empno: null, ename: null, deptno: d.deptno, dname: d.dname, loc: d.loc });
@@ -722,7 +722,7 @@
         });
       } else if (mode === "FULL") {
         sql = `SELECT e.empno, e.ename, COALESCE(e.deptno, d.deptno) AS deptno, d.dname, d.loc\nFROM scott.emp e\nFULL OUTER JOIN scott.dept d ON e.deptno = d.deptno;`;
-        exp = "Preserves unmatched rows from BOTH sides (in SCOTT, DEPT 40 OPERATIONS is unmatched; in HR, Kimberely Grant is also unmatched on the left!).";
+        exp = "Behält nicht-passende Zeilen von BEIDEN Seiten (in SCOTT ist DEPT 40 OPERATIONS ohne Treffer; in HR bleibt links zudem Kimberely Grant ohne Department).";
         SCOTT_DEPT.forEach((d) => {
           const emps = SCOTT_EMP.filter((e) => e.deptno === d.deptno);
           if (emps.length === 0) resRows.push({ empno: null, ename: null, deptno: d.deptno, dname: d.dname, loc: d.loc });
@@ -730,7 +730,7 @@
         });
       } else {
         sql = `SELECT e.empno, e.ename, d.deptno, d.dname, d.loc\nFROM scott.emp e\nCROSS JOIN scott.dept d;`;
-        exp = "Cartesian product pairs every one of the 14 employees with all 4 departments: 14 x 4 = 56 rows.";
+        exp = "Das Cartesian Product kombiniert jeden der 14 Employees mit allen 4 Departments: 14 x 4 = 56 Zeilen.";
         SCOTT_EMP.forEach((e) => {
           SCOTT_DEPT.forEach((d) => {
             resRows.push({ empno: e.empno, ename: e.ename, deptno: d.deptno, dname: d.dname, loc: d.loc });
@@ -739,7 +739,7 @@
       }
     } else if (mode === "SELF") {
       sql = `SELECT e.empno, e.ename AS employee, e.mgr, m.ename AS manager\nFROM scott.emp e\nLEFT JOIN scott.emp m ON e.mgr = m.empno;`;
-      exp = "Self-join matches each employee's MGR to their manager's EMPNO. LEFT JOIN preserves KING (whose MGR is NULL).";
+      exp = "Der Self-Join verknüpft den MGR jedes Employees mit der EMPNO seines Managers. LEFT JOIN behält KING (dessen MGR NULL ist).";
       leftHtml = renderHtmlTable(["empno", "ename", "mgr"], SCOTT_EMP, (r) => (r.mgr === null ? "row-unmatched" : "row-matched"));
       rightHtml = renderHtmlTable(["empno", "ename", "job"], SCOTT_EMP);
       resCols = ["empno", "employee", "mgr", "manager"];
@@ -749,7 +749,7 @@
       });
     } else if (mode === "NONEQUI") {
       sql = `SELECT e.ename, e.sal, s.grade, s.losal, s.hisal\nFROM scott.emp e\nJOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal\nORDER BY s.grade, e.sal;`;
-      exp = "Non-equijoin compares e.sal against salary band ranges (losal..hisal) in SCOTT.SALGRADE instead of using =.";
+      exp = "Ein Non-Equijoin vergleicht e.sal über Salary-Band-Bereiche (losal..hisal) in SCOTT.SALGRADE statt mit =.";
       leftHtml = renderHtmlTable(["empno", "ename", "sal"], SCOTT_EMP, () => "row-matched");
       rightHtml = renderHtmlTable(["grade", "losal", "hisal"], SCOTT_SALGRADE, () => "row-matched");
       resCols = ["ename", "sal", "grade", "losal", "hisal"];
@@ -767,19 +767,19 @@
 
       if (mode === "UNION") {
         sql = `SELECT deptno FROM scott.emp\nUNION\nSELECT deptno FROM scott.dept;`;
-        exp = "UNION combines both sets and removes all duplicates -> {10, 20, 30, 40}.";
+        exp = "UNION kombiniert beide Ergebnismengen und entfernt alle Duplikate -> {10, 20, 30, 40}.";
         resRows = [10, 20, 30, 40].map((v) => ({ deptno: v }));
       } else if (mode === "UNION_ALL") {
         sql = `SELECT deptno FROM scott.emp\nUNION ALL\nSELECT deptno FROM scott.dept;`;
-        exp = "UNION ALL stacks all 14 rows from EMP + 4 rows from DEPT = 18 rows without deduplicating or sorting.";
+        exp = "UNION ALL hängt alle 14 Zeilen aus EMP + 4 Zeilen aus DEPT direkt aneinander = 18 Zeilen, ohne Deduplizierung oder Sortierung.";
         resRows = [...leftSet, ...rightSet];
       } else if (mode === "INTERSECT") {
         sql = `SELECT deptno FROM scott.emp\nINTERSECT\nSELECT deptno FROM scott.dept;`;
-        exp = "INTERSECT keeps only values present in BOTH queries -> {10, 20, 30}.";
+        exp = "INTERSECT behält nur Werte, die in BEIDEN Queries vorkommen -> {10, 20, 30}.";
         resRows = [10, 20, 30].map((v) => ({ deptno: v }));
       } else {
         sql = `SELECT deptno FROM scott.dept\nMINUS\nSELECT deptno FROM scott.emp;`;
-        exp = "DEPT MINUS EMP returns rows in the first query absent from the second -> {40} (OPERATIONS)!";
+        exp = "DEPT MINUS EMP liefert Zeilen der ersten Query, die in der zweiten fehlen -> {40} (OPERATIONS)!";
         resRows = [{ deptno: 40 }];
       }
     }
@@ -845,7 +845,7 @@
         <div class="char-val">${escapeHtml(ch === " " ? "\u2423" : ch)}</div>
         <div class="char-idx-neg">${i - n}</div>
       </div>
-    `).join("") || `<span class="muted-sm">Type a string above to see Oracle 1-based &amp; negative indices.</span>`;
+    `).join("") || `<span class="muted-sm">Gib oben eine Zeichenkette ein, um Oracles 1-basierte &amp; negative Indizes zu sehen.</span>`;
 
     document.getElementById("substr-formula").textContent = lenRaw > 0
       ? `SUBSTR('${str}', ${startRaw}, ${lenRaw})`
@@ -877,7 +877,7 @@
     document.getElementById("sqlplus-clear-vars").addEventListener("click", () => {
       sqlPlusSessionVars = {};
       renderDefinedVars();
-      document.getElementById("sqlplus-output").textContent = "Session variables cleared (UNDEFINE).\n";
+      document.getElementById("sqlplus-output").textContent = "Session-Variablen gelöscht (UNDEFINE).\n";
     });
 
     document.getElementById("sqlplus-run-btn").addEventListener("click", runSqlPlusSim);
@@ -887,8 +887,8 @@
   function renderDefinedVars() {
     const entries = Object.entries(sqlPlusSessionVars);
     document.getElementById("sqlplus-defined-vars").innerHTML = entries.length
-      ? `<strong>DEFINE session variables:</strong> ${entries.map(([k, v]) => `<code>${escapeHtml(k)} = "${escapeHtml(v)}"</code>`).join(" ")}`
-      : `<em>No session variables currently DEFINE'd.</em>`;
+      ? `<strong>Aktive DEFINE-Session-Variablen:</strong> ${entries.map(([k, v]) => `<code>${escapeHtml(k)} = "${escapeHtml(v)}"</code>`).join(" ")}`
+      : `<em>Derzeit sind keine Session-Variablen per DEFINE gesetzt.</em>`;
   }
 
   function runSqlPlusSim() {
@@ -920,7 +920,7 @@
           const vName = (dblName || sglName).toLowerCase();
           let val = sqlPlusSessionVars[vName];
           if (val === undefined) {
-            val = window.prompt(`Enter value for ${dblName || sglName}:`, vName.includes("dept") ? "20" : vName.includes("job") ? "CLERK" : "sal");
+            val = window.prompt(`Wert für ${dblName || sglName} eingeben:`, vName.includes("dept") ? "20" : vName.includes("job") ? "CLERK" : "sal");
             if (val === null) val = "";
             out.push(`Enter value for ${dblName || sglName}: ${val}`);
             if (isDouble) {
@@ -936,7 +936,7 @@
         return replaced;
       });
       out.push("");
-      out.push("Executed SQL sent to Oracle 23ai:");
+      out.push("Ausgeführtes SQL an Oracle 23ai:");
       out.push(newSqlLines.join("\n"));
     }
 
@@ -961,9 +961,9 @@
         if (picked === d.verdict) correctCount += 1;
       }
       const choices = [
-        { k: "rows", label: "Returns >= 1 Row" },
-        { k: "zero", label: "Valid SQL, Returns 0 Rows" },
-        { k: "error", label: "Raises ORA- Error" }
+        { k: "rows", label: "Liefert >= 1 Zeile" },
+        { k: "zero", label: "Gültiges SQL, liefert 0 Zeilen" },
+        { k: "error", label: "Wirft ORA-Fehler" }
       ];
       return `
         <div class="compiler-card">
@@ -979,7 +979,7 @@
               return `<button class="btn btn-sm hc-choice" data-hc="${d.id}" data-verdict="${c.k}" style="${style}">${c.label}</button>`;
             }).join("")}
           </div>
-          ${picked ? `<p class="muted-sm" style="margin-top:0.65rem;"><strong>${picked === d.verdict ? "Correct!" : "Review:"}</strong> ${escapeHtml(d.explanation)}</p>` : ""}
+          ${picked ? `<p class="muted-sm" style="margin-top:0.65rem;"><strong>${picked === d.verdict ? "Richtig!" : "Prüfen:"}</strong> ${escapeHtml(d.explanation)}</p>` : ""}
         </div>
       `;
     }).join("");
@@ -1028,7 +1028,7 @@
     if (editor) editor.value = sqlText;
     freeSqlActiveFilename = filename || "custom-lab.sql";
     if (fileLabel) fileLabel.textContent = freeSqlActiveFilename;
-    setFreeSqlStatus("Loaded query from Join & SET Visualizer.");
+    setFreeSqlStatus("Query aus dem Join & SET Visualizer geladen.");
     switchView("labs");
     switchLabPane("freesql");
   }
@@ -1056,22 +1056,22 @@
     });
 
     document.getElementById("freesql-open-tab-btn").addEventListener("click", () => {
-      setFreeSqlStatus("Launching Oracle 23ai FreeSQL in a new tab...");
+      setFreeSqlStatus("Öffne Oracle 23ai FreeSQL in einem neuen Tab...");
       openInFreeSqlTab(editor.value);
     });
 
     document.getElementById("freesql-embed-btn").addEventListener("click", async () => {
-      setFreeSqlStatus("Compressing SQL and loading embedded FreeSQL sandbox...");
+      setFreeSqlStatus("Komprimiere SQL und lade eingebettete FreeSQL-Sandbox...");
       const url = await buildFreeSqlEmbedUrl(editor.value);
       embedFrame.src = url;
       embedContainer.hidden = false;
-      setFreeSqlStatus("Embedded Oracle 23ai FreeSQL sandbox loaded below.");
+      setFreeSqlStatus("Eingebettete Oracle 23ai FreeSQL-Sandbox unten geladen.");
     });
 
     document.getElementById("freesql-hide-embed-btn").addEventListener("click", () => {
       embedContainer.hidden = true;
       embedFrame.src = "about:blank";
-      setFreeSqlStatus("Embedded sandbox hidden.");
+      setFreeSqlStatus("Eingebettete Sandbox ausgeblendet.");
     });
 
     document.getElementById("freesql-download-btn").addEventListener("click", () => {
@@ -1081,17 +1081,17 @@
       a.download = freeSqlActiveFilename || "lab-script.sql";
       a.click();
       URL.revokeObjectURL(a.href);
-      setFreeSqlStatus(`Downloaded ${freeSqlActiveFilename} (upload via FreeSQL -> My Content -> Upload Script).`);
+      setFreeSqlStatus(`${freeSqlActiveFilename} heruntergeladen (Upload über FreeSQL -> My Content -> Upload Script).`);
     });
 
     document.getElementById("freesql-copy-btn").addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(editor.value);
-        setFreeSqlStatus("SQL copied to clipboard.");
+        setFreeSqlStatus("SQL in die Zwischenablage kopiert.");
       } catch (_) {
         editor.select();
         document.execCommand("copy");
-        setFreeSqlStatus("SQL copied to clipboard.");
+        setFreeSqlStatus("SQL in die Zwischenablage kopiert.");
       }
     });
   }
@@ -1105,7 +1105,7 @@
 
   function initFlashcards() {
     const sel = document.getElementById("fc-domain-filter");
-    sel.innerHTML = `<option value="ALL">All 11 Domains (${window.FLASHCARDS_1Z0_171.length} cards)</option>` +
+    sel.innerHTML = `<option value="ALL">Alle 11 Domains (${window.FLASHCARDS_1Z0_171.length} Karten)</option>` +
       window.DOMAINS_1Z0_171.map((d) => `<option value="${d.id}">D${d.id}: ${escapeHtml(d.name)}</option>`).join("");
 
     sel.addEventListener("change", () => {
@@ -1169,7 +1169,7 @@
     const dom = window.DOMAINS_1Z0_171.find((d) => d.id === c.domainId);
     const card = document.getElementById("flashcard-card");
     card.classList.toggle("flipped", fcFlipped);
-    document.getElementById("fc-domain-tag").textContent = `D${dom.id}: ${dom.name} — ${fcFlipped ? "ANSWER" : "PROMPT"}`;
+    document.getElementById("fc-domain-tag").textContent = `D${dom.id}: ${dom.name} — ${fcFlipped ? "ANTWORT" : "FRAGE"}`;
     document.getElementById("fc-counter").textContent = `${fcIndex + 1} / ${fcDeck.length}`;
     document.getElementById("fc-body").textContent = fcFlipped ? c.a : c.q;
   }
@@ -1188,11 +1188,11 @@
     if (mockTimerHandle) clearInterval(mockTimerHandle);
     document.getElementById("mock-root").innerHTML = `
       <div class="panel-box" style="max-width:760px;">
-        <h2>Choose Exam Simulation Mode</h2>
-        <p class="muted-sm">Questions mirror the official 1Z0-171 domain weights. Multi-select questions award zero partial credit—just like Pearson VUE / Oracle MyLearn.</p>
+        <h2>Modus der Exam Simulation wählen</h2>
+        <p class="muted-sm">Die Fragen spiegeln die offiziellen 1Z0-171-Domain-Gewichtungen wider. Bei Multi-Select-Fragen gibt es keine Teilpunkte — genau wie bei Pearson VUE / Oracle MyLearn.</p>
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;">
-          <button class="btn btn-primary" id="start-full-mock">Start Full 60-Question Exam (120 Min)</button>
-          <button class="btn btn-secondary" id="start-sprint-mock">Quick 15-Question Sprint (30 Min)</button>
+          <button class="btn btn-primary" id="start-full-mock">Vollständige 60-Fragen-Prüfung starten (120 Min.)</button>
+          <button class="btn btn-secondary" id="start-sprint-mock">Schneller 15-Fragen-Sprint (30 Min.)</button>
         </div>
       </div>
     `;
@@ -1243,14 +1243,14 @@
     const picked = mockSession.answers[q.id] || [];
     const inputType = q.multi ? "checkbox" : "radio";
     const elapsedMin = Math.floor((mockSession.totalSec - mockSession.remainingSec) / 60);
-    const passHint = elapsedMin < 75 ? "Pass 1: Direct Questions" : elapsedMin < 105 ? "Pass 2: Flagged Tracing" : "Pass 3: Multi-Select Audit";
+    const passHint = elapsedMin < 75 ? "Durchgang 1: Direkte Fragen" : elapsedMin < 105 ? "Durchgang 2: Markierte Code-Traces" : "Durchgang 3: Multi-Select-Prüfung";
 
     root.innerHTML = `
       <div class="mock-topbar">
-        <div><strong>Question ${mockSession.idx + 1} of ${mockSession.questions.length}</strong> &middot; <span class="muted-sm">${passHint}</span></div>
+        <div><strong>Frage ${mockSession.idx + 1} von ${mockSession.questions.length}</strong> &middot; <span class="muted-sm">${passHint}</span></div>
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <span class="timer-pill" id="mock-timer">${formatTime(mockSession.remainingSec)}</span>
-          <button class="btn btn-primary" id="mock-finish-btn">Submit Exam</button>
+          <button class="btn btn-primary" id="mock-finish-btn">Prüfung abgeben</button>
         </div>
       </div>
       <div class="q-nav-grid">
@@ -1262,7 +1262,7 @@
       </div>
       <div class="panel-box">
         <div class="q-header">
-          <span>${q.multi ? "Select ALL that apply (no partial credit)" : "Select ONE best answer"}</span>
+          <span>${q.multi ? "Wähle ALLE zutreffenden Antworten (keine Teilpunkte)" : "Wähle EINE beste Antwort"}</span>
           <span class="q-domain-badge">D${dom.id}: ${escapeHtml(dom.name)}</span>
         </div>
         <div class="q-prompt" style="font-size:1.02rem;">${escapeHtml(q.prompt)}</div>
@@ -1276,10 +1276,10 @@
         </div>
         <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-top:1.1rem;">
           <div style="display:flex;gap:0.5rem;">
-            <button class="btn btn-secondary" id="mock-prev" ${mockSession.idx === 0 ? "disabled" : ""}>&larr; Prev</button>
-            <button class="btn btn-secondary" id="mock-flag">${mockSession.flagged.has(q.id) ? "Unflag" : "Flag for Pass 2"}</button>
+            <button class="btn btn-secondary" id="mock-prev" ${mockSession.idx === 0 ? "disabled" : ""}>&larr; Zurück</button>
+            <button class="btn btn-secondary" id="mock-flag">${mockSession.flagged.has(q.id) ? "Markierung entfernen" : "Markieren (Durchgang 2)"}</button>
           </div>
-          <button class="btn btn-teal" id="mock-next" ${mockSession.idx === mockSession.questions.length - 1 ? "disabled" : ""}>Next &rarr;</button>
+          <button class="btn btn-teal" id="mock-next" ${mockSession.idx === mockSession.questions.length - 1 ? "disabled" : ""}>Weiter &rarr;</button>
         </div>
       </div>
     `;
@@ -1305,7 +1305,7 @@
       renderMockQuestion();
     });
     document.getElementById("mock-finish-btn").addEventListener("click", () => {
-      if (confirm("Submit your Mock Exam for scoring?")) finishMock();
+      if (confirm("Mock Exam jetzt zur Auswertung abgeben?")) finishMock();
     });
   }
 
@@ -1332,22 +1332,22 @@
     const pct = Math.round((correct / mockSession.questions.length) * 100);
     const statusCls = pct >= 75 ? "callout-success" : pct >= 65 ? "callout-info" : "callout-warn";
     const statusMsg = pct >= 75
-      ? "Exam-Ready! (Exceeds the 75% target readiness gate)"
+      ? "Prüfungsreif! (Übertrifft die 75%-Zielmarke)"
       : pct >= 65
-        ? "Passed (65%+), keep drilling weak domains to reach 75%+ safety margin."
-        : "Below 65% pass line — review missed domains in Read the Docs before retrying.";
+        ? "Bestanden (65%+), trainiere schwächere Domains weiter bis zum 75%-Sicherheitspuffer."
+        : "Unter der 65%-Bestehensgrenze — wiederhole die verfehlten Domains in Read the Docs vor dem nächsten Versuch.";
 
     document.getElementById("mock-root").innerHTML = `
       <div class="callout ${statusCls}">
-        <strong>Final Score: ${correct} / ${mockSession.questions.length} (${pct}%)</strong> — ${statusMsg}
+        <strong>Endergebnis: ${correct} / ${mockSession.questions.length} (${pct}%)</strong> — ${statusMsg}
       </div>
       <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
-        <button class="btn btn-primary" id="mock-restart-btn">New Mock Exam</button>
+        <button class="btn btn-primary" id="mock-restart-btn">Neues Mock Exam</button>
       </div>
       <div class="panel-box" style="margin-bottom:1.25rem;">
-        <h2>Domain Score Breakdown</h2>
+        <h2>Auswertung nach Domains</h2>
         <table class="matrix-table">
-          <thead><tr><th>Domain</th><th>Correct</th><th>Score</th></tr></thead>
+          <thead><tr><th>Domain</th><th>Richtig</th><th>Ergebnis</th></tr></thead>
           <tbody>
             ${window.DOMAINS_1Z0_171.filter((d) => domStats[d.id].total > 0).map((d) => {
               const s = domStats[d.id];
@@ -1357,12 +1357,12 @@
         </table>
       </div>
       <div class="panel-box">
-        <h2>Question-by-Question Review</h2>
+        <h2>Auswertung Frage für Frage</h2>
         ${details.map(({ q, i, picked, isRight }) => `
           <div class="question-block">
             <div class="q-header">
-              <span>Q${i + 1} (${q.id})</span>
-              <strong style="color:${isRight ? "#166534" : "#c74634"}">${isRight ? "CORRECT" : "MISSED"}</strong>
+              <span>Frage ${i + 1} (${q.id})</span>
+              <strong style="color:${isRight ? "#166534" : "#c74634"}">${isRight ? "RICHTIG" : "FALSCH"}</strong>
             </div>
             <div class="q-prompt">${escapeHtml(q.prompt)}</div>
             <div class="q-options">
@@ -1371,7 +1371,7 @@
                 return `<div class="q-option ${cls}">${escapeHtml(opt)}</div>`;
               }).join("")}
             </div>
-            <p class="muted-sm" style="margin-top:0.45rem;"><strong>Explanation:</strong> ${escapeHtml(q.explanation)}</p>
+            <p class="muted-sm" style="margin-top:0.45rem;"><strong>Erklärung:</strong> ${escapeHtml(q.explanation)}</p>
           </div>
         `).join("")}
       </div>

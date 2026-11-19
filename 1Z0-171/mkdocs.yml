@@ -1,12 +1,12 @@
-site_name: "Oracle 1Z0-171 SQL Zero-to-Certified Handbook"
-site_description: "200-Lesson Beginner Curriculum for Oracle AI Database SQL Associate (1Z0-171) using SCOTT/TIGER and HR schemas"
+site_name: "Oracle 1Z0-171 SQL Zero-to-Certified Handbuch"
+site_description: "200-Lektionen-Einsteiger-Curriculum für Oracle AI Database SQL Associate (1Z0-171) mit SCOTT/TIGER und HR Schema"
 site_url: "https://sql-schulung.readthedocs.io/"
 repo_url: "https://github.com/chatelao/sql-schulung"
 repo_name: "chatelao/sql-schulung"
 
 theme:
   name: material
-  language: en
+  language: de
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -14,14 +14,14 @@ theme:
       accent: teal
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: In den Dark Mode wechseln
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: deep orange
       accent: teal
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode
+        name: In den Light Mode wechseln
   features:
     - navigation.tabs
     - navigation.sections
@@ -49,18 +49,18 @@ markdown_extensions:
   - def_list
 
 nav:
-  - Home: index.md
-  - Getting Started:
-      - Variant A (In-House Oracle DB): getting-started/variant-a-inhouse.md
-      - Variant B (Free Online Cloud): getting-started/variant-b-online.md
-      - FreeSQL Lab Pack & Live Sandboxes: labs/freesql-upload-pack.md
-      - 200-Lesson Pacing & Schedules: getting-started/lesson-schedule.md
-  - Sample Schemas:
-      - Classic SCOTT/TIGER Schema: schemas/scott-tiger.md
-      - Modern HR Schema Overview: schemas/hr-schema.md
-  - 200-Lesson Textbook:
-      - "Phase 1 (L001–L020): Foundations & SELECT": phases/phase-01-foundations.md
-      - "Phase 2 (L021–L042): Filtering, Sorting & Variables": phases/phase-02-filtering-sorting.md
+  - Start: index.md
+  - Einstieg & Setup:
+      - Variante A (In-House Oracle DB): getting-started/variant-a-inhouse.md
+      - Variante B (Kostenlose Online-Cloud): getting-started/variant-b-online.md
+      - FreeSQL Lab Pack & Live-Sandboxes: labs/freesql-upload-pack.md
+      - 200-Lektionen-Zeitplan & Pacing: getting-started/lesson-schedule.md
+  - Beispiel-Schemas:
+      - Klassisches SCOTT/TIGER Schema: schemas/scott-tiger.md
+      - Modernes HR Schema (Überblick): schemas/hr-schema.md
+  - 200-Lektionen-Lehrbuch:
+      - "Phase 1 (L001–L020): Grundlagen & SELECT": phases/phase-01-foundations.md
+      - "Phase 2 (L021–L042): Filtern, Sortieren & Variables": phases/phase-02-filtering-sorting.md
       - "Phase 3 (L043–L068): Single-Row & Conversion Functions": phases/phase-03-functions.md
       - "Phase 4 (L069–L082): Grouping & Aggregating": phases/phase-04-aggregation.md
       - "Phase 5 (L083–L102): Multi-Table Joins": phases/phase-05-joins.md
@@ -68,10 +68,10 @@ nav:
       - "Phase 7 (L123–L138): DML & Transactions": phases/phase-07-dml-tcl.md
       - "Phase 8 (L139–L162): DDL, Constraints, Views & Indexes": phases/phase-08-ddl-objects.md
       - "Phase 9 (L163–L178): Data Dictionary, Time Zones & DCL": phases/phase-09-dict-tz-dcl.md
-      - "Phase 10 (L179–L200): Exam Mastery & Mock Prep": phases/phase-10-exam-prep.md
+      - "Phase 10 (L179–L200): Prüfungstraining & Mock Exams": phases/phase-10-exam-prep.md
   - Checkpoints & Cheat Sheets:
-      - Identical Checkpoints (CP-0 to CP-5): checkpoints/benchmark-guide.md
+      - Identische Checkpoints (CP-0 bis CP-5): checkpoints/benchmark-guide.md
       - SQL Syntax & Clause Order: cheatsheets/sql-syntax.md
       - Functions & Format Models: cheatsheets/functions-reference.md
-      - ORA Error Troubleshooting: cheatsheets/ora-errors.md
-      - Top 1Z0-171 Exam Traps: cheatsheets/exam-traps.md
+      - ORA-Fehlerbehebung: cheatsheets/ora-errors.md
+      - Top 15 1Z0-171 Exam Traps: cheatsheets/exam-traps.md

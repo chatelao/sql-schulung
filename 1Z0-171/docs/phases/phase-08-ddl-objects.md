@@ -1,13 +1,13 @@
 # Phase 8: DDL, Constraints, Views, Sequences, Indexes & Synonyms (`L139`–`L162`)
 
-**Exam Domains**: Domain 8 (*DDL for Tables & Relationships*, 15%) + Domain 9 (*Indexes, Synonyms & Sequences*, 5%)
+**Exam Domains**: Domain 8 (*DDL for Tables & Relationships*, 15 %) + Domain 9 (*Indexes, Synonyms & Sequences*, 5 %)
 
 ---
 
 ## Data Types, `CREATE TABLE`, `CTAS` & `ALTER TABLE` (`L139`–`L144`)
 
-### `L139` — Object Naming Rules & Core Oracle Data Types
-- `VARCHAR2(n)`, `CHAR(n)`, `NUMBER(p, s)` (what happens when `s` is negative, e.g. `NUMBER(5, -2)` rounds to nearest hundred!), `DATE`, `CLOB`, `BLOB`, and 23ai native `BOOLEAN`.
+### `L139` — Object Naming Rules & zentrale Oracle Data Types
+- `VARCHAR2(n)`, `CHAR(n)`, `NUMBER(p, s)` (was passiert bei negativem `s`, z. B. rundet `NUMBER(5, -2)` auf den nächsten Hunderter!), `DATE`, `CLOB`, `BLOB` sowie das native `BOOLEAN` in 23ai.
 
 ### `L140` — `CREATE TABLE` & `DEFAULT` Values
 ```sql
@@ -19,28 +19,28 @@ CREATE TABLE projects (
 );
 ```
 
-### `L141` — `CREATE TABLE ... AS SELECT` (`CTAS`) Trap
-- **Exam Trap**: `CTAS` copies column names, data types, rows, and **only explicit `NOT NULL` constraints**. It does **not** copy `PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `CHECK`, or `DEFAULT` definitions!
+### `L141` — `CREATE TABLE ... AS SELECT` (`CTAS`) Falle
+- **Exam Trap**: `CTAS` kopiert Spaltennamen, Datentypen, Zeilen und **nur explizite `NOT NULL`-Constraints**. Es kopiert **keine** `PRIMARY KEY`-, `FOREIGN KEY`-, `UNIQUE`-, `CHECK`- oder `DEFAULT`-Definitionen!
 
 ### `L142` — `ALTER TABLE` (`ADD`, `MODIFY`, `DROP`, `RENAME`)
-- You can decrease `VARCHAR2` column width only if the table is empty or all existing values fit in the new size.
+- Die Länge einer `VARCHAR2`-Spalte lässt sich nur verkleinern, wenn die Tabelle leer ist oder alle vorhandenen Werte in die neue Größe passen.
 
 ### `L143` — `SET UNUSED` & `DROP UNUSED COLUMNS`
 ```sql
 ALTER TABLE projects SET UNUSED (start_date);
 ALTER TABLE projects DROP UNUSED COLUMNS;
 ```
-- Marking a column `UNUSED` is instant and hides it permanently before reclaiming space offline.
+- Das Markieren einer Spalte als `UNUSED` erfolgt sofort und verbirgt sie dauerhaft, bevor der Speicherplatz später offline freigegeben wird.
 
 ### `L144` — `TRUNCATE TABLE` vs. `DELETE` vs. `DROP TABLE ... PURGE`
-- `TRUNCATE` is **DDL** (auto-commits, cannot be rolled back, resets high-water mark, fires no DML triggers). `DROP TABLE ... PURGE` bypasses the Recycle Bin.
+- `TRUNCATE` ist **DDL** (auto-committet, kann nicht zurückgerollt werden, setzt die High-Water Mark zurück, löst keine DML Trigger aus). `DROP TABLE ... PURGE` umgeht den Recycle Bin.
 
 ---
 
 ## Constraints Deep Dive (`L145`–`L150`)
 
 ### `L145` — `NOT NULL`, `UNIQUE` & `PRIMARY KEY`
-- `UNIQUE` creates a unique index and permits **multiple `NULL` values**; `PRIMARY KEY` = `NOT NULL + UNIQUE`.
+- `UNIQUE` legt einen Unique Index an und erlaubt **mehrere `NULL`-Werte**; `PRIMARY KEY` = `NOT NULL + UNIQUE`.
 
 ### `L146` — `FOREIGN KEY` (`ON DELETE CASCADE` vs. `ON DELETE SET NULL`)
 ```sql
@@ -52,16 +52,17 @@ CREATE TABLE tasks (
 );
 ```
 
-### `L147` — Inline vs. Out-of-Line Constraint Syntax
-- `NOT NULL` can **only** be defined inline (or via `ALTER TABLE ... MODIFY`); multi-column constraints (`PRIMARY KEY (a, b)`) must be out-of-line.
+### `L147` — Inline- vs. Out-of-Line-Constraint-Syntax
+- `NOT NULL` kann **nur** inline definiert werden (oder per `ALTER TABLE ... MODIFY`); Multi-Column Constraints (`PRIMARY KEY (a, b)`) müssen out-of-line stehen.
 
-### `L148` — `CHECK` Constraints & Forbidden Expressions
-- `CHECK` constraints **cannot** reference `SYSDATE`, `USER`, `CURRVAL`/`NEXTVAL`, or subqueries (`ORA-02436`).
+### `L148` — `CHECK` Constraints & verbotene Ausdrücke
+- `CHECK` Constraints **dürfen nicht** auf `SYSDATE`, `USER`, `CURRVAL`/`NEXTVAL` oder Subqueries verweisen (`ORA-02436`).
 
 ### `L149` — `ENABLE`, `DISABLE`, `NOVALIDATE` & `DEFERRABLE`
-- `INITIALLY DEFERRED` checks constraints at `COMMIT` time rather than statement time.
+- `INITIALLY DEFERRED` prüft Constraints erst beim `COMMIT` statt sofort beim einzelnen Statement.
 
-### `L150` — `DROP TABLE ... CASCADE CONSTRAINTS` & Schema Build Lab
+### `L150` — `DROP TABLE ... CASCADE CONSTRAINTS` & Schema-Build-Lab
+- Erstelle und verknüpfe eine komplette Mini-Projektstruktur und räume Parent Tables sauber mit `CASCADE CONSTRAINTS` auf.
 
 ---
 
@@ -75,7 +76,7 @@ CREATE GLOBAL TEMPORARY TABLE cart_items (
 ```
 
 ### `L152` — Private Temporary Tables (`ORA$PTT_`)
-- In-memory, session-scoped tables whose **definition itself** disappears at transaction or session end (`ON COMMIT DROP DEFINITION` vs. `ON COMMIT PRESERVE DEFINITION`).
+- Session-gebundene In-Memory-Tabellen, deren **Definition selbst** am Transaktions- oder Session-Ende verschwindet (`ON COMMIT DROP DEFINITION` vs. `ON COMMIT PRESERVE DEFINITION`).
 
 ### `L153` — External Tables (`ORGANIZATION EXTERNAL`)
 ```sql
@@ -87,17 +88,17 @@ ORGANIZATION EXTERNAL (
   LOCATION ('emps.csv')
 );
 ```
-- Read-only via `ORACLE_LOADER` (supports `SELECT`, no `INSERT`/`UPDATE`/`DELETE` or indexes).
+- Read-only über `ORACLE_LOADER` (unterstützt `SELECT`, kein `INSERT`/`UPDATE`/`DELETE` und keine Indexes).
 
 ---
 
 ## Views (`L154`–`L157`)
 
 ### `L154` — `CREATE OR REPLACE [FORCE] VIEW`
-- `FORCE` creates the view even if the underlying base table does not exist yet or you lack privileges on it.
+- `FORCE` legt die View selbst dann an, wenn die zugrunde liegende Base Table noch nicht existiert oder Rechte darauf fehlen.
 
-### `L155` — Simple vs. Complex Views & DML Rules
-- DML (`DELETE`/`UPDATE`/`INSERT`) is blocked on views containing `DISTINCT`, `GROUP BY`, group functions, `SET` operators, or joins (unless key-preserved rules apply).
+### `L155` — Simple vs. Complex Views & DML-Regeln
+- DML (`DELETE`/`UPDATE`/`INSERT`) ist auf Views mit `DISTINCT`, `GROUP BY`, Group Functions, `SET` Operators oder Joins gesperrt (außer unter Key-Preserved-Regeln).
 
 ### `L156` — `WITH CHECK OPTION` & `WITH READ ONLY`
 ```sql
@@ -105,9 +106,10 @@ CREATE OR REPLACE VIEW dept20_emps AS
 SELECT empno, ename, sal, deptno FROM my_emp WHERE deptno = 20
 WITH CHECK OPTION CONSTRAINT chk_dept20;
 ```
-- `WITH CHECK OPTION` prevents inserting/updating rows through the view that would no longer match the view's `WHERE` clause (`deptno = 30` fails!).
+- `WITH CHECK OPTION` verhindert Inserts/Updates über die View, durch welche die Zeile nicht mehr der `WHERE`-Klausel der View entspräche (`deptno = 30` schlägt fehl!).
 
 ### `L157` — View Management & `DROP VIEW` Lab
+- Teste DML durch eine View mit und ohne `WITH CHECK OPTION` sowie `WITH READ ONLY`.
 
 ---
 
@@ -122,7 +124,7 @@ SELECT emp_seq.CURRVAL FROM dual; -- Fails with ORA-08002 if NEXTVAL not yet cal
 - `GENERATED ALWAYS AS IDENTITY` vs. `GENERATED BY DEFAULT ON NULL AS IDENTITY`.
 
 ### `L159` — Indexes (B-Tree, Unique, Composite, Function-Based, Invisible)
-- Oracle creates unique indexes **automatically** for `PRIMARY KEY` and `UNIQUE` constraints.
+- Oracle erstellt Unique Indexes **automatisch** für `PRIMARY KEY` und `UNIQUE` Constraints.
 - `CREATE INDEX idx_upper_ename ON my_emp(UPPER(ename)) INVISIBLE;`
 
 ### `L160` — Private & Public Synonyms
@@ -133,6 +135,7 @@ SELECT emp_seq.CURRVAL FROM dual; -- Fails with ORA-08002 if NEXTVAL not yet cal
 ## Checkpoint #4 (`L161`–`L162`)
 
 ### `L161` — Identical Checkpoint #4 (Assessment)
-- Target milestone: **75–85%** overall.
+- Ziel-Meilenstein: **75–85 %** gesamt.
 
-### `L162` — Progress Comparison & Reflection (`CP-4` vs. `CP-0..3`)
+### `L162` — Fortschrittsvergleich & Reflexion (`CP-4` vs. `CP-0..3`)
+- Prüfe dein Verlaufsdiagramm auf GitHub Pages und bereite die Endphase vor.

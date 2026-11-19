@@ -1,7 +1,7 @@
 # Phase 4: Grouping & Aggregating Data (`L069`–`L082`)
 
-**Exam Domain**: Domain 3 Part 2 (*Aggregate Functions*, ~7% of exam)  
-**Schemas Used**: `SCOTT.EMP`, `HR.EMPLOYEES`
+**Exam Domain**: Domain 3 Teil 2 (*Aggregate Functions*, ca. 7 % der Prüfung)  
+**Verwendete Schemas**: `SCOTT.EMP`, `HR.EMPLOYEES`
 
 ---
 
@@ -11,7 +11,7 @@
 ```sql
 SELECT MIN(sal), MAX(sal), ROUND(AVG(sal), 2), SUM(sal) FROM scott.emp;
 ```
-- `MIN` and `MAX` work on numbers, strings, and dates; `SUM` and `AVG` work on numbers only.
+- `MIN` und `MAX` funktionieren auf Zahlen, Strings und Datumsangaben; `SUM` und `AVG` nur auf Zahlen.
 
 ### `L070` — `COUNT(*)`, `COUNT(col)` & `COUNT(DISTINCT col)`
 ```sql
@@ -22,7 +22,7 @@ FROM scott.emp;
 -- Results: 14 | 4 | 5
 ```
 
-### `L071` — Proving the `AVG` + `NULL` Trap on `SCOTT.EMP.COMM`
+### `L071` — Die `AVG` + `NULL`-Falle auf `SCOTT.EMP.COMM` beweisen
 ```sql
 -- AVG(comm) = (300 + 500 + 1400 + 0) / 4 = 550
 -- AVG(NVL(comm, 0)) = 2200 / 14 = 157.14
@@ -31,16 +31,17 @@ SELECT AVG(comm) AS avg_recipients_only,
 FROM scott.emp;
 ```
 
-### `L072` — Combining Group Functions with Single-Row Columns (`ORA-00937`)
-- `SELECT ename, MAX(sal) FROM scott.emp;` fails with `ORA-00937: not a single-group group function` unless you use a `GROUP BY` or subquery.
+### `L072` — Group Functions mit Single-Row Columns kombinieren (`ORA-00937`)
+- `SELECT ename, MAX(sal) FROM scott.emp;` schlägt mit `ORA-00937: not a single-group group function` fehl, sofern kein `GROUP BY` oder keine Subquery verwendet wird.
 
-### `L073` — Aggregate Practice Lab on `HR.EMPLOYEES`
+### `L073` — Aggregate Practice Lab auf `HR.EMPLOYEES`
+- Vergleiche `COUNT(*)`, `COUNT(commission_pct)` und `AVG(NVL(commission_pct, 0))` auf `HR.EMPLOYEES`.
 
 ---
 
 ## `GROUP BY`, `HAVING` & Nested Aggregates (`L074`–`L078`)
 
-### `L074` — Grouping by a Single Column
+### `L074` — Gruppieren nach einer einzelnen Spalte
 ```sql
 SELECT deptno, COUNT(*) AS headcount, SUM(sal) AS payroll
 FROM scott.emp
@@ -48,14 +49,14 @@ GROUP BY deptno
 ORDER BY deptno;
 ```
 
-### `L075` — Grouping by Multiple Columns & Fixing `ORA-00979`
+### `L075` — Gruppieren nach mehreren Spalten & `ORA-00979` beheben
 ```sql
 SELECT deptno, job, COUNT(*), SUM(sal)
 FROM scott.emp
 GROUP BY deptno, job
 ORDER BY deptno, job;
 ```
-- **Rule**: Every non-aggregated column in `SELECT` **must** appear in `GROUP BY` (though columns in `GROUP BY` do *not* have to appear in `SELECT`).
+- **Regel**: Jede nicht aggregierte Spalte in `SELECT` **muss** in `GROUP BY` stehen (Spalten aus `GROUP BY` müssen aber *nicht* zwingend in `SELECT` erscheinen).
 
 ### `L076` — `WHERE` vs. `HAVING`
 ```sql
@@ -65,29 +66,30 @@ WHERE job <> 'PRESIDENT'          -- Filters individual rows BEFORE grouping
 GROUP BY deptno
 HAVING AVG(sal) > 2000;           -- Filters groups AFTER grouping
 ```
-- **Exam Trap**: You cannot put group functions (`AVG(sal) > 2000`) in `WHERE` (`ORA-00934`).
+- **Exam Trap**: Group Functions (`AVG(sal) > 2000`) dürfen niemals in `WHERE` stehen (`ORA-00934`).
 
-### `L077` — Nesting Group Functions (Maximum Depth = 2)
+### `L077` — Verschachtelte Group Functions (Maximale Tiefe = 2)
 ```sql
 -- Highest departmental average salary:
 SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;
 ```
-- **Exam Trap**: When nesting two group functions, `GROUP BY` is mandatory and **no** unaggregated column (like `deptno`) can be in the `SELECT` list!
+- **Exam Trap**: Beim Verschachteln zweier Group Functions ist `GROUP BY` Pflicht, und es darf **keine** unaggregierte Spalte (wie `deptno`) in der `SELECT`-Liste stehen!
 
 ### `L078` — Payroll Summary Lab (`HR.EMPLOYEES`)
+- Erstelle je `department_id` und `job_id` eine Übersicht über Headcount, Min/Max/Avg Salary und Gesamt-Payroll.
 
 ---
 
-## Consolidation & Checkpoint #2 (`L079`–`L082`)
+## Konsolidierung & Checkpoint #2 (`L079`–`L082`)
 
-### `L079` — Consolidation Lab (Functions + Grouping)
-- Build formatted summary reports combining `TO_CHAR`, `NVL`, `CASE`, `GROUP BY`, and `HAVING`.
+### `L079` — Konsolidierungs-Lab (Functions + Grouping)
+- Baue formatierte Zusammenfassungen, die `TO_CHAR`, `NVL`, `CASE`, `GROUP BY` und `HAVING` kombinieren.
 
-### `L080` — "Human Compiler" Drill #1 (No-IDE Code Reading)
-- Complete 15 code-reading questions on [GitHub Pages](https://chatelao.github.io/sql-schulung/) covering Phases 1–4 without executing them in a database first.
+### `L080` — "Human Compiler" Drill #1 (Code lesen ohne IDE)
+- Löse 15 Code-Reading-Fragen auf [GitHub Pages](https://chatelao.github.io/sql-schulung/) zu den Phasen 1–4, ohne sie vorab in einer Datenbank auszuführen.
 
 ### `L081` — Identical Checkpoint #2 (Assessment)
-- Re-take the identical 22-question assessment + 3 SQL tasks. Expect a big jump from Domain 3 (25% exam weight)!
+- Wiederhole das identische Assessment (22 Fragen + 3 SQL-Aufgaben). Durch Domain 3 (25 % Prüfungsgewicht) ist hier ein großer Leistungssprung zu erwarten!
 
-### `L082` — Progress Comparison & Reflection (`CP-2` vs. `CP-0..1`)
-- Inspect your longitudinal chart on GitHub Pages and log your reflection.
+### `L082` — Fortschrittsvergleich & Reflexion (`CP-2` vs. `CP-0..1`)
+- Prüfe dein Verlaufsdiagramm auf GitHub Pages und halte deine Reflexion fest.

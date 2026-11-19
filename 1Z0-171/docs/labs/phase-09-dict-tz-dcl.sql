@@ -1,6 +1,6 @@
 -- ============================================================================
 -- Phase 9 Lab Pack (L163-L178): Data Dictionary & Time Zones / Intervals
--- Note: Multi-user GRANT/REVOKE cascade labs require OCI Always Free or PDB!
+-- Hinweis: Multi-User GRANT/REVOKE-Cascade-Labs erfordern OCI Always Free oder PDB!
 -- ============================================================================
 
 -- L163-L166: Data Dictionary Views & COMMENT ON

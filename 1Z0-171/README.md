@@ -1,33 +1,33 @@
 # Oracle AI Database SQL Associate (1Z0-171)
 
-[![Read the Docs Handbook](https://img.shields.io/badge/Read%20the%20Docs-Handbook-8CA1AF?logo=readthedocs&logoColor=white)](https://sql-schulung.readthedocs.io/)
+[![Read the Docs Handbuch](https://img.shields.io/badge/Read%20the%20Docs-Handbuch-8CA1AF?logo=readthedocs&logoColor=white)](https://sql-schulung.readthedocs.io/)
 [![GitHub Pages Interactive Studio](https://img.shields.io/badge/GitHub%20Pages-Interactive%20Studio-222222?logo=githubpages&logoColor=white)](https://chatelao.github.io/sql-schulung/)
 
-## Exam Overview
+## Prüfungsüberblick (Exam Overview)
 
-The **Oracle AI Database SQL Associate (1Z0-171)** certification (also known as **Oracle Database 23ai SQL Associate**) validates a candidate's foundational understanding of SQL concepts and practical skills required to query, manipulate, and manage database objects in an Oracle Database environment.
+Die Zertifizierung **Oracle AI Database SQL Associate (1Z0-171)** (auch bekannt als **Oracle Database 23ai SQL Associate**) bestätigt fundierte Grundlagenkenntnisse in SQL-Konzepten sowie die praktische Fähigkeit, Daten und Datenbankobjekte in einer Oracle-Database-Umgebung abzufragen, zu manipulieren und zu verwalten.
 
-| Attribute | Details |
+| Merkmal | Details |
 | :--- | :--- |
 | **Exam Code** | 1Z0-171 |
 | **Exam Title** | Oracle AI Database SQL Associate |
 | **Target Version** | Oracle AI Database (23ai) |
-| **Format** | Multiple Choice |
-| **Number of Questions** | 60 |
-| **Duration** | 120 Minutes |
-| **Passing Score** | 65% (39/60 questions) |
-| **Prerequisites** | None |
+| **Format** | Multiple Choice (inkl. Multi-Select) |
+| **Anzahl Fragen** | 60 |
+| **Dauer** | 120 Minuten |
+| **Passing Score** | 65 % (39/60 Fragen) |
+| **Voraussetzungen** | Keine (Einstieg ohne Vorkenntnisse möglich) |
 
 > [!NOTE]
-> Despite the "AI Database" product branding (Oracle Database 23ai), the **1Z0-171** exam focuses purely on standard and Oracle SQL fundamentals rather than AI Vector Search, JSON, or PL/SQL procedural programming.
+> Trotz des Produktnamens „AI Database“ (Oracle Database 23ai) prüft das **1Z0-171**-Examen ausschließlich Standard- und Oracle-SQL-Grundlagen – nicht AI Vector Search, JSON oder prozedurale PL/SQL-Programmierung.
 
 ---
 
-## Exam Domains & Syllabus Weights
+## Exam Domains & Gewichtung
 
-The exam covers 11 domains testing theoretical relational concepts and hands-on SQL proficiency:
+Die Prüfung umfasst 11 Domains, die sowohl theoretische Relational-Database-Konzepte als auch praktische SQL-Kompetenz abdecken:
 
-| # | Exam Topic | Weight |
+| # | Exam Domain | Gewichtung |
 | :- | :--- | :---: |
 | 1 | **Relational Database Concepts** | 5% |
 | 2 | **Retrieving and Sorting Data** | 15% |
@@ -43,107 +43,107 @@ The exam covers 11 domains testing theoretical relational concepts and hands-on 
 
 ---
 
-## Detailed Topic Breakdown
+## Detaillierte Themenübersicht
 
-### 1. Relational Database Concepts (5%)
-- Theoretical and physical aspects of a relational database
-- Entity-Relationship Diagram (ERD) components and mapping to relational tables
-- Relating clauses in a SQL `SELECT` statement to components of an ERD
-- Core categories of SQL statements: Data Manipulation Language (DML), Data Definition Language (DDL), Data Control Language (DCL), and Transaction Control Language (TCL)
+### 1. Relational Database Concepts (5 %)
+- Theoretische und physische Aspekte einer Relational Database
+- Bestandteile eines Entity-Relationship Diagrams (ERD) und Abbildung auf relationale Tables
+- Zuordnung der Klauseln eines SQL-`SELECT`-Statements zu Komponenten eines ERD
+- Zentrale Kategorien von SQL-Statements: Data Manipulation Language (`DML`), Data Definition Language (`DDL`), Data Control Language (`DCL`) und Transaction Control Language (`TCL`)
 
-### 2. Retrieving and Sorting Data (15%)
-- Capabilities of the `SELECT` statement, column aliases, and string concatenation (`||`)
-- Arithmetic expressions, operator precedence rules, and handling `NULL` values in expressions
-- Eliminating duplicate rows with `DISTINCT`
-- Restricting rows with the `WHERE` clause, comparison operators (`=`, `<>`, `BETWEEN`, `IN`, `LIKE`, `IS NULL`), and logical operators (`AND`, `OR`, `NOT`)
-- Sorting query results using the `ORDER BY` clause (by column name, alias, or position; `ASC` / `DESC`; `NULLS FIRST` / `NULLS LAST`)
-- Limiting rows using the row limiting clause (`FETCH FIRST` / `OFFSET`)
-- Using substitution variables (`&` and `&&`) and `DEFINE` / `VERIFY` commands
+### 2. Retrieving and Sorting Data (15 %)
+- Möglichkeiten des `SELECT`-Statements, Column Aliases und String Concatenation (`||`)
+- Arithmetische Ausdrücke, Operator Precedence Rules und Umgang mit `NULL`-Werten in Ausdrücken
+- Entfernen doppelter Zeilen mit `DISTINCT`
+- Einschränken von Zeilen mit der `WHERE`-Klausel, Comparison Operators (`=`, `<>`, `BETWEEN`, `IN`, `LIKE`, `IS NULL`) und Logical Operators (`AND`, `OR`, `NOT`)
+- Sortieren von Abfrageergebnissen mit `ORDER BY` (nach Column Name, Alias oder Position; `ASC` / `DESC`; `NULLS FIRST` / `NULLS LAST`)
+- Begrenzen der Zeilenzahl über die Row Limiting Clause (`FETCH FIRST` / `OFFSET`)
+- Arbeiten mit Substitution Variables (`&` und `&&`) sowie den Kommandos `DEFINE` / `VERIFY`
 
-### 3. Using Functions (25%)
+### 3. Using Functions (25 %)
 - **Single-Row Functions**:
-  - Character functions (`UPPER`, `LOWER`, `INITCAP`, `CONCAT`, `SUBSTR`, `LENGTH`, `INSTR`, `LPAD`, `RPAD`, `TRIM`, `REPLACE`)
-  - Numeric functions (`ROUND`, `TRUNC`, `MOD`, `CEIL`, `FLOOR`)
-  - Date functions (`SYSDATE`, `MONTHS_BETWEEN`, `ADD_MONTHS`, `NEXT_DAY`, `LAST_DAY`, `ROUND`, `TRUNC`)
+  - Character Functions (`UPPER`, `LOWER`, `INITCAP`, `CONCAT`, `SUBSTR`, `LENGTH`, `INSTR`, `LPAD`, `RPAD`, `TRIM`, `REPLACE`)
+  - Numeric Functions (`ROUND`, `TRUNC`, `MOD`, `CEIL`, `FLOOR`)
+  - Date Functions (`SYSDATE`, `MONTHS_BETWEEN`, `ADD_MONTHS`, `NEXT_DAY`, `LAST_DAY`, `ROUND`, `TRUNC`)
 - **Conversion Functions**:
-  - Implicit vs. explicit data type conversion
-  - `TO_CHAR`, `TO_NUMBER`, and `TO_DATE` with format models
+  - Implicit vs. Explicit Data Type Conversion
+  - `TO_CHAR`, `TO_NUMBER` und `TO_DATE` mit Format Models
 - **General & Conditional Functions**:
-  - Handling nulls with `NVL`, `NVL2`, `NULLIF`, and `COALESCE`
-  - Conditional logic using `CASE` expressions and the `DECODE` function
+  - Null-Handling mit `NVL`, `NVL2`, `NULLIF` und `COALESCE`
+  - Bedingte Logik mit `CASE`-Ausdrücken und der Funktion `DECODE`
 - **Aggregate (Group) Functions**:
-  - `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` (and how they handle `NULL` values)
-  - Grouping rows with `GROUP BY` and filtering grouped data with `HAVING`
-  - Nesting group functions
+  - `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` (inkl. Verhalten bei `NULL`-Werten)
+  - Gruppieren mit `GROUP BY` und Filtern von Gruppen mit `HAVING`
+  - Verschachtelung von Group Functions (Nesting)
 
-### 4. Displaying Data from Multiple Tables (10%)
-- Writing `SELECT` statements to access data from more than one table using ANSI SQL-99 joins
-- Inner joins (`INNER JOIN`, `NATURAL JOIN`, `USING`, `ON`)
-- Outer joins (`LEFT OUTER JOIN`, `RIGHT OUTER JOIN`, `FULL OUTER JOIN`)
-- Self-joins and non-equijoins
-- Cartesian products (`CROSS JOIN`)
+### 4. Displaying Data from Multiple Tables (10 %)
+- Schreiben von `SELECT`-Statements über mehrere Tabellen mittels ANSI SQL-99 Joins
+- Inner Joins (`INNER JOIN`, `NATURAL JOIN`, `USING`, `ON`)
+- Outer Joins (`LEFT OUTER JOIN`, `RIGHT OUTER JOIN`, `FULL OUTER JOIN`)
+- Self-Joins und Non-Equijoins
+- Cartesian Products (`CROSS JOIN`)
 
-### 5. Using Subqueries (5%)
-- Defining problems that subqueries can solve and where subqueries can be placed (`WHERE`, `HAVING`, `FROM`, `SELECT`)
-- Single-row subqueries (`=`, `>`, `<`, `>=`, `<=`, `<>`)
-- Multiple-row subqueries (`IN`, `ANY`, `ALL`) and pitfalls with `NULL` values in `NOT IN`
-- Multiple-column subqueries
-- Correlated subqueries (including correlated `UPDATE` and `DELETE`) and `EXISTS` / `NOT EXISTS`
+### 5. Using Subqueries (5 %)
+- Einsatzszenarien für Subqueries und zulässige Positionen (`WHERE`, `HAVING`, `FROM`, `SELECT`)
+- Single-Row Subqueries (`=`, `>`, `<`, `>=`, `<=`, `<>`)
+- Multiple-Row Subqueries (`IN`, `ANY`, `ALL`) sowie Fallstricke mit `NULL`-Werten bei `NOT IN`
+- Multiple-Column Subqueries
+- Correlated Subqueries (inkl. Correlated `UPDATE` und `DELETE`) sowie `EXISTS` / `NOT EXISTS`
 
-### 6. Using SET Operators (5%)
-- Rules and guidelines for matching `SELECT` lists across compound queries
-- Combining results with `UNION`, `UNION ALL`, `INTERSECT`, and `MINUS` / `EXCEPT`
-- Controlling sort order with `ORDER BY` in set operations
+### 6. Using SET Operators (5 %)
+- Regeln für übereinstimmende `SELECT`-Listen in Compound Queries
+- Kombinieren von Ergebnissen mit `UNION`, `UNION ALL`, `INTERSECT` und `MINUS` / `EXCEPT`
+- Steuerung der Sortierreihenfolge mit `ORDER BY` bei Set Operations
 
-### 7. Managing Tables with DML (5%)
-- Adding, modifying, and removing rows using `INSERT`, `UPDATE`, and `DELETE`
-- Multi-table `INSERT` statements (unconditional `INSERT ALL`, conditional `INSERT ALL`, conditional `INSERT FIRST`)
-- Upserting data with the `MERGE` statement
-- Database transaction control: `COMMIT`, `ROLLBACK`, `SAVEPOINT`, implicit commits, and read consistency / locking basics
+### 7. Managing Tables with DML (5 %)
+- Einfügen, Ändern und Löschen von Zeilen mittels `INSERT`, `UPDATE` und `DELETE`
+- Multi-Table `INSERT`-Statements (unconditional `INSERT ALL`, conditional `INSERT ALL`, conditional `INSERT FIRST`)
+- Upserts mit dem `MERGE`-Statement
+- Transaction Control: `COMMIT`, `ROLLBACK`, `SAVEPOINT`, Implicit Commits sowie Grundlagen zu Read Consistency und Locking
 
-### 8. DDL for Tables and Relationships (15%)
-- Naming rules, table structures, and core Oracle data types (`VARCHAR2`, `CHAR`, `NUMBER`, `DATE`, `CLOB`, `BLOB`, `BOOLEAN` in 23ai)
-- Creating tables (`CREATE TABLE`, `CREATE TABLE AS SELECT`)
-- Altering table definitions (`ALTER TABLE` to add, modify, drop columns, or `SET UNUSED`)
-- Defining and managing constraints (`PRIMARY KEY`, `FOREIGN KEY` with `ON DELETE CASCADE` / `ON DELETE SET NULL`, `UNIQUE`, `NOT NULL`, `CHECK`)
-- Enabling, disabling, and deferring constraints
-- Dropping and truncating tables (`DROP TABLE ... PURGE`, `TRUNCATE TABLE`)
-- Creating and using Temporary Tables and External Tables
-- Creating, querying, modifying, and dropping Views (`CREATE OR REPLACE VIEW`, `WITH CHECK OPTION`, `WITH READ ONLY`)
+### 8. DDL for Tables and Relationships (15 %)
+- Naming Rules, Tabellenstrukturen und zentrale Oracle Data Types (`VARCHAR2`, `CHAR`, `NUMBER`, `DATE`, `CLOB`, `BLOB`, `BOOLEAN` in 23ai)
+- Erstellen von Tabellen (`CREATE TABLE`, `CREATE TABLE AS SELECT`)
+- Anpassen von Tabellendefinitionen (`ALTER TABLE` zum Hinzufügen, Ändern, Löschen von Columns oder `SET UNUSED`)
+- Definieren und Verwalten von Constraints (`PRIMARY KEY`, `FOREIGN KEY` mit `ON DELETE CASCADE` / `ON DELETE SET NULL`, `UNIQUE`, `NOT NULL`, `CHECK`)
+- Aktivieren, Deaktivieren und Zurückstellen (`ENABLE`, `DISABLE`, `DEFERRABLE`) von Constraints
+- Löschen und Leeren von Tabellen (`DROP TABLE ... PURGE`, `TRUNCATE TABLE`)
+- Erstellen und Verwenden von Temporary Tables und External Tables
+- Erstellen, Abfragen, Ändern und Löschen von Views (`CREATE OR REPLACE VIEW`, `WITH CHECK OPTION`, `WITH READ ONLY`)
 
-### 9. Managing Indexes, Synonyms, and Sequences (5%)
-- Creating, modifying, and dropping sequences (`CREATE SEQUENCE`, `NEXTVAL`, `CURRVAL`, `IDENTITY` columns)
-- Creating and managing indexes (B-tree, unique, composite, function-based, visible/invisible) and understanding when indexes are created automatically
-- Creating and dropping private and public synonyms (`CREATE SYNONYM`, `CREATE PUBLIC SYNONYM`)
+### 9. Managing Indexes, Synonyms, and Sequences (5 %)
+- Erstellen, Ändern und Löschen von Sequences (`CREATE SEQUENCE`, `NEXTVAL`, `CURRVAL`, `IDENTITY`-Columns)
+- Erstellen und Verwalten von Indexes (B-tree, Unique, Composite, Function-Based, Visible/Invisible) und wann Indexes automatisch erzeugt werden
+- Erstellen und Löschen privater und öffentlicher Synonyms (`CREATE SYNONYM`, `CREATE PUBLIC SYNONYM`)
 
-### 10. Data Dictionary and Time Zones (5%)
-- Querying Oracle Data Dictionary views (`USER_*`, `ALL_*`, `DBA_*`, `DICTIONARY` / `DICT`) to inspect schema objects, columns, and constraints
-- Adding comments to tables and columns (`COMMENT ON`)
-- Working with datetime and time zone data types: `TIMESTAMP`, `TIMESTAMP WITH TIME ZONE`, `TIMESTAMP WITH LOCAL TIME ZONE`
-- Interval data types: `INTERVAL YEAR TO MONTH`, `INTERVAL DAY TO SECOND`
-- Datetime functions: `CURRENT_DATE`, `CURRENT_TIMESTAMP`, `LOCALTIMESTAMP`, `DBTIMEZONE`, `SESSIONTIMEZONE`, `EXTRACT`, `TZ_OFFSET`, `FROM_TZ`, `TO_TIMESTAMP`, `TO_YMINTERVAL`, `TO_DSINTERVAL`
+### 10. Data Dictionary and Time Zones (5 %)
+- Abfragen von Oracle Data Dictionary Views (`USER_*`, `ALL_*`, `DBA_*`, `DICTIONARY` / `DICT`) zur Inspektion von Schema-Objekten, Columns und Constraints
+- Hinzufügen von Kommentaren zu Tabellen und Spalten (`COMMENT ON`)
+- Arbeiten mit Datetime- und Time-Zone-Datentypen: `TIMESTAMP`, `TIMESTAMP WITH TIME ZONE`, `TIMESTAMP WITH LOCAL TIME ZONE`
+- Interval Data Types: `INTERVAL YEAR TO MONTH`, `INTERVAL DAY TO SECOND`
+- Datetime Functions: `CURRENT_DATE`, `CURRENT_TIMESTAMP`, `LOCALTIMESTAMP`, `DBTIMEZONE`, `SESSIONTIMEZONE`, `EXTRACT`, `TZ_OFFSET`, `FROM_TZ`, `TO_TIMESTAMP`, `TO_YMINTERVAL`, `TO_DSINTERVAL`
 
-### 11. Controlling User Access (5%)
-- Differentiating between system privileges and object privileges
-- Granting and revoking privileges (`GRANT`, `REVOKE`, `WITH ADMIN OPTION`, `WITH GRANT OPTION`)
-- Creating, granting, and managing database roles (`CREATE ROLE`)
-- Changing passwords and understanding schema object access
+### 11. Controlling User Access (5 %)
+- Unterscheidung zwischen System Privileges und Object Privileges
+- Vergeben und Entziehen von Rechten (`GRANT`, `REVOKE`, `WITH ADMIN OPTION`, `WITH GRANT OPTION`)
+- Erstellen, Zuweisen und Verwalten von Database Roles (`CREATE ROLE`)
+- Passwortänderung und Verständnis des Zugriffs auf Schema-Objekte
 
 ---
 
-## Comparison: 1Z0-171 vs. 1Z0-071
+## Vergleich: 1Z0-171 vs. 1Z0-071
 
-| Feature | 1Z0-171 (Oracle AI Database SQL) | 1Z0-071 (Oracle Database SQL) |
+| Merkmal | 1Z0-171 (Oracle AI Database SQL) | 1Z0-071 (Oracle Database SQL) |
 | :--- | :--- | :--- |
 | **Target Database** | Oracle Database 23ai | Oracle Database 12c / 19c |
-| **Questions** | 60 | 63 |
-| **Time Limit** | 120 minutes | 120 minutes |
-| **Passing Score** | 65% (39 correct answers) | 63% (40 correct answers) |
-| **Credential Earned** | Oracle AI Database SQL Certified Associate | Oracle Database SQL Certified Associate |
+| **Anzahl Fragen** | 60 | 63 |
+| **Zeitlimit** | 120 Minuten | 120 Minuten |
+| **Passing Score** | 65 % (39 richtige Antworten) | 63 % (40 richtige Antworten) |
+| **Zertifizierung** | Oracle AI Database SQL Certified Associate | Oracle Database SQL Certified Associate |
 
 ---
 
-## Official Resources
+## Offizielle Ressourcen
 
 - [Oracle MyLearn: Oracle AI Database SQL Associate (1Z0-171)](https://mylearn.oracle.com/ou/exam/oracle-ai-database-sql-associate-1z0-171/38560/138638/219330)
 - [Oracle Database 23ai SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/)

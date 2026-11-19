@@ -1,30 +1,30 @@
-# SQL Syntax & Logical Execution Order Cheat Sheet
+# SQL Syntax & Logical Execution Order — Cheat Sheet
 
-## Logical Query Processing Order vs. Written Order
+## Logische Verarbeitungsreihenfolge vs. Schreibreihenfolge
 
-Even though you **write** a query top-to-bottom starting with `SELECT`, Oracle **evaluates** clauses in a strict logical sequence:
+Auch wenn du eine Query von oben nach unten beginnend mit `SELECT` **schreibst**, wertet Oracle die Klauseln in einer strikten logischen Reihenfolge aus:
 
-| Execution Step | Clause | What Happens | Alias Visibility |
+| Schritt | Clause | Was passiert | Sichtbarkeit von Aliases |
 | :---: | :--- | :--- | :--- |
-| **1** | `FROM` / `JOIN` | Identify tables and combine rows | Table aliases created here |
-| **2** | `WHERE` | Filter individual rows | Column aliases from `SELECT` **NOT** visible! |
-| **3** | `GROUP BY` | Collapse rows into groups | Column aliases from `SELECT` **NOT** visible! |
-| **4** | `HAVING` | Filter groups | Column aliases from `SELECT` **NOT** visible! |
-| **5** | `SELECT` | Compute expressions, functions & `DISTINCT` | Column aliases created here |
-| **6** | `ORDER BY` | Sort output rows | Column aliases **ARE** visible! |
-| **7** | `OFFSET` / `FETCH` | Limit returned rows | Uses sorted order from step 6 |
+| **1** | `FROM` / `JOIN` | Tabellen identifizieren und Zeilen kombinieren | Table Aliases entstehen hier |
+| **2** | `WHERE` | Einzelne Zeilen filtern | Column Aliases aus `SELECT` sind **NICHT** sichtbar! |
+| **3** | `GROUP BY` | Zeilen zu Gruppen zusammenfassen | Column Aliases aus `SELECT` sind **NICHT** sichtbar! |
+| **4** | `HAVING` | Gruppen filtern | Column Aliases aus `SELECT` sind **NICHT** sichtbar! |
+| **5** | `SELECT` | Ausdrücke, Functions & `DISTINCT` berechnen | Column Aliases entstehen hier |
+| **6** | `ORDER BY` | Ergebniszeilen sortieren | Column Aliases **SIND** sichtbar! |
+| **7** | `OFFSET` / `FETCH` | Rückgabezeilen begrenzen | Nutzt die Sortierung aus Schritt 6 |
 
 ---
 
-## Boolean & Arithmetic Operator Precedence
+## Boolesche & arithmetische Operator Precedence
 
-1. Parentheses `( )`
-2. Multiplication `*` / Division `/`
-3. Addition `+` / Subtraction `-` / Concatenation `||`
-4. Comparison operators (`=`, `<>`, `<`, `>`, `IN`, `BETWEEN`, `LIKE`, `IS NULL`)
+1. Klammern `( )`
+2. Multiplikation `*` / Division `/`
+3. Addition `+` / Subtraktion `-` / Concatenation `||`
+4. Comparison Operators (`=`, `<>`, `<`, `>`, `IN`, `BETWEEN`, `LIKE`, `IS NULL`)
 5. `NOT`
 6. `AND`
 7. `OR`
 
-!!! tip "Exam Rule of Thumb"
-    `AND` binds tighter than `OR`! Always wrap `OR` conditions in parentheses when mixing with `AND`.
+!!! tip "Prüfungs-Faustregel"
+    `AND` bindet stärker als `OR`! Setze `OR`-Bedingungen immer in Klammern, wenn du sie mit `AND` kombinierst.

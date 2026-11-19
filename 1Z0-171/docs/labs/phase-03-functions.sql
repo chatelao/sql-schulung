@@ -10,7 +10,7 @@ SELECT ename,
 FROM scott.emp
 WHERE UPPER(ename) = 'SMITH';
 
--- L047-L050: 1-Based SUBSTR, INSTR, LPAD
+-- L047-L050: 1-basiertes SUBSTR, INSTR, LPAD
 SELECT SUBSTR('SALESMAN', 1, 5) AS first_five,
        SUBSTR('SALESMAN', -3, 2) AS neg_slice,
        INSTR('CORPORATE FLOOR', 'OR', 3, 2) AS second_or,
@@ -18,7 +18,7 @@ SELECT SUBSTR('SALESMAN', 1, 5) AS first_five,
 FROM scott.emp
 WHERE ename = 'KING';
 
--- L051-L053: Numeric ROUND, TRUNC, MOD, CEIL, FLOOR
+-- L051-L053: Numerisches ROUND, TRUNC, MOD, CEIL, FLOOR
 SELECT ROUND(45.926, 2) AS r2,
        ROUND(45.926, -1) AS r_neg1,
        TRUNC(45.926, -1) AS t_neg1,
