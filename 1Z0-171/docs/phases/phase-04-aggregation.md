@@ -97,7 +97,7 @@ SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;
 - **SQL Reference**: [Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
 
 ### `L080` — "Human Compiler" Drill #1 (Code lesen ohne IDE)
-- Löse 15 Code-Reading-Fragen auf [GitHub Pages](https://chatelao.github.io/sql-schulung/) zu den Phasen 1–4, ohne sie vorab in einer Datenbank auszuführen.
+- Löse 15 Code-Reading-Fragen auf [GitHub Pages](https://chatelao.github.io/sql-schulung/#labs/compiler) zu den Phasen 1–4, ohne sie vorab in einer Datenbank auszuführen.
 
 ### `L081` — Identical Checkpoint #2 (Assessment)
 - Wiederhole das identische Assessment (22 Fragen + 3 SQL-Aufgaben). Durch Domain 3 (25 % Prüfungsgewicht) ist hier ein großer Leistungssprung zu erwarten!

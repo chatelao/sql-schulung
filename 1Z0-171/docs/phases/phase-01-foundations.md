@@ -8,7 +8,7 @@
 ## Checkpoint #0 (`L001`–`L002`)
 
 ### `L001` — Kursstart & Identical Checkpoint #0 (Baseline-Test)
-- **45-Min-Fokus**: Verschaffe dir einen Überblick über den 200-Lektionen-Lehrplan und absolviere das Baseline-Assessment **CP-0** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/).
+- **45-Min-Fokus**: Verschaffe dir einen Überblick über den 200-Lektionen-Lehrplan und absolviere das Baseline-Assessment **CP-0** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/#checkpoints/CP-0).
 - **Anfänger-Regel**: Schlage während `CP-0` **nichts** nach. Raten ist ausdrücklich erlaubt und erwünscht – so erfasst du deine ehrliche Zero-Knowledge-Baseline und kannst deinen Lernfortschritt bis `CP-5` objektiv messen.
 
 ### `L002` — Baseline-Reflexion & Zielsetzung

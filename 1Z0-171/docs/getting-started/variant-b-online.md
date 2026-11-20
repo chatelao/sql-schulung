@@ -50,5 +50,5 @@ Browser-Worksheets verhalten sich bei zwei Prüfungsthemen leicht anders als die
 
 | Prüfungsthema | Im Browser (FreeSQL) | Im `1Z0-171`-Examen (`sqlplus`) | So deckt Variante B es ab |
 | :--- | :--- | :--- | :--- |
-| **Substitution Variables** (`&`, `&&`, `DEFINE`, `VERIFY`) | Zeigt Web-Dialog oder weicht bei `old:`/`new:` ab | Fragt interaktiv im CLI; `&&` definiert Session Variable; `SET VERIFY ON` druckt `old`/`new` | Nutze den **SQL\*Plus Simulator** in unserem [GitHub Pages Interactive Studio](https://chatelao.github.io/sql-schulung/) (`L038–L040`) |
+| **Substitution Variables** (`&`, `&&`, `DEFINE`, `VERIFY`) | Zeigt Web-Dialog oder weicht bei `old:`/`new:` ab | Fragt interaktiv im CLI; `&&` definiert Session Variable; `SET VERIFY ON` druckt `old`/`new` | Nutze den **SQL\*Plus Simulator** in unserem [GitHub Pages Interactive Studio](https://chatelao.github.io/sql-schulung/#labs/sqlplus) (`L038–L040`) |
 | **External Tables** (`ORGANIZATION EXTERNAL`) | Kein Zugriff auf Host-OS-Verzeichnisse in der Multi-Tenant-Cloud | Abgeprüft über DDL-Syntax & `DEFAULT DIRECTORY` / `ACCESS PARAMETERS` | Abgedeckt durch kommentierte DDL-Beispiele & „Human Compiler“-Fragen (`L151–L153`) |

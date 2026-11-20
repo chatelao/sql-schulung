@@ -6,7 +6,7 @@
 
 ## "Human Compiler" Clinics (`L179`–`L184`)
 
-Absolviere alle 6 Clinics im **Human Compiler**-Modus auf [GitHub Pages](https://chatelao.github.io/sql-schulung/) (vor dem Absenden ist keine Live-Datenbank erlaubt!):
+Absolviere alle 6 Clinics im **Human Compiler**-Modus auf [GitHub Pages](https://chatelao.github.io/sql-schulung/#labs/compiler) (vor dem Absenden ist keine Live-Datenbank erlaubt!):
 
 - **`L179` — Clinic 1**: `NULL`-Arithmetik, 3-Valued `WHERE`-Logik & `NOT IN`-Fallen
 - **`L180` — Clinic 2**: Verschachtelte Functions, `NVL`/`COALESCE`/`DECODE`-Typen & `TO_CHAR`/`TO_DATE`-Masks

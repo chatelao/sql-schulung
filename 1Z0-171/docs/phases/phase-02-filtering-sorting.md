@@ -167,7 +167,7 @@ UNDEFINE target_dept
 
 ### `L040` — Variante A CLI-Lab vs. Variante B Simulator
 - **Variante A**: Führe `L038–L039` direkt in `sqlcl`/`sqlplus` aus.
-- **Variante B**: Öffne den **SQL\*Plus Substitution Simulator** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/), um `old:`/`new:`-Ausgaben interaktiv zu üben.
+- **Variante B**: Öffne den **SQL\*Plus Substitution Simulator** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/#labs/sqlplus), um `old:`/`new:`-Ausgaben interaktiv zu üben.
 
 ---
 

@@ -68,12 +68,75 @@
     return v === null || v === undefined ? '<span class="null-pill">NULL</span>' : escapeHtml(v);
   }
 
+  let activeView = "curriculum";
+  let activeLab = "joins";
+  let activeSqlPlusPreset = "";
+  let isApplyingRoute = false;
+
+  function setRouteHash(hash, push = true) {
+    const normalized = hash.startsWith("#") ? hash : `#${hash}`;
+    const globalPermalink = document.getElementById("global-permalink");
+    if (globalPermalink) globalPermalink.href = normalized;
+    if (isApplyingRoute) return;
+    if (window.location.hash !== normalized) {
+      if (push) {
+        history.pushState(null, "", normalized);
+      } else {
+        history.replaceState(null, "", normalized);
+      }
+    }
+  }
+
+  function getCanonicalHashForView(view) {
+    if (view === "curriculum") {
+      const ph = phaseFilter ? phaseFilter.value : "ALL";
+      return ph && ph !== "ALL" ? `#curriculum/phase-${ph}` : "#curriculum";
+    }
+    if (view === "checkpoints") {
+      return `#checkpoints/${state.activeCheckpoint || "CP-0"}`;
+    }
+    if (view === "labs") {
+      if (activeLab === "joins") {
+        const mode = document.getElementById("join-mode-select")?.value || "INNER";
+        return `#labs/joins/${mode}`;
+      }
+      if (activeLab === "freesql") {
+        const pack = document.getElementById("freesql-pack-select")?.value || "phase-1";
+        return `#labs/freesql/${pack}`;
+      }
+      if (activeLab === "sqlplus" && activeSqlPlusPreset) {
+        return `#labs/sqlplus/${activeSqlPlusPreset}`;
+      }
+      return `#labs/${activeLab}`;
+    }
+    if (view === "flashcards") {
+      const dom = document.getElementById("fc-domain-filter")?.value || "ALL";
+      return dom && dom !== "ALL" ? `#flashcards/D${dom}` : "#flashcards";
+    }
+    if (view === "mock") {
+      return "#mock";
+    }
+    return "#curriculum";
+  }
+
+  function highlightAndScrollTo(el) {
+    if (!el) return;
+    document.querySelectorAll(".permalink-highlight").forEach((n) => n.classList.remove("permalink-highlight"));
+    el.classList.add("permalink-highlight");
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    setTimeout(() => el.classList.remove("permalink-highlight"), 3200);
+  }
+
   function switchView(view) {
+    activeView = view;
     document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
     document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === `view-${view}`));
   }
 
   function switchLabPane(lab) {
+    activeLab = lab;
     document.querySelectorAll(".subtab-btn").forEach((b) => b.classList.toggle("active", b.dataset.lab === lab));
     document.querySelectorAll(".lab-pane").forEach((p) => p.classList.toggle("active", p.id === `lab-${lab}`));
   }
@@ -124,8 +187,26 @@
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       switchView(btn.dataset.view);
+      setRouteHash(getCanonicalHashForView(btn.dataset.view));
     });
   });
+
+  const globalPermalinkEl = document.getElementById("global-permalink");
+  if (globalPermalinkEl) {
+    globalPermalinkEl.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const fullUrl = new URL(globalPermalinkEl.getAttribute("href") || "#curriculum", window.location.href).href;
+      try {
+        await navigator.clipboard.writeText(fullUrl);
+      } catch (_) {}
+      globalPermalinkEl.classList.add("copied");
+      globalPermalinkEl.textContent = "Kopiert!";
+      setTimeout(() => {
+        globalPermalinkEl.classList.remove("copied");
+        globalPermalinkEl.innerHTML = "&#x1F517; Permalink";
+      }, 1500);
+    });
+  }
 
   // =========================================================================
   // VIEW 1: 200-LESSON TRACKER
@@ -147,7 +228,10 @@
       renderVariantBanner();
     });
 
-    phaseFilter.addEventListener("change", renderPhases);
+    phaseFilter.addEventListener("change", () => {
+      renderPhases();
+      setRouteHash(phaseFilter.value === "ALL" ? "#curriculum" : `#curriculum/phase-${phaseFilter.value}`);
+    });
     lessonSearch.addEventListener("input", renderPhases);
     document.getElementById("reset-lessons-btn").addEventListener("click", () => {
       if (confirm("Alle 200 Lektions-Häkchen zurücksetzen?")) {
@@ -189,12 +273,13 @@
         if (filteredLessons.length === 0) return "";
         const phaseDone = p.lessons.filter((l) => doneSet.has(l.id)).length;
         return `
-          <div class="phase-block">
+          <div class="phase-block" id="phase-${p.id}">
             <div class="phase-header">
               <div class="phase-title-row">
                 <span class="phase-tag">Phase ${p.id}</span>
                 <strong>${escapeHtml(p.title.replace(/^Phase \d+:\s*/, ""))}</strong>
                 <span class="muted-sm" style="margin:0;">(${escapeHtml(p.examNote)})</span>
+                <a class="permalink-badge" href="#curriculum/phase-${p.id}" title="Permanente URL zu Phase ${p.id}">#phase-${p.id}</a>
               </div>
               <div class="phase-stats">
                 <span><strong>${phaseDone}</strong> / ${p.lessons.length} erledigt</span>
@@ -206,10 +291,13 @@
               ${filteredLessons.map((l) => {
                 const isDone = doneSet.has(l.id);
                 return `
-                  <label class="lesson-item ${isDone ? "done" : ""}">
+                  <label class="lesson-item ${isDone ? "done" : ""}" id="lesson-${l.id}">
                     <input type="checkbox" data-lesson-id="${l.id}" ${isDone ? "checked" : ""} />
-                    <div>
-                      <span class="lesson-id">${l.id} &middot; 45 Min.</span>
+                    <div style="width:100%;">
+                      <div class="lesson-id-row">
+                        <span class="lesson-id">${l.id} &middot; 45 Min.</span>
+                        <a class="lesson-permalink" href="#curriculum/${l.id}" title="Permanente URL zu ${l.id}" onclick="event.stopPropagation()">#${l.id}</a>
+                      </div>
                       <span class="lesson-title">${escapeHtml(l.title)}</span>
                       <span class="lesson-meta">${escapeHtml(l.tag)}</span>
                       ${l.refUrl ? `<a class="lesson-ref-link" href="${l.refUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">SQL Ref: ${escapeHtml(l.refLabel)} &nearr;</a>` : ""}
@@ -303,7 +391,10 @@
         : `Noch nicht absolviert &middot; Erwartet: ${slot.expected}`;
       return `
         <button class="cp-card-btn ${slot.id === activeId ? "active" : ""}" data-cp="${slot.id}">
-          <div class="cp-card-code">${slot.id} (${slot.lessons})</div>
+          <div class="lesson-id-row">
+            <span class="cp-card-code">${slot.id} (${slot.lessons})</span>
+            <a class="cp-permalink" href="#checkpoints/${slot.id}" title="Permanente URL zu ${slot.id}" onclick="event.stopPropagation()">#${slot.id}</a>
+          </div>
           <div style="font-size:0.84rem;font-weight:600;">${escapeHtml(slot.label)}</div>
           <div class="cp-card-score">${statusText}</div>
         </button>
@@ -315,6 +406,7 @@
         state.activeCheckpoint = btn.dataset.cp;
         saveState();
         renderCheckpointsUI();
+        setRouteHash(`#checkpoints/${btn.dataset.cp}`);
       });
     });
 
@@ -634,6 +726,7 @@
     document.querySelectorAll(".subtab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         switchLabPane(btn.dataset.lab);
+        setRouteHash(getCanonicalHashForView("labs"));
       });
     });
 
@@ -647,7 +740,10 @@
   // Lab A: Join & Set Visualizer
   function initJoinVisualizer() {
     const sel = document.getElementById("join-mode-select");
-    sel.addEventListener("change", renderJoinVisualizer);
+    sel.addEventListener("change", () => {
+      renderJoinVisualizer();
+      setRouteHash(`#labs/joins/${sel.value}`);
+    });
     document.getElementById("join-run-freesql-btn").addEventListener("click", () => {
       const sql = document.getElementById("join-sql-code").textContent;
       openInFreeSqlTab(sql);
@@ -871,7 +967,9 @@
 
     document.querySelectorAll("[data-preset]").forEach((btn) => {
       btn.addEventListener("click", () => {
+        activeSqlPlusPreset = btn.dataset.preset;
         input.value = SQLPLUS_PRESETS[btn.dataset.preset];
+        setRouteHash(`#labs/sqlplus/${btn.dataset.preset}`);
       });
     });
 
@@ -967,8 +1065,11 @@
         { k: "error", label: "Wirft ORA-Fehler" }
       ];
       return `
-        <div class="compiler-card">
-          <div class="q-header"><strong>Snippet ${i + 1} (${d.id})</strong></div>
+        <div class="compiler-card" id="drill-${d.id}">
+          <div class="q-header">
+            <strong>Snippet ${i + 1} (${d.id})</strong>
+            <a class="permalink-badge" href="#labs/compiler/${d.id}" title="Permanente URL zu ${d.id}">#${d.id}</a>
+          </div>
           <pre><code>${escapeHtml(d.sql)}</code></pre>
           <div class="compiler-actions">
             ${choices.map((c) => {
@@ -1021,6 +1122,7 @@
     loadFreeSqlPackByKey(`phase-${phaseId}`);
     switchView("labs");
     switchLabPane("freesql");
+    setRouteHash(`#labs/freesql/phase-${phaseId}`);
   }
 
   function openCustomSqlInFreeSqlLauncher(filename, sqlText) {
@@ -1032,6 +1134,7 @@
     setFreeSqlStatus("Query aus dem Join & SET Visualizer geladen.");
     switchView("labs");
     switchLabPane("freesql");
+    setRouteHash("#labs/freesql");
   }
 
   function initFreeSqlLauncher() {
@@ -1049,6 +1152,7 @@
 
     sel.addEventListener("change", () => {
       loadFreeSqlPackByKey(sel.value);
+      setRouteHash(`#labs/freesql/${sel.value}`);
       if (embedContainer && !embedContainer.hidden && embedFrame) {
         buildFreeSqlEmbedUrl(editor.value).then((url) => {
           embedFrame.src = url;
@@ -1104,6 +1208,21 @@
   let fcIndex = 0;
   let fcFlipped = false;
 
+  function applyFlashcardDomainFilter(val) {
+    const sel = document.getElementById("fc-domain-filter");
+    if (sel) sel.value = val;
+    fcDeck = val === "ALL"
+      ? window.FLASHCARDS_1Z0_171.slice()
+      : window.FLASHCARDS_1Z0_171.filter((c) => String(c.domainId) === String(val));
+    if (fcDeck.length === 0) {
+      fcDeck = window.FLASHCARDS_1Z0_171.slice();
+      if (sel) sel.value = "ALL";
+    }
+    fcIndex = 0;
+    fcFlipped = false;
+    renderFlashcard();
+  }
+
   function initFlashcards() {
     const sel = document.getElementById("fc-domain-filter");
     sel.innerHTML = `<option value="ALL">Alle 11 Domains (${window.FLASHCARDS_1Z0_171.length} Karten)</option>` +
@@ -1111,12 +1230,8 @@
 
     sel.addEventListener("change", () => {
       const val = sel.value;
-      fcDeck = val === "ALL"
-        ? window.FLASHCARDS_1Z0_171.slice()
-        : window.FLASHCARDS_1Z0_171.filter((c) => String(c.domainId) === val);
-      fcIndex = 0;
-      fcFlipped = false;
-      renderFlashcard();
+      applyFlashcardDomainFilter(val);
+      setRouteHash(val === "ALL" ? "#flashcards" : `#flashcards/D${val}`);
     });
 
     document.getElementById("fc-shuffle-btn").addEventListener("click", () => {
@@ -1380,10 +1495,215 @@
     document.getElementById("mock-restart-btn").addEventListener("click", renderMockIntro);
   }
 
+  // =========================================================================
+  // PERMANENT URL ROUTING
+  // =========================================================================
+  function applyRouteFromHash() {
+    const raw = (window.location.hash || "").replace(/^#\/?/, "");
+    if (!raw) {
+      isApplyingRoute = true;
+      switchView("curriculum");
+      setRouteHash("#curriculum", false);
+      isApplyingRoute = false;
+      return;
+    }
+
+    const [pathPart, queryPart] = raw.split("?");
+    const segments = pathPart.split("/").filter(Boolean);
+    const params = new URLSearchParams(queryPart || "");
+    const first = (segments[0] || "").toLowerCase();
+    const second = segments[1] || "";
+    const third = segments[2] || "";
+
+    isApplyingRoute = true;
+    try {
+      // Shorthands: #L042 or #phase-3 or #CP-2
+      if (/^l\d{3}$/i.test(first)) {
+        const lessonId = first.toUpperCase();
+        switchView("curriculum");
+        phaseFilter.value = "ALL";
+        lessonSearch.value = "";
+        renderPhases();
+        const target = document.getElementById(`lesson-${lessonId}`);
+        highlightAndScrollTo(target);
+        setRouteHash(`#curriculum/${lessonId}`, false);
+        return;
+      }
+      if (/^phase-(\d+)$/i.test(first)) {
+        const pId = first.match(/^phase-(\d+)$/i)[1];
+        switchView("curriculum");
+        phaseFilter.value = pId;
+        lessonSearch.value = "";
+        renderPhases();
+        const target = document.getElementById(`phase-${pId}`);
+        highlightAndScrollTo(target);
+        setRouteHash(`#curriculum/phase-${pId}`, false);
+        return;
+      }
+      if (/^cp-[0-5]$/i.test(first)) {
+        const cpId = first.toUpperCase();
+        switchView("checkpoints");
+        state.activeCheckpoint = cpId;
+        saveState();
+        renderCheckpointsUI();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setRouteHash(`#checkpoints/${cpId}`, false);
+        return;
+      }
+
+      if (first === "curriculum") {
+        switchView("curriculum");
+        const vParam = (params.get("variant") || "").toUpperCase();
+        if (vParam === "A" || vParam === "B") {
+          state.variant = vParam;
+          variantSelect.value = vParam;
+          saveState();
+          renderVariantBanner();
+        }
+        if (/^l\d{3}$/i.test(second)) {
+          const lessonId = second.toUpperCase();
+          phaseFilter.value = "ALL";
+          lessonSearch.value = "";
+          renderPhases();
+          const target = document.getElementById(`lesson-${lessonId}`);
+          highlightAndScrollTo(target);
+          setRouteHash(`#curriculum/${lessonId}`, false);
+        } else if (/^phase-(\d+)$/i.test(second)) {
+          const pId = second.match(/^phase-(\d+)$/i)[1];
+          phaseFilter.value = pId;
+          lessonSearch.value = "";
+          renderPhases();
+          const target = document.getElementById(`phase-${pId}`);
+          highlightAndScrollTo(target);
+          setRouteHash(`#curriculum/phase-${pId}`, false);
+        } else {
+          if (params.has("phase")) {
+            phaseFilter.value = params.get("phase") || "ALL";
+          }
+          if (params.has("q")) {
+            lessonSearch.value = params.get("q") || "";
+          }
+          renderPhases();
+          setRouteHash(getCanonicalHashForView("curriculum"), false);
+        }
+        return;
+      }
+
+      if (first === "checkpoints") {
+        switchView("checkpoints");
+        const cpMatch = second.toUpperCase();
+        if (/^CP-[0-5]$/.test(cpMatch)) {
+          state.activeCheckpoint = cpMatch;
+          saveState();
+        }
+        renderCheckpointsUI();
+        setRouteHash(`#checkpoints/${state.activeCheckpoint || "CP-0"}`, false);
+        return;
+      }
+
+      if (first === "labs") {
+        switchView("labs");
+        const labKey = second.toLowerCase() || activeLab || "joins";
+        const validLabs = ["joins", "slicer", "sqlplus", "compiler", "freesql"];
+        const targetLab = validLabs.includes(labKey) ? labKey : "joins";
+        switchLabPane(targetLab);
+
+        if (targetLab === "joins") {
+          const sel = document.getElementById("join-mode-select");
+          if (third && sel) {
+            const upperMode = third.toUpperCase();
+            if (Array.from(sel.options).some((o) => o.value === upperMode)) {
+              sel.value = upperMode;
+            }
+          }
+          renderJoinVisualizer();
+          setRouteHash(`#labs/joins/${sel ? sel.value : "INNER"}`, false);
+        } else if (targetLab === "slicer") {
+          if (params.has("text")) document.getElementById("slicer-text").value = params.get("text");
+          if (params.has("start")) document.getElementById("slicer-start").value = params.get("start");
+          if (params.has("len")) document.getElementById("slicer-len").value = params.get("len");
+          if (params.has("needle")) document.getElementById("instr-needle").value = params.get("needle");
+          if (params.has("occ")) document.getElementById("instr-occ").value = params.get("occ");
+          renderStringSlicer();
+          setRouteHash("#labs/slicer", false);
+        } else if (targetLab === "sqlplus") {
+          const presetKey = third.toLowerCase();
+          if (presetKey && SQLPLUS_PRESETS[presetKey]) {
+            activeSqlPlusPreset = presetKey;
+            document.getElementById("sqlplus-input").value = SQLPLUS_PRESETS[presetKey];
+            setRouteHash(`#labs/sqlplus/${presetKey}`, false);
+          } else {
+            setRouteHash("#labs/sqlplus", false);
+          }
+        } else if (targetLab === "compiler") {
+          if (third) {
+            const drillId = third.toUpperCase();
+            const drillEl = document.getElementById(`drill-${drillId}`);
+            highlightAndScrollTo(drillEl);
+            setRouteHash(drillEl ? `#labs/compiler/${drillId}` : "#labs/compiler", false);
+          } else {
+            setRouteHash("#labs/compiler", false);
+          }
+        } else if (targetLab === "freesql") {
+          const packs = window.FREESQL_LAB_PACKS || [];
+          const packMatch = packs.find((p) => p.key.toLowerCase() === third.toLowerCase());
+          if (packMatch) {
+            loadFreeSqlPackByKey(packMatch.key);
+            setRouteHash(`#labs/freesql/${packMatch.key}`, false);
+          } else {
+            const curPack = document.getElementById("freesql-pack-select")?.value || "phase-1";
+            setRouteHash(`#labs/freesql/${curPack}`, false);
+          }
+        }
+        return;
+      }
+
+      if (first === "flashcards") {
+        switchView("flashcards");
+        if (second) {
+          const cleaned = second.toUpperCase().replace(/^D/, "");
+          if (cleaned === "ALL") {
+            applyFlashcardDomainFilter("ALL");
+            setRouteHash("#flashcards", false);
+          } else if (/^\d+$/.test(cleaned)) {
+            applyFlashcardDomainFilter(cleaned);
+            setRouteHash(`#flashcards/D${cleaned}`, false);
+          } else {
+            setRouteHash(getCanonicalHashForView("flashcards"), false);
+          }
+        } else {
+          setRouteHash(getCanonicalHashForView("flashcards"), false);
+        }
+        return;
+      }
+
+      if (first === "mock") {
+        switchView("mock");
+        if (second.toLowerCase() === "sprint") {
+          startMock(15, 30 * 60);
+          setRouteHash("#mock/sprint", false);
+        } else if (second.toLowerCase() === "full") {
+          startMock(60, 120 * 60);
+          setRouteHash("#mock/full", false);
+        } else {
+          setRouteHash("#mock", false);
+        }
+        return;
+      }
+    } finally {
+      isApplyingRoute = false;
+    }
+  }
+
+  window.addEventListener("hashchange", applyRouteFromHash);
+  window.addEventListener("popstate", applyRouteFromHash);
+
   // Boot
   initCurriculum();
   initCheckpoints();
   initLabs();
   initFlashcards();
   initMockExam();
+  applyRouteFromHash();
 })();
+

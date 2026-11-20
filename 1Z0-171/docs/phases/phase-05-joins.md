@@ -8,7 +8,7 @@
 ## Join Mental Model & `CROSS JOIN` (`L083`–`L085`)
 
 ### `L083` — Warum Joins existieren & Row-Matching-Intuition
-- Nutze den **Join Visualizer** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/), um zu beobachten, wie jede der 14 Zeilen aus `SCOTT.EMP` ihre passende Zeile in `SCOTT.DEPT` nachschlägt.
+- Nutze den **Join Visualizer** auf [GitHub Pages](https://chatelao.github.io/sql-schulung/#labs/joins), um zu beobachten, wie jede der 14 Zeilen aus `SCOTT.EMP` ihre passende Zeile in `SCOTT.DEPT` nachschlägt.
 - **SQL Reference**: [Joins](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html)
 
 ### `L084` — Cartesian Products (`CROSS JOIN`)
