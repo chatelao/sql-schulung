@@ -4,12 +4,17 @@
 -- Hinweis: Keine '&'-Zeichen enthalten (kein interaktiver Prompt).
 -- =============================================================================
 
--- Cleanup (optional bei Wiederholung)
-DROP TABLE adv_org_emp PURGE;
-DROP TABLE adv_bom PURGE;
-DROP TABLE adv_logs PURGE;
-DROP TABLE adv_orders_json PURGE;
-DROP TABLE adv_catalog_xml PURGE;
+-- Cleanup (idempotent: auch beim allerersten Durchlauf fehlerfrei)
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE adv_org_emp PURGE';    EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE adv_bom PURGE';        EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE adv_logs PURGE';       EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE adv_orders_json PURGE'; EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE adv_catalog_xml PURGE'; EXCEPTION WHEN OTHERS THEN NULL; END;
+/
 
 -- -----------------------------------------------------------------------------
 -- 1. Modul 1: Hierarchien, Self-Joins & Rekursive CTEs
@@ -192,4 +197,59 @@ SELECT emp_name,
        salary - LAG(salary) OVER (ORDER BY salary DESC) AS diff_to_prev
 FROM adv_org_emp;
 
+-- -----------------------------------------------------------------------------
+-- 6. Modul 6: ROLLUP, OUTER APPLY, MATCH_RECOGNIZE & Execution Plans
+-- -----------------------------------------------------------------------------
+SELECT CASE WHEN GROUPING(deptno) = 1 THEN 'GESAMT' ELSE TO_CHAR(deptno) END AS dept,
+       CASE WHEN GROUPING(job) = 1    THEN 'SUBTOTAL' ELSE job END AS job_grp,
+       SUM(sal) AS total_sal
+FROM scott.emp
+GROUP BY ROLLUP(deptno, job);
+
+SELECT d.dname, top_emp.ename, top_emp.sal
+FROM scott.dept d
+OUTER APPLY (
+  SELECT e.ename, e.sal
+  FROM scott.emp e
+  WHERE e.deptno = d.deptno
+  ORDER BY e.sal DESC
+  FETCH FIRST 1 ROW ONLY
+) top_emp;
+
+WITH nums AS (
+  SELECT 1 n FROM dual UNION ALL SELECT 2 FROM dual UNION ALL SELECT 3 FROM dual
+  UNION ALL SELECT 5 FROM dual UNION ALL SELECT 6 FROM dual UNION ALL SELECT 9 FROM dual
+)
+SELECT start_n, end_n, island_len
+FROM nums
+MATCH_RECOGNIZE (
+  ORDER BY n
+  MEASURES FIRST(n) AS start_n, LAST(n) AS end_n, COUNT(*) AS island_len
+  PATTERN (strt consec*)
+  DEFINE consec AS n = PREV(n) + 1
+);
+
+EXPLAIN PLAN FOR
+SELECT e.ename, d.dname FROM scott.emp e JOIN scott.dept d ON e.deptno = d.deptno;
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
 COMMIT;
+
+-- -----------------------------------------------------------------------------
+-- 7. Selbststaendige Uebungsaufgaben (Loesungen in advanced-queries-solutions.sql)
+-- -----------------------------------------------------------------------------
+-- Aufgabe 1 (Modul 1): Zeige mit CONNECT BY den Pfad von 'Becker' (Bottom-Up) bis zum CEO.
+-- TODO: Deine Query hier
+
+-- Aufgabe 2 (Modul 2): Extrahiere aus adv_logs den API-Pfad nach path= per REGEXP_SUBSTR.
+-- TODO: Deine Query hier
+
+-- Aufgabe 3 (Modul 3): Berechne per JSON_TABLE den Gesamtbestellwert je order_id.
+-- TODO: Deine Query hier
+
+-- Aufgabe 4 (Modul 4): Berechne per XMLTABLE den Durchschnittspreis in adv_catalog_xml.
+-- TODO: Deine Query hier
+
+-- Aufgabe 5 (Modul 5): Finde die Top 2 Bestverdiener je deptno in SCOTT.EMP mittels DENSE_RANK.
+-- TODO: Deine Query hier
+

@@ -36,17 +36,21 @@
   ];
 
   function loadState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (_) {}
-    return {
+    const defaults = {
       completedLessons: [],
       variant: "B",
       checkpoints: {},
       activeCheckpoint: "CP-0",
-      compilerAnswers: {}
+      compilerAnswers: {},
+      compilerFilter: "ALL",
+      flashcardStatus: {},
+      mockHistory: []
     };
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return Object.assign({}, defaults, JSON.parse(raw));
+    } catch (_) {}
+    return defaults;
   }
 
   let state = loadState();
@@ -300,7 +304,11 @@
                       </div>
                       <span class="lesson-title">${escapeHtml(l.title)}</span>
                       <span class="lesson-meta">${escapeHtml(l.tag)}</span>
-                      ${l.refUrl ? `<a class="lesson-ref-link" href="${l.refUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">SQL Ref: ${escapeHtml(l.refLabel)} &nearr;</a>` : ""}
+                      <div style="display:flex;gap:0.65rem;flex-wrap:wrap;margin-top:0.2rem;">
+                        <a class="lesson-ref-link" href="${p.docsUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Handbuch &nearr;</a>
+                        ${l.toolHash ? `<a class="lesson-ref-link" href="${l.toolHash}" onclick="event.stopPropagation()">${escapeHtml(l.toolLabel)} &rarr;</a>` : ""}
+                        ${l.refUrl ? `<a class="lesson-ref-link" href="${l.refUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">SQL Ref: ${escapeHtml(l.refLabel)} &nearr;</a>` : ""}
+                      </div>
                     </div>
                   </label>
                 `;
@@ -474,17 +482,23 @@
       `;
     }).join("");
 
+    cpData.taskSql = cpData.taskSql || {};
     const tasksHtml = window.CHECKPOINT_SQL_TASKS.map((t) => {
       const done = !!cpData.tasksSelfGrade[t.id];
+      const userSql = cpData.taskSql[t.id] || "";
       return `
         <div class="question-block">
           <h3>${escapeHtml(t.title)}</h3>
           <p style="font-size:0.9rem;margin:0.3rem 0 0.6rem;">${escapeHtml(t.prompt)}</p>
-          <label style="font-size:0.86rem;display:flex;align-items:center;gap:0.45rem;margin-bottom:0.5rem;">
-            <input type="checkbox" class="cp-task-cb" data-task="${t.id}" ${done ? "checked" : ""} />
-            Ich habe diese Query bzw. dieses DDL sauber in einer Oracle DB geschrieben &amp; geprüft
-          </label>
-          ${showKey ? `<pre><code>${escapeHtml(t.reference)}</code></pre>` : `<span class="muted-sm">Musterlösung wird bei CP-5 (oder über Trainer-Freigabe) freigeschaltet.</span>`}
+          <textarea rows="4" class="cp-task-sql" data-task="${t.id}" placeholder="-- Schreibe hier zuerst dein SQL ohne Spicken..." style="width:100%;font-family:'JetBrains Mono',monospace;font-size:0.84rem;margin-bottom:0.5rem;">${escapeHtml(userSql)}</textarea>
+          <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">
+            <button type="button" class="btn btn-sm btn-teal cp-task-freesql" data-task="${t.id}">Meine Lösung in FreeSQL testen &nearr;</button>
+            <label style="font-size:0.86rem;display:flex;align-items:center;gap:0.45rem;">
+              <input type="checkbox" class="cp-task-cb" data-task="${t.id}" ${done ? "checked" : ""} />
+              Syntax, NULL-Sicherheit &amp; Ergebniszeilen in einer Oracle DB erfolgreich geprüft
+            </label>
+          </div>
+          ${showKey ? `<pre><code>${escapeHtml(t.reference)}</code></pre>` : `<span class="muted-sm">Musterlösung wird bei CP-5 (oder über Notfall-Freigabe) freigeschaltet.</span>`}
         </div>
       `;
     }).join("");
@@ -511,7 +525,7 @@
         <div style="display:flex;gap:0.5rem;">
           ${cpData.submitted
             ? `<button class="btn btn-secondary" id="cp-retake-btn">${cpId} wiederholen</button>`
-            : `<button class="btn btn-primary" id="cp-submit-btn">${cpId} einreichen &amp; auswerten</button>`}
+            : `<span class="muted-sm">Erst Teil A, B und C (unten) ausfüllen, dann auswerten.</span>`}
         </div>
       </div>
       ${resultBanner}
@@ -521,6 +535,7 @@
       ${tasksHtml}
       <h3 style="margin-top:1.25rem;">Teil C — Selbsteinschätzung je Domain (1 = Raten, 5 = Prüfungsreif)</h3>
       <div class="confidence-grid">${confHtml}</div>
+      ${!cpData.submitted ? `<div style="margin:1.1rem 0 1.4rem;"><button class="btn btn-primary" id="cp-submit-btn">${cpId} jetzt einreichen &amp; auswerten</button></div>` : ""}
       <h3>Lektion 2 — Strukturiertes Reflexionsprotokoll</h3>
       <div style="display:grid;gap:0.75rem;">
         <div class="field">
@@ -553,6 +568,20 @@
       });
     });
 
+    cpWorkspace.querySelectorAll(".cp-task-sql").forEach((ta) => {
+      ta.addEventListener("input", () => {
+        cpData.taskSql[ta.dataset.task] = ta.value;
+        saveState();
+      });
+    });
+
+    cpWorkspace.querySelectorAll(".cp-task-freesql").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const sql = (cpData.taskSql[btn.dataset.task] || "").trim();
+        openInFreeSqlTab(sql || "-- Schreibe zuerst deine Query für " + btn.dataset.task);
+      });
+    });
+
     cpWorkspace.querySelectorAll(".cp-task-cb").forEach((cb) => {
       cb.addEventListener("change", () => {
         cpData.tasksSelfGrade[cb.dataset.task] = cb.checked;
@@ -580,6 +609,10 @@
     const submitBtn = document.getElementById("cp-submit-btn");
     if (submitBtn) {
       submitBtn.addEventListener("click", () => {
+        const allDefault = window.DOMAINS_1Z0_171.every((d) => (cpData.confidence[d.id] || 2) === 2);
+        if (allDefault && !confirm("Alle Confidence-Slider (Teil C) stehen noch auf 2/5. Trotzdem jetzt auswerten?")) {
+          return;
+        }
         cpData.submitted = true;
         cpData.submittedAt = new Date().toISOString();
         saveState();
@@ -1045,15 +1078,33 @@
 
   // Lab D: Human Compiler
   function initHumanCompiler() {
+    const sel = document.getElementById("compiler-filter-select");
+    if (sel) {
+      sel.value = state.compilerFilter || "ALL";
+      sel.addEventListener("change", () => {
+        state.compilerFilter = sel.value;
+        saveState();
+        renderHumanCompiler();
+        setRouteHash(sel.value === "ALL" ? "#labs/compiler" : `#labs/compiler/${sel.value}`);
+      });
+    }
     renderHumanCompiler();
   }
 
   function renderHumanCompiler() {
     const list = document.getElementById("compiler-list");
+    const filterVal = state.compilerFilter || "ALL";
+    const items = window.HUMAN_COMPILER_DRILLS.filter((d) => {
+      if (filterVal === "ALL") return true;
+      if (filterVal === "phase-1-4") return d.phaseGroup === "1-4";
+      if (filterVal.startsWith("clinic-")) return String(d.clinic) === filterVal.replace("clinic-", "");
+      return true;
+    });
+
     let correctCount = 0;
     let answeredCount = 0;
 
-    list.innerHTML = window.HUMAN_COMPILER_DRILLS.map((d, i) => {
+    list.innerHTML = items.map((d, i) => {
       const picked = state.compilerAnswers[d.id];
       if (picked) {
         answeredCount += 1;
@@ -1067,7 +1118,7 @@
       return `
         <div class="compiler-card" id="drill-${d.id}">
           <div class="q-header">
-            <strong>Snippet ${i + 1} (${d.id})</strong>
+            <strong>Snippet ${i + 1} (${d.id} &middot; Clinic ${d.clinic})</strong>
             <a class="permalink-badge" href="#labs/compiler/${d.id}" title="Permanente URL zu ${d.id}">#${d.id}</a>
           </div>
           <pre><code>${escapeHtml(d.sql)}</code></pre>
@@ -1086,7 +1137,7 @@
       `;
     }).join("");
 
-    document.getElementById("compiler-score-val").textContent = `${correctCount} / ${answeredCount}`;
+    document.getElementById("compiler-score-val").textContent = `${correctCount} / ${answeredCount} (${items.length} angezeigt)`;
     list.querySelectorAll(".hc-choice").forEach((btn) => {
       btn.addEventListener("click", () => {
         state.compilerAnswers[btn.dataset.hc] = btn.dataset.verdict;
@@ -1211,12 +1262,25 @@
   function applyFlashcardDomainFilter(val) {
     const sel = document.getElementById("fc-domain-filter");
     if (sel) sel.value = val;
-    fcDeck = val === "ALL"
-      ? window.FLASHCARDS_1Z0_171.slice()
-      : window.FLASHCARDS_1Z0_171.filter((c) => String(c.domainId) === String(val));
+    applyFlashcardFilters();
+  }
+
+  function applyFlashcardFilters() {
+    const domSel = document.getElementById("fc-domain-filter");
+    const phSel = document.getElementById("fc-phase-filter");
+    const unsureCb = document.getElementById("fc-unsure-only");
+    const domVal = domSel ? domSel.value : "ALL";
+    const phVal = phSel ? phSel.value : "ALL";
+    const unsureOnly = unsureCb ? unsureCb.checked : false;
+
+    fcDeck = window.FLASHCARDS_1Z0_171.filter((c) => {
+      if (domVal !== "ALL" && String(c.domainId) !== String(domVal)) return false;
+      if (phVal !== "ALL" && String(c.phaseId) !== String(phVal)) return false;
+      if (unsureOnly && state.flashcardStatus[c.id] === "known") return false;
+      return true;
+    });
     if (fcDeck.length === 0) {
       fcDeck = window.FLASHCARDS_1Z0_171.slice();
-      if (sel) sel.value = "ALL";
     }
     fcIndex = 0;
     fcFlipped = false;
@@ -1225,13 +1289,22 @@
 
   function initFlashcards() {
     const sel = document.getElementById("fc-domain-filter");
+    const phSel = document.getElementById("fc-phase-filter");
+    const unsureCb = document.getElementById("fc-unsure-only");
+
     sel.innerHTML = `<option value="ALL">Alle 11 Domains (${window.FLASHCARDS_1Z0_171.length} Karten)</option>` +
       window.DOMAINS_1Z0_171.map((d) => `<option value="${d.id}">D${d.id}: ${escapeHtml(d.name)}</option>`).join("");
 
+    if (phSel) {
+      phSel.innerHTML = `<option value="ALL">Alle Phasen</option>` +
+        window.CURRICULUM_PHASES.filter((p) => p.id <= 9).map((p) => `<option value="${p.id}">Phase ${p.id}</option>`).join("");
+      phSel.addEventListener("change", applyFlashcardFilters);
+    }
+    if (unsureCb) unsureCb.addEventListener("change", applyFlashcardFilters);
+
     sel.addEventListener("change", () => {
-      const val = sel.value;
-      applyFlashcardDomainFilter(val);
-      setRouteHash(val === "ALL" ? "#flashcards" : `#flashcards/D${val}`);
+      applyFlashcardFilters();
+      setRouteHash(sel.value === "ALL" ? "#flashcards" : `#flashcards/D${sel.value}`);
     });
 
     document.getElementById("fc-shuffle-btn").addEventListener("click", () => {
@@ -1276,6 +1349,26 @@
       fcFlipped = false;
       renderFlashcard();
     });
+    document.getElementById("fc-mark-known")?.addEventListener("click", () => {
+      const cur = fcDeck[fcIndex];
+      if (cur) {
+        state.flashcardStatus[cur.id] = "known";
+        saveState();
+        fcIndex = (fcIndex + 1) % fcDeck.length;
+        fcFlipped = false;
+        renderFlashcard();
+      }
+    });
+    document.getElementById("fc-mark-unsure")?.addEventListener("click", () => {
+      const cur = fcDeck[fcIndex];
+      if (cur) {
+        state.flashcardStatus[cur.id] = "unsure";
+        saveState();
+        fcIndex = (fcIndex + 1) % fcDeck.length;
+        fcFlipped = false;
+        renderFlashcard();
+      }
+    });
 
     renderFlashcard();
   }
@@ -1284,10 +1377,20 @@
     const c = fcDeck[fcIndex];
     const dom = window.DOMAINS_1Z0_171.find((d) => d.id === c.domainId);
     const card = document.getElementById("flashcard-card");
+    const status = state.flashcardStatus[c.id];
+    const statusLabel = status === "known" ? " · [Sicher]" : status === "unsure" ? " · [Wiederholen]" : "";
     card.classList.toggle("flipped", fcFlipped);
-    document.getElementById("fc-domain-tag").textContent = `D${dom.id}: ${dom.name} — ${fcFlipped ? "ANTWORT" : "FRAGE"}`;
+    document.getElementById("fc-domain-tag").textContent = `D${dom.id}: ${dom.name} (Phase ${c.phaseId}) — ${fcFlipped ? "ANTWORT" : "FRAGE"}${statusLabel}`;
     document.getElementById("fc-counter").textContent = `${fcIndex + 1} / ${fcDeck.length}`;
     document.getElementById("fc-body").textContent = fcFlipped ? c.a : c.q;
+
+    const summaryEl = document.getElementById("fc-mastery-summary");
+    if (summaryEl) {
+      const total = window.FLASHCARDS_1Z0_171.length;
+      const known = Object.values(state.flashcardStatus).filter((v) => v === "known").length;
+      const unsure = Object.values(state.flashcardStatus).filter((v) => v === "unsure").length;
+      summaryEl.textContent = `Lernstatus gesamt: ${known} / ${total} sicher gewusst · ${unsure} zum Wiederholen markiert`;
+    }
   }
 
   // =========================================================================
@@ -1302,30 +1405,78 @@
 
   function renderMockIntro() {
     if (mockTimerHandle) clearInterval(mockTimerHandle);
+    const hist = state.mockHistory || [];
+    const histHtml = hist.length > 0
+      ? `
+        <div class="panel-box" style="max-width:760px;margin-top:1rem;">
+          <h3>Bisherige Mock-Exam-Ergebnisse</h3>
+          <table class="matrix-table">
+            <thead><tr><th>Modus</th><th>Ergebnis</th><th>Datum</th></tr></thead>
+            <tbody>
+              ${hist.slice(-6).reverse().map((h) => `<tr><td>${escapeHtml(h.label)}</td><td><strong>${h.correct} / ${h.total} (${h.pct}%)</strong></td><td>${escapeHtml(h.date.slice(0, 10))}</td></tr>`).join("")}
+            </tbody>
+          </table>
+        </div>
+      `
+      : "";
+
     document.getElementById("mock-root").innerHTML = `
       <div class="panel-box" style="max-width:760px;">
         <h2>Modus der Exam Simulation wählen</h2>
-        <p class="muted-sm">Die Fragen spiegeln die offiziellen 1Z0-171-Domain-Gewichtungen wider. Bei Multi-Select-Fragen gibt es keine Teilpunkte — genau wie bei Pearson VUE / Oracle MyLearn.</p>
+        <p class="muted-sm">Zwei unabhängige 60-Fragen-Pools nach offizieller 1Z0-171-Gewichtung (keine Teilpunkte bei Multi-Select) sowie gezielter Domain-Fokus-Drill für Remediation (<code>L190–L192</code>).</p>
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;">
-          <button class="btn btn-primary" id="start-full-mock">Vollständige 60-Fragen-Prüfung starten (120 Min.)</button>
+          <button class="btn btn-primary" id="start-mock-1">Mock Exam #1 starten (60 Fragen / 120 Min.)</button>
+          <button class="btn btn-teal" id="start-mock-2">Mock Exam #2 starten (60 neue Fragen / 120 Min.)</button>
           <button class="btn btn-secondary" id="start-sprint-mock">Schneller 15-Fragen-Sprint (30 Min.)</button>
         </div>
+        <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2ddd2;">
+          <label for="mock-domain-select"><strong>Domain-Fokus-Drill:</strong></label>
+          <select id="mock-domain-select">
+            ${window.DOMAINS_1Z0_171.map((d) => `<option value="${d.id}">D${d.id}: ${escapeHtml(d.name)} (${d.weight}%)</option>`).join("")}
+          </select>
+          <button class="btn btn-secondary" id="start-domain-drill" type="button">Domain-Drill starten</button>
+        </div>
       </div>
+      ${histHtml}
     `;
-    document.getElementById("start-full-mock").addEventListener("click", () => startMock(60, 120 * 60));
-    document.getElementById("start-sprint-mock").addEventListener("click", () => startMock(15, 30 * 60));
+    document.getElementById("start-mock-1").addEventListener("click", () => startMock(60, 120 * 60, "exam-1"));
+    document.getElementById("start-mock-2").addEventListener("click", () => startMock(60, 120 * 60, "exam-2"));
+    document.getElementById("start-sprint-mock").addEventListener("click", () => startMock(15, 30 * 60, "sprint"));
+    document.getElementById("start-domain-drill").addEventListener("click", () => {
+      const dId = Number(document.getElementById("mock-domain-select").value);
+      startMock(30, 30 * 60, `domain-${dId}`);
+    });
   }
 
-  function startMock(count, seconds) {
-    const pool = window.MOCK_EXAM_QUESTIONS.slice();
-    if (count < pool.length) {
-      for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [pool[i], pool[j]] = [pool[j], pool[i]];
-      }
+  function startMock(count, seconds, mode = "exam-1") {
+    let pool = [];
+    let label = "Mock Exam #1";
+    if (mode === "exam-2" && Array.isArray(window.MOCK_EXAM_2_QUESTIONS)) {
+      pool = window.MOCK_EXAM_2_QUESTIONS.slice();
+      label = "Mock Exam #2";
+    } else if (mode.startsWith("domain-")) {
+      const dId = Number(mode.replace("domain-", ""));
+      const combined = [...window.MOCK_EXAM_QUESTIONS, ...(window.MOCK_EXAM_2_QUESTIONS || [])];
+      pool = combined.filter((q) => q.domainId === dId);
+      const dom = window.DOMAINS_1Z0_171.find((d) => d.id === dId);
+      label = `Domain-Drill D${dId}: ${dom ? dom.name : ""}`;
+    } else if (mode === "sprint") {
+      pool = [...window.MOCK_EXAM_QUESTIONS, ...(window.MOCK_EXAM_2_QUESTIONS || [])];
+      label = "15-Fragen-Sprint";
+    } else {
+      pool = window.MOCK_EXAM_QUESTIONS.slice();
+      label = "Mock Exam #1";
     }
+
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    const chosen = pool.slice(0, Math.min(count, pool.length));
     mockSession = {
-      questions: pool.slice(0, count),
+      label,
+      mode,
+      questions: chosen,
       answers: {},
       flagged: new Set(),
       idx: 0,
@@ -1446,6 +1597,16 @@
     });
 
     const pct = Math.round((correct / mockSession.questions.length) * 100);
+    state.mockHistory = state.mockHistory || [];
+    state.mockHistory.push({
+      label: mockSession.label || "Mock Exam",
+      correct,
+      total: mockSession.questions.length,
+      pct,
+      date: new Date().toISOString()
+    });
+    saveState();
+
     const statusCls = pct >= 75 ? "callout-success" : pct >= 65 ? "callout-info" : "callout-warn";
     const statusMsg = pct >= 75
       ? "Prüfungsreif! (Übertrifft die 75%-Zielmarke)"
@@ -1636,7 +1797,18 @@
             setRouteHash("#labs/sqlplus", false);
           }
         } else if (targetLab === "compiler") {
-          if (third) {
+          const lowerThird = third.toLowerCase();
+          const cSel = document.getElementById("compiler-filter-select");
+          if (lowerThird === "phase-1-4" || /^clinic-[1-6]$/.test(lowerThird)) {
+            state.compilerFilter = lowerThird;
+            if (cSel) cSel.value = lowerThird;
+            saveState();
+            renderHumanCompiler();
+            setRouteHash(`#labs/compiler/${lowerThird}`, false);
+          } else if (third) {
+            state.compilerFilter = "ALL";
+            if (cSel) cSel.value = "ALL";
+            renderHumanCompiler();
             const drillId = third.toUpperCase();
             const drillEl = document.getElementById(`drill-${drillId}`);
             highlightAndScrollTo(drillEl);
@@ -1679,13 +1851,18 @@
 
       if (first === "mock") {
         switchView("mock");
-        if (second.toLowerCase() === "sprint") {
-          startMock(15, 30 * 60);
+        const mSub = second.toLowerCase();
+        if (mSub === "sprint") {
+          startMock(15, 30 * 60, "sprint");
           setRouteHash("#mock/sprint", false);
-        } else if (second.toLowerCase() === "full") {
-          startMock(60, 120 * 60);
-          setRouteHash("#mock/full", false);
+        } else if (mSub === "exam-2") {
+          startMock(60, 120 * 60, "exam-2");
+          setRouteHash("#mock/exam-2", false);
+        } else if (mSub === "full" || mSub === "exam-1") {
+          startMock(60, 120 * 60, "exam-1");
+          setRouteHash("#mock/exam-1", false);
         } else {
+          renderMockIntro();
           setRouteHash("#mock", false);
         }
         return;

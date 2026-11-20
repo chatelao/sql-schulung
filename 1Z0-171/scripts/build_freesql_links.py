@@ -60,8 +60,8 @@ def main() -> None:
         "",
         "## Lab-Skripte je Phase & Ein-Klick-Sandboxes",
         "",
-        "| Phase | `.sql` herunterladen (Upload Script / `sqlcl`) | Live-Browser-Sandbox |",
-        "| :--- | :--- | :--- |",
+        "| Phase | Übungs-`.sql` (Demos + Aufgaben) | Live-Sandbox (Aufgaben) | Musterlösung |",
+        "| :--- | :--- | :--- | :--- |",
     ]
 
     js_packs = []
@@ -70,8 +70,11 @@ def main() -> None:
         sql_path = DOCS_LABS_DIR / fname
         sql_text = sql_path.read_text(encoding="utf-8")
         live_url = encode_freesql_url(sql_text)
+        sol_name = fname.replace(".sql", "-solutions.sql")
+        sol_path = DOCS_LABS_DIR / "solutions" / sol_name
+        sol_cell = f"[`{sol_name}`](solutions/{sol_name})" if sol_path.exists() else "—"
         lines.append(
-            f"| **{title}** | [`{fname}`]({fname}) | [Live in FreeSQL 23ai öffnen ↗]({live_url}) |"
+            f"| **{title}** | [`{fname}`]({fname}) | [Live in FreeSQL 23ai öffnen ↗]({live_url}) | {sol_cell} |"
         )
         js_packs.append({
             "key": f"phase-{phase_id}",
@@ -84,7 +87,7 @@ def main() -> None:
     scott_sql = SCOTT_SQL_PATH.read_text(encoding="utf-8")
     scott_url = encode_freesql_url(scott_sql)
     lines.append(
-        f"| **Schema Setup: Klassisches `SCOTT/TIGER` (`EMP`, `DEPT`, `SALGRADE`, `BONUS`)** | [`scott_tiger.sql`](../schemas/scott_tiger.sql) | [Live in FreeSQL 23ai öffnen ↗]({scott_url}) |"
+        f"| **Schema Setup: Klassisches `SCOTT/TIGER` (`EMP`, `DEPT`, `SALGRADE`, `BONUS`)** | [`scott_tiger.sql`](../schemas/scott_tiger.sql) | [Live in FreeSQL 23ai öffnen ↗]({scott_url}) | — |"
     )
     js_packs.append({
         "key": "scott",

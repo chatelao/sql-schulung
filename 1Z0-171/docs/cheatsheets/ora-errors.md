@@ -1,17 +1,28 @@
 # ORA-Fehlerbehebung für Einsteiger
 
-Wer `ORA-`-Meldungen lesen lernt, verwandelt roten Fehlertext in präzise Hinweise.
+Wer `ORA-`-Meldungen lesen lernt, verwandelt roten Fehlertext in präzise Hinweise. Hier sind die wichtigsten Fehlercodes des `1Z0-171`-Curriculums:
 
 | Error Code | Oracle-Meldung (EN) | Typische Einsteiger-Ursache | Lösung |
 | :--- | :--- | :--- | :--- |
-| `ORA-00904` | `invalid identifier` | Tippfehler im Column Name oder ein `SELECT`-Alias wurde in `WHERE` verwendet | `DESCRIBE table` prüfen oder Ausdruck direkt statt Alias schreiben |
+| `ORA-00904` | `invalid identifier` | Tippfehler im Column Name, fehlende `'...'` um String-Literal (`&job`) oder ein `SELECT`-Alias in `WHERE` | `DESCRIBE table` prüfen, `'...'` setzen oder Ausdruck direkt statt Alias schreiben |
 | `ORA-00918` | `column ambiguously defined` | Gleicher Column Name existiert in 2 gejointen Tabellen ohne Table Alias | Mit `e.deptno` oder `d.deptno` qualifizieren (außer bei `USING`) |
-| `ORA-00933` | `SQL command not properly ended` | Fehlendes `AND`, überzähliges Komma oder `ORDER BY` im ersten Zweig von `UNION` | Kommas prüfen und `ORDER BY` ans Ende verschieben |
+| `ORA-00923` | `FROM keyword not found where expected` | Fehlendes Komma in `SELECT`-Liste oder Alias mit Leerzeichen ohne `"Double Quotes"` | Kommas prüfen und Aliases mit Leerzeichen in `"..."` setzen |
+| `ORA-00933` | `SQL command not properly ended` | Fehlendes `AND`, überzähliges Komma oder `ORDER BY` im ersten Zweig von `UNION` | Kommas prüfen und `ORDER BY` ganz ans Ende verschieben |
+| `ORA-00934` | `group function is not allowed here` | `AVG(sal)` oder `COUNT(*)` in `WHERE` verwendet | Gruppenfilter von `WHERE` in `HAVING` verschieben |
+| `ORA-00936` | `missing expression` | Z. B. `SELECT DISTINCT deptno, DISTINCT job` (zweimal `DISTINCT`) | `DISTINCT` nur einmal direkt nach `SELECT` schreiben |
+| `ORA-00937` | `not a single-group group function` | Unaggregierte Spalte in `SELECT` zusammen mit `MAX(sal)` ohne `GROUP BY` | Spalte in `GROUP BY` aufnehmen oder entfernen |
 | `ORA-00942` | `table or view does not exist` | Tippfehler im Tabellennamen, fehlender Schema-Prefix (`scott.emp`) oder fehlendes `SELECT`-Recht | Schema-Prefix (`scott.emp`) & Privileges prüfen |
-| `ORA-00979` | `not a GROUP BY expression` | Nicht-aggregierte Spalte in `SELECT` fehlt in `GROUP BY` | Spalte in `GROUP BY` aufnehmen oder mit `MAX`/`COUNT` aggregieren |
+| `ORA-00955` | `name is already used by an existing object` | `CREATE TABLE` für bereits existierende Tabelle ohne vorheriges `DROP` | Vorheriges Objekt mit `DROP TABLE ... PURGE` bereinigen |
+| `ORA-00979` | `not a GROUP BY expression` | Nicht-aggregierte Spalte in `SELECT` fehlt in `GROUP BY` | Spalte exakt wie im `SELECT` in `GROUP BY` aufnehmen |
 | `ORA-01400` | `cannot insert NULL into (...)` | Fehlender Wert für eine `NOT NULL`- oder `PRIMARY KEY`-Spalte | Nicht-`NULL`-Wert im `INSERT` angeben |
+| `ORA-01402` | `view WITH CHECK OPTION where-clause violation` | `INSERT`/`UPDATE` über eine View verletzt deren `WHERE`-Bedingung | Nur Werte schreiben, die die View-`WHERE`-Klausel erfüllen |
 | `ORA-01427` | `single-row subquery returns more than one row` | `=`, `<` oder `>` mit einer Subquery verwendet, die 2+ Zeilen liefert | Auf `IN`, `ANY`, `ALL` wechseln oder in der Subquery aggregieren |
+| `ORA-01438` | `value larger than specified precision allowed` | Zahl überschreitet `NUMBER(p, s)`-Stellen (z. B. `1000` in `NUMBER(3)`) | Spalten-Precision vergrößern oder kleineren Wert einfügen |
 | `ORA-01722` | `invalid number` | `NVL(comm, 'None')` oder Vergleich einer Zahlenspalte mit nicht-numerischem String | Zahl zuerst in Text wandeln: `NVL(TO_CHAR(comm), 'None')` |
+| `ORA-01843` | `not a valid month` | Falsches Datumsformat in `TO_DATE` (z. B. Monat `13` oder falscher NLS-Monatsname) | Format Mask prüfen (`MM` vs. `MON`, `YYYY-MM-DD`) |
 | `ORA-02292` | `integrity constraint violated - child record found` | Versuch, einen Parent-Datensatz (`DEPT 10`) zu löschen, solange Child Rows in `EMP` existieren | Zuerst Child Rows löschen oder FK mit `ON DELETE CASCADE`/`SET NULL` definieren |
+| `ORA-02436` | `date or system variable wrongly specified in CHECK constraint` | `SYSDATE` oder `USER` innerhalb eines `CHECK`-Constraints verwendet | Deterministische Konstanten verwenden (keine `SYSDATE`/`USER`/Subquery) |
 | `ORA-08002` | `sequence SEQ.CURRVAL is not yet defined in this session` | `CURRVAL` wurde vor dem ersten `NEXTVAL` in derselben Session abgefragt | Zuerst mindestens einmal `seq.NEXTVAL` aufrufen |
 | `ORA-25154` | `column part of USING clause cannot have qualifier` | `SELECT e.deptno ... JOIN dept d USING (deptno)` geschrieben | Qualifier weglassen: `SELECT deptno` |
+| `ORA-30001` | `trim set should have only one character` | `TRIM('AB' FROM 'ABSMITH')` mit mehr als 1 Trim-Zeichen | Einzelzeichen verwenden oder `LTRIM`/`RTRIM` nutzen |
+| `ORA-32795` | `cannot insert into a generated always identity column` | Expliziter Wert im `INSERT` für `GENERATED ALWAYS AS IDENTITY` angegeben | Spalte im `INSERT` weglassen oder `GENERATED BY DEFAULT` verwenden |

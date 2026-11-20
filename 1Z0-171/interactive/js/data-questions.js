@@ -1,6 +1,7 @@
 window.HUMAN_COMPILER_DRILLS = [
+  // Clinic 1: NULL & 3-Valued-Logic-Fallen (Phasen 1-2)
   {
-    id: "HC01",
+    id: "HC01", clinic: 1, phaseGroup: "1-4",
     sql: `SELECT ename, sal * 12 annual_sal
 FROM scott.emp
 WHERE annual_sal > 30000;`,
@@ -8,7 +9,7 @@ WHERE annual_sal > 30000;`,
     explanation: "ORA-00904: \"ANNUAL_SAL\": invalid identifier. In SELECT definierte Column Aliases sind in WHERE noch nicht sichtbar."
   },
   {
-    id: "HC02",
+    id: "HC02", clinic: 1, phaseGroup: "1-4",
     sql: `SELECT ename, sal, comm
 FROM scott.emp
 WHERE comm = NULL;`,
@@ -16,46 +17,7 @@ WHERE comm = NULL;`,
     explanation: "Wirft KEINEN Fehler, liefert aber 0 Zeilen! Jeder Vergleich mit = NULL ergibt UNKNOWN. Verwende IS NULL."
   },
   {
-    id: "HC03",
-    sql: `SELECT e.ename, e.deptno, d.dname
-FROM scott.emp e
-JOIN scott.dept d USING (deptno);`,
-    verdict: "error",
-    explanation: "ORA-25154: column part of USING clause cannot have qualifier (entferne e. vor e.deptno)."
-  },
-  {
-    id: "HC04",
-    sql: `SELECT ename, NVL(comm, 'None')
-FROM scott.emp;`,
-    verdict: "error",
-    explanation: "ORA-01722: invalid number. Argument 1 (comm) ist NUMBER, daher kann 'None' nicht implizit in NUMBER konvertiert werden."
-  },
-  {
-    id: "HC05",
-    sql: `SELECT ename
-FROM scott.emp
-WHERE empno NOT IN (SELECT mgr FROM scott.emp);`,
-    verdict: "zero",
-    explanation: "Liefert 0 Zeilen! KING hat mgr = NULL, wodurch NOT IN (..., NULL) für jede Zeile zu UNKNOWN auswertet."
-  },
-  {
-    id: "HC06",
-    sql: `SELECT deptno, MAX(AVG(sal))
-FROM scott.emp
-GROUP BY deptno;`,
-    verdict: "error",
-    explanation: "ORA-00937: not a single-group group function. Bei verschachtelten Aggregate Functions (Tiefe 2) dürfen keine unaggregierten Spalten wie deptno im SELECT stehen."
-  },
-  {
-    id: "HC07",
-    sql: `SELECT MAX(AVG(sal))
-FROM scott.emp
-GROUP BY deptno;`,
-    verdict: "rows",
-    explanation: "Liefert 1 Zeile (2916.67 für Dept 10)! Verschachtelte Group Functions der Tiefe 2 mit GROUP BY und ohne weitere Spalten im SELECT sind gültig."
-  },
-  {
-    id: "HC08",
+    id: "HC03", clinic: 1, phaseGroup: "1-4",
     sql: `SELECT ename, sal
 FROM scott.emp
 WHERE sal BETWEEN 3000 AND 1500;`,
@@ -63,14 +25,21 @@ WHERE sal BETWEEN 3000 AND 1500;`,
     explanation: "Gültige Syntax, liefert aber 0 Zeilen! BETWEEN verlangt die Untergrenze zuerst (sal >= 3000 AND sal <= 1500 ist immer falsch)."
   },
   {
-    id: "HC09",
+    id: "HC04", clinic: 1, phaseGroup: "1-4",
     sql: `SELECT DISTINCT deptno, DISTINCT job
 FROM scott.emp;`,
     verdict: "error",
     explanation: "ORA-00936: missing expression. DISTINCT darf nur einmal direkt nach SELECT stehen."
   },
   {
-    id: "HC10",
+    id: "HC05", clinic: 1, phaseGroup: "1-4",
+    sql: `SELECT ename FROM scott.emp
+WHERE ename LIKE 'S%T__';`,
+    verdict: "zero",
+    explanation: "Liefert 0 Zeilen! 'SMITH' hat nach dem T nur ein Zeichen ('H'), nicht zwei Zeichen wie vom Muster 'S%T__' gefordert."
+  },
+  {
+    id: "HC06", clinic: 1, phaseGroup: "1-4",
     sql: `SELECT ename, sal
 FROM scott.emp
 ORDER BY sal DESC
@@ -78,8 +47,116 @@ FETCH FIRST 2 ROWS WITH TIES;`,
     verdict: "rows",
     explanation: "Liefert 3 Zeilen! KING (5000) liegt auf Platz 1, und sowohl SCOTT (3000) als auch FORD (3000) teilen sich Platz 2 – WITH TIES nimmt daher alle drei auf."
   },
+
+  // Clinic 2: Nested Functions, Conversion Masks & Aggregation (Phasen 3-4)
   {
-    id: "HC11",
+    id: "HC07", clinic: 2, phaseGroup: "1-4",
+    sql: `SELECT ename, NVL(comm, 'None')
+FROM scott.emp;`,
+    verdict: "error",
+    explanation: "ORA-01722: invalid number. Argument 1 (comm) ist NUMBER, daher kann 'None' nicht implizit in NUMBER konvertiert werden."
+  },
+  {
+    id: "HC08", clinic: 2, phaseGroup: "1-4",
+    sql: `SELECT deptno, MAX(AVG(sal))
+FROM scott.emp
+GROUP BY deptno;`,
+    verdict: "error",
+    explanation: "ORA-00937: not a single-group group function. Bei verschachtelten Aggregate Functions (Tiefe 2) dürfen keine unaggregierten Spalten wie deptno im SELECT stehen."
+  },
+  {
+    id: "HC09", clinic: 2, phaseGroup: "1-4",
+    sql: `SELECT MAX(AVG(sal))
+FROM scott.emp
+GROUP BY deptno;`,
+    verdict: "rows",
+    explanation: "Liefert 1 Zeile (2916.67 für Dept 10)! Verschachtelte Group Functions der Tiefe 2 mit GROUP BY und ohne weitere Spalten im SELECT sind gültig."
+  },
+  {
+    id: "HC10", clinic: 2, phaseGroup: "1-4",
+    sql: `SELECT TRIM('AB' FROM 'ABSMITHAB') FROM dual;`,
+    verdict: "error",
+    explanation: "ORA-30001: trim set should have only one character. Für mehrstellige Zeichenmengen nutze LTRIM/RTRIM."
+  },
+  {
+    id: "HC11", clinic: 2, phaseGroup: "1-4",
+    sql: `SELECT CONCAT('EMP: ', ename, job) FROM scott.emp;`,
+    verdict: "error",
+    explanation: "ORA-00909: invalid number of arguments. CONCAT akzeptiert strikt 2 Argumente; für 3+ Strings verwende ||."
+  },
+  {
+    id: "HC12", clinic: 2, phaseGroup: "1-4",
+    sql: `SELECT ename, DECODE(comm, NULL, 'Missing', comm)
+FROM scott.emp;`,
+    verdict: "rows",
+    explanation: "Läuft durch und liefert 14 Zeilen! Anders als CASE WHEN NULL wertet DECODE NULL = NULL als Treffer, und da Argument 3 ('Missing') VARCHAR2 ist, konvertiert DECODE comm nach VARCHAR2."
+  },
+
+  // Clinic 3: Joins, USING & Outer-Filter (Phase 5)
+  {
+    id: "HC13", clinic: 3, phaseGroup: "5-6",
+    sql: `SELECT e.ename, e.deptno, d.dname
+FROM scott.emp e
+JOIN scott.dept d USING (deptno);`,
+    verdict: "error",
+    explanation: "ORA-25154: column part of USING clause cannot have qualifier (entferne e. vor e.deptno)."
+  },
+  {
+    id: "HC14", clinic: 3, phaseGroup: "5-6",
+    sql: `SELECT d.dname, e.ename
+FROM scott.dept d
+LEFT JOIN scott.emp e ON d.deptno = e.deptno
+WHERE e.job = 'CLERK';`,
+    verdict: "rows",
+    explanation: "Liefert 4 Zeilen (nur die CLERKs aus Dept 10, 20, 30) – DEPT 40 OPERATIONS fällt stillschweigend weg, weil WHERE e.job = 'CLERK' die NULL-Zeile herausfiltert!"
+  },
+  {
+    id: "HC15", clinic: 3, phaseGroup: "5-6",
+    sql: `SELECT empno, ename, dname
+FROM scott.emp
+NATURAL JOIN scott.dept
+WHERE deptno = 40;`,
+    verdict: "zero",
+    explanation: "Gültiges SQL (INNER JOIN über deptno), liefert aber 0 Zeilen, weil kein Employee in SCOTT.EMP zu deptno 40 gehört."
+  },
+  {
+    id: "HC16", clinic: 3, phaseGroup: "5-6",
+    sql: `SELECT e.ename, d.dname
+FROM scott.emp e
+JOIN scott.dept d ON e.deptno = d.deptno
+WHERE deptno = 10;`,
+    verdict: "error",
+    explanation: "ORA-00918: column ambiguously defined. Bei JOIN ... ON muss deptno im WHERE qualifiziert werden (e.deptno = 10)."
+  },
+  {
+    id: "HC17", clinic: 3, phaseGroup: "5-6",
+    sql: `SELECT e.ename, s.grade
+FROM scott.emp e
+JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal
+WHERE s.grade = 5;`,
+    verdict: "rows",
+    explanation: "Läuft fehlerfrei und liefert 1 Zeile (KING mit sal 5000 in Grade 5: 3001..9999)."
+  },
+  {
+    id: "HC18", clinic: 3, phaseGroup: "5-6",
+    sql: `SELECT e.ename, d.dname
+FROM scott.emp e, scott.dept d
+WHERE e.deptno(+) = d.deptno(+);`,
+    verdict: "error",
+    explanation: "ORA-01468: a predicate may reference only one outer-joined table. Die Legacy-Syntax (+) erlaubt keinen FULL OUTER JOIN."
+  },
+
+  // Clinic 4: Subqueries & SET Operators (Phase 6)
+  {
+    id: "HC19", clinic: 4, phaseGroup: "5-6",
+    sql: `SELECT ename
+FROM scott.emp
+WHERE empno NOT IN (SELECT mgr FROM scott.emp);`,
+    verdict: "zero",
+    explanation: "Liefert 0 Zeilen! KING hat mgr = NULL, wodurch NOT IN (..., NULL) für jede Zeile zu UNKNOWN auswertet."
+  },
+  {
+    id: "HC20", clinic: 4, phaseGroup: "5-6",
     sql: `SELECT deptno FROM scott.emp
 ORDER BY deptno
 UNION
@@ -88,35 +165,7 @@ SELECT deptno FROM scott.dept;`,
     explanation: "ORA-00933: SQL command not properly ended. ORDER BY darf in einer SET Query nur ganz am Ende stehen."
   },
   {
-    id: "HC12",
-    sql: `SELECT d.dname, e.ename
-FROM scott.dept d
-LEFT JOIN scott.emp e ON d.deptno = e.deptno
-WHERE e.job = 'CLERK';`,
-    verdict: "rows",
-    explanation: "Liefert Zeilen (nur die CLERKs aus Dept 10, 20, 30) – DEPT 40 OPERATIONS fällt stillschweigend weg, weil WHERE e.job = 'CLERK' die NULL-Zeile herausfiltert!"
-  },
-  {
-    id: "HC13",
-    sql: `SELECT TRIM('AB' FROM 'ABSMITHAB') FROM dual;`,
-    verdict: "error",
-    explanation: "ORA-30001: trim set should have only one character. Für mehrstellige Zeichenmengen nutze LTRIM/RTRIM."
-  },
-  {
-    id: "HC14",
-    sql: `SELECT CONCAT('EMP: ', ename, job) FROM scott.emp;`,
-    verdict: "error",
-    explanation: "ORA-00909: invalid number of arguments. CONCAT akzeptiert strikt 2 Argumente; für 3+ Strings verwende ||."
-  },
-  {
-    id: "HC15",
-    sql: `SELECT ename, DECODE(comm, NULL, 'Missing', comm)
-FROM scott.emp;`,
-    verdict: "rows",
-    explanation: "Läuft durch und liefert 14 Zeilen! Anders als CASE WHEN NULL wertet DECODE NULL = NULL als Treffer, und da Argument 3 ('Missing') VARCHAR2 ist, konvertiert DECODE comm nach VARCHAR2."
-  },
-  {
-    id: "HC16",
+    id: "HC21", clinic: 4, phaseGroup: "5-6",
     sql: `SELECT ename, sal
 FROM scott.emp
 WHERE sal > (SELECT sal FROM scott.emp WHERE ename = 'GHOST');`,
@@ -124,7 +173,7 @@ WHERE sal > (SELECT sal FROM scott.emp WHERE ename = 'GHOST');`,
     explanation: "Gültige Query mit 0 Zeilen! Eine leere Scalar Subquery wertet zu NULL aus, und sal > NULL ist UNKNOWN."
   },
   {
-    id: "HC17",
+    id: "HC22", clinic: 4, phaseGroup: "5-6",
     sql: `SELECT empno, ename FROM scott.emp
 WHERE deptno = 10
 UNION
@@ -133,62 +182,199 @@ SELECT deptno, dname FROM scott.dept;`,
     explanation: "Läuft durch! Beide Zweige haben 2 Spalten mit passenden Datentypen (NUMBER, VARCHAR2). Die Spaltenköpfe stammen vom ersten SELECT (EMPNO, ENAME)."
   },
   {
-    id: "HC18",
+    id: "HC23", clinic: 4, phaseGroup: "5-6",
+    sql: `SELECT ename FROM scott.emp
+WHERE deptno = (SELECT deptno FROM scott.dept WHERE loc IN ('DALLAS', 'CHICAGO'));`,
+    verdict: "error",
+    explanation: "ORA-01427: single-row subquery returns more than one row. Der Operator = erwartet maximal 1 Zeile, die Subquery liefert 2 (20 und 30)."
+  },
+  {
+    id: "HC24", clinic: 4, phaseGroup: "5-6",
+    sql: `SELECT d.deptno, d.dname FROM scott.dept d
+WHERE NOT EXISTS (SELECT 1 FROM scott.emp e WHERE e.deptno = d.deptno);`,
+    verdict: "rows",
+    explanation: "Liefert 1 Zeile (40 | OPERATIONS)! NOT EXISTS ist NULL-sicher und findet Abteilungen ohne Mitarbeiter zuverlässig."
+  },
+
+  // Clinic 5: DML, TCL, DDL, Views & Sequences (Phasen 7-8)
+  {
+    id: "HC25", clinic: 5, phaseGroup: "7-9",
+    sql: `CREATE TABLE t_chk (
+  id NUMBER PRIMARY KEY,
+  dt DATE CHECK (dt <= SYSDATE)
+);`,
+    verdict: "error",
+    explanation: "ORA-02436: date or system variable wrongly specified in CHECK constraint. SYSDATE und USER sind in CHECK Constraints verboten."
+  },
+  {
+    id: "HC26", clinic: 5, phaseGroup: "7-9",
+    sql: `CREATE TABLE t_id (
+  id NUMBER GENERATED ALWAYS AS IDENTITY,
+  name VARCHAR2(20)
+);
+INSERT INTO t_id (id, name) VALUES (1, 'Test');`,
+    verdict: "error",
+    explanation: "ORA-32795: cannot insert into a generated always identity column. Bei GENERATED ALWAYS darf id nicht explizit angegeben werden."
+  },
+  {
+    id: "HC27", clinic: 5, phaseGroup: "7-9",
+    sql: `CREATE SEQUENCE s1 START WITH 10;
+SELECT s1.CURRVAL FROM dual;`,
+    verdict: "error",
+    explanation: "ORA-08002: sequence S1.CURRVAL is not yet defined in this session. Vor CURRVAL muss in derselben Session mindestens einmal NEXTVAL aufgerufen werden."
+  },
+  {
+    id: "HC28", clinic: 5, phaseGroup: "7-9",
+    sql: `CREATE TABLE t_uq (id NUMBER, code VARCHAR2(10) UNIQUE);
+INSERT INTO t_uq VALUES (1, NULL);
+INSERT INTO t_uq VALUES (2, NULL);
+SELECT * FROM t_uq;`,
+    verdict: "rows",
+    explanation: "Läuft fehlerfrei und liefert 2 Zeilen! Ein UNIQUE Constraint erlaubt beliebig viele NULL-Werte (sofern nicht zusätzlich NOT NULL gesetzt ist)."
+  },
+  {
+    id: "HC29", clinic: 5, phaseGroup: "7-9",
+    sql: `UPDATE my_emp SET sal = 9999 WHERE empno = 7369;
+SAVEPOINT sp1;
+CREATE TABLE t_tmp (x NUMBER);
+ROLLBACK TO SAVEPOINT sp1;`,
+    verdict: "error",
+    explanation: "ORA-01086: savepoint 'SP1' never established in this session or is invalid. CREATE TABLE (DDL) hat ein implizites COMMIT ausgelöst und sp1 gelöscht!"
+  },
+  {
+    id: "HC30", clinic: 5, phaseGroup: "7-9",
+    sql: `SELECT TO_CHAR(12500, '$9,999')
+FROM dual;`,
+    verdict: "rows",
+    explanation: "Liefert 1 Zeile mit '#######' (Überlaufzeichen), weil 12500 fünf Ziffern benötigt, die Mask aber nur vier Ziffernstellen vorsieht."
+  },
+
+  // Clinic 6: Data Dictionary, Time Zones & DCL (Phase 9)
+  {
+    id: "HC31", clinic: 6, phaseGroup: "7-9",
+    sql: `SELECT table_name
+FROM user_tables
+WHERE table_name = 'emp';`,
+    verdict: "zero",
+    explanation: "Liefert 0 Zeilen! Objektnamen werden im Oracle Data Dictionary standardmäßig in GROSSBUCHSTABEN ('EMP') gespeichert."
+  },
+  {
+    id: "HC32", clinic: 6, phaseGroup: "7-9",
+    sql: `SELECT owner, table_name
+FROM user_tables;`,
+    verdict: "error",
+    explanation: "ORA-00904: \"OWNER\": invalid identifier. USER_*-Views zeigen nur eigene Objekte und besitzen daher keine OWNER-Spalte (nur ALL_* und DBA_* haben OWNER)."
+  },
+  {
+    id: "HC33", clinic: 6, phaseGroup: "7-9",
+    sql: `SELECT DATE '2026-01-15' + TO_YMINTERVAL('02-03')
+FROM dual;`,
+    verdict: "rows",
+    explanation: "Liefert 1 Zeile (2028-04-15)! TO_YMINTERVAL('02-03') addiert exakt 2 Jahre und 3 Monate."
+  },
+  {
+    id: "HC34", clinic: 6, phaseGroup: "7-9",
     sql: `SELECT NVL2(comm, 0, 'Has Comm')
 FROM scott.emp;`,
     verdict: "error",
     explanation: "ORA-01722: invalid number. Bei NVL2(expr, val1, val2) wird val2 in den Datentyp von val1 (NUMBER) konvertiert, und 'Has Comm' ist keine gültige Zahl."
   },
   {
-    id: "HC19",
-    sql: `SELECT ename FROM scott.emp
-WHERE ename LIKE 'S%T__';`,
-    verdict: "zero",
-    explanation: "Liefert 0 Zeilen! 'SMITH' hat nach dem T nur ein Zeichen ('H'), nicht zwei Zeichen wie vom Muster 'S%T__' gefordert."
-  },
-  {
-    id: "HC20",
-    sql: `SELECT TO_CHAR(12500, '$9,999')
+    id: "HC35", clinic: 6, phaseGroup: "7-9",
+    sql: `SELECT CURRENT_TIMESTAMP, LOCALTIMESTAMP
 FROM dual;`,
     verdict: "rows",
-    explanation: "Liefert 1 Zeile mit '#######' (Überlaufzeichen), weil 12500 fünf Ziffern benötigt, die Mask aber nur vier Ziffernstellen vorsieht."
+    explanation: "Läuft fehlerfrei und liefert 1 Zeile: CURRENT_TIMESTAMP enthält die SESSIONTIMEZONE, LOCALTIMESTAMP ist ein TIMESTAMP ohne Time Zone."
+  },
+  {
+    id: "HC36", clinic: 6, phaseGroup: "7-9",
+    sql: `GRANT SELECT (ename, sal) ON scott.emp TO alice;`,
+    verdict: "error",
+    explanation: "ORA-00969 / Syntaxfehler! Spaltenbezogene Object Privileges sind nur für INSERT, UPDATE und REFERENCES zulässig – nicht für SELECT."
   }
 ];
 
 window.FLASHCARDS_1Z0_171 = [
-  { domainId: 1, q: "Worauf bilden Entities, Attributes und Relationships eines ERDs in SQL ab?", a: "Entity -> Table (FROM)\nAttribute -> Column (SELECT/WHERE)\nRelationship -> Join Condition (ON)" },
-  { domainId: 1, q: "Welche SQL Statement Families lösen ein implizites COMMIT aus?", a: "DDL (CREATE, ALTER, DROP, TRUNCATE, RENAME) und DCL (GRANT, REVOKE).\nDML (INSERT, UPDATE, DELETE, MERGE) führt KEIN Auto-Commit aus." },
-  { domainId: 1, q: "Was ist der Unterschied zwischen Primary Key und Foreign Key?", a: "Ein Primary Key identifiziert jede Zeile einer Tabelle eindeutig (NOT NULL + UNIQUE).\nEin Foreign Key verweist auf einen PK/UNIQUE-Schlüssel in derselben oder einer anderen Tabelle zur Sicherung der Referential Integrity." },
-  { domainId: 2, q: "In welcher logischen Reihenfolge wertet Oracle SELECT-Klauseln aus?", a: "FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY -> OFFSET/FETCH." },
-  { domainId: 2, q: "Warum funktioniert WHERE sal * 12 > 30000, während WHERE annual_sal > 30000 fehlschlägt?", a: "WHERE läuft VOR SELECT. In SELECT definierte Column Aliases existieren während der WHERE-Auswertung noch nicht (ORA-00904)." },
-  { domainId: 2, q: "Was unterscheidet &var von &&var in SQL*Plus?", a: "&var fragt bei jeder Ausführung erneut nach und speichert den Wert nicht.\n&&var fragt nur einmal, legt per DEFINE automatisch eine Session Variable an und verwendet sie wieder." },
-  { domainId: 3, q: "Was liefert SUBSTR('ORACLE', -4, 2) zurück?", a: "'AC'\nStart -4 zählt 4 Zeichen vom rechten Ende zurück ('A') und liest dann 2 Zeichen von links nach rechts." },
-  { domainId: 3, q: "Wie bestimmt NVL2(a, b, c) seinen Rückgabe-Datentyp?", a: "Anhand von Argument b (2. Argument). Argument c muss implizit in den Typ von b konvertierbar sein. Argument a kann jeden Datentyp haben." },
-  { domainId: 3, q: "Worin unterscheiden sich DECODE und searched CASE beim Thema NULL?", a: "DECODE behandelt zwei NULL-Werte als gleich (DECODE(comm, NULL, 0, comm) greift bei NULL!).\nSearched CASE WHEN comm = NULL ergibt UNKNOWN und greift niemals." },
-  { domainId: 4, q: "Was passiert, wenn du eine Spalte aus JOIN ... USING (deptno) mit einem Qualifier versiehst?", a: "ORA-25154: column part of USING clause cannot have qualifier. Bei USING (deptno) darf niemals e.deptno oder d.deptno geschrieben werden." },
-  { domainId: 4, q: "Warum ist HR.EMPLOYEES NATURAL JOIN HR.DEPARTMENTS eine klassische Exam Trap?", a: "Beide Tabellen teilen ZWEI namensgleiche Spalten: DEPARTMENT_ID und MANAGER_ID. NATURAL JOIN joint automatisch auf BEIDE Spalten!" },
-  { domainId: 4, q: "Wie funktioniert ein Non-Equijoin auf SCOTT.EMP und SCOTT.SALGRADE?", a: "Verknüpft Zeilen über Bereichsoperatoren statt =, z. B.:\nJOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal" },
-  { domainId: 5, q: "Warum liefert WHERE empno NOT IN (SELECT mgr FROM scott.emp) 0 Zeilen?", a: "Weil KING mgr = NULL hat. In SQL wird x NOT IN (7839, NULL) zu x <> 7839 AND x <> NULL, was für alle Zeilen UNKNOWN ergibt." },
-  { domainId: 5, q: "Was ist der Unterschied zwischen > ANY und > ALL?", a: "> ANY bedeutet größer als das MINIMUM der Subquery.\n> ALL bedeutet größer als das MAXIMUM der Subquery." },
-  { domainId: 5, q: "Wann wird eine Correlated Subquery ausgeführt?", a: "Einmal für jede Kandidatenzeile der äußeren Query, weil die innere Query eine Spalte des äußeren Tabellen-Alias referenziert." },
-  { domainId: 6, q: "Was sind die 3 Regeln für SET Operators (UNION, INTERSECT, MINUS)?", a: "1) Gleiche Anzahl an Ausdrücken in jedem SELECT.\n2) Korrespondierende Spalten müssen kompatible Datentyp-Gruppen haben.\n3) Spaltennamen kommen vom 1. SELECT; ORDER BY darf nur ganz am Ende stehen." },
-  { domainId: 6, q: "Welcher SET Operator entfernt KEINE Duplikate und sortiert die Ausgabe nicht?", a: "UNION ALL (schnellster SET Operator, da Sortierung/Deduplizierung entfällt)." },
-  { domainId: 6, q: "Wie lautet in Oracle Database 23ai das ANSI-Synonym für MINUS?", a: "EXCEPT (gibt Zeilen der ersten Query zurück, die nicht in der zweiten Query vorkommen)." },
-  { domainId: 7, q: "Was unterscheidet bedingtes INSERT ALL von INSERT FIRST?", a: "INSERT ALL prüft jede WHEN-Klausel und kann eine Zeile in mehrere Tabellen schreiben.\nINSERT FIRST stoppt bei der ersten zutreffenden WHEN-Klausel." },
-  { domainId: 7, q: "Welche Zeilen kann eine DELETE WHERE-Klausel innerhalb eines MERGE Statements entfernen?", a: "Nur Zeilen, die von genau diesem MERGE Statement GEMATCHT und AKTUALISIERT wurden (ausgewertet anhand der neuen Werte nach dem Update)." },
-  { domainId: 7, q: "Was passiert mit SAVEPOINT sp1, wenn du ein fehlschlagendes CREATE TABLE Statement ausführst?", a: "Sobald das DDL Statement die Syntaxprüfung bis zur DDL-Transaktionsgrenze passiert, setzt Oracle vor der Ausführung ein implizites COMMIT ab und löscht sp1!" },
-  { domainId: 8, q: "Welche Constraints kopiert CREATE TABLE t2 AS SELECT * FROM t1?", a: "NUR explizite NOT NULL Constraints! PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK und DEFAULT-Werte werden NICHT kopiert." },
-  { domainId: 8, q: "Welche Ausdrücke sind innerhalb eines CHECK Constraints verboten?", a: "SYSDATE, CURRENT_DATE, USER, UID, ROWNUM, Sequence CURRVAL/NEXTVAL sowie Subqueries." },
-  { domainId: 8, q: "Was bewirkt WITH CHECK OPTION bei einer View?", a: "Verhindert INSERT oder UPDATE über die View, falls die resultierende Zeile nicht mehr die WHERE-Klausel der View erfüllen würde." },
-  { domainId: 9, q: "Welcher Fehler tritt auf, wenn du my_seq.CURRVAL vor dem ersten my_seq.NEXTVAL in einer Session abfragst?", a: "ORA-08002: sequence MY_SEQ.CURRVAL is not yet defined in this session." },
-  { domainId: 9, q: "Wann legt Oracle automatisch einen Index an?", a: "Immer wenn du einen PRIMARY KEY oder UNIQUE Constraint aktivierst (für FOREIGN KEY wird KEIN automatischer Index erstellt)." },
-  { domainId: 9, q: "Was ist ein INVISIBLE Index?", a: "Ein Index, der von DML-Operationen gepflegt wird, den der Optimizer aber ignoriert, solange nicht OPTIMIZER_USE_INVISIBLE_INDEXES = TRUE gesetzt ist." },
-  { domainId: 10, q: "Vergleiche die Data-Dictionary-Views USER_*, ALL_* und DBA_*.", a: "USER_*: Objekte im eigenen Besitz.\nALL_*: Eigene Objekte + dir freigegebene Objekte.\nDBA_*: Alle Objekte der gesamten DB (erfordert DBA/Katalog-Recht)." },
-  { domainId: 10, q: "Vergleiche TIMESTAMP WITH TIME ZONE vs. TIMESTAMP WITH LOCAL TIME ZONE.", a: "WITH TIME ZONE speichert explizit Zone/Offset.\nWITH LOCAL TIME ZONE normalisiert auf DBTIMEZONE auf Disk und zeigt Werte in der SESSIONTIMEZONE des Users an." },
-  { domainId: 10, q: "Welche Datetime Functions liefern DATE vs. TIMESTAMP WITH TIME ZONE?", a: "SYSDATE und CURRENT_DATE liefern DATE.\nSYSTIMESTAMP und CURRENT_TIMESTAMP liefern TIMESTAMP WITH TIME ZONE.\nLOCALTIMESTAMP liefert TIMESTAMP (ohne TZ)." },
-  { domainId: 11, q: "Kaskadiert der Entzug (REVOKE) eines SYSTEM Privilege mit WITH ADMIN OPTION?", a: "NEIN! System Privileges (z. B. CREATE TABLE) kaskadieren beim REVOKE NICHT." },
-  { domainId: 11, q: "Kaskadiert der Entzug (REVOKE) eines OBJECT Privilege mit WITH GRANT OPTION?", a: "JA! Object Privileges (z. B. SELECT ON emp) kaskadieren beim REVOKE automatisch an nachgelagerte Empfänger." },
-  { domainId: 11, q: "Darf ein User mit CREATE ROLE ein Object Privilege an eine Role erteilen?", a: "Ja, sofern der User Eigentümer des Objekts ist oder das Object Privilege WITH GRANT OPTION besitzt." }
+  { id: "FC01", domainId: 1, phaseId: 1, q: "Worauf bilden Entities, Attributes und Relationships eines ERDs in SQL ab?", a: "Entity -> Table (FROM)\nAttribute -> Column (SELECT/WHERE)\nRelationship -> Join Condition (ON)" },
+  { id: "FC02", domainId: 1, phaseId: 1, q: "Welche SQL Statement Families lösen ein implizites COMMIT aus?", a: "DDL (CREATE, ALTER, DROP, TRUNCATE, RENAME) und DCL (GRANT, REVOKE).\nDML (INSERT, UPDATE, DELETE, MERGE) führt KEIN Auto-Commit aus." },
+  { id: "FC03", domainId: 1, phaseId: 1, q: "Was ist der Unterschied zwischen Primary Key und Foreign Key?", a: "Ein Primary Key identifiziert jede Zeile eindeutig (NOT NULL + UNIQUE).\nEin Foreign Key verweist auf einen PK/UNIQUE-Schlüssel zur Sicherung der Referential Integrity." },
+  { id: "FC04", domainId: 1, phaseId: 1, q: "Zu welcher SQL-Familie gehört TRUNCATE TABLE und warum ist das wichtig?", a: "DDL! Es löst ein implizites COMMIT aus und kann nicht mit ROLLBACK rückgängig gemacht werden." },
+  { id: "FC05", domainId: 1, phaseId: 1, q: "Was bedeutet in einem Crow's-Foot-ERD die Notation DEPT ||--o{ EMP?", a: "Ein Department (genau 1) hat null, einen oder viele Employees (o{)." },
+  { id: "FC06", domainId: 2, phaseId: 2, q: "In welcher logischen Reihenfolge wertet Oracle SELECT-Klauseln aus?", a: "FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY -> OFFSET/FETCH." },
+  { id: "FC07", domainId: 2, phaseId: 2, q: "Warum funktioniert WHERE sal * 12 > 30000, während WHERE annual_sal > 30000 fehlschlägt?", a: "WHERE läuft VOR SELECT. In SELECT definierte Column Aliases existieren während der WHERE-Auswertung noch nicht (ORA-00904)." },
+  { id: "FC08", domainId: 2, phaseId: 2, q: "Was unterscheidet &var von &&var in SQL*Plus?", a: "&var fragt bei jeder Ausführung erneut nach und speichert den Wert nicht.\n&&var fragt nur einmal, legt per DEFINE automatisch eine Session Variable an und verwendet sie wieder." },
+  { id: "FC09", domainId: 2, phaseId: 1, q: "Was liefert sal + comm für SMITH (sal=800, comm=NULL) und für TURNER (sal=1500, comm=0)?", a: "SMITH: NULL (Arithmetik mit NULL ergibt immer NULL).\nTURNER: 1500 (0 ist eine Zahl, kein NULL!)." },
+  { id: "FC10", domainId: 2, phaseId: 1, q: "Was liefert 'Hello ' || NULL || 'World' in Oracle SQL?", a: "'Hello World'! Der Verkettungsoperator || behandelt NULL wie einen leeren String (im Gegensatz zu +)." },
+  { id: "FC11", domainId: 2, phaseId: 1, q: "Wofür steht der Alternative Quote Operator q'[...]'?", a: "Er schließt Literale mit einfachen Anführungszeichen ein, ohne doppelte '' schreiben zu müssen, z. B. q'[King's Salary]'." },
+  { id: "FC12", domainId: 2, phaseId: 1, q: "Welche Anführungszeichen braucht ein Column Alias mit Leerzeichen (z. B. Annual Salary)?", a: "\"Double Quotes\" (\"Annual Salary\"). Niemals 'Single Quotes' (ORA-00923)." },
+  { id: "FC13", domainId: 2, phaseId: 2, q: "Was passiert bei WHERE sal BETWEEN 3000 AND 1500?", a: "Kein Fehler, aber 0 Zeilen! Bei BETWEEN muss immer die Untergrenze zuerst stehen." },
+  { id: "FC14", domainId: 2, phaseId: 2, q: "Wie suchst du in LIKE nach einem wörtlichen Unterstrich '_' (z. B. 'SA_REP')?", a: "Mit ESCAPE: WHERE job_id LIKE 'SA\\_%' ESCAPE '\\'. Sonst ist _ eine Wildcard für genau 1 Zeichen." },
+  { id: "FC15", domainId: 2, phaseId: 2, q: "Was ist die Operator Precedence der logischen Operatoren?", a: "NOT (höchste) -> AND -> OR (niedrigste). Bei gemischtem AND/OR immer Klammern setzen!" },
+  { id: "FC16", domainId: 2, phaseId: 2, q: "Wo stehen NULL-Werte standardmäßig bei ORDER BY col ASC vs. ORDER BY col DESC?", a: "ASC: NULLS LAST (ganz unten).\nDESC: NULLS FIRST (ganz oben)." },
+  { id: "FC17", domainId: 2, phaseId: 2, q: "Was unterscheidet FETCH FIRST 2 ROWS ONLY von FETCH FIRST 2 ROWS WITH TIES?", a: "ONLY schneidet hart nach 2 Zeilen ab. WITH TIES nimmt weitere Zeilen auf, die denselben ORDER-BY-Wert wie Platz 2 haben." },
+  { id: "FC18", domainId: 2, phaseId: 2, q: "Was bewirkt SET VERIFY ON in SQL*Plus bei Substitution Variables?", a: "Es gibt vor der Ausführung die Zeilen 'old N:' (mit &var) und 'new N:' (mit eingesetztem Wert) aus." },
+  { id: "FC19", domainId: 3, phaseId: 3, q: "Was liefert SUBSTR('ORACLE', -4, 2) zurück?", a: "'AC'\nStart -4 zählt 4 Zeichen vom rechten Ende zurück ('A') und liest dann 2 Zeichen von links nach rechts." },
+  { id: "FC20", domainId: 3, phaseId: 3, q: "Wie verhält sich CONCAT bei 3 Argumenten: CONCAT('A', 'B', 'C')?", a: "ORA-00909: invalid number of arguments! CONCAT akzeptiert strikt 2 Argumente." },
+  { id: "FC21", domainId: 3, phaseId: 3, q: "Was passiert bei TRIM('AB' FROM 'ABSMITHAB')?", a: "ORA-30001: trim set should have only one character. TRIM(... FROM ...) erlaubt nur 1 Trim-Zeichen." },
+  { id: "FC22", domainId: 3, phaseId: 3, q: "Was liefert INSTR('CORPORATE FLOOR', 'OR', 3, 2)?", a: "14 (Suche beginnt ab Pos. 3, erstes 'OR' ab dort an Pos. 5, zweites 'OR' an Pos. 14). Nicht gefunden liefert 0." },
+  { id: "FC23", domainId: 3, phaseId: 3, q: "Was liefern ROUND(156.78, -2) und TRUNC(156.78, -1)?", a: "ROUND(156.78, -2) = 200 (auf Hunderter).\nTRUNC(156.78, -1) = 150 (auf Zehner abschneiden)." },
+  { id: "FC24", domainId: 3, phaseId: 3, q: "Was ist der Unterschied zwischen CEIL(-4.2) und FLOOR(-4.2)?", a: "CEIL(-4.2) = -4 (kleinste Ganzzahl >= -4.2).\nFLOOR(-4.2) = -5 (größte Ganzzahl <= -4.2)." },
+  { id: "FC25", domainId: 3, phaseId: 3, q: "Was liefert ADD_MONTHS(DATE '2024-01-31', 1)?", a: "2024-02-29 (Schaltjahr-Monatsende wird sauber angepasst)." },
+  { id: "FC26", domainId: 3, phaseId: 3, q: "Ab welchem Tag rundet ROUND(date, 'MONTH') auf und ab welchem Monat ROUND(date, 'YEAR')?", a: "'MONTH': ab Tag >= 16.\n'YEAR': ab Monat >= 7 (1. Juli)." },
+  { id: "FC27", domainId: 3, phaseId: 3, q: "Welches Jahr erzeugt TO_DATE('15-JAN-85', 'DD-MON-RR') im Jahr 2026 vs. mit 'DD-MON-YY'?", a: "Mit RR: 1985 (aktuelles Jahr 00–49, Input 50–99 -> voriges Jahrhundert).\nMit YY: 2085 (immer aktuelles Jahrhundert)." },
+  { id: "FC28", domainId: 3, phaseId: 3, q: "Was bewirkt der Format-Modifier 'fm' in TO_CHAR(hiredate, 'fmMonth DD, YYYY')?", a: "Fill Mode entfernt nachfolgende Leerzeichen bei Monats-/Tagesnamen und führende Nullen bei Zahlen." },
+  { id: "FC29", domainId: 3, phaseId: 3, q: "Was gibt TO_CHAR(12500, '$9,999') zurück?", a: "'#######' (Überlaufzeichen, weil 12500 fünf Stellen braucht, die Mask aber nur vier 9er hat)." },
+  { id: "FC30", domainId: 3, phaseId: 3, q: "Warum scheitert NVL(comm, 'None')?", a: "ORA-01722: invalid number. Argument 2 wird in den Typ von Argument 1 (NUMBER) konvertiert." },
+  { id: "FC31", domainId: 3, phaseId: 3, q: "Wie bestimmt NVL2(a, b, c) seinen Rückgabe-Datentyp?", a: "Anhand von Argument b (2. Argument). Argument c muss implizit in den Typ von b konvertierbar sein. Argument a darf einen anderen Typ haben." },
+  { id: "FC32", domainId: 3, phaseId: 3, q: "Was liefert NULLIF(100, 100) vs. NULLIF(100, 200)?", a: "NULLIF(100, 100) -> NULL.\nNULLIF(100, 200) -> 100. (Erstes Argument darf nicht Literal NULL sein.)" },
+  { id: "FC33", domainId: 3, phaseId: 3, q: "Worin unterscheiden sich DECODE und searched CASE beim Thema NULL?", a: "DECODE behandelt zwei NULL-Werte als gleich (DECODE(comm, NULL, 0, comm) greift bei NULL!).\nSimple CASE comm WHEN NULL ergibt UNKNOWN und greift niemals." },
+  { id: "FC34", domainId: 3, phaseId: 4, q: "Warum unterscheidet sich AVG(comm) (= 550) von AVG(NVL(comm, 0)) (= 157.14) in SCOTT.EMP?", a: "Aggregate Functions (außer COUNT(*)) ignorieren NULLs: AVG(comm) teilt durch 4, AVG(NVL(comm, 0)) teilt durch 14." },
+  { id: "FC35", domainId: 3, phaseId: 4, q: "Welche ORA-Fehler entstehen bei: a) SELECT ename, MAX(sal) FROM emp; b) WHERE AVG(sal) > 2000;?", a: "a) ORA-00937: not a single-group group function.\nb) ORA-00934: group function is not allowed here (gehört in HAVING!)." },
+  { id: "FC36", domainId: 3, phaseId: 4, q: "Was gilt für verschachtelte Group Functions wie SELECT MAX(AVG(sal)) FROM emp GROUP BY deptno?", a: "Max. Tiefe = 2, GROUP BY ist Pflicht, und es darf KEINE unaggregierte Spalte (auch nicht deptno!) in SELECT stehen." },
+  { id: "FC37", domainId: 4, phaseId: 5, q: "Was passiert, wenn du eine Spalte aus JOIN ... USING (deptno) mit einem Qualifier versiehst?", a: "ORA-25154: column part of USING clause cannot have qualifier. Bei USING (deptno) darf niemals e.deptno oder d.deptno geschrieben werden." },
+  { id: "FC38", domainId: 4, phaseId: 5, q: "Warum ist HR.EMPLOYEES NATURAL JOIN HR.DEPARTMENTS eine klassische Exam Trap?", a: "Beide Tabellen teilen ZWEI namensgleiche Spalten: DEPARTMENT_ID und MANAGER_ID. NATURAL JOIN joint automatisch auf BEIDE Spalten!" },
+  { id: "FC39", domainId: 4, phaseId: 5, q: "Wie funktioniert ein Non-Equijoin auf SCOTT.EMP und SCOTT.SALGRADE?", a: "Verknüpft Zeilen über Bereichsoperatoren statt =, z. B.:\nJOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal" },
+  { id: "FC40", domainId: 4, phaseId: 5, q: "Was passiert bei LEFT OUTER JOIN, wenn ein Filter auf die rechte Tabelle in WHERE statt in ON steht?", a: "NULL-Zeilen werden von WHERE herausgefiltert — der Outer Join wird faktisch zu einem INNER JOIN!" },
+  { id: "FC41", domainId: 4, phaseId: 5, q: "Wofür steht WHERE e.deptno(+) = d.deptno in Legacy Oracle Syntax?", a: "RIGHT OUTER JOIN (alle Zeilen aus d bleiben erhalten; fehlende e-Zeilen werden mit NULL ergänzt)." },
+  { id: "FC42", domainId: 4, phaseId: 5, q: "Wie viele Zeilen liefert SCOTT.EMP CROSS JOIN SCOTT.DEPT?", a: "14 x 4 = 56 Zeilen (Cartesian Product)." },
+  { id: "FC43", domainId: 5, phaseId: 6, q: "Warum liefert WHERE empno NOT IN (SELECT mgr FROM scott.emp) 0 Zeilen?", a: "Weil KING mgr = NULL hat. x NOT IN (7839, NULL) wird zu x <> 7839 AND x <> NULL -> UNKNOWN für alle Zeilen." },
+  { id: "FC44", domainId: 5, phaseId: 6, q: "Was ist der Unterschied zwischen > ANY und > ALL?", a: "> ANY bedeutet größer als das MINIMUM der Subquery.\n> ALL bedeutet größer als das MAXIMUM der Subquery." },
+  { id: "FC45", domainId: 5, phaseId: 6, q: "Wann wird eine Correlated Subquery ausgeführt?", a: "Einmal für jede Kandidatenzeile der äußeren Query, weil die innere Query eine Spalte des äußeren Tabellen-Alias referenziert." },
+  { id: "FC46", domainId: 5, phaseId: 6, q: "Was passiert, wenn eine Single-Row Subquery 0 Zeilen liefert vs. 2 Zeilen?", a: "0 Zeilen: wertet zu NULL aus -> kein Fehler, äußeres WHERE liefert 0 Zeilen.\n2 Zeilen: wirft ORA-01427." },
+  { id: "FC47", domainId: 5, phaseId: 6, q: "In welchen Klauseln darf eine Subquery stehen?", a: "SELECT (Scalar), FROM (Inline View), WHERE, HAVING (und DML-WHERE/SET). Nicht in GROUP BY." },
+  { id: "FC48", domainId: 6, phaseId: 6, q: "Was sind die 3 Regeln für SET Operators (UNION, INTERSECT, MINUS)?", a: "1) Gleiche Spaltenanzahl.\n2) Kompatible Datentyp-Gruppen.\n3) Spaltennamen vom 1. SELECT; ORDER BY nur ganz am Ende." },
+  { id: "FC49", domainId: 6, phaseId: 6, q: "Welcher SET Operator entfernt KEINE Duplikate und sortiert die Ausgabe nicht?", a: "UNION ALL (schnellster SET Operator, da Sortierung/Deduplizierung entfällt)." },
+  { id: "FC50", domainId: 6, phaseId: 6, q: "Wie lautet in Oracle Database 23ai das ANSI-Synonym für MINUS?", a: "EXCEPT (gibt Zeilen der ersten Query zurück, die nicht in der zweiten Query vorkommen)." },
+  { id: "FC51", domainId: 6, phaseId: 6, q: "Wie ergänzt du eine fehlende Zahlenspalte im zweiten SELECT bei UNION ALL?", a: "Mit TO_NUMBER(NULL) (analog TO_CHAR(NULL) oder TO_DATE(NULL) für Text/Datum)." },
+  { id: "FC52", domainId: 7, phaseId: 7, q: "Was unterscheidet bedingtes INSERT ALL von INSERT FIRST?", a: "INSERT ALL prüft jede WHEN-Klausel und kann eine Zeile in mehrere Tabellen schreiben.\nINSERT FIRST stoppt bei der ersten zutreffenden WHEN-Klausel." },
+  { id: "FC53", domainId: 7, phaseId: 7, q: "Welche Zeilen kann eine DELETE WHERE-Klausel innerhalb eines MERGE Statements entfernen?", a: "Nur Zeilen, die von diesem MERGE Statement GEMATCHT und AKTUALISIERT wurden (ausgewertet anhand der neuen Werte nach dem Update)." },
+  { id: "FC54", domainId: 7, phaseId: 7, q: "Was passiert mit SAVEPOINT sp1, wenn du ein CREATE TABLE Statement ausführst?", a: "DDL löst ein implizites COMMIT aus und macht alle vorherigen Savepoints ungültig (ORA-01086 bei ROLLBACK TO sp1)." },
+  { id: "FC55", domainId: 7, phaseId: 7, q: "Was bedeutet Read Consistency in Oracle?", a: "Readers blockieren Writers nie und Writers blockieren Readers nie: andere Sessions sehen immer den letzten committeten Snapshot (via Undo)." },
+  { id: "FC56", domainId: 7, phaseId: 7, q: "Was passiert bei einem sauberen EXIT in SQL*Plus vs. einem plötzlichen Netzwerkabbruch?", a: "Sauberes EXIT: implizites COMMIT.\nNetzwerk-/Session-Abbruch: automatisches ROLLBACK." },
+  { id: "FC57", domainId: 8, phaseId: 8, q: "Welche Constraints kopiert CREATE TABLE t2 AS SELECT * FROM t1?", a: "NUR explizite NOT NULL Constraints! PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK und DEFAULT-Werte werden NICHT kopiert." },
+  { id: "FC58", domainId: 8, phaseId: 8, q: "Welche Ausdrücke sind innerhalb eines CHECK Constraints verboten?", a: "SYSDATE, CURRENT_DATE, USER, UID, ROWNUM, Sequence CURRVAL/NEXTVAL sowie Subqueries (ORA-02436)." },
+  { id: "FC59", domainId: 8, phaseId: 8, q: "Was bewirkt WITH CHECK OPTION bei einer View?", a: "Verhindert INSERT oder UPDATE über die View, falls die resultierende Zeile nicht mehr die WHERE-Klausel der View erfüllen würde (ORA-01402)." },
+  { id: "FC60", domainId: 8, phaseId: 8, q: "Wie speichert eine Spalte vom Typ NUMBER(5, -2) den Wert 1256?", a: "1300! Negative Scale -2 rundet auf den nächsten Hunderter." },
+  { id: "FC61", domainId: 8, phaseId: 8, q: "Welcher Constraint kann NUR inline (auf Spaltenebene) oder per ALTER TABLE ... MODIFY definiert werden?", a: "NOT NULL (Multi-Column Constraints wie PRIMARY KEY (a,b) müssen dagegen out-of-line stehen)." },
+  { id: "FC62", domainId: 8, phaseId: 8, q: "Darf eine UNIQUE-Spalte mehrere NULL-Werte enthalten?", a: "Ja! In Oracle ist NULL != NULL, daher erlaubt UNIQUE beliebig viele NULL-Zeilen." },
+  { id: "FC63", domainId: 8, phaseId: 8, q: "Was unterscheidet ON DELETE CASCADE von ON DELETE SET NULL bei einem Foreign Key?", a: "CASCADE löscht abhängige Child Rows mit; SET NULL behält Child Rows und setzt deren FK-Spalte auf NULL." },
+  { id: "FC64", domainId: 8, phaseId: 8, q: "Was ist das Standard-Verhalten einer Global Temporary Table (GTT)?", a: "ON COMMIT DELETE ROWS (Daten sind privat pro Session und werden beim COMMIT geleert)." },
+  { id: "FC65", domainId: 8, phaseId: 8, q: "Unterstützt eine External Table (ORACLE_LOADER) DML oder Indexes?", a: "Nein! External Tables sind Read-only für SELECT auf OS-Dateien in einem DIRECTORY-Objekt." },
+  { id: "FC66", domainId: 8, phaseId: 8, q: "Was unterscheidet ALTER TABLE t SET UNUSED (col) von DROP COLUMN?", a: "SET UNUSED verbirgt die Spalte sofort logisch ohne teuren Block-Scan; DROP UNUSED COLUMNS gibt den Platz später offline frei." },
+  { id: "FC67", domainId: 9, phaseId: 8, q: "Welcher Fehler tritt auf, wenn du my_seq.CURRVAL vor dem ersten my_seq.NEXTVAL in einer Session abfragst?", a: "ORA-08002: sequence MY_SEQ.CURRVAL is not yet defined in this session." },
+  { id: "FC68", domainId: 9, phaseId: 8, q: "Wann legt Oracle automatisch einen Index an?", a: "Immer wenn du einen PRIMARY KEY oder UNIQUE Constraint aktivierst (für FOREIGN KEY wird KEIN automatischer Index erstellt)." },
+  { id: "FC69", domainId: 9, phaseId: 8, q: "Was ist ein INVISIBLE Index?", a: "Ein Index, der von DML-Operationen gepflegt wird, den der Optimizer aber ignoriert, solange nicht OPTIMIZER_USE_INVISIBLE_INDEXES = TRUE gesetzt ist." },
+  { id: "FC70", domainId: 9, phaseId: 8, q: "Was passiert bei INSERT INTO t (id, name) VALUES (1, 'A') bei GENERATED ALWAYS AS IDENTITY?", a: "ORA-32795: cannot insert into a generated always identity column. (GENERATED BY DEFAULT erlaubt Überschreibungen.)" },
+  { id: "FC71", domainId: 9, phaseId: 8, q: "Gewährt ein PUBLIC SYNONYM automatisch SELECT-Rechte auf die Zieltabelle?", a: "Nein! Synonyme sind nur Aliasnamen – Object Privileges müssen weiterhin explizit über GRANT erteilt werden." },
+  { id: "FC72", domainId: 10, phaseId: 9, q: "Vergleiche die Data-Dictionary-Views USER_*, ALL_* und DBA_*.", a: "USER_*: Objekte im eigenen Besitz (ohne OWNER).\nALL_*: Eigene Objekte + freigegebene Objekte.\nDBA_*: Alle Objekte der gesamten DB." },
+  { id: "FC73", domainId: 10, phaseId: 9, q: "Vergleiche TIMESTAMP WITH TIME ZONE vs. TIMESTAMP WITH LOCAL TIME ZONE.", a: "WITH TIME ZONE speichert explizit Zone/Offset.\nWITH LOCAL TIME ZONE normalisiert auf DBTIMEZONE auf Disk und zeigt Werte in der SESSIONTIMEZONE des Users an." },
+  { id: "FC74", domainId: 10, phaseId: 9, q: "Welche Datetime Functions liefern DATE vs. TIMESTAMP WITH TIME ZONE?", a: "SYSDATE und CURRENT_DATE liefern DATE.\nSYSTIMESTAMP und CURRENT_TIMESTAMP liefern TIMESTAMP WITH TIME ZONE.\nLOCALTIMESTAMP liefert TIMESTAMP (ohne TZ)." },
+  { id: "FC75", domainId: 10, phaseId: 9, q: "Was zeigt constraint_type = 'C' in USER_CONSTRAINTS an?", a: "Sowohl CHECK Constraints als auch NOT NULL Constraints (Regel steht in SEARCH_CONDITION)." },
+  { id: "FC76", domainId: 10, phaseId: 9, q: "Wie schreibst du Interval-Literale für 1 Jahr 6 Monate bzw. 3 Tage 4 Stunden?", a: "INTERVAL '1-6' YEAR TO MONTH\nINTERVAL '3 04:00:00' DAY TO SECOND" },
+  { id: "FC77", domainId: 11, phaseId: 9, q: "Kaskadiert der Entzug (REVOKE) eines SYSTEM Privilege mit WITH ADMIN OPTION?", a: "NEIN! System Privileges (z. B. CREATE TABLE) kaskadieren beim REVOKE NICHT." },
+  { id: "FC78", domainId: 11, phaseId: 9, q: "Kaskadiert der Entzug (REVOKE) eines OBJECT Privilege mit WITH GRANT OPTION?", a: "JA! Object Privileges (z. B. SELECT ON emp) kaskadieren beim REVOKE automatisch an nachgelagerte Empfänger." },
+  { id: "FC79", domainId: 11, phaseId: 9, q: "Für welche Object Privileges sind spaltenbezogene Grants wie (sal, comm) zulässig?", a: "Nur für INSERT, UPDATE und REFERENCES — NICHT für SELECT oder DELETE." },
+  { id: "FC80", domainId: 11, phaseId: 9, q: "Was benötigt ein User mindestens, um eine Tabelle per PUBLIC Grant abzufragen?", a: "Das Login-System-Privileg CREATE SESSION (plus das jeweilige Objekt-Recht, das über PUBLIC vorliegt)." }
 ];
 
 // 60 Domain-gewichtete 1Z0-171 Mock Exam Fragen (getrennt von den Checkpoint-Fragen!)

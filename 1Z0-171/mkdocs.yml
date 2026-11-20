@@ -51,6 +51,7 @@ markdown_extensions:
 nav:
   - Start: index.md
   - Einstieg & Setup:
+      - Selbststudium-Leitfaden: getting-started/self-study-guide.md
       - Variante A (In-House Oracle DB): getting-started/variant-a-inhouse.md
       - Variante B (Kostenlose Online-Cloud): getting-started/variant-b-online.md
       - FreeSQL Lab Pack & Live-Sandboxes: labs/freesql-upload-pack.md
@@ -73,5 +74,13 @@ nav:
       - Identische Checkpoints (CP-0 bis CP-5): checkpoints/benchmark-guide.md
       - SQL Syntax & Clause Order: cheatsheets/sql-syntax.md
       - Functions & Format Models: cheatsheets/functions-reference.md
+      - SQL*Plus Spool-Transkripte: cheatsheets/sqlplus-transcripts.md
       - ORA-Fehlerbehebung: cheatsheets/ora-errors.md
       - Top 15 1Z0-171 Exam Traps: cheatsheets/exam-traps.md
+  - Advanced SQL (A001–A060):
+      - "Modul 1: Hierarchien & Rekursion": advanced/modul-01-hierarchies.md
+      - "Modul 2: Regular Expressions": advanced/modul-02-regex.md
+      - "Modul 3: JSON in Oracle SQL": advanced/modul-03-json.md
+      - "Modul 4: XML in Oracle SQL": advanced/modul-04-xml.md
+      - "Modul 5: Window Functions & Pivoting": advanced/modul-05-window-pivoting.md
+      - "Modul 6: Query-Patterns & Performance": advanced/modul-06-patterns-performance.md

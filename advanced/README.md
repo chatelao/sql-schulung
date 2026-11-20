@@ -23,7 +23,14 @@ Dieses Modul baut direkt auf dem Grundlagen-Curriculum ([`1Z0-171`](../1Z0-171/R
 
 ---
 
-## Weiterführende Dokumente
+## Lehrbuchkapitel & Weiterführende Dokumente
 
-- **[CURRICULUM.md](CURRICULUM.md)** — Vollständiger 60-Lektionen-Lehrplan (`A001`–`A060`) mit Lernzielen, Beispiel-Queries und typischen Fallstricken.
+- **[CURRICULUM.md](CURRICULUM.md)** — Vollständiger 60-Lektionen-Lehrplan (`A001`–`A060`).
+- **[Modul 1 (`A001`–`A010`): Hierarchien & Rekursion](docs/modul-01-hierarchies.md)**
+- **[Modul 2 (`A011`–`A020`): Regular Expressions](docs/modul-02-regex.md)**
+- **[Modul 3 (`A021`–`A032`): JSON in Oracle SQL](docs/modul-03-json.md)**
+- **[Modul 4 (`A033`–`A042`): XML in Oracle SQL](docs/modul-04-xml.md)**
+- **[Modul 5 (`A043`–`A052`): Window Functions & Pivoting](docs/modul-05-window-pivoting.md)**
+- **[Modul 6 (`A053`–`A060`): Query-Patterns & Performance](docs/modul-06-patterns-performance.md)**
 - **[advanced-queries-sandbox.sql](docs/labs/advanced-queries-sandbox.sql)** — Komplettes Setup- und Übungsskript für alle 6 Module.
+- **[advanced-queries-solutions.sql](docs/labs/advanced-queries-solutions.sql)** — Musterlösungen zu den Übungsaufgaben.

@@ -19,15 +19,15 @@ window.CURRICULUM_PHASES = [
     docsUrl: "https://sql-schulung.readthedocs.io/en/latest/phases/phase-01-foundations/",
     examNote: "Domain 1 (5 %) + Domain 2 Teil 1 (ca. 5 %)",
     lessons: [
-      { id: "L001", title: "Kursstart & Identical Checkpoint #0 (Baseline-Test)", tag: "Checkpoint CP-0" },
-      { id: "L002", title: "Baseline-Reflexion & Zielsetzung", tag: "Checkpoint CP-0" },
+      { id: "L001", title: "Kursstart & Identical Checkpoint #0 (Baseline-Test)", tag: "Checkpoint CP-0", toolHash: "#checkpoints/CP-0", toolLabel: "CP-0 starten" },
+      { id: "L002", title: "Baseline-Reflexion & Zielsetzung", tag: "Checkpoint CP-0", toolHash: "#checkpoints/CP-0", toolLabel: "CP-0 Reflexion" },
       { id: "L003", title: "Warum Spreadsheets an Grenzen stoßen", tag: "Konzept" },
       { id: "L004", title: "Tables, Rows, Columns & Primary Keys (SCOTT.DEPT)", tag: "SCOTT/TIGER", refLabel: "Database Objects", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Database-Objects.html" },
       { id: "L005", title: "Tables mit Foreign Keys verknüpfen (SCOTT.EMP)", tag: "SCOTT/TIGER", refLabel: "constraint", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html" },
       { id: "L006", title: "Entity-Relationship Diagrams (Crow's Foot) lesen", tag: "ERD" },
       { id: "L007", title: "ERDs auf SELECT-Klauseln abbilden", tag: "Exam Objective", refLabel: "SELECT", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html" },
       { id: "L008", title: "SQL Statement Families: DML, DDL, DCL, TCL", tag: "Konzept", refLabel: "Types of SQL Statements", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Types-of-SQL-Statements.html" },
-      { id: "L009", title: "Mit der Lab-Umgebung verbinden (Variante A / FreeSQL)", tag: "Setup" },
+      { id: "L009", title: "Mit der Lab-Umgebung verbinden (Variante A / FreeSQL)", tag: "Setup", toolHash: "#labs/freesql/phase-1", toolLabel: "FreeSQL Phase 1" },
       { id: "L010", title: "Erste Queries: SELECT * & DESCRIBE scott.emp", tag: "Lab", refLabel: "SELECT", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html" },
       { id: "L011", title: "ORA-Fehlermeldungen gelassen lesen (ORA-00942 / ORA-00904)", tag: "Troubleshooting" },
       { id: "L012", title: "Einstieg von SCOTT zu HR.EMPLOYEES", tag: "HR Schema", refLabel: "SELECT", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html" },
@@ -64,11 +64,11 @@ window.CURRICULUM_PHASES = [
       { id: "L035", title: "Sortieren nach Alias, Position & NULLS FIRST / LAST", tag: "Exam Trap", refLabel: "Sorting Query Results", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Sorting-Query-Results.html" },
       { id: "L036", title: "Row Limiting: OFFSET & FETCH FIRST ... ONLY", tag: "Lab", refLabel: "SELECT", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html" },
       { id: "L037", title: "FETCH ONLY vs. WITH TIES & PERCENT", tag: "Exam Trap", refLabel: "SELECT", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html" },
-      { id: "L038", title: "Substitution Variables: & vs. &&", tag: "SQL*Plus" },
-      { id: "L039", title: "DEFINE, UNDEFINE & SET VERIFY ON/OFF", tag: "SQL*Plus" },
-      { id: "L040", title: "Variante A CLI-Lab vs. Variante B Simulator", tag: "Interactive Lab" },
-      { id: "L041", title: "Identical Checkpoint #1 (Assessment)", tag: "Checkpoint CP-1" },
-      { id: "L042", title: "Fortschrittsvergleich & Reflexion (CP-1 vs. CP-0)", tag: "Checkpoint CP-1" }
+      { id: "L038", title: "Substitution Variables: & vs. &&", tag: "SQL*Plus", toolHash: "#labs/sqlplus/single", toolLabel: "SQL*Plus Simulator" },
+      { id: "L039", title: "DEFINE, UNDEFINE & SET VERIFY ON/OFF", tag: "SQL*Plus", toolHash: "#labs/sqlplus/define", toolLabel: "SQL*Plus Simulator" },
+      { id: "L040", title: "Variante A CLI-Lab vs. Variante B Simulator", tag: "Interactive Lab", toolHash: "#labs/sqlplus", toolLabel: "SQL*Plus Simulator" },
+      { id: "L041", title: "Identical Checkpoint #1 (Assessment)", tag: "Checkpoint CP-1", toolHash: "#checkpoints/CP-1", toolLabel: "CP-1 starten" },
+      { id: "L042", title: "Fortschrittsvergleich & Reflexion (CP-1 vs. CP-0)", tag: "Checkpoint CP-1", toolHash: "#checkpoints/CP-1", toolLabel: "CP-1 Reflexion" }
     ]
   },
   {
@@ -81,9 +81,9 @@ window.CURRICULUM_PHASES = [
       { id: "L044", title: "CONCAT (strikte 2-Arg-Regel) vs. || und LENGTH", tag: "Exam Trap", refLabel: "CONCAT", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CONCAT.html" },
       { id: "L045", title: "TRIM (Single-Char-Regel), LTRIM, RTRIM", tag: "Exam Trap", refLabel: "TRIM", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TRIM.html" },
       { id: "L046", title: "Zeichenketten ersetzen mit REPLACE", tag: "Lab", refLabel: "REPLACE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/REPLACE.html" },
-      { id: "L047", title: "SUBSTR mit 1-basierten positiven Positionen", tag: "String Slicer", refLabel: "SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SUBSTR.html" },
-      { id: "L048", title: "SUBSTR mit negativen Startpositionen", tag: "Exam Trap", refLabel: "SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SUBSTR.html" },
-      { id: "L049", title: "INSTR: Das n-te Vorkommen finden", tag: "String Slicer", refLabel: "INSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/INSTR.html" },
+      { id: "L047", title: "SUBSTR mit 1-basierten positiven Positionen", tag: "String Slicer", refLabel: "SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SUBSTR.html", toolHash: "#labs/slicer", toolLabel: "String Slicer" },
+      { id: "L048", title: "SUBSTR mit negativen Startpositionen", tag: "Exam Trap", refLabel: "SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SUBSTR.html", toolHash: "#labs/slicer", toolLabel: "String Slicer" },
+      { id: "L049", title: "INSTR: Das n-te Vorkommen finden", tag: "String Slicer", refLabel: "INSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/INSTR.html", toolHash: "#labs/slicer", toolLabel: "String Slicer" },
       { id: "L050", title: "LPAD, RPAD & Verschachtelung von SUBSTR + INSTR", tag: "Lab", refLabel: "LPAD", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/LPAD.html" },
       { id: "L051", title: "Numerisches ROUND(n, d) inkl. negativer Dezimalstellen", tag: "Exam Trap", refLabel: "ROUND (number)", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/ROUND-number.html" },
       { id: "L052", title: "Numerisches TRUNC(n, d)", tag: "Lab", refLabel: "TRUNC (number)", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TRUNC-number.html" },
@@ -122,9 +122,9 @@ window.CURRICULUM_PHASES = [
       { id: "L077", title: "Verschachtelte Group Functions: MAX(AVG(sal))-Regeln", tag: "Exam Trap", refLabel: "Aggregate Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html" },
       { id: "L078", title: "Departmental Payroll Summary Lab (HR)", tag: "Lab", refLabel: "Aggregate Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html" },
       { id: "L079", title: "Konsolidierungs-Lab: Functions + Grouping", tag: "Lab", refLabel: "Aggregate Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html" },
-      { id: "L080", title: "Human Compiler Drill #1 (Phasen 1–4, ohne IDE)", tag: "Human Compiler" },
-      { id: "L081", title: "Identical Checkpoint #2 (Assessment)", tag: "Checkpoint CP-2" },
-      { id: "L082", title: "Fortschrittsvergleich & Reflexion (CP-2 vs. CP-0..1)", tag: "Checkpoint CP-2" }
+      { id: "L080", title: "Human Compiler Drill #1 (Phasen 1–4, ohne IDE)", tag: "Human Compiler", toolHash: "#labs/compiler/phase-1-4", toolLabel: "Human Compiler (P1-4)" },
+      { id: "L081", title: "Identical Checkpoint #2 (Assessment)", tag: "Checkpoint CP-2", toolHash: "#checkpoints/CP-2", toolLabel: "CP-2 starten" },
+      { id: "L082", title: "Fortschrittsvergleich & Reflexion (CP-2 vs. CP-0..1)", tag: "Checkpoint CP-2", toolHash: "#checkpoints/CP-2", toolLabel: "CP-2 Reflexion" }
     ]
   },
   {
@@ -133,8 +133,8 @@ window.CURRICULUM_PHASES = [
     docsUrl: "https://sql-schulung.readthedocs.io/en/latest/phases/phase-05-joins/",
     examNote: "Domain 4 (10 %)",
     lessons: [
-      { id: "L083", title: "Mental Model von Joins (Row-Matching visualisieren)", tag: "Join Visualizer", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
-      { id: "L084", title: "Cartesian Products (CROSS JOIN: 14 x 4 = 56)", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
+      { id: "L083", title: "Mental Model von Joins (Row-Matching visualisieren)", tag: "Join Visualizer", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/INNER", toolLabel: "Join Visualizer" },
+      { id: "L084", title: "Cartesian Products (CROSS JOIN: 14 x 4 = 56)", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/CROSS", toolLabel: "Join Visualizer" },
       { id: "L085", title: "Mehrdeutige Spalten (ORA-00918) mit Aliases auflösen", tag: "Troubleshooting", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
       { id: "L086", title: "Standard INNER JOIN ... ON (SCOTT.EMP + DEPT)", tag: "Lab", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
       { id: "L087", title: "3+ Tabellen joinen (HR -> DEPT -> LOC -> COUNTRY)", tag: "HR Schema", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
@@ -143,12 +143,12 @@ window.CURRICULUM_PHASES = [
       { id: "L090", title: "JOIN ... USING (col) Syntax", tag: "Lab", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
       { id: "L091", title: "Die ORA-25154-Regel: USING-Spalten niemals qualifizieren", tag: "Exam Trap", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
       { id: "L092", title: "Vergleich von ON, USING und NATURAL JOIN", tag: "Review", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
-      { id: "L093", title: "LEFT OUTER JOIN (Kimberely Grant in HR behalten)", tag: "HR Schema", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
-      { id: "L094", title: "RIGHT OUTER JOIN (SCOTT.DEPT 40 OPERATIONS behalten)", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
-      { id: "L095", title: "FULL OUTER JOIN (Unmatched Rows von beiden Seiten)", tag: "Join Visualizer", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
+      { id: "L093", title: "LEFT OUTER JOIN (Kimberely Grant in HR behalten)", tag: "HR Schema", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/LEFT", toolLabel: "Join Visualizer" },
+      { id: "L094", title: "RIGHT OUTER JOIN (SCOTT.DEPT 40 OPERATIONS behalten)", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/RIGHT", toolLabel: "Join Visualizer" },
+      { id: "L095", title: "FULL OUTER JOIN (Unmatched Rows von beiden Seiten)", tag: "Join Visualizer", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/FULL", toolLabel: "Join Visualizer" },
       { id: "L096", title: "Outer Join ON-Filter vs. WHERE-Filter-Falle", tag: "Exam Trap", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
-      { id: "L097", title: "Self-Join: Employee-to-Manager-Baum (KING behalten)", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
-      { id: "L098", title: "Non-Equijoin: SCOTT.EMP + SCOTT.SALGRADE", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
+      { id: "L097", title: "Self-Join: Employee-to-Manager-Baum (KING behalten)", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/SELF", toolLabel: "Join Visualizer" },
+      { id: "L098", title: "Non-Equijoin: SCOTT.EMP + SCOTT.SALGRADE", tag: "SCOTT/TIGER", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html", toolHash: "#labs/joins/NONEQUI", toolLabel: "Join Visualizer" },
       { id: "L099", title: "Legacy Oracle (+) Outer Join-Syntax erkennen", tag: "Exam Objective", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
       { id: "L100", title: "4-Wege-Join: EMP + DEPT + MGR + SALGRADE", tag: "Lab", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
       { id: "L101", title: "Multi-Table Reporting Lab Teil 1", tag: "Lab", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Joins.html" },
@@ -175,12 +175,12 @@ window.CURRICULUM_PHASES = [
       { id: "L114", title: "Pairwise vs. Non-Pairwise Multi-Column Subqueries", tag: "Exam Objective", refLabel: "Using Subqueries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html" },
       { id: "L115", title: "Correlated Subqueries (Zeile-für-Zeile-Auswertung)", tag: "Lab", refLabel: "Using Subqueries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html" },
       { id: "L116", title: "EXISTS und NOT EXISTS (Null-sicherer Department-Check)", tag: "SCOTT/TIGER", refLabel: "EXISTS Condition", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/EXISTS-Condition.html" },
-      { id: "L117", title: "SET Operators: UNION vs. UNION ALL", tag: "Join Visualizer", refLabel: "The Set Operators", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html" },
-      { id: "L118", title: "INTERSECT & MINUS (sowie 23ai EXCEPT)", tag: "HR Schema", refLabel: "The Set Operators", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html" },
+      { id: "L117", title: "SET Operators: UNION vs. UNION ALL", tag: "Join Visualizer", refLabel: "The Set Operators", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html", toolHash: "#labs/joins/UNION", toolLabel: "SET Visualizer" },
+      { id: "L118", title: "INTERSECT & MINUS (sowie 23ai EXCEPT)", tag: "HR Schema", refLabel: "The Set Operators", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html", toolHash: "#labs/joins/MINUS", toolLabel: "SET Visualizer" },
       { id: "L119", title: "Spaltenabgleich, Dummy Nulls & ORDER BY-Platzierung", tag: "Exam Trap", refLabel: "The Set Operators", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html" },
       { id: "L120", title: "Compound Query Lab (HR.EMPLOYEES + JOB_HISTORY)", tag: "Lab", refLabel: "The Set Operators", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/The-Set-Operators.html" },
-      { id: "L121", title: "Identical Checkpoint #3 (Assessment)", tag: "Checkpoint CP-3" },
-      { id: "L122", title: "Fortschrittsvergleich & Reflexion (CP-3 vs. CP-0..2)", tag: "Checkpoint CP-3" }
+      { id: "L121", title: "Identical Checkpoint #3 (Assessment)", tag: "Checkpoint CP-3", toolHash: "#checkpoints/CP-3", toolLabel: "CP-3 starten" },
+      { id: "L122", title: "Fortschrittsvergleich & Reflexion (CP-3 vs. CP-0..2)", tag: "Checkpoint CP-3", toolHash: "#checkpoints/CP-3", toolLabel: "CP-3 Reflexion" }
     ]
   },
   {
@@ -235,8 +235,8 @@ window.CURRICULUM_PHASES = [
       { id: "L158", title: "Sequences (NEXTVAL / CURRVAL ORA-08002) & IDENTITY Columns", tag: "Exam Trap", refLabel: "CREATE SEQUENCE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-SEQUENCE.html" },
       { id: "L159", title: "Indexes (B-Tree, Unique, Composite, Function-Based, Invisible)", tag: "Lab", refLabel: "CREATE INDEX", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-INDEX.html" },
       { id: "L160", title: "Private & Public Synonyms", tag: "Lab", refLabel: "CREATE SYNONYM", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-SYNONYM.html" },
-      { id: "L161", title: "Identical Checkpoint #4 (Assessment)", tag: "Checkpoint CP-4" },
-      { id: "L162", title: "Fortschrittsvergleich & Reflexion (CP-4 vs. CP-0..3)", tag: "Checkpoint CP-4" }
+      { id: "L161", title: "Identical Checkpoint #4 (Assessment)", tag: "Checkpoint CP-4", toolHash: "#checkpoints/CP-4", toolLabel: "CP-4 starten" },
+      { id: "L162", title: "Fortschrittsvergleich & Reflexion (CP-4 vs. CP-0..3)", tag: "Checkpoint CP-4", toolHash: "#checkpoints/CP-4", toolLabel: "CP-4 Reflexion" }
     ]
   },
   {
@@ -269,28 +269,28 @@ window.CURRICULUM_PHASES = [
     docsUrl: "https://sql-schulung.readthedocs.io/en/latest/phases/phase-10-exam-prep/",
     examNote: "Alle 11 Domains (100 %)",
     lessons: [
-      { id: "L179", title: "Human Compiler Clinic 1: NULL & 3-Valued-Logic-Fallen", tag: "Human Compiler" },
-      { id: "L180", title: "Human Compiler Clinic 2: Nested Functions & Conversion Masks", tag: "Human Compiler" },
-      { id: "L181", title: "Human Compiler Clinic 3: Joins, USING & Outer-Filter", tag: "Human Compiler" },
-      { id: "L182", title: "Human Compiler Clinic 4: Subqueries & SET Operators", tag: "Human Compiler" },
-      { id: "L183", title: "Human Compiler Clinic 5: DDL, CTAS, Views & Sequences", tag: "Human Compiler" },
-      { id: "L184", title: "Human Compiler Clinic 6: Dictionary, Time Zones & DCL", tag: "Human Compiler" },
-      { id: "L185", title: "Timed Mock Exam #1 (Fragen 1–20, Durchgang 1)", tag: "Mock Exam" },
-      { id: "L186", title: "Timed Mock Exam #1 (Fragen 21–45, Durchgang 1–2)", tag: "Mock Exam" },
-      { id: "L187", title: "Timed Mock Exam #1 (Fragen 46–60 & Multi-Select-Audit)", tag: "Mock Exam" },
+      { id: "L179", title: "Human Compiler Clinic 1: NULL & 3-Valued-Logic-Fallen", tag: "Human Compiler", toolHash: "#labs/compiler/clinic-1", toolLabel: "Clinic 1 starten" },
+      { id: "L180", title: "Human Compiler Clinic 2: Nested Functions & Conversion Masks", tag: "Human Compiler", toolHash: "#labs/compiler/clinic-2", toolLabel: "Clinic 2 starten" },
+      { id: "L181", title: "Human Compiler Clinic 3: Joins, USING & Outer-Filter", tag: "Human Compiler", toolHash: "#labs/compiler/clinic-3", toolLabel: "Clinic 3 starten" },
+      { id: "L182", title: "Human Compiler Clinic 4: Subqueries & SET Operators", tag: "Human Compiler", toolHash: "#labs/compiler/clinic-4", toolLabel: "Clinic 4 starten" },
+      { id: "L183", title: "Human Compiler Clinic 5: DDL, CTAS, Views & Sequences", tag: "Human Compiler", toolHash: "#labs/compiler/clinic-5", toolLabel: "Clinic 5 starten" },
+      { id: "L184", title: "Human Compiler Clinic 6: Dictionary, Time Zones & DCL", tag: "Human Compiler", toolHash: "#labs/compiler/clinic-6", toolLabel: "Clinic 6 starten" },
+      { id: "L185", title: "Timed Mock Exam #1 (Fragen 1–20, Durchgang 1)", tag: "Mock Exam", toolHash: "#mock/exam-1", toolLabel: "Mock Exam #1" },
+      { id: "L186", title: "Timed Mock Exam #1 (Fragen 21–45, Durchgang 1–2)", tag: "Mock Exam", toolHash: "#mock/exam-1", toolLabel: "Mock Exam #1" },
+      { id: "L187", title: "Timed Mock Exam #1 (Fragen 46–60 & Multi-Select-Audit)", tag: "Mock Exam", toolHash: "#mock/exam-1", toolLabel: "Mock Exam #1" },
       { id: "L188", title: "Mock Exam #1 Debrief Teil 1 (Query Domains)", tag: "Debrief" },
       { id: "L189", title: "Mock Exam #1 Debrief Teil 2 (DDL / Dictionary / DCL)", tag: "Debrief" },
       { id: "L190", title: "Targeted Remediation Lab 1 (Schwächste Domain)", tag: "Remediation" },
       { id: "L191", title: "Targeted Remediation Lab 2 (Schwächste Domain)", tag: "Remediation" },
       { id: "L192", title: "Targeted Remediation Lab 3 (Zweitschwächste Domain)", tag: "Remediation" },
-      { id: "L193", title: "Flashcard Rapid Review über alle 11 Domains", tag: "Flashcards" },
-      { id: "L194", title: "Timed Mock Exam #2 (Fragen 1–20)", tag: "Mock Exam" },
-      { id: "L195", title: "Timed Mock Exam #2 (Fragen 21–45)", tag: "Mock Exam" },
-      { id: "L196", title: "Timed Mock Exam #2 (Fragen 46–60 & Final Check)", tag: "Mock Exam" },
+      { id: "L193", title: "Flashcard Rapid Review über alle 11 Domains", tag: "Flashcards", toolHash: "#flashcards", toolLabel: "Flashcards öffnen" },
+      { id: "L194", title: "Timed Mock Exam #2 (Fragen 1–20)", tag: "Mock Exam", toolHash: "#mock/exam-2", toolLabel: "Mock Exam #2" },
+      { id: "L195", title: "Timed Mock Exam #2 (Fragen 21–45)", tag: "Mock Exam", toolHash: "#mock/exam-2", toolLabel: "Mock Exam #2" },
+      { id: "L196", title: "Timed Mock Exam #2 (Fragen 46–60 & Final Check)", tag: "Mock Exam", toolHash: "#mock/exam-2", toolLabel: "Mock Exam #2" },
       { id: "L197", title: "Mock Exam #2 Debrief & Blind-Spot-Verifikation", tag: "Debrief" },
       { id: "L198", title: "Oracle MyLearn Buchung & Online-Proctoring-Checkliste", tag: "Logistik" },
-      { id: "L199", title: "Identical Checkpoint #5 (Abschluss-Benchmark + Answer Key!)", tag: "Checkpoint CP-5" },
-      { id: "L200", title: "CP-0 -> CP-5 Longitudinal Retrospective & Exam Sign-Off", tag: "Abschluss" }
+      { id: "L199", title: "Identical Checkpoint #5 (Abschluss-Benchmark + Answer Key!)", tag: "Checkpoint CP-5", toolHash: "#checkpoints/CP-5", toolLabel: "CP-5 starten" },
+      { id: "L200", title: "CP-0 -> CP-5 Longitudinal Retrospective & Exam Sign-Off", tag: "Abschluss", toolHash: "#checkpoints/CP-5", toolLabel: "CP-5 Portfolio" }
     ]
   }
 ];

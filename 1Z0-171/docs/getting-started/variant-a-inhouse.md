@@ -56,14 +56,44 @@ GRANT CREATE SESSION TO student_01_peer;
 ## Beispiel-Schemas installieren (`SCOTT/TIGER` + `HR`)
 
 ### 1. Klassisches `SCOTT/TIGER` Schema
-Lade [`scott_tiger.sql`](../schemas/scott_tiger.sql) herunter und führe es in deinem Student-Schema aus (oder lege für nostalgische Authentizität einen User `SCOTT` mit Passwort `tiger` an):
+Damit die Abfragen `FROM scott.emp` und `FROM scott.dept` in allen Übungen exakt wie im Handbuch funktionieren, lege einmalig als `SYSDBA` den Schema-User `SCOTT` an und erteile `SELECT`-Rechte:
+
+```sql
+-- Als SYSDBA in FREEPDB1 / PDB_TRAINING ausführen
+CREATE USER scott IDENTIFIED BY tiger
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp
+  QUOTA UNLIMITED ON users;
+
+GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE, CREATE SYNONYM TO scott;
+```
+
+Lade anschließend [`scott_tiger.sql`](../schemas/scott_tiger.sql) herunter und führe es als `scott` aus:
 
 ```bash
 sqlplus scott/tiger@localhost:1521/FREEPDB1 @scott_tiger.sql
 ```
 
+Falls du über `student_01` arbeitest, erteile als `scott` (oder `SYSDBA`) Leserechte für `student_01`:
+
+```sql
+GRANT SELECT ON scott.dept     TO student_01;
+GRANT SELECT ON scott.emp      TO student_01;
+GRANT SELECT ON scott.salgrade TO student_01;
+GRANT SELECT ON scott.bonus    TO student_01;
+```
+
+> **Alternative (nur eigenes Schema):** Wenn du `scott_tiger.sql` direkt in deinem eigenen Schema (`student_01`) ausführst, lasse in den Abfragen der Phasen 1–6 den Präfix `scott.` weg (`FROM emp` statt `FROM scott.emp`).
+
 ### 2. Offizielles Oracle 23ai `HR` Sample Schema
-Klone oder lade das offizielle Repository [Oracle Database Sample Schemas](https://github.com/oracle-samples/db-sample-schemas) herunter und führe `hr_install.sql` in `FREEPDB1` aus.
+Klone oder lade das offizielle Repository [Oracle Database Sample Schemas](https://github.com/oracle-samples/db-sample-schemas) herunter und installiere `HR` in `FREEPDB1`:
+
+```bash
+git clone https://github.com/oracle-samples/db-sample-schemas.git
+sqlplus sys/Welcome123!@localhost:1521/FREEPDB1 as sysdba @db-sample-schemas/human_resources/hr_install.sql
+```
+
+Falls du als `student_01` arbeitest, erteile danach `GRANT SELECT ON hr.employees TO student_01;` (analog für `departments`, `jobs`, `job_history`, `locations`, `countries`, `regions`).
 
 !!! tip "Setup überprüfen"
     Führe diesen kurzen Smoke-Test sowohl in VS Code als auch in `sqlcl`/`sqlplus` aus:

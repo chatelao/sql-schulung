@@ -67,6 +67,9 @@
             <option value="B">Variante B: Kostenlos Online (FreeSQL + OCI)</option>
           </select>
         </div>
+        <button class="btn btn-secondary" id="export-state-btn" type="button">Lernstand sichern (.json)</button>
+        <button class="btn btn-secondary" id="import-state-btn" type="button">Lernstand laden (.json)</button>
+        <input type="file" id="import-state-file" accept=".json,application/json" hidden />
         <button class="btn btn-secondary" id="reset-lessons-btn">Fortschritt zurücksetzen</button>
       </div>
 
@@ -236,7 +239,19 @@
             <h2>Human Compiler Drill (Ohne IDE)</h2>
             <p class="muted-sm">Lies jedes SQL-Snippet auf <code>SCOTT.EMP</code> / <code>HR.EMPLOYEES</code> und sage voraus, ob es Zeilen zurückgibt, 0 Zeilen liefert oder einen <code>ORA-</code>-Fehler auslöst.</p>
           </div>
-          <div class="compiler-score">Punkte: <strong id="compiler-score-val">0 / 0</strong></div>
+          <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+            <select id="compiler-filter-select" aria-label="Human Compiler Filter">
+              <option value="ALL">Alle 36 Snippets (Phasen 1–9)</option>
+              <option value="phase-1-4">L080: Phasen 1–4 (12 Snippets)</option>
+              <option value="clinic-1">L179: Clinic 1 — NULL &amp; 3-Valued Logic</option>
+              <option value="clinic-2">L180: Clinic 2 — Functions &amp; Aggregation</option>
+              <option value="clinic-3">L181: Clinic 3 — Joins, USING &amp; Outer-Filter</option>
+              <option value="clinic-4">L182: Clinic 4 — Subqueries &amp; SET</option>
+              <option value="clinic-5">L183: Clinic 5 — DML, DDL, Views &amp; Sequences</option>
+              <option value="clinic-6">L184: Clinic 6 — Dictionary, Time Zones &amp; DCL</option>
+            </select>
+            <div class="compiler-score">Punkte: <strong id="compiler-score-val">0 / 0</strong></div>
+          </div>
         </div>
         <div id="compiler-list" class="compiler-list"></div>
       </div>
@@ -328,6 +343,7 @@
   <script src="js/data-curriculum.js"></script>
   <script src="js/data-checkpoints.js"></script>
   <script src="js/data-questions.js"></script>
+  <script src="js/data-mock2.js"></script>
   <script src="js/data-freesql-labs.js"></script>
   <script src="js/app.js"></script>
 </body>
