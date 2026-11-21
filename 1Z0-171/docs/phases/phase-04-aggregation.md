@@ -18,6 +18,16 @@
   ```
 - **Regel**: `MIN` und `MAX` funktionieren auf Zahlen, Strings und Datumsangaben; `SUM` und `AVG` nur auf Zahlen.
 
+- **Selbstlern-Aufgabe:** Lückentext: Berechne Minimum, Maximum und Summe aller Gehälter in `scott.emp`:
+```sql
+SELECT ___(sal), ___(sal), ___(sal) FROM scott.emp;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT MIN(sal), MAX(sal), SUM(sal) FROM scott.emp;
+      ```
+      Ergebnis: `800`, `5000`, `29025` (1 Zeile).
+
 ### `L070` — `COUNT(*)`, `COUNT(col)` & `COUNT(DISTINCT col)`
 - **Lernziel**: Du unterscheidest das Zählen aller Zeilen (`COUNT(*)`) vom Zählen gefüllter (`COUNT(col)`) und eindeutiger Werte (`COUNT(DISTINCT col)`).
 - **Studio-Link**: [Tracker `L070`](https://chatelao.github.io/sql-schulung/#curriculum/L070) · [SQL Ref: COUNT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html)
@@ -30,6 +40,10 @@
   -- Ergebnis: 14 | 4 | 5
   ```
 
+- **Selbstlern-Aufgabe:** Welche unterschiedlichen Werte liefern `COUNT(*)`, `COUNT(comm)` und `COUNT(DISTINCT deptno)` auf `scott.emp`?
+  ??? success "Musterlösung & Erklärung"
+      `COUNT(*)` = **14** (alle Zeilen), `COUNT(comm)` = **4** (ohne `NULL`), `COUNT(DISTINCT deptno)` = **3** (`10, 20, 30`).
+
 ### `L071` — Die `AVG` + `NULL`-Falle auf `SCOTT.EMP.COMM` beweisen
 - **Lernziel**: Du beweist rechnerisch, warum Aggregate Functions (außer `COUNT(*)`) `NULL`-Werte ignorieren.
 - **Studio-Link**: [Tracker `L071`](https://chatelao.github.io/sql-schulung/#curriculum/L071)
@@ -38,10 +52,21 @@
   - `AVG(comm)` = `(300 + 500 + 1400 + 0) / 4` = **`550`** (teilt durch 4!).
   - `AVG(NVL(comm, 0))` = `2200 / 14` = **`157.14`** (teilt durch alle 14 Mitarbeiter!).
 
+- **Selbstlern-Aufgabe:** Beweise per Query auf `scott.emp`: Warum unterscheidet sich `AVG(comm)` von `AVG(NVL(comm, 0))`?
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT AVG(comm) AS nur_nicht_null, AVG(NVL(comm, 0)) AS alle_14 FROM scott.emp;
+      ```
+      `AVG(comm)` teilt `2200 / 4 = 550` (nur 4 Zeilen mit `comm IS NOT NULL`), während `AVG(NVL(comm,0))` `2200 / 14 = 157.14` berechnet!
+
 ### `L072` — Group Functions mit Single-Row Columns kombinieren (`ORA-00937`)
 - **Lernziel**: Du erkennst und behebst `ORA-00937: not a single-group group function`.
 - **Studio-Link**: [Tracker `L072`](https://chatelao.github.io/sql-schulung/#curriculum/L072)
 - **Exam Trap**: `SELECT ename, MAX(sal) FROM scott.emp;` liefert 14 Namen, aber nur 1 Maximum — Oracle bricht mit `ORA-00937` ab, solange kein `GROUP BY` oder keine Subquery verwendet wird.
+
+- **Selbstlern-Aufgabe:** Warum wirft `SELECT deptno, MAX(sal) FROM scott.emp;` den Fehler `ORA-00937`?
+  ??? success "Musterlösung & Erklärung"
+      `deptno` ist eine Einzelspalte ohne Aggregatfunktion und steht nicht im `GROUP BY`. Jede nicht-aggregierte `SELECT`-Spalte muss ins `GROUP BY`.
 
 ### `L073` — Aggregate Practice Lab auf `HR.EMPLOYEES`
 - **Lernziel**: Du wendest `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` sicher auf `HR.EMPLOYEES` an.
@@ -73,10 +98,27 @@
   -- Erwartet: 3 Zeilen (10: 3 | 8750, 20: 5 | 10875, 30: 6 | 9400)
   ```
 
+- **Selbstlern-Aufgabe:** Lückentext: Gib je `job` die Mitarbeiteranzahl in `scott.emp` aus, sortiert nach Anzahl absteigend:
+```sql
+SELECT job, COUNT(*) AS cnt FROM scott.emp ___ BY job ORDER BY ___ DESC;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT job, COUNT(*) AS cnt FROM scott.emp GROUP BY job ORDER BY cnt DESC;
+      ```
+      `ORDER BY` darf im Gegensatz zu `WHERE`/`HAVING` den Alias `cnt` verwenden (5 Zeilen).
+
 ### `L075` — Gruppieren nach mehreren Spalten & `ORA-00979` beheben
 - **Lernziel**: Du gruppierst nach mehreren Spalten und hältst die strikte `GROUP BY`-Regel ein.
 - **Studio-Link**: [Tracker `L075`](https://chatelao.github.io/sql-schulung/#curriculum/L075)
 - **Regel**: Jede nicht aggregierte Spalte in `SELECT` **muss** in `GROUP BY` stehen (Spalten aus `GROUP BY` müssen aber *nicht* zwingend in `SELECT` erscheinen). Verstoß → `ORA-00979`.
+
+- **Selbstlern-Aufgabe:** Behebe `ORA-00979` in `SELECT deptno, job, SUM(sal) FROM scott.emp GROUP BY deptno;`.
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT deptno, job, SUM(sal) FROM scott.emp GROUP BY deptno, job;
+      ```
+      Beide nicht-aggregierten Spalten (`deptno` und `job`) müssen im `GROUP BY` stehen.
 
 ### `L076` — `WHERE` vs. `HAVING`
 - **Lernziel**: Du unterscheidest Zeilenfilter vor der Gruppierung (`WHERE`) von Gruppenfiltern nach der Gruppierung (`HAVING`).
@@ -93,12 +135,26 @@
 - !!! warning "1Z0-171 Exam Trap"
     Group Functions (`AVG(sal) > 2000`) dürfen **niemals** in `WHERE` stehen (`ORA-00934`).
 
+- **Selbstlern-Aufgabe:** Lückentext: Berechne das Durchschnittsgehalt je `deptno` nur für `sal >= 1000` und zeige nur Abteilungen mit Schnitt `> 2000`:
+```sql
+SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(sal) > 2000;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT deptno, AVG(sal) FROM scott.emp WHERE sal >= 1000 GROUP BY deptno HAVING AVG(sal) > 2000;
+      ```
+      `WHERE` filtert vor der Gruppierung, `HAVING` filtert Gruppen danach.
+
 ### `L077` — Verschachtelte Group Functions (Maximale Tiefe = 2)
 - **Lernziel**: Du liest und schreibst 2-stufig verschachtelte Aggregate korrekt.
 - **Studio-Link**: [Tracker `L077`](https://chatelao.github.io/sql-schulung/#curriculum/L077)
 - **Beispiel**: `SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;` → `2916.67` (1 Zeile!).
 - !!! warning "1Z0-171 Exam Trap"
     Beim Verschachteln zweier Group Functions ist `GROUP BY` Pflicht, und es darf **keine** unaggregierte Spalte (wie `deptno`) in der `SELECT`-Liste stehen (`ORA-00937`)!
+
+- **Selbstlern-Aufgabe:** Was ist das Maximum in `SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;` — und darf man noch eine dritte Ebene (`SUM(MAX(AVG(sal)))`) schachteln?
+  ??? success "Musterlösung & Erklärung"
+      Ergebnis ist `2916.67` (Schnitt von `DEPT 10`). Eine **3. Verschachtelungsebene ist verboten** (`ORA-00935: group function is nested too deeply`).
 
 ### `L078` — Payroll Summary Lab (`HR.EMPLOYEES`)
 - **Lernziel**: Du erstellst mehrstufige Gruppenauswertungen auf `HR.EMPLOYEES`.
@@ -135,16 +191,59 @@
 - **Lernziel**: Du beurteilst SQL-Code aus den Phasen 1–4 rein im Kopf auf Zeilen/0 Zeilen/`ORA-`-Fehler.
 - **Studio-Link**: [Tracker `L080`](https://chatelao.github.io/sql-schulung/#curriculum/L080) · [Human Compiler (Phasen 1–4) starten ↗](https://chatelao.github.io/sql-schulung/#labs/compiler/phase-1-4)
 
+- **Selbstlern-Aufgabe:** Löse 6 Aufgaben im [Human Compiler Drill (Phasen 1–4)](https://chatelao.github.io/sql-schulung/#labs/compiler/phase-1-4), ohne vorher eine DB zu öffnen.
+  ??? success "Musterlösung & Erklärung"
+      Achte bei jeder Aufgabe auf die drei Klassiker: `NULL` in Arithmetik/`NOT IN`, `WHERE` vs. `HAVING` und `NVL`-Typkompatibilität.
+
 ### `L081` — Identical Checkpoint #2 (Assessment)
 - **Lernziel**: Du misst deinen Wissenssprung nach Domain 3 (25 % Prüfungsgewicht!).
 - **Studio-Link**: [Tracker `L081`](https://chatelao.github.io/sql-schulung/#curriculum/L081) · [Checkpoint `CP-2` starten ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-2)
 - **Erwartetes Niveau**: **50–60 %** gesamt.
+
+- **Selbstlern-Aufgabe:** Absolviere [CP-2 im Interactive Studio](https://chatelao.github.io/sql-schulung/#checkpoints/CP-2) (22 Fragen + Part B + Part C).
+  ??? success "Musterlösung & Erklärung"
+      Zielwert nach Phase 4: **50–60 %** Gesamtscore (grosser Zuwachs durch Functions & Grouping).
 
 ### `L082` — Fortschrittsvergleich & Reflexion (`CP-2` vs. `CP-0..1`)
 - **Lernziel**: Du wertest dein Delta-Diagramm aus und identifizierst verbleibende Blind Spots in Domains 1–3.
 - **Studio-Link**: [Tracker `L082`](https://chatelao.github.io/sql-schulung/#curriculum/L082) · [`CP-2` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-2)
 
 ---
+
+- **Selbstlern-Aufgabe:** Vergleiche `CP-2` mit `CP-1`: Welche Domain aus Phase 3–4 hat am stärksten zugelegt, und wo liegt noch ein Blind Spot?
+  ??? success "Musterlösung & Erklärung"
+      Halte mindestens 1 konkrete Übungsmassnahme im Reflexions-Log für Phase 5–6 fest.
+
+### Visuelle Orientierung: Logische Abarbeitung & NULL-Verhalten
+
+```mermaid
+flowchart LR
+    F["1. FROM / JOIN"] --> W["2. WHERE (Zeilen filtern)"]
+    W --> G["3. GROUP BY (Gruppen bilden)"]
+    G --> H["4. HAVING (Gruppen filtern)"]
+    H --> S["5. SELECT (Aggregate & Aliase)"]
+    S --> O["6. ORDER BY"]
+```
+*Alt-Text: Logische Abarbeitungsreihenfolge einer SQL-Abfrage von FROM bis ORDER BY.*
+
+```mermaid
+flowchart TD
+    D["4 Zeilen in COMM: 300, 500, 1400, NULL"] --> CS["COUNT(*) = 4"]
+    D --> CC["COUNT(comm) = 3 (NULL ignoriert)"]
+    D --> AC["AVG(comm) = 733.33 (Summe / 3)"]
+    D --> AN["AVG(NVL(comm,0)) = 550 (Summe / 4)"]
+```
+*Alt-Text: Unterschied zwischen COUNT(*), COUNT(col), AVG(col) und AVG(NVL(col,0)) bei NULL-Werten.*
+
+```mermaid
+flowchart LR
+    G["GROUP BY (deptno, job)"] --> R["ROLLUP(deptno, job): Teilsumme je deptno + Gesamtsumme"]
+    G --> C["CUBE(deptno, job): zusätzlich Teilsumme je job"]
+```
+*Alt-Text: Vergleich von einfachem GROUP BY mit ROLLUP und CUBE für Zwischen- und Gesamtsummen.*
+
+---
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (NULL-Verzerrung):** Vergleicht in `scott.emp` `AVG(comm)` mit `AVG(NVL(comm, 0))` sowie `COUNT(*)` mit `COUNT(comm)`. Erklärt in 2 Sätzen, welche Kennzahl für das Management irreführend wäre.

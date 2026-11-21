@@ -18,6 +18,10 @@
 - !!! tip "Anfänger-Regel"
     Schlage während `CP-0` **nichts** nach. Raten ist ausdrücklich erwünscht (erwarteter Score: 10–25 %). So siehst du bis `CP-5` deinen echten Wissenszuwachs.
 
+- **Selbstlern-Aufgabe:** Öffne [CP-0 im Interactive Studio](https://chatelao.github.io/sql-schulung/#checkpoints/CP-0), bearbeite alle 22 Fragen **ohne Nachschlagen** und bewerte in Part C deine Sicherheit (1–5).
+  ??? success "Musterlösung & Erklärung"
+      Erwartet ist ein ehrlicher Ausgangswert von **10–25 %**. Alle Antworten bleiben bis `CP-5` bewusst gesperrt, damit echte Lernfortschritte messbar bleiben.
+
 ### `L002` — Baseline-Reflexion & Zielsetzung
 - **Lernziel**: Du wertest deine Start-Prozentsätze aus und legst dein persönliches Wochenpensum fest.
 - **Studio-Link**: [Tracker `L002`](https://chatelao.github.io/sql-schulung/#curriculum/L002) · [`CP-0` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-0)
@@ -28,6 +32,10 @@
 ---
 
 ## Relational Foundations (`L003`–`L008`)
+
+- **Selbstlern-Aufgabe:** Exportiere nach `CP-0` deinen Snapshot (`.json`) und notiere die 2 Domains mit der grössten Differenz zwischen Confidence und Score.
+  ??? success "Musterlösung & Erklärung"
+      Typische Einsteiger-Lücke: `NULL`-Logik (`WHERE col = NULL`) und `GROUP BY`-Regeln. Dein Reflexions-Log bleibt im Studio gespeichert.
 
 ### `L003` — Warum Spreadsheets an Grenzen stoßen
 - **Lernziel**: Du erklärst, warum relationale Datenbanken Daten auf mehrere verknüpfte Tabellen aufteilen statt in einer einzigen Excel-Liste zu speichern.
@@ -87,6 +95,16 @@ erDiagram
 - !!! warning "1Z0-171 Exam Trap"
     Verwechsle **Entity** und **Attribute** nicht mit einzelnen Zeilen: Eine **Row** ist eine *Instanz* einer Entity, keine Tabellenspalte.
 
+- **Selbstlern-Aufgabe:** Lückentext: Bilde das ERD `SCOTT.DEPT` → `SCOTT.EMP` auf eine Abfrage ab, die Name und Abteilungsnummer aller Angestellten zeigt:
+```sql
+SELECT ___, ___ FROM scott.___;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT ename, deptno FROM scott.emp;
+      ```
+      `EMP` enthält den Foreign Key `DEPTNO`, der auf `DEPT.DEPTNO` zeigt (14 Zeilen).
+
 ### `L008` — Die vier SQL Statement Families
 - **Lernziel**: Du unterscheidest `DML`, `DDL`, `DCL` und `TCL` inklusive ihres Commit-Verhaltens.
 - **Studio-Link**: [Tracker `L008`](https://chatelao.github.io/sql-schulung/#curriculum/L008) · [SQL Ref: Types of SQL Statements](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Types-of-SQL-Statements.html)
@@ -112,6 +130,10 @@ erDiagram
 - **Schritte**:
   - **Variante A**: Verbinde VS Code / SQL Developer oder `sqlcl` mit `FREEPDB1` / `PDB_TRAINING` (siehe [Variante A Setup](../getting-started/variant-a-inhouse.md)).
   - **Variante B**: Melde dich bei [freesql.com](https://freesql.com/) an oder klicke oben auf **Phase 1 in FreeSQL öffnen ↗**.
+
+- **Selbstlern-Aufgabe:** Führe den Smoke-Test `SELECT COUNT(*) FROM scott.emp;` in deiner gewählten Umgebung (Variante A oder FreeSQL) aus.
+  ??? success "Musterlösung & Erklärung"
+      Erwartete Ausgabe: `14`. Wenn du `ORA-00942` erhältst, fehlt das `scott.`-Präfix oder der `GRANT SELECT`.
 
 ### `L010` — Dein erstes `SELECT *` & `DESCRIBE`
 - **Lernziel**: Du inspizierst Tabellenstrukturen mit `DESCRIBE` und fragst alle Zeilen mit `SELECT *` ab.
@@ -178,6 +200,16 @@ erDiagram
   ```
   **Erwartete Ausgabe** (Auszug): `SMITH | 800 | 9600 | 10100`, `KING | 5000 | 60000 | 60500`.
 
+- **Selbstlern-Aufgabe:** Lückentext: Berechne für jeden Mitarbeiter in `scott.emp` das Jahresgehalt (`sal * 12`) plus einen einmaligen Bonus von `500`:
+```sql
+SELECT ename, sal * ___ + ___ AS jahrespaket FROM scott.emp;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT ename, sal * 12 + 500 AS jahrespaket FROM scott.emp;
+      ```
+      Multiplikation hat Vorrang vor Addition (`14 Zeilen`).
+
 ### `L015` — Operator Precedence (Punkt vor Strich)
 - **Lernziel**: Du wendest Oracles Auswertungsreihenfolge (`*`, `/` vor `+`, `-`) und Klammern korrekt an.
 - **Studio-Link**: [Tracker `L015`](https://chatelao.github.io/sql-schulung/#curriculum/L015) · [SQL Ref: About SQL Operators](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/About-SQL-Operators.html)
@@ -208,6 +240,16 @@ erDiagram
 
 ## Aliases, Concatenation, `DISTINCT` & `DUAL` (`L017`–`L020`)
 
+- **Selbstlern-Aufgabe:** Lückentext: Berechne `sal + comm` in `scott.emp` so, dass `NULL` bei `comm` als `0` gezählt wird:
+```sql
+SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT ename, sal, comm, sal + NVL(comm, 0) AS gesamt FROM scott.emp;
+      ```
+      Ohne `NVL` liefert `sal + comm` für 10 von 14 Mitarbeitenden `NULL`!
+
 ### `L017` — Column Aliases (`AS` vs. `"Double Quotes"`)
 - **Lernziel**: Du benennst Ausgabespalten lesbar um und vermeidest Quoting-Fehler.
 - **Studio-Link**: [Tracker `L017`](https://chatelao.github.io/sql-schulung/#curriculum/L017)
@@ -218,6 +260,10 @@ erDiagram
   ```
 - !!! warning "1Z0-171 Exam Trap"
     Aliases ohne Anführungszeichen werden automatisch `UPPERCASE` (`EMPLOYEE_NAME`). Leerzeichen, Sonderzeichen oder erhaltene Groß-/Kleinschreibung erfordern `"Double Quotes"`, **niemals** `'Single Quotes'` (`ORA-00923`).
+
+- **Selbstlern-Aufgabe:** Welcher Unterschied besteht zwischen `AS jahres_gehalt` und `AS "Jahres Gehalt"`?
+  ??? success "Musterlösung & Erklärung"
+      `AS jahres_gehalt` wird im Ergebnis zu `JAHRES_GEHALT` (Grossbuchstaben). Doppelte Anführungszeichen `"Jahres Gehalt"` erzwingen exakte Gross-/Kleinschreibung und erlauben Leerzeichen.
 
 ### `L018` — Concatenation (`||`), Literals & Alternative Quotes (`q'[...]'`)
 - **Lernziel**: Du verkettest Spalten mit Textliteralen und gehst sicher mit Apostrophen im Text um.
@@ -242,6 +288,16 @@ erDiagram
 - !!! warning "1Z0-171 Exam Trap"
     `DISTINCT` gilt immer für die **Kombination aller Spalten** und darf nur **einmal direkt nach `SELECT`** stehen (`SELECT DISTINCT deptno, DISTINCT job` wirft `ORA-00936`).
 
+- **Selbstlern-Aufgabe:** Lückentext: Gib jede eindeutige Kombination aus `deptno` und `job` in `scott.emp` genau einmal aus:
+```sql
+SELECT ___ deptno, job FROM scott.emp ORDER BY deptno, job;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT DISTINCT deptno, job FROM scott.emp ORDER BY deptno, job;
+      ```
+      `DISTINCT` gilt immer für die gesamte Spaltenkombination (`9 Zeilen`).
+
 ### `L020` — Die `DUAL`-Tabelle & Phase-1-Review
 - **Lernziel**: Du nutzt `DUAL` für einmalige Berechnungen und prüfst deinen Phase-1-Wissensstand.
 - **Studio-Link**: [Tracker `L020`](https://chatelao.github.io/sql-schulung/#curriculum/L020) · [SQL Ref: Selecting from DUAL](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Selecting-from-the-DUAL-Table.html)
@@ -259,6 +315,38 @@ erDiagram
       Danach: Wiederhole die [Flashcards D1](https://chatelao.github.io/sql-schulung/#flashcards/D1) und starte Phase 2!
 
 ---
+### Visuelle Orientierung: Statement-Familien & Schema-Beziehung
+
+```mermaid
+flowchart LR
+    SQL["SQL Statement-Familien"] --> DQL["DQL: SELECT (Daten lesen)"]
+    SQL --> DML["DML: INSERT / UPDATE / DELETE / MERGE"]
+    SQL --> DDL["DDL: CREATE / ALTER / DROP / TRUNCATE (Auto-Commit!)"]
+    SQL --> TCL["TCL: COMMIT / ROLLBACK / SAVEPOINT"]
+    SQL --> DCL["DCL: GRANT / REVOKE"]
+```
+*Alt-Text: Übersicht der fünf SQL-Statement-Familien (DQL, DML, DDL, TCL, DCL) mit dem Hinweis auf Auto-Commit bei DDL.*
+
+```mermaid
+erDiagram
+    DEPT ||--o{ EMP : "beschaeftigt (DEPTNO)"
+    DEPT {
+        number DEPTNO PK
+        varchar2 DNAME
+        varchar2 LOC
+    }
+    EMP {
+        number EMPNO PK
+        varchar2 ENAME
+        number SAL
+        number COMM
+        number DEPTNO FK
+    }
+```
+*Alt-Text: ER-Diagramm der Kernbeziehung zwischen SCOTT.DEPT (1) und SCOTT.EMP (N) über DEPTNO.*
+
+---
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 *Arbeitsmodus: Je 1 Person vor Ort (Headset) + 1 Person via Teams im Breakout-Room; Rollenwechsel Driver/Navigator nach 8 Minuten.*

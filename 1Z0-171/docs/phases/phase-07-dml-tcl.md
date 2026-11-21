@@ -17,6 +17,16 @@
   CREATE TABLE my_emp  AS SELECT * FROM scott.emp;
   ```
 
+- **Selbstlern-Aufgabe:** Lückentext: Erstelle eine eigene Sandbox-Kopie `my_emp` von `scott.emp`:
+```sql
+CREATE TABLE my_emp ___ SELECT * FROM scott.emp;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      CREATE TABLE my_emp AS SELECT * FROM scott.emp;
+      ```
+      Achtung: `CTAS` führt ein implizites `COMMIT` aus!
+
 ### `L124` — `INSERT INTO ... VALUES` (Explizites & implizites `NULL`, `DEFAULT`)
 - **Lernziel**: Du fügst neue Zeilen mit expliziten Spaltenlisten und `NULL`/`DEFAULT`-Werten ein.
 - **Studio-Link**: [Tracker `L124`](https://chatelao.github.io/sql-schulung/#curriculum/L124) · [SQL Ref: INSERT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/INSERT.html)
@@ -26,10 +36,27 @@
   INSERT INTO my_dept (deptno, dname) VALUES (60, 'DESIGN'); -- loc wird implizit NULL
   ```
 
+- **Selbstlern-Aufgabe:** Lückentext: Füge einen neuen Mitarbeiter (`empno = 9001`, `ename = 'MUSTER'`, `sal = 2500`, `deptno = 10`) in `my_emp` ein und bestätige mit `SELECT`:
+```sql
+INSERT INTO my_emp (empno, ename, sal, deptno) ___ (9001, 'MUSTER', 2500, 10);
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      INSERT INTO my_emp (empno, ename, sal, deptno) VALUES (9001, 'MUSTER', 2500, 10);
+      ```
+      Nicht genannte Spalten erhalten `NULL` (oder ihren `DEFAULT`-Wert).
+
 ### `L125` — `UPDATE` Statements & `WHERE`-Sicherheitsgewohnheiten
 - **Lernziel**: Du änderst Datensätze gezielt und prüfst den Filter vorab mit `SELECT`.
 - **Studio-Link**: [Tracker `L125`](https://chatelao.github.io/sql-schulung/#curriculum/L125)
 - **Praxisregel**: Teste die `WHERE`-Bedingung immer zuerst mit `SELECT * FROM my_emp WHERE deptno = 20;`, bevor du `UPDATE my_emp SET sal = sal * 1.10 WHERE deptno = 20;` ausführst! Ohne `WHERE` werden **alle** Zeilen geändert.
+
+- **Selbstlern-Aufgabe:** Erhöhe das Gehalt in `my_emp` nur für `deptno = 20` um 10 % — wie schützt du dich vor einem Update ohne `WHERE`?
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      UPDATE my_emp SET sal = sal * 1.10 WHERE deptno = 20;
+      ```
+      Schutzregel: Immer zuerst `SELECT * FROM my_emp WHERE deptno = 20;` testen, erst danach `UPDATE` ausführen (und im Notfall `ROLLBACK;`).
 
 ### `L126` — `DELETE` vs. Referential Integrity Errors (`ORA-02292`)
 - **Lernziel**: Du löschst Zeilen sicher und verstehst `ORA-02292` bei Foreign-Key-Beziehungen.
@@ -39,6 +66,10 @@
 ---
 
 ## Subquery-gestütztes & Correlated DML (`L127`–`L128`)
+
+- **Selbstlern-Aufgabe:** Warum scheitert `DELETE FROM my_dept WHERE deptno = 10;` mit `ORA-02292`, wenn ein Foreign Key aus `my_emp` existiert?
+  ??? success "Musterlösung & Erklärung"
+      `ORA-02292` (*integrity constraint violated - child record found*): Solange noch Mitarbeitende auf `deptno = 10` verweisen, verhindert Oracle ohne `ON DELETE CASCADE`/`SET NULL` das Löschen.
 
 ### `L127` — `INSERT INTO ... SELECT`
 - **Lernziel**: Du überträgst Zeilen aus einer Abfrage direkt in eine Zieltabelle.
@@ -50,6 +81,16 @@
   FROM hr.employees
   WHERE department_id = 60;
   ```
+
+- **Selbstlern-Aufgabe:** Lückentext: Kopiere alle Zeilen aus `scott.emp` mit `sal >= 3000` in eine vorbereitete Tabelle `high_earners(empno, ename, sal)`:
+```sql
+INSERT INTO high_earners (empno, ename, sal) ___ empno, ename, sal FROM scott.emp WHERE sal >= 3000;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      INSERT INTO high_earners (empno, ename, sal) SELECT empno, ename, sal FROM scott.emp WHERE sal >= 3000;
+      ```
+      Bei `INSERT INTO ... SELECT` wird **kein** `VALUES` geschrieben!
 
 ### `L128` — Correlated `UPDATE` und Correlated `DELETE`
 - **Lernziel**: Du aktualisierst oder löschst Zeilen dynamisch auf Basis von Werten derselben oder einer anderen Tabelle.
@@ -68,6 +109,16 @@
 
 ## Multi-Table `INSERT` & `MERGE` (`L129`–`L132`)
 
+- **Selbstlern-Aufgabe:** Lückentext: Setze in `my_emp` das Gehalt von `SMITH` auf das Durchschnittsgehalt der `DEPT 10`:
+```sql
+UPDATE my_emp SET sal = (SELECT ___ FROM scott.emp WHERE deptno = 10) WHERE ename = 'SMITH';
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      UPDATE my_emp SET sal = (SELECT AVG(sal) FROM scott.emp WHERE deptno = 10) WHERE ename = 'SMITH';
+      ```
+      Immer prüfen, dass die Subquery höchstens 1 Zeile liefert.
+
 ### `L129` — Unconditional `INSERT ALL`
 - **Lernziel**: Du schreibst eine Quellzeile gleichzeitig in mehrere Zieltabellen.
 - **Studio-Link**: [Tracker `L129`](https://chatelao.github.io/sql-schulung/#curriculum/L129)
@@ -84,12 +135,25 @@
   -- Fügt 5 Zeilen in high_earners UND 5 Zeilen in emp_audit ein (10 rows inserted)!
   ```
 
+- **Selbstlern-Aufgabe:** Wie lautet die Grundsyntax eines bedingungslosen `INSERT ALL` in Oracle?
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      INSERT ALL
+        INTO high_earners (empno, ename, sal) VALUES (empno, ename, sal)
+        INTO emp_audit (empno, audit_note) VALUES (empno, 'Imported')
+      SELECT empno, ename, sal FROM scott.emp WHERE deptno = 10;
+      ```
+
 ### `L130` — Conditional `INSERT ALL` vs. `INSERT FIRST`
 - **Lernziel**: Du unterscheidest Mehrfach-Treffer (`INSERT ALL`) von Ersttreffer-Stopp (`INSERT FIRST`).
 - **Studio-Link**: [Tracker `L130`](https://chatelao.github.io/sql-schulung/#curriculum/L130)
 - **Regel**:
   - `INSERT ALL`: wertet **jede `WHEN`**-Klausel für jede Zeile aus (eine Zeile kann in mehreren Zieltabellen landen).
   - `INSERT FIRST`: stoppt beim **ersten zutreffenden `WHEN`** (optional mit `ELSE`).
+
+- **Selbstlern-Aufgabe:** Worin unterscheidet sich `INSERT ALL` (conditional) von `INSERT FIRST`?
+  ??? success "Musterlösung & Erklärung"
+      `INSERT ALL` prüft **alle** `WHEN`-Zweige und kann eine Quellzeile in mehrere Zieltabellen einfügen. `INSERT FIRST` stoppt nach dem **ersten** passenden `WHEN`-Zweig.
 
 ### `L131` — Das `MERGE` Statement (Upsert)
 - **Lernziel**: Du kombinierst `UPDATE`, `DELETE` und `INSERT` atomar in einem `MERGE`.
@@ -107,6 +171,20 @@
   ```
 - !!! warning "1Z0-171 Exam Trap"
     `DELETE WHERE` innerhalb eines `MERGE` löscht ausschließlich Zeilen, die in genau diesem `MERGE` **gematcht und aktualisiert** wurden (ausgewertet anhand ihrer *neuen* Werte nach dem `UPDATE`).
+
+- **Selbstlern-Aufgabe:** Lückentext: Vervollständige das `MERGE`-Statement (Update bei Match, sonst Insert):
+```sql
+MERGE INTO my_emp t USING scott.emp s ON (t.empno = s.empno)
+WHEN ___ THEN UPDATE SET t.sal = s.sal
+WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      MERGE INTO my_emp t USING scott.emp s ON (t.empno = s.empno)
+      WHEN MATCHED THEN UPDATE SET t.sal = s.sal
+      WHEN NOT MATCHED THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
+      ```
+      Achtung: `ON`-Spalten (`t.empno`) dürfen im `UPDATE SET` nicht verändert werden!
 
 ### `L132` — `MERGE` & Multi-Table Insert Lab
 - **Lernziel**: Du wendest `INSERT FIRST` und `MERGE` selbstständig an.
@@ -139,19 +217,36 @@
   COMMIT;
   ```
 
+- **Selbstlern-Aufgabe:** Was passiert nach `INSERT ...; SAVEPOINT sp1; DELETE ...; ROLLBACK TO sp1;`?
+  ??? success "Musterlösung & Erklärung"
+      Das `DELETE` wird rückgängig gemacht, das `INSERT` bleibt **uncommitted** bestehen! Die Transaktion ist noch offen bis `COMMIT` oder `ROLLBACK`.
+
 ### `L134` — Implicit `COMMIT` & `ROLLBACK` Triggers
 - **Lernziel**: Du weißt exakt, wann Oracle eine Transaktion automatisch festschreibt oder zurückrollt.
 - **Studio-Link**: [Tracker `L134`](https://chatelao.github.io/sql-schulung/#curriculum/L134) · [SQL Ref: ROLLBACK](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ROLLBACK.html)
 - **Auto-`COMMIT`**: Jedes DDL (`CREATE`, `ALTER`, `DROP`, `TRUNCATE`), jedes DCL (`GRANT`, `REVOKE`), reguläres `EXIT` aus `sqlplus`.
 - **Auto-`ROLLBACK`**: Verbindungsabbruch, Session-Absturz, explizites `ROLLBACK`.
 
+- **Selbstlern-Aufgabe:** Nenne zwei Ereignisse, die ein **implizites `COMMIT`** auslösen.
+  ??? success "Musterlösung & Erklärung"
+      1. Jedes **DDL**-Statement (`CREATE`, `ALTER`, `DROP`, `TRUNCATE`).
+      2. Normales Beenden von `sqlplus`/`sqlcl` mit `EXIT` (Absturz führt dagegen zu implizitem `ROLLBACK`).
+
 ### `L135` — Read Consistency (Readers Never Block Writers)
 - **Lernziel**: Du verstehst Oracles Undo-basiertes Snapshot-Modell für parallele Sessions.
 - **Studio-Link**: [Tracker `L135`](https://chatelao.github.io/sql-schulung/#curriculum/L135)
 
+- **Selbstlern-Aufgabe:** Session 1 führt `UPDATE my_emp SET sal = 9999 WHERE empno = 7369;` ohne `COMMIT` aus. Was sieht Session 2 bei `SELECT sal`?
+  ??? success "Musterlösung & Erklärung"
+      Session 2 sieht weiterhin den **alten Wert** (`800`) — Oracle garantiert *Read Consistency* („Readers never block writers“).
+
 ### `L136` — Row-Level Locking & `SELECT ... FOR UPDATE`
 - **Lernziel**: Du weißt, dass Oracle nur geänderte Zeilen sperrt, und nutzt `FOR UPDATE [NOWAIT | WAIT n | SKIP LOCKED]`.
 - **Studio-Link**: [Tracker `L136`](https://chatelao.github.io/sql-schulung/#curriculum/L136)
+
+- **Selbstlern-Aufgabe:** Wozu dient `SELECT * FROM my_emp WHERE deptno = 10 FOR UPDATE NOWAIT;`?
+  ??? success "Musterlösung & Erklärung"
+      Es sperrt alle Zeilen der `DEPT 10` exklusiv bis zum `COMMIT`/`ROLLBACK` und bricht sofort mit `ORA-00054` ab, falls eine andere Session bereits einen Lock hält.
 
 ### `L137`–`L138` — Two-Session Concurrency Lab (Schritt-für-Schritt-Anleitung)
 - **Lernziel**: Du beobachtest Read Consistency und Row Locking live zwischen zwei Sessions.
@@ -166,6 +261,47 @@
 | **4** | `COMMIT;` | *(läuft sofort weiter)* | Erst nach `COMMIT` wird Session 2 entsperrt |
 
 ---
+
+- **Selbstlern-Aufgabe:** Führe das Two-Session-Drehbuch in zwei Tabs (oder im Hybrid-Paar) durch und beobachte, wann der Lock in Session 2 freigegeben wird.
+  ??? success "Musterlösung & Erklärung"
+      Session 2 hängt genau so lange, bis Session 1 `COMMIT` oder `ROLLBACK` ausführt — erst dann wird das `UPDATE` in Session 2 ausgeführt.
+
+### Visuelle Orientierung: Transaktionen, Savepoints & Zwei-Session-Locking
+
+```mermaid
+flowchart LR
+    DML["DML (INSERT/UPDATE/DELETE)"] --> SP["SAVEPOINT sp1"]
+    SP --> DML2["Weiteres DML"]
+    DML2 -->|ROLLBACK TO sp1| SP
+    DML2 -->|COMMIT oder DDL| END["Dauerhaft gespeichert!"]
+    DML2 -->|ROLLBACK| R0["Komplett verworfen"]
+```
+*Alt-Text: Transaktions-Lebenszyklus mit SAVEPOINT, ROLLBACK TO SAVEPOINT, ROLLBACK und COMMIT inklusive implizitem DDL-Commit.*
+
+```mermaid
+sequenceDiagram
+    participant S1 as Session 1
+    participant DB as Oracle DB
+    participant S2 as Session 2
+    S1->>DB: UPDATE emp SET sal = 9999 WHERE empno = 7369
+    S2->>DB: SELECT sal FROM emp WHERE empno = 7369
+    DB-->>S2: alter Wert (Read Consistency!)
+    S2->>DB: UPDATE emp SET sal = 1111 WHERE empno = 7369
+    Note over S2,DB: Session 2 wartet auf Row Lock!
+    S1->>DB: COMMIT
+    Note over S2,DB: Lock frei, Session 2 führt Update aus
+```
+*Alt-Text: Sequenzdiagramm zum Zwei-Session-Verhalten mit Read Consistency und Row-Level-Locking.*
+
+```mermaid
+flowchart TD
+    M["MERGE INTO ziel USING quelle ON (Match)"] -->|WHEN MATCHED| U["UPDATE (optional DELETE WHERE ...)"]
+    M -->|WHEN NOT MATCHED| I["INSERT neue Zeile"]
+```
+*Alt-Text: Verzweigungslogik von MERGE INTO für Upsert-Operationen.*
+
+---
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Zwei-Session-Locking live):** Beide Partner arbeiten mit demselben Test-Datensatz bzw. beobachten Session 1 (`UPDATE` ohne `COMMIT`) und Session 2 (`SELECT` vor/nach `COMMIT`, danach `UPDATE` auf dieselbe Zeile). Protokolliert Lese-Konsistenz und Lock-Verhalten.

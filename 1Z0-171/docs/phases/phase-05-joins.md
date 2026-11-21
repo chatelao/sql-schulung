@@ -12,10 +12,24 @@
 - **Lernziel**: Du verstehst visuell, wie jede Zeile der linken Tabelle über einen Schlüsselwert ihre passende(n) Zeile(n) in der rechten Tabelle findet.
 - **Studio-Link**: [Tracker `L083`](https://chatelao.github.io/sql-schulung/#curriculum/L083) · [Join Visualizer öffnen ↗](https://chatelao.github.io/sql-schulung/#labs/joins/INNER)
 
+- **Selbstlern-Aufgabe:** Wie viele Spalten und wie viele Zeilen entstehen theoretisch, wenn `SCOTT.EMP` (14×8) und `SCOTT.DEPT` (4×3) gejoint werden?
+  ??? success "Musterlösung & Erklärung"
+      `8 + 3 = 11` Spalten; ohne Join-Bedingung `14 × 4 = 56` Zeilen (`CROSS JOIN`), mit `e.deptno = d.deptno` genau **14 Zeilen**.
+
 ### `L084` — Cartesian Products (`CROSS JOIN`)
 - **Lernziel**: Du erkennst, wann ein Kreuzprodukt (`N × M` Zeilen) entsteht und wie du es mit `CROSS JOIN` explizit schreibst.
 - **Studio-Link**: [Tracker `L084`](https://chatelao.github.io/sql-schulung/#curriculum/L084) · [Join Visualizer: CROSS ↗](https://chatelao.github.io/sql-schulung/#labs/joins/CROSS)
 - **Beispiel**: `SELECT e.ename, d.dname FROM scott.emp e CROSS JOIN scott.dept d;` → **`14 × 4 = 56` Zeilen**.
+
+- **Selbstlern-Aufgabe:** Lückentext: Erzeuge explizit das kartesische Produkt aus `scott.emp` und `scott.dept` (ANSI-Syntax):
+```sql
+SELECT e.ename, d.dname FROM scott.emp e ___ scott.dept d;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename, d.dname FROM scott.emp e CROSS JOIN scott.dept d;
+      ```
+      Ergebnis: `14 × 4 = 56` Zeilen.
 
 ### `L085` — Mehrdeutige Spalten auflösen (`ORA-00918`)
 - **Lernziel**: Du qualifizierst gleichnamige Spalten konsequent mit Table Aliases.
@@ -25,6 +39,10 @@
 ---
 
 ## `INNER JOIN ... ON`, `NATURAL JOIN` & `USING` (`L086`–`L092`)
+
+- **Selbstlern-Aufgabe:** Warum wirft `SELECT ename, deptno, dname FROM scott.emp e JOIN scott.dept d ON e.deptno = d.deptno;` den Fehler `ORA-00918`?
+  ??? success "Musterlösung & Erklärung"
+      `deptno` existiert in beiden Tabellen. In der `SELECT`-Liste muss sie qualifiziert werden (`e.deptno` oder `d.deptno`).
 
 ### `L086` — Standard `INNER JOIN ... ON`
 - **Lernziel**: Du verknüpfst zwei Tabellen über `INNER JOIN ... ON` und weißt, dass ungematchte Zeilen wegfallen.
@@ -36,6 +54,16 @@
   INNER JOIN scott.dept d ON e.deptno = d.deptno;
   ```
   **Erwartete Ausgabe**: 14 Zeilen — `DEPT 40 (OPERATIONS)` fehlt!
+
+- **Selbstlern-Aufgabe:** Lückentext: Verbinde `scott.emp` und `scott.dept` per `INNER JOIN`, inklusive Abteilungsstandort `loc`:
+```sql
+SELECT e.ename, d.dname, d.loc FROM scott.emp e ___ scott.dept d ___ e.deptno = d.deptno;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename, d.dname, d.loc FROM scott.emp e INNER JOIN scott.dept d ON e.deptno = d.deptno;
+      ```
+      Liefert 14 Zeilen (`DEPT 40 OPERATIONS` hat keine Mitarbeitenden und fehlt).
 
 ### `L087` — Drei oder mehr Tabellen joinen (`HR`)
 - **Lernziel**: Du verkettest 3–4 Tabellen über `JOIN ... ON` entlang des ERD.
@@ -49,6 +77,10 @@
   JOIN hr.countries c   ON l.country_id = c.country_id;
   -- Erwartet: 106 Zeilen (Kimberely Grant hat department_id IS NULL!)
   ```
+
+- **Selbstlern-Aufgabe:** Warum liefert der 4-Tabellen-`INNER JOIN` auf `hr.employees` (107 Zeilen) mit `hr.departments` nur **106 Zeilen**?
+  ??? success "Musterlösung & Erklärung"
+      `Kimberely Grant` hat `department_id IS NULL` — beim `INNER JOIN` gibt es keinen Match in `hr.departments`, also fällt sie heraus.
 
 ### `L088` — `WHERE` & `GROUP BY` mit Joins kombinieren
 - **Lernziel**: Du filterst und aggregierst über gejointe Tabellen hinweg.
@@ -76,16 +108,37 @@
   FROM hr.employees NATURAL JOIN hr.departments; -- Nur 32 statt 106 Zeilen!
   ```
 
+- **Selbstlern-Aufgabe:** Welche versteckte Gefahr birgt `SELECT * FROM hr.employees NATURAL JOIN hr.departments;`?
+  ??? success "Musterlösung & Erklärung"
+      `NATURAL JOIN` joint automatisch über **alle** gleichnamigen Spalten — hier sowohl `department_id` als auch `manager_id`! Dadurch verschwinden fast alle Mitarbeitenden (nur 32 Zeilen statt 106).
+
 ### `L090` — `JOIN ... USING (col)`
 - **Lernziel**: Du verknüpfst explizit benannte gleichnamige Spalten mit `USING`.
 - **Studio-Link**: [Tracker `L090`](https://chatelao.github.io/sql-schulung/#curriculum/L090)
 - **Beispiel**: `SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d USING (deptno);` → 14 Zeilen.
+
+- **Selbstlern-Aufgabe:** Lückentext: Schreibe den Join auf `scott.emp` und `scott.dept` mit `USING`:
+```sql
+SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d ___ (deptno);
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d USING (deptno);
+      ```
+      `deptno` steht **ohne** Tabellen-Qualifier.
 
 ### `L091` — Die `ORA-25154`-Regel (`USING`-Qualifier-Falle)
 - **Lernziel**: Du vermeidest den häufigsten Prüfungsfehler bei `USING`.
 - **Studio-Link**: [Tracker `L091`](https://chatelao.github.io/sql-schulung/#curriculum/L091)
 - !!! warning "1Z0-171 Exam Trap (`ORA-25154`)"
     Setze vor eine in `USING (...)` aufgeführte Spalte **niemals** einen Tabellennamen oder Alias – weder in `SELECT`, `WHERE`, `GROUP BY` noch in `ORDER BY`! `SELECT e.deptno ... USING (deptno)` wirft **`ORA-25154`**.
+
+- **Selbstlern-Aufgabe:** Korrigiere den `ORA-25154`-Fehler in `SELECT e.ename, e.deptno FROM scott.emp e JOIN scott.dept d USING (deptno);`.
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename, deptno FROM scott.emp e JOIN scott.dept d USING (deptno);
+      ```
+      Eine in `USING (...)` genannte Spalte darf nirgends im Statement (auch nicht in `SELECT`/`WHERE`/`ORDER BY`) mit einem Tabellen-Alias qualifiziert werden!
 
 ### `L092` — Vergleich: `ON`, `USING` und `NATURAL JOIN`
 - **Lernziel**: Du wählst für jede Anforderung die passende Join-Variante.
@@ -101,19 +154,47 @@
 
 ## Outer Joins (`LEFT`, `RIGHT`, `FULL`) (`L093`–`L096`)
 
+- **Selbstlern-Aufgabe:** Wann musst du `JOIN ... ON` statt `USING` oder `NATURAL JOIN` verwenden?
+  ??? success "Musterlösung & Erklärung"
+      Immer dann, wenn die Join-Spalten **unterschiedlich heissen** (z. B. `e.mgr = m.empno`), bei **Non-Equijoins** (`BETWEEN`), oder wenn man mehrere gleichnamige Spalten kontrolliert auseinanderhalten will.
+
 ### `L093` — `LEFT OUTER JOIN` (`HR` Unassigned Employees)
 - **Lernziel**: Du bewahrst alle Zeilen der linken Tabelle, auch ohne Treffer rechts.
 - **Studio-Link**: [Tracker `L093`](https://chatelao.github.io/sql-schulung/#curriculum/L093) · [Join Visualizer: LEFT ↗](https://chatelao.github.io/sql-schulung/#labs/joins/LEFT)
 - **Beispiel**: `SELECT e.last_name, d.department_name FROM hr.employees e LEFT OUTER JOIN hr.departments d ON e.department_id = d.department_id;` → 107 Zeilen (inkl. Kimberely Grant mit `NULL`).
+
+- **Selbstlern-Aufgabe:** Lückentext: Zeige alle 107 `hr.employees` inklusive `Kimberely Grant` (ohne Abteilung):
+```sql
+SELECT e.last_name, d.department_name FROM hr.employees e ___ hr.departments d ON e.department_id = d.department_id;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.last_name, d.department_name FROM hr.employees e LEFT OUTER JOIN hr.departments d ON e.department_id = d.department_id;
+      ```
+      `Kimberely Grant` erscheint mit `department_name = NULL` (`107 Zeilen`).
 
 ### `L094` — `RIGHT OUTER JOIN` (`SCOTT.DEPT` #40 `OPERATIONS` erhalten)
 - **Lernziel**: Du bewahrst alle Zeilen der rechten Tabelle.
 - **Studio-Link**: [Tracker `L094`](https://chatelao.github.io/sql-schulung/#curriculum/L094) · [Join Visualizer: RIGHT ↗](https://chatelao.github.io/sql-schulung/#labs/joins/RIGHT)
 - **Beispiel**: `SELECT e.ename, d.deptno, d.dname FROM scott.emp e RIGHT OUTER JOIN scott.dept d ON e.deptno = d.deptno;` → 15 Zeilen (14 Employees + `NULL | 40 | OPERATIONS`).
 
+- **Selbstlern-Aufgabe:** Lückentext: Zeige alle Abteilungen aus `scott.dept` (inklusive `40 OPERATIONS`), auch wenn keine Mitarbeitenden zugeordnet sind:
+```sql
+SELECT d.dname, e.ename FROM scott.emp e ___ scott.dept d ON e.deptno = d.deptno;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT d.dname, e.ename FROM scott.emp e RIGHT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
+      ```
+      Ergebnis: `15 Zeilen` (14 Mitarbeitende + `OPERATIONS` mit `ename = NULL`).
+
 ### `L095` — `FULL OUTER JOIN`
 - **Lernziel**: Du bewahrst ungematchte Zeilen von **beiden** Seiten.
 - **Studio-Link**: [Tracker `L095`](https://chatelao.github.io/sql-schulung/#curriculum/L095) · [Join Visualizer: FULL ↗](https://chatelao.github.io/sql-schulung/#labs/joins/FULL)
+
+- **Selbstlern-Aufgabe:** Was leistet `FULL OUTER JOIN` zwischen `hr.employees` und `hr.departments`?
+  ??? success "Musterlösung & Erklärung"
+      Es bleiben sowohl Mitarbeitende ohne Abteilung (`Kimberely Grant`) als auch leere Abteilungen (mit `NULL` bei den Mitarbeiter-Spalten) im Ergebnis erhalten.
 
 ### `L096` — Outer Join `ON`- vs. `WHERE`-Filter-Falle
 - **Lernziel**: Du platzierst optionale Filter auf die äußere Tabelle korrekt in `ON` statt `WHERE`.
@@ -132,6 +213,10 @@
 
 ## Self-Joins, Non-Equijoins & Reporting (`L097`–`L102`)
 
+- **Selbstlern-Aufgabe:** Warum macht `LEFT JOIN scott.dept d ON ... WHERE d.loc = 'NEW YORK'` den Outer Join wirkungslos?
+  ??? success "Musterlösung & Erklärung"
+      Der `WHERE`-Filter läuft **nach** dem Join und verwirft alle erzeugten `NULL`-Zeilen (`d.loc IS NULL`). Filter auf die äussere Tabelle gehören in die **`ON`-Klausel** (`AND d.loc = 'NEW YORK'`).
+
 ### `L097` — Self-Join (`EMP` → `MGR`)
 - **Lernziel**: Du verknüpfst eine Tabelle mit sich selbst über zwei verschiedene Table Aliases.
 - **Studio-Link**: [Tracker `L097`](https://chatelao.github.io/sql-schulung/#curriculum/L097) · [Join Visualizer: SELF ↗](https://chatelao.github.io/sql-schulung/#labs/joins/SELF)
@@ -143,15 +228,42 @@
   -- 14 Zeilen: KING hat manager = NULL
   ```
 
+- **Selbstlern-Aufgabe:** Lückentext: Gib jeden Mitarbeiter aus `scott.emp` mit seinem Vorgesetzten (inkl. `KING`) aus:
+```sql
+SELECT e.ename AS mitarbeiter, NVL(m.ename, 'TOP') AS chef FROM scott.emp e ___ scott.emp m ON e.mgr = m.___;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename AS mitarbeiter, NVL(m.ename, 'TOP') AS chef FROM scott.emp e LEFT JOIN scott.emp m ON e.mgr = m.empno;
+      ```
+      `LEFT JOIN` bewahrt `KING` (`mgr IS NULL`, `14 Zeilen`).
+
 ### `L098` — Non-Equijoin (`SCOTT.EMP` + `SCOTT.SALGRADE`)
 - **Lernziel**: Du joinst Tabellen über Wertebereiche (`BETWEEN`, `<`, `>`) statt `=`.
 - **Studio-Link**: [Tracker `L098`](https://chatelao.github.io/sql-schulung/#curriculum/L098) · [Join Visualizer: NONEQUI ↗](https://chatelao.github.io/sql-schulung/#labs/joins/NONEQUI)
 - **Beispiel**: `SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal;` → 14 Zeilen.
 
+- **Selbstlern-Aufgabe:** Lückentext: Ordne jedem Mitarbeiter in `scott.emp` seine Gehaltsstufe aus `scott.salgrade` zu:
+```sql
+SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal ___ s.losal ___ s.hisal;
+```
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal;
+      ```
+      Klassischer Non-Equijoin (`14 Zeilen`).
+
 ### `L099` — Legacy Oracle `(+)` Join-Syntax erkennen
 - **Lernziel**: Du liest die ältere Oracle-`(+)`-Syntax sicher und übersetzt sie in ANSI-Outer-Joins.
 - **Studio-Link**: [Tracker `L099`](https://chatelao.github.io/sql-schulung/#curriculum/L099)
 - **Merkregel**: Das `(+)` steht immer auf der **optionalen/fehlenden** Seite (`WHERE e.deptno(+) = d.deptno` → alle `DEPT`-Zeilen bleiben erhalten = `RIGHT OUTER JOIN`). Ein `FULL OUTER JOIN` ist mit `(+)` **nicht** direkt möglich.
+
+- **Selbstlern-Aufgabe:** Übersetze in ANSI-Syntax: `SELECT e.ename, d.dname FROM scott.emp e, scott.dept d WHERE e.deptno = d.deptno(+);`
+  ??? success "Musterlösung & Erklärung"
+      ```sql
+      SELECT e.ename, d.dname FROM scott.emp e LEFT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
+      ```
+      Das `(+)` steht bei Oracle-Legacy-Syntax auf der **optionalen** (NULL-ergänzten) Seite.
 
 ### `L100` — Multi-Way Join aus `EMP`, `DEPT`, `MGR` & `SALGRADE`
 - **Lernziel**: Du kombinierst Equi-Join, Self-Join und Non-Equijoin in einer einzigen Query.
@@ -191,6 +303,34 @@
       ```
 
 ---
+### Visuelle Orientierung: Join-Typen, Outer-Filter & Self-Join
+
+```mermaid
+flowchart TD
+    J["Join-Typen"] --> IJ["INNER JOIN: nur passende Paare"]
+    J --> LJ["LEFT OUTER JOIN: alle linken + passende rechte (sonst NULL)"]
+    J --> RJ["RIGHT OUTER JOIN: alle rechten + passende linke (sonst NULL)"]
+    J --> FJ["FULL OUTER JOIN: alle beider Seiten"]
+```
+*Alt-Text: Übersicht der vier ANSI-Join-Typen INNER, LEFT OUTER, RIGHT OUTER und FULL OUTER JOIN.*
+
+```mermaid
+flowchart LR
+    L1["LEFT JOIN ... ON ... AND d.loc = 'NEW YORK'"] --> R1["Alle linken Zeilen bleiben erhalten!"]
+    L2["LEFT JOIN ... ON ... WHERE d.loc = 'NEW YORK'"] --> R2["NULL-Zeilen werden verworfen -> wird faktisch INNER JOIN!"]
+```
+*Alt-Text: Unterschied zwischen Filterung in der ON-Klausel vs. WHERE-Klausel bei einem LEFT OUTER JOIN.*
+
+```mermaid
+flowchart TD
+    K["KING (EMPNO 7839, MGR NULL)"] --> J["JONES (EMPNO 7566, MGR 7839)"]
+    K --> B["BLAKE (EMPNO 7698, MGR 7839)"]
+    J --> S["SCOTT (EMPNO 7788, MGR 7566)"]
+```
+*Alt-Text: Self-Join-Hierarchie in SCOTT.EMP über die Spalten EMPNO und MGR.*
+
+---
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Verschwundene Zeilen):** Führt auf `hr.employees` und `hr.departments` zuerst einen `INNER JOIN`, dann `LEFT OUTER JOIN` und schliesslich einen `LEFT OUTER JOIN` mit `WHERE d.location_id = 1700` aus. Markiert gemeinsam `Kimberely Grant` und erklärt, wann sie verschwindet.
