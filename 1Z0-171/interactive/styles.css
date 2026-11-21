@@ -1213,3 +1213,40 @@ textarea {
   transition: outline-color 0.3s ease, background 0.3s ease;
 }
 
+
+/* WCAG 2.2 AA Skip-Link, Focus-Visible & Beamer-Modus */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 1rem;
+  z-index: 9999;
+  background: #1a222d;
+  color: #ffffff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.35rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 0.5rem;
+}
+:focus-visible {
+  outline: 3px solid #0f6e6e;
+  outline-offset: 2px;
+}
+body.beamer-mode {
+  font-size: 118%;
+}
+body.beamer-mode pre,
+body.beamer-mode code,
+body.beamer-mode .sql-code,
+body.beamer-mode textarea {
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+#beamer-toggle-btn.active {
+  background: #0f6e6e;
+  color: #ffffff;
+  border-color: #0f6e6e;
+}

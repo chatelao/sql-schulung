@@ -135,14 +135,39 @@
 
   function switchView(view) {
     activeView = view;
-    document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
+    document.querySelectorAll(".nav-btn").forEach((b) => {
+      const isAct = b.dataset.view === view;
+      b.classList.toggle("active", isAct);
+      b.setAttribute("aria-selected", isAct ? "true" : "false");
+    });
     document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === `view-${view}`));
   }
 
   function switchLabPane(lab) {
     activeLab = lab;
-    document.querySelectorAll(".subtab-btn").forEach((b) => b.classList.toggle("active", b.dataset.lab === lab));
+    document.querySelectorAll(".subtab-btn").forEach((b) => {
+      const isAct = b.dataset.lab === lab;
+      b.classList.toggle("active", isAct);
+      b.setAttribute("aria-selected", isAct ? "true" : "false");
+    });
     document.querySelectorAll(".lab-pane").forEach((p) => p.classList.toggle("active", p.id === `lab-${lab}`));
+  }
+
+  const beamerBtn = document.getElementById("beamer-toggle-btn");
+  if (beamerBtn) {
+    const applyBeamer = (on) => {
+      document.body.classList.toggle("beamer-mode", !!on);
+      beamerBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      beamerBtn.classList.toggle("active", !!on);
+    };
+    if (state.beamerMode || new URLSearchParams(window.location.search).get("beamer") === "1") {
+      applyBeamer(true);
+    }
+    beamerBtn.addEventListener("click", () => {
+      state.beamerMode = !document.body.classList.contains("beamer-mode");
+      saveState();
+      applyBeamer(state.beamerMode);
+    });
   }
 
   async function buildFreeSqlEmbedUrl(sqlText) {
@@ -756,6 +781,10 @@
             : `<circle cx="${p.x}" cy="${padT + plotH}" r="3" fill="#d8d1c5" />`}
         `).join("")}
       </svg>
+      <table class="matrix-table" aria-label="Tabellarische Übersicht der Checkpoint-Ergebnisse" style="margin-top:0.5rem;">
+        <thead><tr>${points.map((p) => `<th scope="col">${p.id}</th>`).join("")}</tr></thead>
+        <tbody><tr>${points.map((p) => `<td>${p.pct !== null ? `<strong>${p.pct}%</strong>` : "—"}</td>`).join("")}</tr></tbody>
+      </table>
     `;
   }
 

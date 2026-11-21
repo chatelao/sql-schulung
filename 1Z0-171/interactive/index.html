@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Direkt zum Hauptinhalt springen</a>
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
@@ -21,24 +22,25 @@
         </div>
       </div>
 
-      <nav class="main-nav" aria-label="Hauptbereiche">
-        <button class="nav-btn active" data-view="curriculum" id="nav-curriculum">200 Lektionen</button>
-        <button class="nav-btn" data-view="checkpoints" id="nav-checkpoints">Checkpoints (CP-0..5)</button>
-        <button class="nav-btn" data-view="labs" id="nav-labs">Interaktive Labs</button>
-        <button class="nav-btn" data-view="flashcards" id="nav-flashcards">Flashcards</button>
-        <button class="nav-btn" data-view="mock" id="nav-mock">Mock Exam</button>
+      <nav class="main-nav" aria-label="Hauptbereiche" role="tablist">
+        <button class="nav-btn active" role="tab" aria-selected="true" aria-controls="view-curriculum" data-view="curriculum" id="nav-curriculum">200 Lektionen</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="view-checkpoints" data-view="checkpoints" id="nav-checkpoints">Checkpoints (CP-0..5)</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="view-labs" data-view="labs" id="nav-labs">Interaktive Labs</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="view-flashcards" data-view="flashcards" id="nav-flashcards">Flashcards</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="view-mock" data-view="mock" id="nav-mock">Mock Exam</button>
       </nav>
 
       <div class="header-actions">
+        <button class="btn btn-sm btn-secondary" id="beamer-toggle-btn" type="button" aria-pressed="false" title="Grössere Schrift für Beamer &amp; Microsoft Teams Screen-Share">Beamer-Modus</button>
         <a class="permalink-pill" id="global-permalink" href="#curriculum" title="Permanente URL zu diesem Sprungziel kopieren">&#x1F517; Permalink</a>
         <a class="docs-link" href="https://sql-schulung.readthedocs.io/" target="_blank" rel="noopener">Read the Docs Handbuch &nearr;</a>
       </div>
     </div>
   </header>
 
-  <main class="page-shell">
+  <main class="page-shell" id="main-content">
     <!-- VIEW 1: 200-LESSON CURRICULUM TRACKER -->
-    <section id="view-curriculum" class="view active" aria-labelledby="curriculum-heading">
+    <section id="view-curriculum" class="view active" role="tabpanel" aria-labelledby="curriculum-heading">
       <div class="section-head">
         <div>
           <h1 id="curriculum-heading">200-Lektionen-Lernplan für Einsteiger</h1>
