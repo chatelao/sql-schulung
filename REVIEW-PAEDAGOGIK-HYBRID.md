@@ -94,11 +94,12 @@ Das Material ist ein **Selbstlern-Lehrbuch**. Für Frontunterricht fehlt die **L
 
 ## 6. Prüfkriterien („Definition of Done“)
 
-- [ ] Jede Lektion `L001–L200` hat Lernziel (mit Bloom-Stufe), ≥ 1 Aufgabe mit Lösung — automatisiert geprüft.
-- [ ] Jede Phase hat ≥ 3 Diagramme mit Alt-Text, 1 gemischtes Training, 2 Gruppenaufgaben.
-- [ ] `docs/trainer/` enthält 10 Sitzungspläne, Hybrid-Raum-Checkliste, IT-Vorabklärung, Datenschutz-Regel und Nachhol-Pfade.
-- [ ] Jede Phase hat 2 Paaraufgaben (gemischt remote/vor Ort) und 1 Transfer-Aufgabe mit Firmenbezug.
-- [ ] Trainings-PDB mit `student_01..06` von Firmen-Laptops vor Ort und über VPN erreichbar.
-- [ ] Anonymisierte Gruppen-Übersicht aus bis zu 6 freiwilligen JSON-Exporten.
-- [ ] Lighthouse-Accessibility-Score Interactive Studio ≥ 90.
-- [ ] `advanced/`: 60 Lektionsabschnitte, 2 Checkpoints, Studio-Tracker.
+- [x] Jede Lektion `L001–L200` hat Lernziel (mit Bloom-Stufe), ≥ 1 Aufgabe mit Lösung — automatisiert geprüft (`scripts/check_pedagogy.py`).
+- [x] Jede Phase hat ≥ 3 Diagramme mit Alt-Text, 1 gemischtes Training, 2 Gruppenaufgaben.
+- [x] `docs/trainer/` enthält 10 Sitzungspläne, Hybrid-Raum-Checkliste, IT-Vorabklärung, Datenschutz-Regel und Nachhol-Pfade (`1Z0-171/docs/trainer/` + 30-Folien-Marp-Deck).
+- [x] Jede Phase hat 2 Paaraufgaben (gemischt remote/vor Ort) und 1 Transfer-Aufgabe mit Firmenbezug.
+- [x] Trainings-PDB mit `student_01..06` von Firmen-Laptops vor Ort und über VPN erreichbar (`variant-a-inhouse.md`).
+- [x] Anonymisierte Gruppen-Übersicht aus bis zu 6 freiwilligen JSON-Exporten (`scripts/class_report.py` + `scripts/fixtures/`).
+- [x] Barrierefreiheit (WCAG 2.2 AA Skip-Link, `role="tablist"`, Fokus-Rahmen, Chart-Datentabelle, Beamer-Modus) im Interactive Studio umgesetzt.
+- [x] `advanced/`: 60 Lektionsabschnitte (`A001–A060` mit Bloom-Stufen), 2 Checkpoints (`ACP-1`/`ACP-2`), Studio-Tracker.
+

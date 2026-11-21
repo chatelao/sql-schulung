@@ -1,0 +1,46 @@
+name: Quality Gate (MkDocs Strict, Pedagogy, Oracle Refs & Studio JS)
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install MkDocs dependencies
+        run: pip install -r 1Z0-171/requirements.txt
+
+      - name: Verify MkDocs strict build
+        run: mkdocs build -f 1Z0-171/mkdocs.yml --strict -d /tmp/mkdocs-site
+
+      - name: Verify Oracle 26ai reference links (offline coverage & version check)
+        run: python3 scripts/check_refs.py --offline
+
+      - name: Verify pedagogy standards (Bloom levels, 100% solutions, diagrams & advanced A001-A060)
+        run: python3 scripts/check_pedagogy.py
+
+      - name: Verify anonymized class report generator against fixtures
+        run: python3 scripts/class_report.py scripts/fixtures/
+
+      - name: Verify Interactive Studio JS syntax
+        run: node --check 1Z0-171/interactive/js/*.js
