@@ -32,61 +32,61 @@ flowchart LR
 ## Lektionen im Detail
 
 ### `A043` — Mental Model: `GROUP BY` vs. `OVER (PARTITION BY ...)`
-- **Lernziel:** Ausführungsreihenfolge (Analytic Functions laufen *nach* `WHERE`, `GROUP BY`, `HAVING`, *vor* `ORDER BY`), `SUM(sal) OVER (PARTITION BY deptno)`
+- **Lernziel:** Ausführungsreihenfolge (Analytic Functions laufen *nach* `WHERE`, `GROUP BY`, `HAVING`, *vor* `ORDER BY`), `SUM(sal) OVER (PARTITION BY deptno)` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT ename, sal, SUM(sal) OVER () AS gesamt FROM scott.emp;`
   ??? success "Musterlösung & Erklärung"
       Leeres OVER () berechnet die Gesamtsumme über alle 14 Zeilen, ohne Zeilen zu verdichten.
 
 ### `A044` — Ranking Functions: `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `NTILE`
-- **Lernziel:** Verhalten bei Gleichstand (Ties), Top-N-per-Group-Muster (z. B. Top 2 Gehälter je Department), Duplikate deduplizieren
+- **Lernziel:** Verhalten bei Gleichstand (Ties), Top-N-per-Group-Muster (z. B. Top 2 Gehälter je Department), Duplikate deduplizieren *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT ename, deptno, sal, AVG(sal) OVER (___ deptno) FROM scott.emp;`
   ??? success "Musterlösung & Erklärung"
       PARTITION BY deptno bildet das Fenster pro Abteilung.
 
 ### `A045` — Windowing Clauses: `ROWS BETWEEN` vs. `RANGE BETWEEN`
-- **Lernziel:** Laufende Summen (`UNBOUNDED PRECEDING AND CURRENT ROW`), gleitende Durchschnitte (`2 PRECEDING AND CURRENT ROW`), Default-Falle bei `ORDER BY` (`RANGE`)
+- **Lernziel:** Laufende Summen (`UNBOUNDED PRECEDING AND CURRENT ROW`), gleitende Durchschnitte (`2 PRECEDING AND CURRENT ROW`), Default-Falle bei `ORDER BY` (`RANGE`) *(Bloom: Analysieren)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT ename, deptno, sal, ___() OVER (PARTITION BY deptno ORDER BY sal DESC) AS rn FROM scott.emp;`
   ??? success "Musterlösung & Erklärung"
       ROW_NUMBER() vergibt eindeutige Ränge 1,2,3... (im Gegensatz zu RANK/DENSE_RANK bei Gleichstand).
 
 ### `A046` — Navigation: `LAG` & `LEAD`
-- **Lernziel:** Zugriff auf vorherige/nächste Zeile (`LAG(sal, 1, 0) OVER (...)`), Differenzen zum Vormonat oder zum Vorgänger berechnen
+- **Lernziel:** Zugriff auf vorherige/nächste Zeile (`LAG(sal, 1, 0) OVER (...)`), Differenzen zum Vormonat oder zum Vorgänger berechnen *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT ename, sal, SUM(sal) OVER (ORDER BY empno ROWS BETWEEN ___ PRECEDING AND CURRENT ROW) FROM scott.emp;`
   ??? success "Musterlösung & Erklärung"
       UNBOUNDED PRECEDING berechnet die laufende Summe (Running Total).
 
 ### `A047` — `FIRST_VALUE`, `LAST_VALUE` & `NTH_VALUE`
-- **Lernziel:** Typische `LAST_VALUE`-Falle (Standard-Window endet bei `CURRENT ROW` → `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` nötig!)
+- **Lernziel:** Typische `LAST_VALUE`-Falle (Standard-Window endet bei `CURRENT ROW` → `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` nötig!) *(Bloom: Analysieren)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welcher Unterschied besteht zwischen ROWS BETWEEN ... und RANGE BETWEEN ...?`
   ??? success "Musterlösung & Erklärung"
       ROWS zählt physische Zeilen; RANGE fasst logisch gleiche ORDER-BY-Werte zusammen (Standard bei ORDER BY ohne Frame!).
 
 ### `A048` — String-Aggregation mit `LISTAGG`
-- **Lernziel:** `LISTAGG(ename, ', ') WITHIN GROUP (ORDER BY ename)`, `ON OVERFLOW TRUNCATE '...' WITH COUNT`, Einsatz als Analytic Function
+- **Lernziel:** `LISTAGG(ename, ', ') WITHIN GROUP (ORDER BY ename)`, `ON OVERFLOW TRUNCATE '...' WITH COUNT`, Einsatz als Analytic Function *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT ename, sal, ___(sal, 1, 0) OVER (ORDER BY hiredate) AS prev_sal FROM scott.emp;`
   ??? success "Musterlösung & Erklärung"
       LAG(sal, 1, 0) liest den vorherigen Wert (LEAD den nächsten).
 
 ### `A049` — Zeilen zu Spalten drehen: `PIVOT`
-- **Lernziel:** Kreuztabellen direkt in SQL (`PIVOT (SUM(sal) FOR deptno IN (10, 20, 30))`), mehrere Aggregate im `PIVOT`
+- **Lernziel:** Kreuztabellen direkt in SQL (`PIVOT (SUM(sal) FOR deptno IN (10, 20, 30))`), mehrere Aggregate im `PIVOT` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT ename, sal, FIRST_VALUE(ename) OVER (ORDER BY sal DESC) AS top_earner FROM scott.emp;`
   ??? success "Musterlösung & Erklärung"
       Achtung bei LAST_VALUE: ohne ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING endet das Standardfenster bei CURRENT ROW!
 
 ### `A050` — Spalten zu Zeilen drehen: `UNPIVOT`
-- **Lernziel:** Normalisierung breiter Tabellen (`UNPIVOT [INCLUDE\
+- **Lernziel:** Normalisierung breiter Tabellen (`UNPIVOT [INCLUDE\ *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT * FROM (SELECT deptno, job, sal FROM scott.emp) ___ (SUM(sal) FOR deptno IN (10, 20, 30));`
   ??? success "Musterlösung & Erklärung"
       PIVOT dreht Zeilenwerte (10, 20, 30) in Spalten.
 
 ### `A051` — Ratio-to-Report & statistische Analytic Functions
-- **Lernziel:** `RATIO_TO_REPORT(sal) OVER (PARTITION BY deptno)`, `PERCENT_RANK`, `CUME_DIST`, `MEDIAN`
+- **Lernziel:** `RATIO_TO_REPORT(sal) OVER (PARTITION BY deptno)`, `PERCENT_RANK`, `CUME_DIST`, `MEDIAN` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT * FROM umsatz_breit ___ (betrag FOR monat IN (jan, feb, mar));`
   ??? success "Musterlösung & Erklärung"
       UNPIVOT wandelt Spalten zurück in Zeilen (Standard: EXCLUDE NULLS).
 
 ### `A052` — Modul-5-Lab: HR-Gehaltsanalyse & Zeitreihen-Reporting
-- **Lernziel:** Kombinierte Abfrage mit Ranking, laufender Summe, Abteilungsanteil und `LAG`-Abstand
+- **Lernziel:** Kombinierte Abfrage mit Ranking, laufender Summe, Abteilungsanteil und `LAG`-Abstand *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Erstelle ein Top-2-Gehaltsranking pro Abteilung inkl. Vormonats-/Nachbar-Differenz auf scott.emp.`
   ??? success "Musterlösung & Erklärung"
       CTE mit DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) AS rnk, aussen WHERE rnk <= 2.

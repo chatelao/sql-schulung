@@ -9,7 +9,7 @@
 ## `INSERT`, `UPDATE`, `DELETE` Grundlagen (`L123`–`L126`)
 
 ### `L123` — Deine beschreibbare Sandbox einrichten (`my_emp` & `my_dept`)
-- **Lernziel**: Du legst eigene schreibbare Tabellenkopien an, um DML gefahrlos zu üben.
+- **Lernziel**: Du legst eigene schreibbare Tabellenkopien an, um DML gefahrlos zu üben. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L123`](https://chatelao.github.io/sql-schulung/#curriculum/L123) · [SQL Ref: CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CREATE-TABLE.html)
 - **Setup**:
   ```sql
@@ -28,7 +28,7 @@ CREATE TABLE my_emp ___ SELECT * FROM scott.emp;
       Achtung: `CTAS` führt ein implizites `COMMIT` aus!
 
 ### `L124` — `INSERT INTO ... VALUES` (Explizites & implizites `NULL`, `DEFAULT`)
-- **Lernziel**: Du fügst neue Zeilen mit expliziten Spaltenlisten und `NULL`/`DEFAULT`-Werten ein.
+- **Lernziel**: Du fügst neue Zeilen mit expliziten Spaltenlisten und `NULL`/`DEFAULT`-Werten ein. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L124`](https://chatelao.github.io/sql-schulung/#curriculum/L124) · [SQL Ref: INSERT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/INSERT.html)
 - **Beispiel**:
   ```sql
@@ -47,7 +47,7 @@ INSERT INTO my_emp (empno, ename, sal, deptno) ___ (9001, 'MUSTER', 2500, 10);
       Nicht genannte Spalten erhalten `NULL` (oder ihren `DEFAULT`-Wert).
 
 ### `L125` — `UPDATE` Statements & `WHERE`-Sicherheitsgewohnheiten
-- **Lernziel**: Du änderst Datensätze gezielt und prüfst den Filter vorab mit `SELECT`.
+- **Lernziel**: Du änderst Datensätze gezielt und prüfst den Filter vorab mit `SELECT`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L125`](https://chatelao.github.io/sql-schulung/#curriculum/L125)
 - **Praxisregel**: Teste die `WHERE`-Bedingung immer zuerst mit `SELECT * FROM my_emp WHERE deptno = 20;`, bevor du `UPDATE my_emp SET sal = sal * 1.10 WHERE deptno = 20;` ausführst! Ohne `WHERE` werden **alle** Zeilen geändert.
 
@@ -59,7 +59,7 @@ INSERT INTO my_emp (empno, ename, sal, deptno) ___ (9001, 'MUSTER', 2500, 10);
       Schutzregel: Immer zuerst `SELECT * FROM my_emp WHERE deptno = 20;` testen, erst danach `UPDATE` ausführen (und im Notfall `ROLLBACK;`).
 
 ### `L126` — `DELETE` vs. Referential Integrity Errors (`ORA-02292`)
-- **Lernziel**: Du löschst Zeilen sicher und verstehst `ORA-02292` bei Foreign-Key-Beziehungen.
+- **Lernziel**: Du löschst Zeilen sicher und verstehst `ORA-02292` bei Foreign-Key-Beziehungen. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L126`](https://chatelao.github.io/sql-schulung/#curriculum/L126) · [SQL Ref: DELETE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/DELETE.html)
 - **Exam Trap**: Das Löschen einer Parent Row in `DEPT` (z. B. `deptno = 10`), solange noch Child Rows in `EMP` existieren, wirft `ORA-02292: integrity constraint violated - child record found`. *(Hinweis: `my_dept`/`my_emp` aus `CTAS` haben noch keinen FK; in Phase 8 baust du diesen explizit ein.)*
 
@@ -72,7 +72,7 @@ INSERT INTO my_emp (empno, ename, sal, deptno) ___ (9001, 'MUSTER', 2500, 10);
       `ORA-02292` (*integrity constraint violated - child record found*): Solange noch Mitarbeitende auf `deptno = 10` verweisen, verhindert Oracle ohne `ON DELETE CASCADE`/`SET NULL` das Löschen.
 
 ### `L127` — `INSERT INTO ... SELECT`
-- **Lernziel**: Du überträgst Zeilen aus einer Abfrage direkt in eine Zieltabelle.
+- **Lernziel**: Du überträgst Zeilen aus einer Abfrage direkt in eine Zieltabelle. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L127`](https://chatelao.github.io/sql-schulung/#curriculum/L127)
 - **Beispiel**:
   ```sql
@@ -93,7 +93,7 @@ INSERT INTO high_earners (empno, ename, sal) ___ empno, ename, sal FROM scott.em
       Bei `INSERT INTO ... SELECT` wird **kein** `VALUES` geschrieben!
 
 ### `L128` — Correlated `UPDATE` und Correlated `DELETE`
-- **Lernziel**: Du aktualisierst oder löschst Zeilen dynamisch auf Basis von Werten derselben oder einer anderen Tabelle.
+- **Lernziel**: Du aktualisierst oder löschst Zeilen dynamisch auf Basis von Werten derselben oder einer anderen Tabelle. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L128`](https://chatelao.github.io/sql-schulung/#curriculum/L128)
 - **Beispiel**:
   ```sql
@@ -120,7 +120,7 @@ UPDATE my_emp SET sal = (SELECT ___ FROM scott.emp WHERE deptno = 10) WHERE enam
       Immer prüfen, dass die Subquery höchstens 1 Zeile liefert.
 
 ### `L129` — Unconditional `INSERT ALL`
-- **Lernziel**: Du schreibst eine Quellzeile gleichzeitig in mehrere Zieltabellen.
+- **Lernziel**: Du schreibst eine Quellzeile gleichzeitig in mehrere Zieltabellen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L129`](https://chatelao.github.io/sql-schulung/#curriculum/L129)
 - **Beispiel**:
   ```sql
@@ -145,7 +145,7 @@ UPDATE my_emp SET sal = (SELECT ___ FROM scott.emp WHERE deptno = 10) WHERE enam
       ```
 
 ### `L130` — Conditional `INSERT ALL` vs. `INSERT FIRST`
-- **Lernziel**: Du unterscheidest Mehrfach-Treffer (`INSERT ALL`) von Ersttreffer-Stopp (`INSERT FIRST`).
+- **Lernziel**: Du unterscheidest Mehrfach-Treffer (`INSERT ALL`) von Ersttreffer-Stopp (`INSERT FIRST`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L130`](https://chatelao.github.io/sql-schulung/#curriculum/L130)
 - **Regel**:
   - `INSERT ALL`: wertet **jede `WHEN`**-Klausel für jede Zeile aus (eine Zeile kann in mehreren Zieltabellen landen).
@@ -156,7 +156,7 @@ UPDATE my_emp SET sal = (SELECT ___ FROM scott.emp WHERE deptno = 10) WHERE enam
       `INSERT ALL` prüft **alle** `WHEN`-Zweige und kann eine Quellzeile in mehrere Zieltabellen einfügen. `INSERT FIRST` stoppt nach dem **ersten** passenden `WHEN`-Zweig.
 
 ### `L131` — Das `MERGE` Statement (Upsert)
-- **Lernziel**: Du kombinierst `UPDATE`, `DELETE` und `INSERT` atomar in einem `MERGE`.
+- **Lernziel**: Du kombinierst `UPDATE`, `DELETE` und `INSERT` atomar in einem `MERGE`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L131`](https://chatelao.github.io/sql-schulung/#curriculum/L131) · [SQL Ref: MERGE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/MERGE.html)
 - **Beispiel**:
   ```sql
@@ -187,7 +187,7 @@ WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
       Achtung: `ON`-Spalten (`t.empno`) dürfen im `UPDATE SET` nicht verändert werden!
 
 ### `L132` — `MERGE` & Multi-Table Insert Lab
-- **Lernziel**: Du wendest `INSERT FIRST` und `MERGE` selbstständig an.
+- **Lernziel**: Du wendest `INSERT FIRST` und `MERGE` selbstständig an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L132`](https://chatelao.github.io/sql-schulung/#curriculum/L132)
 - **Selbstlern-Aufgabe**: Erstelle zwei Tabellen `tier_top (empno, ename, sal)` und `tier_rest (empno, ename, sal)` und verteile `SCOTT.EMP` per `INSERT FIRST`: `WHEN sal >= 3000 THEN INTO tier_top ... ELSE INTO tier_rest ...`. Prüfe danach die Zeilenzahlen (erwartet: 3 in `tier_top`, 11 in `tier_rest`).
   ??? success "Musterlösung & Erklärung"
@@ -206,7 +206,7 @@ WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
 ## Transactions, Implicit Commits & Locking (`L133`–`L138`)
 
 ### `L133` — `COMMIT`, `ROLLBACK` & `SAVEPOINT`
-- **Lernziel**: Du steuerst Transaktionen gezielt und rollst Teiländerungen auf einen `SAVEPOINT` zurück.
+- **Lernziel**: Du steuerst Transaktionen gezielt und rollst Teiländerungen auf einen `SAVEPOINT` zurück. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L133`](https://chatelao.github.io/sql-schulung/#curriculum/L133) · [SQL Ref: COMMIT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COMMIT.html)
 - **Beispiel**:
   ```sql
@@ -222,7 +222,7 @@ WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
       Das `DELETE` wird rückgängig gemacht, das `INSERT` bleibt **uncommitted** bestehen! Die Transaktion ist noch offen bis `COMMIT` oder `ROLLBACK`.
 
 ### `L134` — Implicit `COMMIT` & `ROLLBACK` Triggers
-- **Lernziel**: Du weißt exakt, wann Oracle eine Transaktion automatisch festschreibt oder zurückrollt.
+- **Lernziel**: Du weißt exakt, wann Oracle eine Transaktion automatisch festschreibt oder zurückrollt. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L134`](https://chatelao.github.io/sql-schulung/#curriculum/L134) · [SQL Ref: ROLLBACK](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ROLLBACK.html)
 - **Auto-`COMMIT`**: Jedes DDL (`CREATE`, `ALTER`, `DROP`, `TRUNCATE`), jedes DCL (`GRANT`, `REVOKE`), reguläres `EXIT` aus `sqlplus`.
 - **Auto-`ROLLBACK`**: Verbindungsabbruch, Session-Absturz, explizites `ROLLBACK`.
@@ -233,7 +233,7 @@ WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
       2. Normales Beenden von `sqlplus`/`sqlcl` mit `EXIT` (Absturz führt dagegen zu implizitem `ROLLBACK`).
 
 ### `L135` — Read Consistency (Readers Never Block Writers)
-- **Lernziel**: Du verstehst Oracles Undo-basiertes Snapshot-Modell für parallele Sessions.
+- **Lernziel**: Du verstehst Oracles Undo-basiertes Snapshot-Modell für parallele Sessions. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L135`](https://chatelao.github.io/sql-schulung/#curriculum/L135)
 
 - **Selbstlern-Aufgabe:** Session 1 führt `UPDATE my_emp SET sal = 9999 WHERE empno = 7369;` ohne `COMMIT` aus. Was sieht Session 2 bei `SELECT sal`?
@@ -241,7 +241,7 @@ WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
       Session 2 sieht weiterhin den **alten Wert** (`800`) — Oracle garantiert *Read Consistency* („Readers never block writers“).
 
 ### `L136` — Row-Level Locking & `SELECT ... FOR UPDATE`
-- **Lernziel**: Du weißt, dass Oracle nur geänderte Zeilen sperrt, und nutzt `FOR UPDATE [NOWAIT | WAIT n | SKIP LOCKED]`.
+- **Lernziel**: Du weißt, dass Oracle nur geänderte Zeilen sperrt, und nutzt `FOR UPDATE [NOWAIT | WAIT n | SKIP LOCKED]`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L136`](https://chatelao.github.io/sql-schulung/#curriculum/L136)
 
 - **Selbstlern-Aufgabe:** Wozu dient `SELECT * FROM my_emp WHERE deptno = 10 FOR UPDATE NOWAIT;`?
@@ -249,7 +249,7 @@ WHEN ___ THEN INSERT (empno, ename, sal) VALUES (s.empno, s.ename, s.sal);
       Es sperrt alle Zeilen der `DEPT 10` exklusiv bis zum `COMMIT`/`ROLLBACK` und bricht sofort mit `ORA-00054` ab, falls eine andere Session bereits einen Lock hält.
 
 ### `L137`–`L138` — Two-Session Concurrency Lab (Schritt-für-Schritt-Anleitung)
-- **Lernziel**: Du beobachtest Read Consistency und Row Locking live zwischen zwei Sessions.
+- **Lernziel**: Du beobachtest Read Consistency und Row Locking live zwischen zwei Sessions. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L137`](https://chatelao.github.io/sql-schulung/#curriculum/L137) · [Tracker `L138`](https://chatelao.github.io/sql-schulung/#curriculum/L138)
 - **Durchführung** (*Variante A*: `sqlcl` + VS Code; *Variante B*: 2 Tabs in **OCI Always Free Database Actions**):
 

@@ -8,7 +8,7 @@
 ## Data Types, `CREATE TABLE`, `CTAS` & `ALTER TABLE` (`L139`–`L144`)
 
 ### `L139` — Object Naming Rules & zentrale Oracle Data Types
-- **Lernziel**: Du wählst passende Datentypen (`VARCHAR2`, `CHAR`, `NUMBER(p,s)`, `DATE`, `CLOB`, `BLOB`, 23ai `BOOLEAN`) und kennst Namensregeln.
+- **Lernziel**: Du wählst passende Datentypen (`VARCHAR2`, `CHAR`, `NUMBER(p,s)`, `DATE`, `CLOB`, `BLOB`, 23ai `BOOLEAN`) und kennst Namensregeln. *(Bloom: Erinnern)*
 - **Studio-Link**: [Tracker `L139`](https://chatelao.github.io/sql-schulung/#curriculum/L139) · [SQL Ref: Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Data-Types.html)
 - **Exam Trap**: Bei `NUMBER(5, -2)` rundet eine negative Scale `-2` auf den nächsten **Hunderter**: `1256` wird als **`1300`** gespeichert!
 
@@ -18,7 +18,7 @@
       2. `VARCHAR2(20)` speichert variable Länge, `CHAR(20)` füllt immer rechts mit Leerzeichen auf 20 auf.
 
 ### `L140` — `CREATE TABLE` & `DEFAULT` Values
-- **Lernziel**: Du erstellst eigene Tabellen mit Spaltendefinitionen und Standardwerten.
+- **Lernziel**: Du erstellst eigene Tabellen mit Spaltendefinitionen und Standardwerten. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L140`](https://chatelao.github.io/sql-schulung/#curriculum/L140)
 - **Beispiel**:
   ```sql
@@ -40,7 +40,7 @@ CREATE TABLE projekte (id NUMBER(6), name VARCHAR2(50), erstellt_am DATE ___ SYS
       ```
 
 ### `L141` — `CREATE TABLE ... AS SELECT` (`CTAS`) Falle
-- **Lernziel**: Du weißt exakt, welche Metadaten `CTAS` übernimmt und welche verloren gehen.
+- **Lernziel**: Du weißt exakt, welche Metadaten `CTAS` übernimmt und welche verloren gehen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L141`](https://chatelao.github.io/sql-schulung/#curriculum/L141)
 - !!! warning "1Z0-171 Exam Trap"
     `CTAS` kopiert Spaltennamen, Datentypen, Zeilen und **nur explizite `NOT NULL`-Constraints**. Es kopiert **keine** `PRIMARY KEY`-, `FOREIGN KEY`-, `UNIQUE`-, `CHECK`- oder `DEFAULT`-Definitionen!
@@ -50,7 +50,7 @@ CREATE TABLE projekte (id NUMBER(6), name VARCHAR2(50), erstellt_am DATE ___ SYS
       `CTAS` übernimmt **nur `NOT NULL`**-Constraints (und Datentypen), aber **keine** `PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE` oder `CHECK` Constraints!
 
 ### `L142` — `ALTER TABLE` (`ADD`, `MODIFY`, `DROP`, `RENAME`)
-- **Lernziel**: Du passt bestehende Tabellenstrukturen nachträglich an.
+- **Lernziel**: Du passt bestehende Tabellenstrukturen nachträglich an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L142`](https://chatelao.github.io/sql-schulung/#curriculum/L142) · [SQL Ref: ALTER TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ALTER-TABLE.html)
 - **Regel**: Die Länge einer `VARCHAR2`-Spalte lässt sich nur verkleinern, wenn die Tabelle leer ist oder alle vorhandenen Werte in die neue Größe passen.
 
@@ -66,7 +66,7 @@ ALTER TABLE projekte ___ COLUMN budget TO max_budget;
       ```
 
 ### `L143` — `SET UNUSED` & `DROP UNUSED COLUMNS`
-- **Lernziel**: Du blendest große Spalten sofort aus und gibst Speicherplatz später wartungsfreundlich frei.
+- **Lernziel**: Du blendest große Spalten sofort aus und gibst Speicherplatz später wartungsfreundlich frei. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L143`](https://chatelao.github.io/sql-schulung/#curriculum/L143)
 - **Beispiel**:
   ```sql
@@ -79,7 +79,7 @@ ALTER TABLE projekte ___ COLUMN budget TO max_budget;
       `SET UNUSED` markiert die Spalte logisch sofort als entfernt (ohne teure I/O-Sperre). Das physische Löschen erfolgt später im Wartungsfenster mit `ALTER TABLE ... DROP UNUSED COLUMNS;`.
 
 ### `L144` — `TRUNCATE TABLE` vs. `DELETE` vs. `DROP TABLE ... PURGE`
-- **Lernziel**: Du unterscheidest DDL-Leeren (`TRUNCATE`), DML-Löschen (`DELETE`) und Objekt-Löschen (`DROP`).
+- **Lernziel**: Du unterscheidest DDL-Leeren (`TRUNCATE`), DML-Löschen (`DELETE`) und Objekt-Löschen (`DROP`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L144`](https://chatelao.github.io/sql-schulung/#curriculum/L144)
 
 | Befehl | Typ | Rollback möglich? | Tabellenstruktur bleibt? |
@@ -99,7 +99,7 @@ ALTER TABLE projekte ___ COLUMN budget TO max_budget;
       - `DROP ... PURGE`: entfernt Tabelle endgültig ohne Recycle Bin.
 
 ### `L145` — `NOT NULL`, `UNIQUE` & `PRIMARY KEY`
-- **Lernziel**: Du setzt Eindeutigkeit und Pflichtfelder sauber durch.
+- **Lernziel**: Du setzt Eindeutigkeit und Pflichtfelder sauber durch. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L145`](https://chatelao.github.io/sql-schulung/#curriculum/L145)
 - **Exam Trap**: `UNIQUE` legt einen Unique Index an und erlaubt **mehrere `NULL`-Werte** (da in Oracle `NULL != NULL`). `PRIMARY KEY` = `NOT NULL + UNIQUE`.
 
@@ -108,7 +108,7 @@ ALTER TABLE projekte ___ COLUMN budget TO max_budget;
       **Beliebig viele!** In Oracle gilt `NULL != NULL` bei `UNIQUE`-Indizes (im Gegensatz zum `PRIMARY KEY`, der `NOT NULL` erzwingt).
 
 ### `L146` — `FOREIGN KEY` (`ON DELETE CASCADE` vs. `ON DELETE SET NULL`)
-- **Lernziel**: Du modellierst referenzielle Integrität und Löschweitergabe.
+- **Lernziel**: Du modellierst referenzielle Integrität und Löschweitergabe. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L146`](https://chatelao.github.io/sql-schulung/#curriculum/L146)
 - **Beispiel**:
   ```sql
@@ -130,7 +130,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       ```
 
 ### `L147` — Inline- vs. Out-of-Line-Constraint-Syntax
-- **Lernziel**: Du kennst die Syntaxgrenzen beider Varianten.
+- **Lernziel**: Du kennst die Syntaxgrenzen beider Varianten. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L147`](https://chatelao.github.io/sql-schulung/#curriculum/L147)
 - **Regel**: `NOT NULL` kann **nur** inline definiert werden (oder per `ALTER TABLE ... MODIFY`); Multi-Column Constraints (`PRIMARY KEY (a, b)`) müssen out-of-line stehen.
 
@@ -139,7 +139,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       Immer bei **zusammengesetzten Constraints** über mehrere Spalten (z. B. `PRIMARY KEY (order_id, line_id)` oder `CHECK (end_date >= start_date)`).
 
 ### `L148` — `CHECK` Constraints & verbotene Ausdrücke
-- **Lernziel**: Du vermeidest `ORA-02436` bei Geschäftsregeln.
+- **Lernziel**: Du vermeidest `ORA-02436` bei Geschäftsregeln. *(Bloom: Erinnern)*
 - **Studio-Link**: [Tracker `L148`](https://chatelao.github.io/sql-schulung/#curriculum/L148)
 - **Exam Trap**: `CHECK` Constraints **dürfen nicht** auf `SYSDATE`, `USER`, `CURRVAL`/`NEXTVAL` oder Subqueries verweisen (`ORA-02436`).
 
@@ -148,7 +148,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       `ORA-02436`: Funktionen wie `SYSDATE`, `USER` oder Subqueries sind in `CHECK`-Constraints verboten, weil ihr Ergebnis nicht deterministisch von der Zeile allein abhängt.
 
 ### `L149` — `ENABLE`, `DISABLE`, `NOVALIDATE` & `DEFERRABLE`
-- **Lernziel**: Du steuerst, wann Constraints geprüft werden (sofort vs. beim `COMMIT`).
+- **Lernziel**: Du steuerst, wann Constraints geprüft werden (sofort vs. beim `COMMIT`). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L149`](https://chatelao.github.io/sql-schulung/#curriculum/L149)
 - **Beispiel**:
   ```sql
@@ -164,7 +164,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       Bestehende (ggf. fehlerhafte) Altdaten werden **nicht** geprüft, aber alle **neuen** `INSERT`/`UPDATE`-Operationen müssen das Constraint erfüllen.
 
 ### `L150` — `DROP TABLE ... CASCADE CONSTRAINTS` & Schema-Build-Lab
-- **Lernziel**: Du baust verknüpfte Tabellen inklusive Constraints auf und räumst Parent Tables sauber ab.
+- **Lernziel**: Du baust verknüpfte Tabellen inklusive Constraints auf und räumst Parent Tables sauber ab. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L150`](https://chatelao.github.io/sql-schulung/#curriculum/L150)
 - **Selbstlern-Aufgabe**: Erstelle `lab_depts (deptno PK, dname NOT NULL UNIQUE)` und `lab_staff (empno PK, deptno FK ON DELETE SET NULL, sal CHECK (sal > 0))`. Füge 1 Dept + 1 Staff ein, lösche das Dept und prüfe, dass `lab_staff.deptno` zu `NULL` wird. Räume mit `DROP TABLE lab_depts CASCADE CONSTRAINTS PURGE;` auf.
   ??? success "Musterlösung & Erklärung"
@@ -191,7 +191,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
 ## Global Temporary Tables & External Tables (`L151`–`L153`)
 
 ### `L151` — Global Temporary Tables (`GTT`)
-- **Lernziel**: Du unterscheidest transaktions- vs. session-gebundene temporäre Daten.
+- **Lernziel**: Du unterscheidest transaktions- vs. session-gebundene temporäre Daten. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L151`](https://chatelao.github.io/sql-schulung/#curriculum/L151)
 - **Beispiel**:
   ```sql
@@ -205,7 +205,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       `DELETE ROWS` (Standard) leert die Session-Daten bei jedem `COMMIT`; `PRESERVE ROWS` behält sie für die gesamte Session bis zum Logout.
 
 ### `L152` — Private Temporary Tables (`ORA$PTT_`)
-- **Lernziel**: Du kennst In-Memory-Tabellen, deren **Definition** selbst nach Transaktion/Session verschwindet (`ON COMMIT DROP DEFINITION` vs. `ON COMMIT PRESERVE DEFINITION`).
+- **Lernziel**: Du kennst In-Memory-Tabellen, deren **Definition** selbst nach Transaktion/Session verschwindet (`ON COMMIT DROP DEFINITION` vs. `ON COMMIT PRESERVE DEFINITION`). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L152`](https://chatelao.github.io/sql-schulung/#curriculum/L152)
 
 - **Selbstlern-Aufgabe:** Welche feste Namenskonvention gilt für Private Temporary Tables in Oracle (seit 18c/23ai/26ai)?
@@ -213,7 +213,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       Der Tabellenname **muss** mit `ORA$PTT_` beginnen (z. B. `CREATE PRIVATE TEMPORARY TABLE ora$ptt_tmp (...)`).
 
 ### `L153` — External Tables (`ORGANIZATION EXTERNAL`)
-- **Lernziel**: Du liest die DDL-Syntax für `ORACLE_LOADER` sicher und kennst ihre Einschränkungen.
+- **Lernziel**: Du liest die DDL-Syntax für `ORACLE_LOADER` sicher und kennst ihre Einschränkungen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L153`](https://chatelao.github.io/sql-schulung/#curriculum/L153)
 - **Beispiel**:
   ```sql
@@ -236,7 +236,7 @@ CONSTRAINT fk_emp_dept FOREIGN KEY (deptno) REFERENCES dept(deptno) ___ DELETE _
       **Nein** (standardmässig Read-Only über `SELECT`; DML auf External Tables ist nicht unterstützt).
 
 ### `L154` — `CREATE OR REPLACE [FORCE] VIEW`
-- **Lernziel**: Du legst wiederverwendbare gespeicherte Abfragen an (auch mit `FORCE`, falls die Basistabelle noch fehlt).
+- **Lernziel**: Du legst wiederverwendbare gespeicherte Abfragen an (auch mit `FORCE`, falls die Basistabelle noch fehlt). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L154`](https://chatelao.github.io/sql-schulung/#curriculum/L154)
 
 - **Selbstlern-Aufgabe:** Lückentext: Erstelle (oder ersetze) eine View `v_dept10`, die nur Mitarbeitende aus `deptno = 10` zeigt:
@@ -249,7 +249,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       ```
 
 ### `L155` — Simple vs. Complex Views & DML-Regeln
-- **Lernziel**: Du erkennst sofort, wann DML über eine View verboten ist (`DISTINCT`, `GROUP BY`, Group Functions, `SET` Operators, `ROWNUM` oder Joins ohne Key-Preserved-Regel).
+- **Lernziel**: Du erkennst sofort, wann DML über eine View verboten ist (`DISTINCT`, `GROUP BY`, Group Functions, `SET` Operators, `ROWNUM` oder Joins ohne Key-Preserved-Regel). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L155`](https://chatelao.github.io/sql-schulung/#curriculum/L155)
 
 - **Selbstlern-Aufgabe:** Warum erlaubt eine View mit `GROUP BY` oder `DISTINCT` kein `UPDATE` oder `DELETE`?
@@ -257,7 +257,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       Oracle kann eine aggregierte oder deduplizierte View-Zeile nicht eindeutig einer einzelnen Basis-Tabellenzeile zuordnen (`ORA-01732`).
 
 ### `L156` — `WITH CHECK OPTION` & `WITH READ ONLY`
-- **Lernziel**: Du schützt Views vor unerwünschten Datenänderungen.
+- **Lernziel**: Du schützt Views vor unerwünschten Datenänderungen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L156`](https://chatelao.github.io/sql-schulung/#curriculum/L156)
 - **Beispiel**:
   ```sql
@@ -272,7 +272,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       Es verhindert `INSERT` oder `UPDATE` durch die View, die dazu führen würden, dass die Zeile die `WHERE`-Bedingung (`deptno = 10`) nicht mehr erfüllt (`ORA-01402`).
 
 ### `L157` — View Management & `DROP VIEW` Lab
-- **Lernziel**: Du testest `WITH CHECK OPTION` und `WITH READ ONLY` praktisch.
+- **Lernziel**: Du testest `WITH CHECK OPTION` und `WITH READ ONLY` praktisch. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L157`](https://chatelao.github.io/sql-schulung/#curriculum/L157)
 - **Selbstlern-Aufgabe**: Lege `v_ro_emp` mit `WITH READ ONLY` auf `my_emp` an, teste `SELECT COUNT(*) FROM v_ro_emp;` und versuche ein `DELETE FROM v_ro_emp;` (erwartet: `ORA-42399: cannot perform a DML operation on a read-only view`). Lösche die View anschließend mit `DROP VIEW v_ro_emp;`.
   ??? success "Musterlösung & Erklärung"
@@ -289,7 +289,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
 ## Sequences, Indexes & Synonyms (`L158`–`L160`)
 
 ### `L158` — Sequences & `IDENTITY` Columns
-- **Lernziel**: Du erzeugst eindeutige IDs mit Sequences (`NEXTVAL`/`CURRVAL`) und `IDENTITY`-Spalten.
+- **Lernziel**: Du erzeugst eindeutige IDs mit Sequences (`NEXTVAL`/`CURRVAL`) und `IDENTITY`-Spalten. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L158`](https://chatelao.github.io/sql-schulung/#curriculum/L158)
 - **Beispiel**:
   ```sql
@@ -305,7 +305,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       2. Bei Cache-Verlust (Shutdown/Aging) gehen gecachte Sequenzwerte verloren.
 
 ### `L159` — Indexes (B-Tree, Unique, Composite, Function-Based, Invisible)
-- **Lernziel**: Du weißt, wann Oracle Indexes automatisch anlegt und wann du sie manuell erstellst.
+- **Lernziel**: Du weißt, wann Oracle Indexes automatisch anlegt und wann du sie manuell erstellst. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L159`](https://chatelao.github.io/sql-schulung/#curriculum/L159)
 - **Regel**: Oracle erstellt Unique Indexes **automatisch** für `PRIMARY KEY` und `UNIQUE` Constraints (nicht für `FOREIGN KEY`!).
 - **Beispiel**: `CREATE INDEX idx_upper_ename ON my_emp(UPPER(ename)) INVISIBLE;`
@@ -315,7 +315,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       Es ist ein **Function-Based Index**, der Queries mit `WHERE UPPER(ename) = 'SMITH'` beschleunigt (während ein normaler Index auf `ename` durch `UPPER(...)` umgangen würde).
 
 ### `L160` — Private & Public Synonyms
-- **Lernziel**: Du verkürzt lange Objektnamen mit Synonymen und weißt, dass Synonyme keine Rechte ersetzen.
+- **Lernziel**: Du verkürzt lange Objektnamen mit Synonymen und weißt, dass Synonyme keine Rechte ersetzen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L160`](https://chatelao.github.io/sql-schulung/#curriculum/L160)
 - **Beispiel**: `CREATE SYNONYM e FOR scott.emp;` vs. `CREATE PUBLIC SYNONYM dept FOR scott.dept;`
 
@@ -328,7 +328,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       Ein `PRIVATE SYNONYM` gehört nur dem eigenen Schema (`CREATE SYNONYM`); ein `PUBLIC SYNONYM` gilt datenbankweit für alle User (erfordert das Systemprivileg `CREATE PUBLIC SYNONYM`).
 
 ### `L161` — Identical Checkpoint #4 (Assessment)
-- **Lernziel**: Du prüfst deine DDL-, Constraint-, View- und Sequence-Sicherheit.
+- **Lernziel**: Du prüfst deine DDL-, Constraint-, View- und Sequence-Sicherheit. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L161`](https://chatelao.github.io/sql-schulung/#curriculum/L161) · [Checkpoint `CP-4` starten ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-4)
 - **Erwartetes Niveau**: **75–85 %** gesamt.
 
@@ -337,7 +337,7 @@ CREATE ___ VIEW v_dept10 AS SELECT empno, ename, sal FROM scott.emp WHERE deptno
       Ziel nach Phase 8: **75–85 %** Gesamtscore über alle 11 Domains.
 
 ### `L162` — Fortschrittsvergleich & Reflexion (`CP-4` vs. `CP-0..3`)
-- **Lernziel**: Du prüfst dein Verlaufsdiagramm auf GitHub Pages und planst den Endspurt (Phase 9 & 10).
+- **Lernziel**: Du prüfst dein Verlaufsdiagramm auf GitHub Pages und planst den Endspurt (Phase 9 & 10). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L162`](https://chatelao.github.io/sql-schulung/#curriculum/L162) · [`CP-4` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-4)
 
 ---

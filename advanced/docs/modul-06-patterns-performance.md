@@ -52,49 +52,49 @@ flowchart TD
 ## Lektionen im Detail
 
 ### `A053` — Mehrdimensionale Aggregation: `ROLLUP`, `CUBE` & `GROUPING SETS`
-- **Lernziel:** Zwischen- und Gesamtsummen in einem einzigen Tabellenscan, gezielte Kombinationen mit `GROUPING SETS`
+- **Lernziel:** Zwischen- und Gesamtsummen in einem einzigen Tabellenscan, gezielte Kombinationen mit `GROUPING SETS` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT deptno, job, SUM(sal) FROM scott.emp GROUP BY ___ (deptno, job);`
   ??? success "Musterlösung & Erklärung"
       ROLLUP(deptno, job) liefert Detailzeilen, Abteilungssummen und Gesamtsumme (CUBE zusätzlich Job-Summen).
 
 ### `A054` — `GROUPING()` & `GROUPING_ID()`
-- **Lernziel:** Echte `NULL`-Werte von Subtotal-`NULL`s unterscheiden und sprechende Labels (`'Gesamt'`) erzeugen
+- **Lernziel:** Echte `NULL`-Werte von Subtotal-`NULL`s unterscheiden und sprechende Labels (`'Gesamt'`) erzeugen *(Bloom: Verstehen)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Wozu dient GROUPING(deptno) in einer ROLLUP-Abfrage?`
   ??? success "Musterlösung & Erklärung"
       Liefert 1 für die künstlich erzeugte NULL-Zeile einer Zwischen-/Gesamtsumme und 0 für echte Datenzeilen.
 
 ### `A055` — `LATERAL` Inline Views & `CROSS APPLY` / `OUTER APPLY`
-- **Lernziel:** Korrelierte Subqueries in der `FROM`-Klausel (z. B. Top-2-Mitarbeiter pro Department per `APPLY` + `FETCH FIRST 2 ROWS ONLY`)
+- **Lernziel:** Korrelierte Subqueries in der `FROM`-Klausel (z. B. Top-2-Mitarbeiter pro Department per `APPLY` + `FETCH FIRST 2 ROWS ONLY`) *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT d.dname, e.ename FROM scott.dept d ___ APPLY (SELECT ename FROM scott.emp e WHERE e.deptno = d.deptno FETCH FIRST 2 ROWS ONLY) e;`
   ??? success "Musterlösung & Erklärung"
       CROSS APPLY (bzw. OUTER APPLY um DEPT 40 zu behalten) erlaubt korrelierte Top-N-Subqueries in FROM.
 
 ### `A056` — Row Pattern Matching: `MATCH_RECOGNIZE` (Teil 1)
-- **Lernziel:** Grundaufbau (`PARTITION BY`, `ORDER BY`, `MEASURES`, `PATTERN`, `DEFINE`) für V-/W-Muster und Trend-Erkennung
+- **Lernziel:** Grundaufbau (`PARTITION BY`, `ORDER BY`, `MEASURES`, `PATTERN`, `DEFINE`) für V-/W-Muster und Trend-Erkennung *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Wozu dient MATCH_RECOGNIZE in Oracle SQL?`
   ??? success "Musterlösung & Erklärung"
       Zur Erkennung sequenzieller Muster über sortierte Zeilen (z. B. V-förmige Kurse, Session-Timeouts) direkt in SQL.
 
 ### `A057` — `MATCH_RECOGNIZE` (Teil 2): Islands & Gaps / Sessionization
-- **Lernziel:** Zusammenhängende Zeiträume oder fehlende Sequenznummern elegant mit `MATCH_RECOGNIZE` erkennen
+- **Lernziel:** Zusammenhängende Zeiträume oder fehlende Sequenznummern elegant mit `MATCH_RECOGNIZE` erkennen *(Bloom: Erinnern)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche Klauseln gehören mindestens in MATCH_RECOGNIZE (ORDER BY ..., MEASURES ..., PATTERN ..., DEFINE ...)?`
   ??? success "Musterlösung & Erklärung"
       ORDER BY für die Reihenfolge, PATTERN für den Regex auf Zeilenvariablen (z. B. A B+ C) und DEFINE für deren Bedingungen.
 
 ### `A058` — Komplexe `WITH`-Pipelines & CTE-Optimierung
-- **Lernziel:** Mehrstufige Transformationen sauber strukturieren, Hinweise zu `MATERIALIZE` vs. `INLINE`
+- **Lernziel:** Mehrstufige Transformationen sauber strukturieren, Hinweise zu `MATERIALIZE` vs. `INLINE` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Warum verhindert WHERE UPPER(ename) = 'SMITH' oft einen Standard-Index auf ename?`
   ??? success "Musterlösung & Erklärung"
       Weil die Spalte in einer Funktion steckt — Lösung: Function-Based Index auf UPPER(ename).
 
 ### `A059` — Execution Plans lesen (`EXPLAIN PLAN` & `DBMS_XPLAN.DISPLAY`)
-- **Lernziel:** Kosten, Cardinality, Access Predicates vs. Filter Predicates bei Joins, `JSON_TABLE`, `XMLTABLE` und Regex verstehen
+- **Lernziel:** Kosten, Cardinality, Access Predicates vs. Filter Predicates bei Joins, `JSON_TABLE`, `XMLTABLE` und Regex verstehen *(Bloom: Verstehen)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche zwei Befehle zeigen den geschätzten vs. den tatsächlich gelaufenen Execution Plan?`
   ??? success "Musterlösung & Erklärung"
       Geschätzt: EXPLAIN PLAN FOR ... + DBMS_XPLAN.DISPLAY; Tatsächlich: SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST')).
 
 ### `A060` — Capstone-Projekt: End-to-End-Analyse-Query
-- **Lernziel:** Kombinierte Auswertung über hierarchische Daten, JSON/XML-Nutzlast, Regex-Bereinigung und Window Functions
+- **Lernziel:** Kombinierte Auswertung über hierarchische Daten, JSON/XML-Nutzlast, Regex-Bereinigung und Window Functions *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Löse das Capstone-Szenario in advanced-queries-sandbox.sql (Hierarchie + JSON/Regex + Window-Ranking).`
   ??? success "Musterlösung & Erklärung"
       Prüfe mit EXPLAIN PLAN, dass unnötige Full Table Scans / kartesische Joins vermieden werden.

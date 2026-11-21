@@ -9,7 +9,7 @@
 ## Checkpoint #0 (`L001`–`L002`)
 
 ### `L001` — Kursstart & Identical Checkpoint #0 (Baseline-Test)
-- **Lernziel**: Du kennst die 200-Lektionen-Struktur und erfasst deine ehrliche Start-Baseline ohne Druck.
+- **Lernziel**: Du kennst die 200-Lektionen-Struktur und erfasst deine ehrliche Start-Baseline ohne Druck. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L001`](https://chatelao.github.io/sql-schulung/#curriculum/L001) · [Checkpoint `CP-0` starten ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-0)
 - **Ablauf (45 Min.)**:
   1. Lies den [Selbststudium-Leitfaden](../getting-started/self-study-guide.md) (10 Min.).
@@ -23,7 +23,7 @@
       Erwartet ist ein ehrlicher Ausgangswert von **10–25 %**. Alle Antworten bleiben bis `CP-5` bewusst gesperrt, damit echte Lernfortschritte messbar bleiben.
 
 ### `L002` — Baseline-Reflexion & Zielsetzung
-- **Lernziel**: Du wertest deine Start-Prozentsätze aus und legst dein persönliches Wochenpensum fest.
+- **Lernziel**: Du wertest deine Start-Prozentsätze aus und legst dein persönliches Wochenpensum fest. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L002`](https://chatelao.github.io/sql-schulung/#curriculum/L002) · [`CP-0` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-0)
 - **Selbstlern-Aufgabe**:
   1. Fülle die 4 Reflexionsfragen direkt unter `CP-0` aus und exportiere einen ersten Snapshot als JSON/Markdown.
@@ -38,7 +38,7 @@
       Typische Einsteiger-Lücke: `NULL`-Logik (`WHERE col = NULL`) und `GROUP BY`-Regeln. Dein Reflexions-Log bleibt im Studio gespeichert.
 
 ### `L003` — Warum Spreadsheets an Grenzen stoßen
-- **Lernziel**: Du erklärst, warum relationale Datenbanken Daten auf mehrere verknüpfte Tabellen aufteilen statt in einer einzigen Excel-Liste zu speichern.
+- **Lernziel**: Du erklärst, warum relationale Datenbanken Daten auf mehrere verknüpfte Tabellen aufteilen statt in einer einzigen Excel-Liste zu speichern. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L003`](https://chatelao.github.io/sql-schulung/#curriculum/L003)
 - **Konzept & Analogie**: In einer Excel-Tabelle stehen Mitarbeitername, Abteilungsname und Standort (`DALLAS`) in jeder Zeile nebeneinander. Zieht Abteilung 20 (`RESEARCH`) von `DALLAS` nach `AUSTIN` um, müssen in Excel dutzende Zeilen einzeln geändert werden — vergisst man eine, widersprechen sich die Daten (**Update-Anomalie**). Ein **RDBMS** (Relational Database Management System) speichert jede Abteilung *genau einmal* in `DEPT` und verweist in `EMP` nur über die Nummer `DEPTNO = 20` darauf.
 
@@ -54,7 +54,7 @@
       2. **Redundanz / Inkonsistenz**: Bei mehreren Mitarbeitern wird der Standort mehrfach gespeichert und kann leicht unterschiedlich geschrieben werden (`Dallas` vs. `DALLAS`).
 
 ### `L004` — Tables, Rows, Columns & Primary Keys
-- **Lernziel**: Du identifizierst Tables, Rows (Tupel), Columns (Attribute) und Primary Keys anhand von `SCOTT.DEPT`.
+- **Lernziel**: Du identifizierst Tables, Rows (Tupel), Columns (Attribute) und Primary Keys anhand von `SCOTT.DEPT`. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L004`](https://chatelao.github.io/sql-schulung/#curriculum/L004) · [SQL Ref: Database Objects](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Database-Objects.html)
 - **Konzept**: Eine **Table** ist wie ein Aktenschrank für genau eine Objektart (z. B. `DEPT` für Abteilungen). Jede **Row** (Zeile) ist ein konkreter Datensatz, jede **Column** (Spalte) ein Merkmal (`deptno`, `dname`, `loc`). Der **Primary Key (PK)** ist die eindeutige ID jeder Zeile: Er darf **niemals doppelt** vorkommen und **niemals `NULL`** (leer) sein.
 - **Beispiel (`SCOTT.DEPT`)**: `DEPTNO` (`10, 20, 30, 40`) ist der Primary Key; `EMPNO` (`7369`..`7934`) ist der Primary Key in `SCOTT.EMP`.
@@ -63,7 +63,7 @@
       Zwei Mitarbeiter können denselben Nachnamen haben (z. B. ein zweiter `SMITH`). Ein Primary Key muss fachlich und technisch dauerhaft eindeutig sein — daher nutzt man eine künstliche Nummer wie `EMPNO`.
 
 ### `L005` — Tables mit Foreign Keys verknüpfen
-- **Lernziel**: Du verstehst, wie ein Foreign Key (FK) zwei Tabellen über einen Primary Key verbindet und ungültige Verweise verhindert.
+- **Lernziel**: Du verstehst, wie ein Foreign Key (FK) zwei Tabellen über einen Primary Key verbindet und ungültige Verweise verhindert. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L005`](https://chatelao.github.io/sql-schulung/#curriculum/L005) · [SQL Ref: constraint](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/constraint.html)
 - **Konzept**: `EMP.DEPTNO` ist ein **Foreign Key (FK)**, der auf den Primary Key `DEPT.DEPTNO` zeigt. Oracle garantiert dadurch **Referential Integrity**: Du kannst in `EMP` keinen Mitarbeiter mit `deptno = 99` anlegen, solange `99` nicht in `DEPT` existiert.
 - **Selbstlern-Aufgabe**: Schau in [`SCOTT.EMP`](../schemas/scott-tiger.md#emp-14-rows): Welche zweite Spalte in `EMP` verweist ebenfalls auf einen Mitarbeiter in derselben Tabelle (`EMPNO`)?
@@ -71,7 +71,7 @@
       `MGR` (Manager-ID) verweist auf `EMPNO` des Vorgesetzten (z. B. hat `SMITH` `MGR = 7902`, das ist `FORD`). Nur `KING` hat `MGR = NULL`.
 
 ### `L006` — Entity-Relationship Diagrams (ERDs) lesen
-- **Lernziel**: Du liest Crow's-Foot-Beziehungen (`1:1`, `1:M`, `M:N`) sicher ab.
+- **Lernziel**: Du liest Crow's-Foot-Beziehungen (`1:1`, `1:M`, `M:N`) sicher ab. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L006`](https://chatelao.github.io/sql-schulung/#curriculum/L006)
 - **Konzept**: Ein ERD zeigt Datenstrukturen grafisch:
 
@@ -86,7 +86,7 @@ erDiagram
       An einem Standort (`LOCATION`) können 0, 1 oder viele Abteilungen (`DEPARTMENTS`) sitzen; jede Abteilung gehört zu einem Standort.
 
 ### `L007` — ERDs auf `SELECT`-Queries abbilden
-- **Lernziel**: Du ordnest Bestandteile eines ERD den passenden Klauseln eines `SELECT`-Statements zu (direktes `1Z0-171`-Prüfungsziel!).
+- **Lernziel**: Du ordnest Bestandteile eines ERD den passenden Klauseln eines `SELECT`-Statements zu (direktes `1Z0-171`-Prüfungsziel!). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L007`](https://chatelao.github.io/sql-schulung/#curriculum/L007) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
 - **Konzept**:
   - **Entity** (Rechteck im ERD) → **Table** in `FROM dept`
@@ -106,7 +106,7 @@ SELECT ___, ___ FROM scott.___;
       `EMP` enthält den Foreign Key `DEPTNO`, der auf `DEPT.DEPTNO` zeigt (14 Zeilen).
 
 ### `L008` — Die vier SQL Statement Families
-- **Lernziel**: Du unterscheidest `DML`, `DDL`, `DCL` und `TCL` inklusive ihres Commit-Verhaltens.
+- **Lernziel**: Du unterscheidest `DML`, `DDL`, `DCL` und `TCL` inklusive ihres Commit-Verhaltens. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L008`](https://chatelao.github.io/sql-schulung/#curriculum/L008) · [SQL Ref: Types of SQL Statements](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Types-of-SQL-Statements.html)
 
 | Familie | Vollständiger Name | Kernbefehle | Auto-Commit? |
@@ -125,7 +125,7 @@ SELECT ___, ___ FROM scott.___;
 ## Lab Setup & erste Queries (`L009`–`L012`)
 
 ### `L009` — Mit der Lab-Umgebung verbinden
-- **Lernziel**: Du verbindest dich erfolgreich mit deiner Oracle-23ai-Umgebung und führst das Phase-1-Lab-Skript aus.
+- **Lernziel**: Du verbindest dich erfolgreich mit deiner Oracle-23ai-Umgebung und führst das Phase-1-Lab-Skript aus. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L009`](https://chatelao.github.io/sql-schulung/#curriculum/L009) · [Phase 1 in FreeSQL öffnen ↗](https://chatelao.github.io/sql-schulung/#labs/freesql/phase-1)
 - **Schritte**:
   - **Variante A**: Verbinde VS Code / SQL Developer oder `sqlcl` mit `FREEPDB1` / `PDB_TRAINING` (siehe [Variante A Setup](../getting-started/variant-a-inhouse.md)).
@@ -136,7 +136,7 @@ SELECT ___, ___ FROM scott.___;
       Erwartete Ausgabe: `14`. Wenn du `ORA-00942` erhältst, fehlt das `scott.`-Präfix oder der `GRANT SELECT`.
 
 ### `L010` — Dein erstes `SELECT *` & `DESCRIBE`
-- **Lernziel**: Du inspizierst Tabellenstrukturen mit `DESCRIBE` und fragst alle Zeilen mit `SELECT *` ab.
+- **Lernziel**: Du inspizierst Tabellenstrukturen mit `DESCRIBE` und fragst alle Zeilen mit `SELECT *` ab. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L010`](https://chatelao.github.io/sql-schulung/#curriculum/L010) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
 - **Beispiel**:
   ```sql
@@ -149,7 +149,7 @@ SELECT ___, ___ FROM scott.___;
       `14` Zeilen und `8` Spalten (`EMPNO`, `ENAME`, `JOB`, `MGR`, `HIREDATE`, `SAL`, `COMM`, `DEPTNO`).
 
 ### `L011` — `ORA-`-Fehlermeldungen gelassen lesen
-- **Lernziel**: Du erkennst die häufigsten Einsteiger-Fehler `ORA-00942` und `ORA-00904` und behebst sie gezielt.
+- **Lernziel**: Du erkennst die häufigsten Einsteiger-Fehler `ORA-00942` und `ORA-00904` und behebst sie gezielt. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L011`](https://chatelao.github.io/sql-schulung/#curriculum/L011) · [ORA-Fehler-Lexikon](../cheatsheets/ora-errors.md)
 - **Selbstlern-Aufgabe (Fehler absichtlich provozieren!)**:
   1. Führe `SELECT * FROM scott.empp;` aus → Lies den genauen Fehlertext.
@@ -159,7 +159,7 @@ SELECT ___, ___ FROM scott.___;
       2. `ORA-00904: "ENMAE": invalid identifier` → Spaltenname falsch geschrieben.
 
 ### `L012` — Einstieg in das `HR`-Schema
-- **Lernziel**: Du skalierst von `SCOTT` auf das größere `HR`-Schema und begrenzt erste Ausgaben.
+- **Lernziel**: Du skalierst von `SCOTT` auf das größere `HR`-Schema und begrenzt erste Ausgaben. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L012`](https://chatelao.github.io/sql-schulung/#curriculum/L012)
 - **Beispiel**:
   ```sql
@@ -177,7 +177,7 @@ SELECT ___, ___ FROM scott.___;
 ## Projections, Arithmetic & `NULL` (`L013`–`L016`)
 
 ### `L013` — Bestimmte Spalten auswählen (Projection)
-- **Lernziel**: Du wählst gezielt benötigte Spalten aus statt `SELECT *` zu verwenden.
+- **Lernziel**: Du wählst gezielt benötigte Spalten aus statt `SELECT *` zu verwenden. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L013`](https://chatelao.github.io/sql-schulung/#curriculum/L013)
 - **Beispiel**:
   ```sql
@@ -191,7 +191,7 @@ SELECT ___, ___ FROM scott.___;
       ```
 
 ### `L014` — Arithmetische Ausdrücke (`+`, `-`, `*`, `/`)
-- **Lernziel**: Du berechnest abgeleitete Werte direkt in der `SELECT`-Liste, ohne die Tabelle zu verändern.
+- **Lernziel**: Du berechnest abgeleitete Werte direkt in der `SELECT`-Liste, ohne die Tabelle zu verändern. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L014`](https://chatelao.github.io/sql-schulung/#curriculum/L014) · [SQL Ref: Arithmetic Operators](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Arithmetic-Operators.html)
 - **Beispiel**:
   ```sql
@@ -211,7 +211,7 @@ SELECT ename, sal * ___ + ___ AS jahrespaket FROM scott.emp;
       Multiplikation hat Vorrang vor Addition (`14 Zeilen`).
 
 ### `L015` — Operator Precedence (Punkt vor Strich)
-- **Lernziel**: Du wendest Oracles Auswertungsreihenfolge (`*`, `/` vor `+`, `-`) und Klammern korrekt an.
+- **Lernziel**: Du wendest Oracles Auswertungsreihenfolge (`*`, `/` vor `+`, `-`) und Klammern korrekt an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L015`](https://chatelao.github.io/sql-schulung/#curriculum/L015) · [SQL Ref: About SQL Operators](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/About-SQL-Operators.html)
 - **Selbstlern-Aufgabe**: Sage für `SMITH` (`sal = 800`) das Ergebnis beider Ausdrücke voraus, bevor du sie ausführst:
   1. `sal + 200 * 12`
@@ -221,7 +221,7 @@ SELECT ename, sal * ___ + ___ AS jahrespaket FROM scott.emp;
       2. `1000 * 12 = 12000` (Klammern erzwingen Addition zuerst).
 
 ### `L016` — Die goldene Regel für `NULL`
-- **Lernziel**: Du unterscheidest `NULL` (unbekannt/leer) sauber von `0` und weißt, warum Arithmetik mit `NULL` immer `NULL` ergibt.
+- **Lernziel**: Du unterscheidest `NULL` (unbekannt/leer) sauber von `0` und weißt, warum Arithmetik mit `NULL` immer `NULL` ergibt. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L016`](https://chatelao.github.io/sql-schulung/#curriculum/L016) · [SQL Ref: Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Nulls.html)
 - **Beispiel**:
   ```sql
@@ -251,7 +251,7 @@ SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
       Ohne `NVL` liefert `sal + comm` für 10 von 14 Mitarbeitenden `NULL`!
 
 ### `L017` — Column Aliases (`AS` vs. `"Double Quotes"`)
-- **Lernziel**: Du benennst Ausgabespalten lesbar um und vermeidest Quoting-Fehler.
+- **Lernziel**: Du benennst Ausgabespalten lesbar um und vermeidest Quoting-Fehler. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L017`](https://chatelao.github.io/sql-schulung/#curriculum/L017)
 - **Beispiel**:
   ```sql
@@ -266,7 +266,7 @@ SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
       `AS jahres_gehalt` wird im Ergebnis zu `JAHRES_GEHALT` (Grossbuchstaben). Doppelte Anführungszeichen `"Jahres Gehalt"` erzwingen exakte Gross-/Kleinschreibung und erlauben Leerzeichen.
 
 ### `L018` — Concatenation (`||`), Literals & Alternative Quotes (`q'[...]'`)
-- **Lernziel**: Du verkettest Spalten mit Textliteralen und gehst sicher mit Apostrophen im Text um.
+- **Lernziel**: Du verkettest Spalten mit Textliteralen und gehst sicher mit Apostrophen im Text um. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L018`](https://chatelao.github.io/sql-schulung/#curriculum/L018) · [SQL Ref: Concatenation Operator](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Concatenation-Operator.html)
 - **Beispiel**:
   ```sql
@@ -278,7 +278,7 @@ SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
       `'Hello World'`! Anders als Arithmetik (`+`) ignoriert der Verkettungsoperator `||` ein `NULL` und behandelt es wie einen leeren String.
 
 ### `L019` — Duplikate entfernen mit `DISTINCT`
-- **Lernziel**: Du entfernst doppelte Ergebniszeilen und kennst die Syntaxregeln von `DISTINCT`.
+- **Lernziel**: Du entfernst doppelte Ergebniszeilen und kennst die Syntaxregeln von `DISTINCT`. *(Bloom: Erinnern)*
 - **Studio-Link**: [Tracker `L019`](https://chatelao.github.io/sql-schulung/#curriculum/L019)
 - **Beispiel**:
   ```sql
@@ -299,7 +299,7 @@ SELECT ___ deptno, job FROM scott.emp ORDER BY deptno, job;
       `DISTINCT` gilt immer für die gesamte Spaltenkombination (`9 Zeilen`).
 
 ### `L020` — Die `DUAL`-Tabelle & Phase-1-Review
-- **Lernziel**: Du nutzt `DUAL` für einmalige Berechnungen und prüfst deinen Phase-1-Wissensstand.
+- **Lernziel**: Du nutzt `DUAL` für einmalige Berechnungen und prüfst deinen Phase-1-Wissensstand. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L020`](https://chatelao.github.io/sql-schulung/#curriculum/L020) · [SQL Ref: Selecting from DUAL](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Selecting-from-the-DUAL-Table.html)
 - **Beispiel**:
   ```sql

@@ -21,6 +21,7 @@ Absolviere alle 6 Clinics im **Human Compiler**-Modus auf GitHub Pages (**ohne v
 ## Mock Exam #1 & Aufarbeitung (`L185`–`L193`)
 
 ### `L185`–`L187` — Vollständiges Timed Mock Exam #1 (60 Fragen / 120 Minuten)
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
 Starte **[Mock Exam #1 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-1)** und trainiere die **3-Pass Exam Pacing Strategy**:
 1. **Durchgang 1 (Minuten 0–75)**: Beantworte alle eindeutigen Syntax- und Konzeptfragen (ca. 1 Min. je Frage). Markiere lange Multi-Table- oder DDL-Fragen (*Markieren*).
 2. **Durchgang 2 (Minuten 75–105)**: Verfolge markierte Queries Schritt für Schritt auf Schmierzettel nach.
@@ -31,6 +32,7 @@ Starte **[Mock Exam #1 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-1
       Zielwert für sichere Prüfungsreife: **≥ 75 %** (Bestehensgrenze `1Z0-171`: ~65 %).
 
 ### `L188`–`L189` — Strukturierte Selbst-Nachbesprechung (Debrief)
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Bewerten)*
 Notiere für jede falsche oder glücklich geratene Frage aus Mock Exam #1:
 
 | Frage-ID | Domain | Mein Fehler / Denkfalle | Richtige Oracle-Regel / `ORA-`-Code | Kapitel-Link |
@@ -42,6 +44,7 @@ Notiere für jede falsche oder glücklich geratene Frage aus Mock Exam #1:
       Erfahrungswert: Über 30 % der Fehler im ersten Mock sind Lesefehler („NOT“, „SELECT two“, fehlendes `NULL` in Beispielzeilen).
 
 ### `L190`–`L193` — Gezielte Remediation Labs
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
 - Identifiziere die **2 schwächsten Domains** aus der Mock-Exam-#1-Auswertung.
 - Starte im Studio den **Domain-Fokus-Drill** ([Mock / Domain-Drill ↗](https://chatelao.github.io/sql-schulung/#mock)) für diese Domains und führe die passenden Live-Beispiele noch einmal in Oracle FreeSQL / deiner PDB aus.
 - Wiederhole in `L193` alle unsicheren Karten im [Flashcard Rapid Review ↗](https://chatelao.github.io/sql-schulung/#flashcards).
@@ -55,6 +58,7 @@ Notiere für jede falsche oder glücklich geratene Frage aus Mock Exam #1:
       Wiederhole dazu mindestens 10 Aufgaben aus dem jeweiligen `docs/labs/phase-XX-*.sql`.
 
 ### `L194`–`L196` — Vollständiges Timed Mock Exam #2 (Unabhängiger 60-Fragen-Pool!)
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
 Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2)** unter strengen 120-Minuten-Bedingungen.
 - **Zielvorgabe für die Prüfungsreife**: **≥ 75 % (45/60)** (10 Prozentpunkte Sicherheitspuffer über den offiziellen 65 %).
 
@@ -63,6 +67,7 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
       Zielwert: **≥ 78–80 %** ohne Zeitnot (mind. 10 Min. Restzeit für Multi-Select-Check).
 
 ### `L197` — Debrief & Blind-Spot Final Check
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Bewerten)*
 - Prüfe alle falsch beantworteten Fragen aus Mock Exam #2 gegen das [Exam-Traps-Cheatsheet](../cheatsheets/exam-traps.md).
 
 - **Selbstlern-Aufgabe:** Prüfe nach Mock #2, ob die verbleibenden Fehler sich in einer bestimmten Domain häufen, und wiederhole die zugehörige [Human Compiler Clinic](https://chatelao.github.io/sql-schulung/#labs/compiler).
@@ -70,6 +75,7 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
       Wenn alle Domains über 70 % liegen, bist du bereit für `CP-5`.
 
 ### `L198` — Buchung & Exam-Day Checklist
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
 - Erstelle/prüfe deinen Oracle-SSO-Account auf **Oracle MyLearn**.
 - Führe den Pearson/Oracle-Systemcheck für Online-Proctoring exakt auf dem Computer, mit der Webcam und im Netzwerk aus, die du am Prüfungstag nutzt.
 - Räume deinen Schreibtisch vollständig frei (nur ein gültiger amtlicher Lichtbildausweis ist erlaubt).
@@ -83,6 +89,7 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
       Plane den Systemtest mindestens 48 Stunden vor dem Prüfungstermin ein.
 
 ### `L199` — Identical Checkpoint #5 (Abschlusslauf + Answer Key freigeschaltet!)
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Bewerten)*
 - Absolviere **[Checkpoint `CP-5` ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-5)** ein letztes Mal (Ziel: **≥ 85 %**).
 - Bei `CP-5` werden der vollständige **Answer Key und alle ausgearbeiteten Erklärungen** automatisch freigeschaltet!
 
@@ -91,6 +98,7 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
       Zielwert: **≥ 85 %** Gesamtscore. Lies nach Abgabe alle 22 Erklärungen zu Fragen, bei denen du unsicher warst.
 
 ### `L200` — `CP-0 → CP-5` Longitudinal Retrospective & Weiterbildung
+- **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
 - Öffne dein vollständiges Verlaufsdiagramm auf GitHub Pages und verfolge deinen Weg von **CP-0 (10–25 %)** bis **CP-5 (≥ 85 %)**.
 - Exportiere dein finales Lernportfolio (`.json` und `.md`).
 - **Wie geht es nach `1Z0-171` weiter?** Starte direkt im Aufbau-Modul **[Advanced Oracle SQL (`A001`–`A060`)](../advanced/modul-01-hierarchies.md)** (Hierarchien, Regex, JSON, XML, Window Functions, `MATCH_RECOGNIZE`).

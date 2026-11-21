@@ -9,7 +9,7 @@
 ## Single-Row Subqueries (`L103`–`L107`)
 
 ### `L103` — Was ist eine Subquery? („Wer verdient mehr als `JONES`?“)
-- **Lernziel**: Du verwendest verschachtelte `SELECT`-Abfragen in `WHERE`, wenn ein Vergleichswert zuerst aus der Datenbank ermittelt werden muss.
+- **Lernziel**: Du verwendest verschachtelte `SELECT`-Abfragen in `WHERE`, wenn ein Vergleichswert zuerst aus der Datenbank ermittelt werden muss. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L103`](https://chatelao.github.io/sql-schulung/#curriculum/L103) · [SQL Ref: Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Using-Subqueries.html)
 - **Beispiel**:
   ```sql
@@ -30,7 +30,7 @@ SELECT ename, sal FROM scott.emp WHERE sal > (SELECT ___ FROM scott.emp WHERE en
       `JONES` verdient `2975`; die äussere Query liefert `KING`, `FORD`, `SCOTT` (`3 Zeilen`).
 
 ### `L104` — Subqueries in `HAVING` und Scalar Subqueries in `SELECT`
-- **Lernziel**: Du vergleichst Gruppenaggregate gegen einen Subquery-Wert (`HAVING`) und bettest skalare Subqueries in `SELECT`.
+- **Lernziel**: Du vergleichst Gruppenaggregate gegen einen Subquery-Wert (`HAVING`) und bettest skalare Subqueries in `SELECT`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L104`](https://chatelao.github.io/sql-schulung/#curriculum/L104)
 - **Beispiel**:
   ```sql
@@ -53,7 +53,7 @@ SELECT deptno, AVG(sal) FROM scott.emp GROUP BY deptno ___ AVG(sal) > (SELECT AV
       Nur `DEPT 10` (`2916.67 > 2073.21`) bleibt übrig.
 
 ### `L105` — Der `ORA-01427`-Fehler (Single-Row Operator, Multi-Row Result)
-- **Lernziel**: Du erkennst und behebst `ORA-01427: single-row subquery returns more than one row`.
+- **Lernziel**: Du erkennst und behebst `ORA-01427: single-row subquery returns more than one row`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L105`](https://chatelao.github.io/sql-schulung/#curriculum/L105)
 - **Exam Trap**: `WHERE deptno = (SELECT deptno FROM scott.dept WHERE loc IN ('DALLAS', 'CHICAGO'))` schlägt mit `ORA-01427` fehl, weil `=` nur 1 Wert erwartet, die Subquery aber 2 liefert (`20`, `30`). Lösung: `IN` verwenden.
 
@@ -62,7 +62,7 @@ SELECT deptno, AVG(sal) FROM scott.emp GROUP BY deptno ___ AVG(sal) > (SELECT AV
       Die Subquery liefert **3 Zeilen** (je ein Minimum pro `deptno`), aber `=` ist ein Single-Row-Operator. Korrekt wäre `IN` statt `=`.
 
 ### `L106` — Verhalten leerer Subqueries (liefert `NULL`)
-- **Lernziel**: Du sagst das Verhalten einer Subquery mit 0 Ergebniszeilen korrekt voraus.
+- **Lernziel**: Du sagst das Verhalten einer Subquery mit 0 Ergebniszeilen korrekt voraus. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L106`](https://chatelao.github.io/sql-schulung/#curriculum/L106)
 - **Konzept**: Gibt die innere Query 0 Zeilen zurück (`WHERE ename = 'NOBODY'`), liefert sie `NULL`. Das äußere `WHERE sal > NULL` wertet zu `UNKNOWN` aus → **0 Zeilen (kein Fehler!)**.
 
@@ -71,7 +71,7 @@ SELECT deptno, AVG(sal) FROM scott.emp GROUP BY deptno ___ AVG(sal) > (SELECT AV
       **0 Zeilen** (keinen Fehler!). Eine leere Single-Row-Subquery gibt `NULL` zurück, und `sal > NULL` ist `UNKNOWN`.
 
 ### `L107` — Single-Row Subquery Practice Lab
-- **Lernziel**: Du kombinierst mehrere Single-Row Subqueries in einer Abfrage.
+- **Lernziel**: Du kombinierst mehrere Single-Row Subqueries in einer Abfrage. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L107`](https://chatelao.github.io/sql-schulung/#curriculum/L107)
 - **Selbstlern-Aufgabe**: Finde alle Mitarbeiter in `SCOTT.EMP`, die denselben `job` wie `SCOTT` haben, aber weniger verdienen als `KING` (erwartet: 2 Zeilen — `SCOTT` und `FORD`).
   ??? success "Musterlösung & Erklärung"
@@ -87,7 +87,7 @@ SELECT deptno, AVG(sal) FROM scott.emp GROUP BY deptno ___ AVG(sal) > (SELECT AV
 ## Multi-Row Subqueries & die `NOT IN` + `NULL`-Falle (`L108`–`L112`)
 
 ### `L108` — `IN`, `ANY` und `ALL` Operators
-- **Lernziel**: Du wendest Mengenoperatoren auf Subqueries mit mehreren Zeilen an.
+- **Lernziel**: Du wendest Mengenoperatoren auf Subqueries mit mehreren Zeilen an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L108`](https://chatelao.github.io/sql-schulung/#curriculum/L108) · [SQL Ref: IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/IN-Condition.html)
 - **Merksatz**: `> ANY` = größer als das **Minimum**; `> ALL` = größer als das **Maximum**; `< ANY` = kleiner als das **Maximum**; `< ALL` = kleiner als das **Minimum**.
 - **Beispiel**: `SELECT ename, sal FROM scott.emp WHERE sal > ALL (SELECT sal FROM scott.emp WHERE job = 'SALESMAN');` → 5 Zeilen (`> 1600`).
@@ -97,7 +97,7 @@ SELECT deptno, AVG(sal) FROM scott.emp GROUP BY deptno ___ AVG(sal) > (SELECT AV
       `> ANY` bedeutet grösser als das **Minimum** (`> 1000`); `> ALL` bedeutet grösser als das **Maximum** (`> 3000`).
 
 ### `L109` — Die `NOT IN` + `NULL`-Falle auf `SCOTT.EMP` beweisen
-- **Lernziel**: Du beweist und löst eine der berühmtesten `1Z0-171`-Prüfungsfallen.
+- **Lernziel**: Du beweist und löst eine der berühmtesten `1Z0-171`-Prüfungsfallen. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L109`](https://chatelao.github.io/sql-schulung/#curriculum/L109)
 - **Beispiel**:
   ```sql
@@ -121,7 +121,7 @@ SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp WHERE 
       Ohne `WHERE mgr IS NOT NULL` liefert `NOT IN` **0 Zeilen**, weil `KING` `mgr IS NULL` hat!
 
 ### `L110` — Warum `IN` mit `NULL` funktioniert, `NOT IN` aber scheitert
-- **Lernziel**: Du leitest die 3-wertige Logik hinter `IN` vs. `NOT IN` exakt her.
+- **Lernziel**: Du leitest die 3-wertige Logik hinter `IN` vs. `NOT IN` exakt her. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L110`](https://chatelao.github.io/sql-schulung/#curriculum/L110)
 - **Herleitung**:
   - `x IN (7839, NULL)` ≡ `(x = 7839) OR (x = NULL)` → `TRUE OR UNKNOWN` = **`TRUE`** (für Treffer).
@@ -132,7 +132,7 @@ SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp WHERE 
       `IN` nutzt `OR` (`= 7839 OR = NULL` → `TRUE OR UNKNOWN` = `TRUE`). `NOT IN` nutzt `AND` (`!= 7839 AND != NULL` → `TRUE AND UNKNOWN` = `UNKNOWN`).
 
 ### `L111`–`L112` — Multi-Row Subquery Drills (`HR.EMPLOYEES`)
-- **Lernziel**: Du wendest `< ANY`, `> ALL` und Null-sicheres `NOT IN` sicher auf `HR.EMPLOYEES` an.
+- **Lernziel**: Du wendest `< ANY`, `> ALL` und Null-sicheres `NOT IN` sicher auf `HR.EMPLOYEES` an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L111`](https://chatelao.github.io/sql-schulung/#curriculum/L111) · [Tracker `L112`](https://chatelao.github.io/sql-schulung/#curriculum/L112)
 - **Selbstlern-Aufgaben**:
   1. (`L111`) Finde alle `HR.EMPLOYEES`, die weniger verdienen als *irgendein* `IT_PROG` (`< ANY`, erwartet: 47 Zeilen).
@@ -152,7 +152,7 @@ SELECT ename FROM scott.emp WHERE empno NOT IN (SELECT mgr FROM scott.emp WHERE 
 ## Inline Views, Multi-Column & Correlated Subqueries (`L113`–`L116`)
 
 ### `L113` — Inline Views (Subqueries in `FROM`) & `WITH` Factoring
-- **Lernziel**: Du berechnest Vor-Aggregationen in einer Inline View oder CTE (`WITH`) und joinst sie.
+- **Lernziel**: Du berechnest Vor-Aggregationen in einer Inline View oder CTE (`WITH`) und joinst sie. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L113`](https://chatelao.github.io/sql-schulung/#curriculum/L113)
 - **Beispiel**:
   ```sql
@@ -178,7 +178,7 @@ SELECT * FROM dept_avg WHERE avg_sal > 2000;
       Liefert `DEPT 10` und `DEPT 20`.
 
 ### `L114` — Pairwise vs. Non-Pairwise Multi-Column Subqueries
-- **Lernziel**: Du unterscheidest tupelweisen Vergleich `(a, b) IN (...)` von unabhängigen Einzelvergleichen.
+- **Lernziel**: Du unterscheidest tupelweisen Vergleich `(a, b) IN (...)` von unabhängigen Einzelvergleichen. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L114`](https://chatelao.github.io/sql-schulung/#curriculum/L114)
 - **Beispiel**:
   ```sql
@@ -192,7 +192,7 @@ SELECT * FROM dept_avg WHERE avg_sal > 2000;
       **Pairwise** verlangt, dass `mgr` und `deptno` aus **derselben** Subquery-Zeile stammen. **Non-Pairwise** kombiniert alle `mgr`-Werte unabhängig mit allen `deptno`-Werten (Kreuzkombinationen möglich).
 
 ### `L115` — Correlated Subqueries
-- **Lernziel**: Du schreibst korrelierte Subqueries, die auf Spalten der äußeren Query verweisen.
+- **Lernziel**: Du schreibst korrelierte Subqueries, die auf Spalten der äußeren Query verweisen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L115`](https://chatelao.github.io/sql-schulung/#curriculum/L115)
 - **Beispiel**:
   ```sql
@@ -214,7 +214,7 @@ WHERE e.sal > (SELECT AVG(i.sal) FROM scott.emp i WHERE i.deptno = ___);
       Die innere Query referenziert `e.deptno` aus der äusseren Query (`6 Zeilen`).
 
 ### `L116` — `EXISTS` und `NOT EXISTS` (Null-Safe!)
-- **Lernziel**: Du prüfst Existenz sicher mit `EXISTS`/`NOT EXISTS` statt `NOT IN`.
+- **Lernziel**: Du prüfst Existenz sicher mit `EXISTS`/`NOT EXISTS` statt `NOT IN`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L116`](https://chatelao.github.io/sql-schulung/#curriculum/L116) · [SQL Ref: EXISTS](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/EXISTS-Condition.html)
 - **Beispiel**:
   ```sql
@@ -240,7 +240,7 @@ WHERE ___ (SELECT 1 FROM scott.emp e WHERE e.deptno = d.deptno);
       Liefert `40 OPERATIONS` — vollständig `NULL`-sicher!
 
 ### `L117` — `UNION` vs. `UNION ALL`
-- **Lernziel**: Du kombinierst Ergebnismengen vertikal und kennst die Performance-/Duplikat-Unterschiede.
+- **Lernziel**: Du kombinierst Ergebnismengen vertikal und kennst die Performance-/Duplikat-Unterschiede. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L117`](https://chatelao.github.io/sql-schulung/#curriculum/L117) · [SET Visualizer: UNION ↗](https://chatelao.github.io/sql-schulung/#labs/joins/UNION)
 
 - **Selbstlern-Aufgabe:** Welcher Performance- und Ergebnisunterschied besteht zwischen `UNION` und `UNION ALL`?
@@ -248,7 +248,7 @@ WHERE ___ (SELECT 1 FROM scott.emp e WHERE e.deptno = d.deptno);
       `UNION` sortiert beide Ergebnismengen und entfernt Duplikate. `UNION ALL` hängt alles direkt aneinander, behält Duplikate und ist deutlich schneller.
 
 ### `L118` — `INTERSECT` & `MINUS` (`EXCEPT` in 23ai)
-- **Lernziel**: Du bildest Schnittmengen (`INTERSECT`) und Differenzmengen (`MINUS` / 23ai `EXCEPT`).
+- **Lernziel**: Du bildest Schnittmengen (`INTERSECT`) und Differenzmengen (`MINUS` / 23ai `EXCEPT`). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L118`](https://chatelao.github.io/sql-schulung/#curriculum/L118) · [SET Visualizer: MINUS ↗](https://chatelao.github.io/sql-schulung/#labs/joins/MINUS)
 - **Beispiel**:
   ```sql
@@ -273,7 +273,7 @@ SELECT job FROM scott.emp WHERE deptno = 30;
       Ergebnis: `CLERK` und `MANAGER`.
 
 ### `L119` — Spaltenabgleich, Dummy Columns & `ORDER BY`-Platzierung
-- **Lernziel**: Du hältst alle 3 Syntax-Regeln für Compound Queries fehlerfrei ein.
+- **Lernziel**: Du hältst alle 3 Syntax-Regeln für Compound Queries fehlerfrei ein. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L119`](https://chatelao.github.io/sql-schulung/#curriculum/L119)
 - **Die 3 Regeln**:
   1. Gleiche **Spaltenanzahl** in jedem `SELECT` (fehlende Spalten über `TO_CHAR(NULL)`, `TO_NUMBER(NULL)` ergänzen).
@@ -285,7 +285,7 @@ SELECT job FROM scott.emp WHERE deptno = 30;
       `ORDER BY` darf **nur ganz am Ende** nach der letzten Query stehen; es gelten ausschliesslich die Spaltennamen/Aliase der **ersten** `SELECT`-Liste.
 
 ### `L120` — Compound Query Lab (`HR.EMPLOYEES` + `HR.JOB_HISTORY`)
-- **Lernziel**: Du kombinierst reale Historien- und Stammdaten mit `UNION ALL` und `MINUS`.
+- **Lernziel**: Du kombinierst reale Historien- und Stammdaten mit `UNION ALL` und `MINUS`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L120`](https://chatelao.github.io/sql-schulung/#curriculum/L120)
 - **Selbstlern-Aufgabe**: Liste alle `employee_id` aus `HR.EMPLOYEES` auf, die **keinen** Eintrag in `HR.JOB_HISTORY` haben (`MINUS`, erwartet: 100 Zeilen), sortiert nach `employee_id`.
   ??? success "Musterlösung & Erklärung"
@@ -301,7 +301,7 @@ SELECT job FROM scott.emp WHERE deptno = 30;
 ## Checkpoint #3 (`L121`–`L122`)
 
 ### `L121` — Identical Checkpoint #3 (Assessment)
-- **Lernziel**: Du erreichst erstmals die Bestehensgrenze von **65 %**!
+- **Lernziel**: Du erreichst erstmals die Bestehensgrenze von **65 %**! *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L121`](https://chatelao.github.io/sql-schulung/#curriculum/L121) · [Checkpoint `CP-3` starten ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-3)
 - **Erwartetes Niveau**: **65–72 %** gesamt.
 
@@ -310,7 +310,7 @@ SELECT job FROM scott.emp WHERE deptno = 30;
       Meilenstein nach Phase 6: Erstmaliges Überschreiten der **65–72-%**-Prüfungsschwelle.
 
 ### `L122` — Fortschrittsvergleich & Reflexion (`CP-3` vs. `CP-0..2`)
-- **Lernziel**: Du prüfst deine Wachstumskurve auf GitHub Pages und dokumentierst den Fokus für DML/DDL (Phasen 7–8).
+- **Lernziel**: Du prüfst deine Wachstumskurve auf GitHub Pages und dokumentierst den Fokus für DML/DDL (Phasen 7–8). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L122`](https://chatelao.github.io/sql-schulung/#curriculum/L122) · [`CP-3` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-3)
 
 ---

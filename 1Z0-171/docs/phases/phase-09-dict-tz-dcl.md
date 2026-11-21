@@ -8,7 +8,7 @@
 ## Oracle Data Dictionary (`L163`–`L166`)
 
 ### `L163` — `USER_*`, `ALL_*`, `DBA_*` und `DICTIONARY` (`DICT`)
-- **Lernziel**: Du wählst für jede Metadaten-Abfrage das passende Data-Dictionary-Präfix.
+- **Lernziel**: Du wählst für jede Metadaten-Abfrage das passende Data-Dictionary-Präfix. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L163`](https://chatelao.github.io/sql-schulung/#curriculum/L163)
 
 | Präfix | Bereich (Scope) | Wer darf abfragen? |
@@ -28,7 +28,7 @@ SELECT table_name FROM ___ WHERE table_name LIKE '%CONSTRAINT%';
       `DICT` ist das Public Synonym für `DICTIONARY`.
 
 ### `L164` — Tables, Columns & Objects inspizieren
-- **Lernziel**: Du prüfst bestehende Tabellen, Spalten und Objektstatus per SQL.
+- **Lernziel**: Du prüfst bestehende Tabellen, Spalten und Objektstatus per SQL. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L164`](https://chatelao.github.io/sql-schulung/#curriculum/L164)
 - **Beispiel**:
   ```sql
@@ -43,7 +43,7 @@ SELECT table_name FROM ___ WHERE table_name LIKE '%CONSTRAINT%';
       `USER_TABLES` zeigt nur Tabellen, die **dir selbst** gehören (`OWNER = USER`). `ALL_TABLES` zeigt zusätzlich fremde Tabellen, auf die du Leserechte hast (z. B. `SCOTT.EMP`).
 
 ### `L165` — Constraints, Views, Sequences & Indexes inspizieren
-- **Lernziel**: Du liest Constraint-Typen und Metadaten aus `USER_CONSTRAINTS`, `USER_VIEWS`, `USER_SEQUENCES` und `USER_IND_COLUMNS`.
+- **Lernziel**: Du liest Constraint-Typen und Metadaten aus `USER_CONSTRAINTS`, `USER_VIEWS`, `USER_SEQUENCES` und `USER_IND_COLUMNS`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L165`](https://chatelao.github.io/sql-schulung/#curriculum/L165)
 - **Beispiel**:
   ```sql
@@ -63,7 +63,7 @@ SELECT constraint_name, constraint_type FROM ___ WHERE table_name = 'MY_EMP';
       Wichtig: Objektnamen stehen im Dictionary immer in **GROSSBUCHSTABEN**!
 
 ### `L166` — Metadaten-Kommentare hinzufügen (`COMMENT ON`)
-- **Lernziel**: Du dokumentierst Tabellen und Spalten direkt in der Datenbank.
+- **Lernziel**: Du dokumentierst Tabellen und Spalten direkt in der Datenbank. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L166`](https://chatelao.github.io/sql-schulung/#curriculum/L166) · [SQL Ref: COMMENT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COMMENT.html)
 - **Beispiel**:
   ```sql
@@ -86,7 +86,7 @@ ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
       ```
 
 ### `L167` — `TIMESTAMP`, `TIMESTAMP WITH TIME ZONE`, `TIMESTAMP WITH LOCAL TIME ZONE`
-- **Lernziel**: Du unterscheidest Oracles drei Timestamp-Varianten sicher.
+- **Lernziel**: Du unterscheidest Oracles drei Timestamp-Varianten sicher. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L167`](https://chatelao.github.io/sql-schulung/#curriculum/L167) · [SQL Ref: Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Data-Types.html)
 - `TIMESTAMP(p)`: Genauigkeit der Sekundenbruchteile (`0`–`9`, Standard `6`).
 - `TIMESTAMP WITH TIME ZONE`: speichert exakt die Zeitzonenregion oder den Offset (`+02:00`, `Europe/Berlin`).
@@ -97,7 +97,7 @@ ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
       `WITH TIME ZONE` speichert die übergebene Zeitzone mit ab. `WITH LOCAL TIME ZONE` normalisiert auf die DB-Zeitzone und zeigt beim `SELECT` immer die Zeitzone der abfragenden Session.
 
 ### `L168` — `CURRENT_DATE`, `CURRENT_TIMESTAMP` & `LOCALTIMESTAMP`
-- **Lernziel**: Du erkennst, welche Funktion Serverzeit vs. Session-Zeit liefert.
+- **Lernziel**: Du erkennst, welche Funktion Serverzeit vs. Session-Zeit liefert. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L168`](https://chatelao.github.io/sql-schulung/#curriculum/L168) · [SQL Ref: CURRENT_TIMESTAMP](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CURRENT_TIMESTAMP.html)
 
 | Function | Rückgabetyp | Verwendete Time Zone |
@@ -113,7 +113,7 @@ ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
       `SYSDATE` liefert Datum/Uhrzeit des **Datenbank-Servers**; `CURRENT_DATE` liefert Datum/Uhrzeit in der **`SESSIONTIMEZONE`** des Clients.
 
 ### `L169` — `DBTIMEZONE`, `SESSIONTIMEZONE`, `TZ_OFFSET` & `FROM_TZ`
-- **Lernziel**: Du änderst Session-Zeitzonen und versiehst Timestamps mit Zeitzonen.
+- **Lernziel**: Du änderst Session-Zeitzonen und versiehst Timestamps mit Zeitzonen. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L169`](https://chatelao.github.io/sql-schulung/#curriculum/L169) · [SQL Ref: FROM_TZ](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/FROM_TZ.html)
 - **Beispiel**:
   ```sql
@@ -135,7 +135,7 @@ SELECT CURRENT_TIMESTAMP FROM dual;
       ```
 
 ### `L170` — `INTERVAL YEAR TO MONTH` & `INTERVAL DAY TO SECOND`
-- **Lernziel**: Du addierst und subtrahierst Zeitspannen exakt per Intervall-Literal.
+- **Lernziel**: Du addierst und subtrahierst Zeitspannen exakt per Intervall-Literal. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L170`](https://chatelao.github.io/sql-schulung/#curriculum/L170)
 - **Beispiel**:
   ```sql
@@ -154,7 +154,7 @@ SELECT SYSDATE + INTERVAL '1-6' ___ FROM dual;
       ```
 
 ### `L171` — `EXTRACT`, `TO_TIMESTAMP`, `TO_YMINTERVAL` & `TO_DSINTERVAL`
-- **Lernziel**: Du extrahierst Datumsteile mit `EXTRACT` und konvertierst Strings in Timestamps/Intervalle.
+- **Lernziel**: Du extrahierst Datumsteile mit `EXTRACT` und konvertierst Strings in Timestamps/Intervalle. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L171`](https://chatelao.github.io/sql-schulung/#curriculum/L171) · [SQL Ref: TO_TIMESTAMP](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TO_TIMESTAMP.html)
 - **Beispiel**:
   ```sql
@@ -173,7 +173,7 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
       Für `HOUR`/`MINUTE`/`SECOND` benötigt `EXTRACT` einen `TIMESTAMP` (nicht `DATE`).
 
 ### `L172` — Global Flight Schedule Time-Zone Lab
-- **Lernziel**: Du berechnest internationale Abflug- und Ankunftszeiten über Zeitzonen hinweg.
+- **Lernziel**: Du berechnest internationale Abflug- und Ankunftszeiten über Zeitzonen hinweg. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L172`](https://chatelao.github.io/sql-schulung/#curriculum/L172)
 - **Selbstlern-Aufgabe**: Ein Flug startet am `2026-11-19 10:00:00` in `'Europe/Berlin'` und dauert `9 Stunden 15 Minuten` (`TO_DSINTERVAL('0 09:15:00')`). Berechne die Ankunftszeit in `'America/New_York'` mittels `FROM_TZ`, `+ TO_DSINTERVAL(...)` und `AT TIME ZONE`.
   ??? success "Musterlösung & Erklärung"
@@ -190,7 +190,7 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
 ## Controlling User Access — DCL (`L173`–`L178`)
 
 ### `L173` — System Privileges vs. Object Privileges
-- **Lernziel**: Du unterscheidest Datenbank-Fähigkeiten (`CREATE SESSION`, `CREATE TABLE`) von Objekt-Rechten (`SELECT`, `UPDATE (sal)`).
+- **Lernziel**: Du unterscheidest Datenbank-Fähigkeiten (`CREATE SESSION`, `CREATE TABLE`) von Objekt-Rechten (`SELECT`, `UPDATE (sal)`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L173`](https://chatelao.github.io/sql-schulung/#curriculum/L173) · [SQL Ref: GRANT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/GRANT.html)
 
 - **Selbstlern-Aufgabe:** Ordne zu: Ist `CREATE VIEW` ein System- oder ein Objektprivileg? Und `SELECT ON scott.emp`?
@@ -199,7 +199,7 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
       - `SELECT ON scott.emp` → **Objektprivileg** (Zugriff auf ein bestimmtes Objekt)
 
 ### `L174` — Users anlegen, Passwörter ändern & Roles
-- **Lernziel**: Du erstellst User und Roles und weist Rechte gebündelt zu.
+- **Lernziel**: Du erstellst User und Roles und weist Rechte gebündelt zu. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L174`](https://chatelao.github.io/sql-schulung/#curriculum/L174)
 - **Beispiel**:
   ```sql
@@ -215,7 +215,7 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
       Das Systemprivileg **`GRANT CREATE SESSION TO u1;`** (oder eine Role wie `CONNECT`, die `CREATE SESSION` enthält).
 
 ### `L175` — `WITH GRANT OPTION` vs. `WITH ADMIN OPTION`
-- **Lernziel**: Du vergibst weitergebbare Rechte mit der jeweils richtigen Klausel.
+- **Lernziel**: Du vergibst weitergebbare Rechte mit der jeweils richtigen Klausel. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L175`](https://chatelao.github.io/sql-schulung/#curriculum/L175)
 - `GRANT SELECT ON my_emp TO alice WITH GRANT OPTION;` (**Object Privilege**).
 - `GRANT CREATE TABLE TO alice WITH ADMIN OPTION;` (**System Privilege / Role**).
@@ -226,7 +226,7 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
       - Objektprivilegien: **`WITH GRANT OPTION`**
 
 ### `L176` — Die kritische `REVOKE`-Kaskadenregel (Prüfungsliebling!)
-- **Lernziel**: Du sagst bei mehrstufigen Rechteketten sofort voraus, wer sein Recht behält und wer es verliert.
+- **Lernziel**: Du sagst bei mehrstufigen Rechteketten sofort voraus, wer sein Recht behält und wer es verliert. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L176`](https://chatelao.github.io/sql-schulung/#curriculum/L176) · [SQL Ref: REVOKE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REVOKE.html)
 - !!! warning "1Z0-171 Exam Trap (Kaskadenregel)"
     - **Object Privilege (`WITH GRANT OPTION`)**: Bei `SYS → Alice → Bob` **KASKADIERT** `REVOKE SELECT ON ... FROM alice` und entzieht das Recht automatisch auch **Bob**!
@@ -237,7 +237,7 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
       **Kaskade:** Sowohl **B als auch C** verlieren `SELECT ON t` sofort! (Bei einem Systemprivileg mit `WITH ADMIN OPTION` würde C sein Recht hingegen behalten.)
 
 ### `L177`–`L178` — Multi-User Privilege Cascade Lab (3-User-Drehbuch)
-- **Lernziel**: Du testest die Kaskadenregel praktisch in zwei Varianten (PDB / OCI Always Free) oder vollziehst das Drehbuch im Kopf nach.
+- **Lernziel**: Du testest die Kaskadenregel praktisch in zwei Varianten (PDB / OCI Always Free) oder vollziehst das Drehbuch im Kopf nach. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L177`](https://chatelao.github.io/sql-schulung/#curriculum/L177) · [Tracker `L178`](https://chatelao.github.io/sql-schulung/#curriculum/L178)
 
 | Schritt | Ausgeführt als | SQL-Befehl | Erwartetes Ergebnis |

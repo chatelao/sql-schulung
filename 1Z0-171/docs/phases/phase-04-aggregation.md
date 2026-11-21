@@ -9,7 +9,7 @@
 ## Aggregate Functions & `NULL` Traps (`L069`–`L073`)
 
 ### `L069` — `SUM`, `AVG`, `MIN`, `MAX`
-- **Lernziel**: Du fasst viele Zeilen zu Kennzahlen zusammen und kennst die zulässigen Datentypen je Funktion.
+- **Lernziel**: Du fasst viele Zeilen zu Kennzahlen zusammen und kennst die zulässigen Datentypen je Funktion. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L069`](https://chatelao.github.io/sql-schulung/#curriculum/L069) · [SQL Ref: Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Aggregate-Functions.html)
 - **Beispiel**:
   ```sql
@@ -29,7 +29,7 @@ SELECT ___(sal), ___(sal), ___(sal) FROM scott.emp;
       Ergebnis: `800`, `5000`, `29025` (1 Zeile).
 
 ### `L070` — `COUNT(*)`, `COUNT(col)` & `COUNT(DISTINCT col)`
-- **Lernziel**: Du unterscheidest das Zählen aller Zeilen (`COUNT(*)`) vom Zählen gefüllter (`COUNT(col)`) und eindeutiger Werte (`COUNT(DISTINCT col)`).
+- **Lernziel**: Du unterscheidest das Zählen aller Zeilen (`COUNT(*)`) vom Zählen gefüllter (`COUNT(col)`) und eindeutiger Werte (`COUNT(DISTINCT col)`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L070`](https://chatelao.github.io/sql-schulung/#curriculum/L070) · [SQL Ref: COUNT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html)
 - **Beispiel**:
   ```sql
@@ -45,7 +45,7 @@ SELECT ___(sal), ___(sal), ___(sal) FROM scott.emp;
       `COUNT(*)` = **14** (alle Zeilen), `COUNT(comm)` = **4** (ohne `NULL`), `COUNT(DISTINCT deptno)` = **3** (`10, 20, 30`).
 
 ### `L071` — Die `AVG` + `NULL`-Falle auf `SCOTT.EMP.COMM` beweisen
-- **Lernziel**: Du beweist rechnerisch, warum Aggregate Functions (außer `COUNT(*)`) `NULL`-Werte ignorieren.
+- **Lernziel**: Du beweist rechnerisch, warum Aggregate Functions (außer `COUNT(*)`) `NULL`-Werte ignorieren. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L071`](https://chatelao.github.io/sql-schulung/#curriculum/L071)
 - **Herleitung**:
   - Provisionen in `SCOTT.EMP`: `300, 500, 1400, 0` (4 Zeilen) + `10× NULL`.
@@ -60,7 +60,7 @@ SELECT ___(sal), ___(sal), ___(sal) FROM scott.emp;
       `AVG(comm)` teilt `2200 / 4 = 550` (nur 4 Zeilen mit `comm IS NOT NULL`), während `AVG(NVL(comm,0))` `2200 / 14 = 157.14` berechnet!
 
 ### `L072` — Group Functions mit Single-Row Columns kombinieren (`ORA-00937`)
-- **Lernziel**: Du erkennst und behebst `ORA-00937: not a single-group group function`.
+- **Lernziel**: Du erkennst und behebst `ORA-00937: not a single-group group function`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L072`](https://chatelao.github.io/sql-schulung/#curriculum/L072)
 - **Exam Trap**: `SELECT ename, MAX(sal) FROM scott.emp;` liefert 14 Namen, aber nur 1 Maximum — Oracle bricht mit `ORA-00937` ab, solange kein `GROUP BY` oder keine Subquery verwendet wird.
 
@@ -69,7 +69,7 @@ SELECT ___(sal), ___(sal), ___(sal) FROM scott.emp;
       `deptno` ist eine Einzelspalte ohne Aggregatfunktion und steht nicht im `GROUP BY`. Jede nicht-aggregierte `SELECT`-Spalte muss ins `GROUP BY`.
 
 ### `L073` — Aggregate Practice Lab auf `HR.EMPLOYEES`
-- **Lernziel**: Du wendest `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` sicher auf `HR.EMPLOYEES` an.
+- **Lernziel**: Du wendest `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` sicher auf `HR.EMPLOYEES` an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L073`](https://chatelao.github.io/sql-schulung/#curriculum/L073)
 - **Selbstlern-Aufgabe**: Ermittle auf `HR.EMPLOYEES` in einer Query: Gesamtanzahl Mitarbeiter, Anzahl Mitarbeiter mit `commission_pct`, `AVG(commission_pct)` und `ROUND(AVG(NVL(commission_pct, 0)), 4)`.
   ??? success "Musterlösung & Erklärung"
@@ -87,7 +87,7 @@ SELECT ___(sal), ___(sal), ___(sal) FROM scott.emp;
 ## `GROUP BY`, `HAVING` & Nested Aggregates (`L074`–`L078`)
 
 ### `L074` — Gruppieren nach einer einzelnen Spalte
-- **Lernziel**: Du bildest Gruppen mit `GROUP BY` und berechnest Kennzahlen pro Gruppe.
+- **Lernziel**: Du bildest Gruppen mit `GROUP BY` und berechnest Kennzahlen pro Gruppe. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L074`](https://chatelao.github.io/sql-schulung/#curriculum/L074)
 - **Beispiel**:
   ```sql
@@ -109,7 +109,7 @@ SELECT job, COUNT(*) AS cnt FROM scott.emp ___ BY job ORDER BY ___ DESC;
       `ORDER BY` darf im Gegensatz zu `WHERE`/`HAVING` den Alias `cnt` verwenden (5 Zeilen).
 
 ### `L075` — Gruppieren nach mehreren Spalten & `ORA-00979` beheben
-- **Lernziel**: Du gruppierst nach mehreren Spalten und hältst die strikte `GROUP BY`-Regel ein.
+- **Lernziel**: Du gruppierst nach mehreren Spalten und hältst die strikte `GROUP BY`-Regel ein. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L075`](https://chatelao.github.io/sql-schulung/#curriculum/L075)
 - **Regel**: Jede nicht aggregierte Spalte in `SELECT` **muss** in `GROUP BY` stehen (Spalten aus `GROUP BY` müssen aber *nicht* zwingend in `SELECT` erscheinen). Verstoß → `ORA-00979`.
 
@@ -121,7 +121,7 @@ SELECT job, COUNT(*) AS cnt FROM scott.emp ___ BY job ORDER BY ___ DESC;
       Beide nicht-aggregierten Spalten (`deptno` und `job`) müssen im `GROUP BY` stehen.
 
 ### `L076` — `WHERE` vs. `HAVING`
-- **Lernziel**: Du unterscheidest Zeilenfilter vor der Gruppierung (`WHERE`) von Gruppenfiltern nach der Gruppierung (`HAVING`).
+- **Lernziel**: Du unterscheidest Zeilenfilter vor der Gruppierung (`WHERE`) von Gruppenfiltern nach der Gruppierung (`HAVING`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L076`](https://chatelao.github.io/sql-schulung/#curriculum/L076)
 - **Beispiel**:
   ```sql
@@ -146,7 +146,7 @@ SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(s
       `WHERE` filtert vor der Gruppierung, `HAVING` filtert Gruppen danach.
 
 ### `L077` — Verschachtelte Group Functions (Maximale Tiefe = 2)
-- **Lernziel**: Du liest und schreibst 2-stufig verschachtelte Aggregate korrekt.
+- **Lernziel**: Du liest und schreibst 2-stufig verschachtelte Aggregate korrekt. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L077`](https://chatelao.github.io/sql-schulung/#curriculum/L077)
 - **Beispiel**: `SELECT MAX(AVG(sal)) FROM scott.emp GROUP BY deptno;` → `2916.67` (1 Zeile!).
 - !!! warning "1Z0-171 Exam Trap"
@@ -157,7 +157,7 @@ SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(s
       Ergebnis ist `2916.67` (Schnitt von `DEPT 10`). Eine **3. Verschachtelungsebene ist verboten** (`ORA-00935: group function is nested too deeply`).
 
 ### `L078` — Payroll Summary Lab (`HR.EMPLOYEES`)
-- **Lernziel**: Du erstellst mehrstufige Gruppenauswertungen auf `HR.EMPLOYEES`.
+- **Lernziel**: Du erstellst mehrstufige Gruppenauswertungen auf `HR.EMPLOYEES`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L078`](https://chatelao.github.io/sql-schulung/#curriculum/L078)
 - **Selbstlern-Aufgabe**: Gib je `department_id` und `job_id` in `HR.EMPLOYEES` die Anzahl Mitarbeiter sowie `MIN(salary)` und `MAX(salary)` aus — aber nur für Kombinationen mit mindestens `5` Mitarbeitern (erwartet: 4 Zeilen).
   ??? success "Musterlösung & Erklärung"
@@ -174,7 +174,7 @@ SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(s
 ## Konsolidierung & Checkpoint #2 (`L079`–`L082`)
 
 ### `L079` — Konsolidierungs-Lab (Functions + Grouping)
-- **Lernziel**: Du kombinierst Single-Row Functions (`TO_CHAR`, `NVL`, `CASE`) mit `GROUP BY` und `HAVING`.
+- **Lernziel**: Du kombinierst Single-Row Functions (`TO_CHAR`, `NVL`, `CASE`) mit `GROUP BY` und `HAVING`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L079`](https://chatelao.github.io/sql-schulung/#curriculum/L079)
 - **Selbstlern-Aufgabe**: Gruppiere `SCOTT.EMP` nach dem Einstellungsjahr (`TO_CHAR(hiredate, 'YYYY')`) und zeige je Jahr die Mitarbeiteranzahl und die Gesamtsumme `sal + NVL(comm, 0)` (erwartet: 4 Zeilen für 1980, 1981, 1982, 1987).
   ??? success "Musterlösung & Erklärung"
@@ -188,7 +188,7 @@ SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(s
       ```
 
 ### `L080` — „Human Compiler“ Drill #1 (Code lesen ohne IDE)
-- **Lernziel**: Du beurteilst SQL-Code aus den Phasen 1–4 rein im Kopf auf Zeilen/0 Zeilen/`ORA-`-Fehler.
+- **Lernziel**: Du beurteilst SQL-Code aus den Phasen 1–4 rein im Kopf auf Zeilen/0 Zeilen/`ORA-`-Fehler. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L080`](https://chatelao.github.io/sql-schulung/#curriculum/L080) · [Human Compiler (Phasen 1–4) starten ↗](https://chatelao.github.io/sql-schulung/#labs/compiler/phase-1-4)
 
 - **Selbstlern-Aufgabe:** Löse 6 Aufgaben im [Human Compiler Drill (Phasen 1–4)](https://chatelao.github.io/sql-schulung/#labs/compiler/phase-1-4), ohne vorher eine DB zu öffnen.
@@ -196,7 +196,7 @@ SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(s
       Achte bei jeder Aufgabe auf die drei Klassiker: `NULL` in Arithmetik/`NOT IN`, `WHERE` vs. `HAVING` und `NVL`-Typkompatibilität.
 
 ### `L081` — Identical Checkpoint #2 (Assessment)
-- **Lernziel**: Du misst deinen Wissenssprung nach Domain 3 (25 % Prüfungsgewicht!).
+- **Lernziel**: Du misst deinen Wissenssprung nach Domain 3 (25 % Prüfungsgewicht!). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L081`](https://chatelao.github.io/sql-schulung/#curriculum/L081) · [Checkpoint `CP-2` starten ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-2)
 - **Erwartetes Niveau**: **50–60 %** gesamt.
 
@@ -205,7 +205,7 @@ SELECT deptno, AVG(sal) FROM scott.emp ___ sal >= 1000 GROUP BY deptno ___ AVG(s
       Zielwert nach Phase 4: **50–60 %** Gesamtscore (grosser Zuwachs durch Functions & Grouping).
 
 ### `L082` — Fortschrittsvergleich & Reflexion (`CP-2` vs. `CP-0..1`)
-- **Lernziel**: Du wertest dein Delta-Diagramm aus und identifizierst verbleibende Blind Spots in Domains 1–3.
+- **Lernziel**: Du wertest dein Delta-Diagramm aus und identifizierst verbleibende Blind Spots in Domains 1–3. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L082`](https://chatelao.github.io/sql-schulung/#curriculum/L082) · [`CP-2` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-2)
 
 ---

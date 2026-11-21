@@ -9,7 +9,7 @@
 ## `WHERE`-Klausel & einfache Vergleiche (`L021`–`L024`)
 
 ### `L021` — Zeilen filtern mit `WHERE`
-- **Lernziel**: Du schränkst Abfrageergebnisse gezielt auf relevante Zeilen ein.
+- **Lernziel**: Du schränkst Abfrageergebnisse gezielt auf relevante Zeilen ein. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L021`](https://chatelao.github.io/sql-schulung/#curriculum/L021) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
 - **Beispiel**:
   ```sql
@@ -24,7 +24,7 @@
       ```
 
 ### `L022` — Comparison Operators (`=`, `<>`, `!=`, `<`, `>`, `<=`, `>=`)
-- **Lernziel**: Du verwendest Vergleichsoperatoren sicher und beachtest Case-Sensitivity bei Zeichenketten.
+- **Lernziel**: Du verwendest Vergleichsoperatoren sicher und beachtest Case-Sensitivity bei Zeichenketten. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L022`](https://chatelao.github.io/sql-schulung/#curriculum/L022) · [SQL Ref: Comparison Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Comparison-Conditions.html)
 - **Konzept**: SQL-Schlüsselwörter sind case-insensitive (`select` = `SELECT`), aber **Zeichenketten innerhalb von `'...'` sind case-sensitive** (`'CLERK'` ≠ `'clerk'`).
 - **Selbstlern-Aufgabe**: Warum liefert `SELECT ename FROM scott.emp WHERE job = 'clerk';` **0 Zeilen**, obwohl es 4 Clerks gibt?
@@ -32,7 +32,7 @@
       In `SCOTT.EMP` ist `JOB` in Großbuchstaben (`'CLERK'`) gespeichert. Mit `'CLERK'` liefert die Abfrage `SMITH`, `ADAMS`, `JAMES`, `MILLER`.
 
 ### `L023` — Date Literals in `WHERE`
-- **Lernziel**: Du filterst Datumsspalten portabel mit dem ANSI-Date-Literal `DATE 'YYYY-MM-DD'`.
+- **Lernziel**: Du filterst Datumsspalten portabel mit dem ANSI-Date-Literal `DATE 'YYYY-MM-DD'`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L023`](https://chatelao.github.io/sql-schulung/#curriculum/L023) · [SQL Ref: Literals](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Literals.html)
 - **Beispiel**:
   ```sql
@@ -52,7 +52,7 @@ SELECT ename, hiredate FROM scott.emp WHERE hiredate > DATE '___';
       ANSI Date Literals nutzen immer das Format `DATE 'YYYY-MM-DD'` unabhängig von `NLS_DATE_FORMAT` (`2 Zeilen`: `SCOTT`, `ADAMS`).
 
 ### `L024` — Warum `SELECT`-Aliases in `WHERE` fehlschlagen
-- **Lernziel**: Du verstehst die logische Verarbeitungsreihenfolge (`FROM` → `WHERE` → `SELECT` → `ORDER BY`).
+- **Lernziel**: Du verstehst die logische Verarbeitungsreihenfolge (`FROM` → `WHERE` → `SELECT` → `ORDER BY`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L024`](https://chatelao.github.io/sql-schulung/#curriculum/L024) · [SQL Syntax Cheat Sheet](../cheatsheets/sql-syntax.md)
 - **Exam Trap**: `SELECT ename, sal * 12 annual FROM scott.emp WHERE annual > 30000;` wirft **`ORA-00904: "ANNUAL": invalid identifier`**, weil Oracle `WHERE` *vor* `SELECT` auswertet.
 - **Selbstlern-Aufgabe**: Korrigiere die fehlerhafte Query so, dass sie alle Mitarbeiter mit Jahresgehalt > 30.000 liefert (erwartet: 5 Zeilen).
@@ -68,7 +68,7 @@ SELECT ename, hiredate FROM scott.emp WHERE hiredate > DATE '___';
 ## Range-, List-, Pattern- & Null-Filter (`L025`–`L028`)
 
 ### `L025` — Inklusive Bereiche mit `BETWEEN ... AND ...`
-- **Lernziel**: Du filterst Wertebereiche inklusiv und vermeidest die Reihenfolge-Falle.
+- **Lernziel**: Du filterst Wertebereiche inklusiv und vermeidest die Reihenfolge-Falle. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L025`](https://chatelao.github.io/sql-schulung/#curriculum/L025) · [SQL Ref: BETWEEN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/BETWEEN-Condition.html)
 - **Beispiel**:
   ```sql
@@ -89,7 +89,7 @@ SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
       `BETWEEN` ist immer inklusive (`>= 1250 AND <= 1600`, `4 Zeilen`).
 
 ### `L026` — Mengenzugehörigkeit mit `IN` und `NOT IN`
-- **Lernziel**: Du prüfst Zugehörigkeit zu Wertelisten kompakt mit `IN`.
+- **Lernziel**: Du prüfst Zugehörigkeit zu Wertelisten kompakt mit `IN`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L026`](https://chatelao.github.io/sql-schulung/#curriculum/L026) · [SQL Ref: IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/IN-Condition.html)
 - **Beispiel**:
   ```sql
@@ -102,7 +102,7 @@ SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
       `NOT IN (7369, NULL)` entspricht `empno != 7369 AND empno != NULL`. Da `empno != NULL` immer `UNKNOWN` ergibt, ist die gesamte `AND`-Bedingung für jede Zeile `UNKNOWN` → 0 Zeilen!
 
 ### `L027` — Pattern Matching mit `LIKE` (`%`, `_`, `ESCAPE`)
-- **Lernziel**: Du suchst Textmuster mit `%` (0..n Zeichen), `_` (exakt 1 Zeichen) und maskierst wörtliche Unterstriche mit `ESCAPE`.
+- **Lernziel**: Du suchst Textmuster mit `%` (0..n Zeichen), `_` (exakt 1 Zeichen) und maskierst wörtliche Unterstriche mit `ESCAPE`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L027`](https://chatelao.github.io/sql-schulung/#curriculum/L027) · [SQL Ref: About SQL Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/About-SQL-Conditions.html)
 - **Beispiel**:
   ```sql
@@ -118,7 +118,7 @@ SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
       ```
 
 ### `L028` — Null-Werte filtern (`IS NULL` / `IS NOT NULL`)
-- **Lernziel**: Du filterst fehlende Werte korrekt mit `IS NULL` / `IS NOT NULL`.
+- **Lernziel**: Du filterst fehlende Werte korrekt mit `IS NULL` / `IS NOT NULL`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L028`](https://chatelao.github.io/sql-schulung/#curriculum/L028) · [SQL Ref: Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Nulls.html)
 - **Beispiel**:
   ```sql
@@ -143,7 +143,7 @@ SELECT ename FROM scott.emp WHERE ename LIKE '___';
       `_` steht für genau 1 Zeichen, `%` für 0..N Zeichen (`WARD`, `MARTIN`, `JAMES`).
 
 ### `L029` — Bedingungen kombinieren mit `AND`
-- **Lernziel**: Du verknüpfst mehrere Pflichtbedingungen mit `AND`.
+- **Lernziel**: Du verknüpfst mehrere Pflichtbedingungen mit `AND`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L029`](https://chatelao.github.io/sql-schulung/#curriculum/L029)
 - **Beispiel**: `SELECT ename, job, sal FROM scott.emp WHERE deptno = 30 AND sal >= 1500;` → 3 Zeilen (`ALLEN`, `BLAKE`, `TURNER`).
 
@@ -158,7 +158,7 @@ SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' ___ sal < 1200;
       Liefert `SMITH` (`800`), `ADAMS` (`1100`) und `JAMES` (`950`).
 
 ### `L030` — Bedingungen erweitern mit `OR`
-- **Lernziel**: Du lässt alternative Kriterien mit `OR` zu.
+- **Lernziel**: Du lässt alternative Kriterien mit `OR` zu. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L030`](https://chatelao.github.io/sql-schulung/#curriculum/L030)
 - **Beispiel**: `SELECT ename, deptno, job FROM scott.emp WHERE deptno = 10 OR job = 'CLERK';` → 6 Zeilen (3 aus Dept 10 + 3 weitere Clerks).
 
@@ -170,7 +170,7 @@ SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' ___ sal < 1200;
       Vergleiche mit `NULL` nutzen immer `IS NULL` bzw. `IS NOT NULL` (`10 Zeilen`).
 
 ### `L031` — Negieren mit `NOT` & 3-Valued Logic
-- **Lernziel**: Du wendest die 3-wertige Logik (`TRUE`, `FALSE`, `UNKNOWN`) auf `AND`, `OR` und `NOT` sicher an.
+- **Lernziel**: Du wendest die 3-wertige Logik (`TRUE`, `FALSE`, `UNKNOWN`) auf `AND`, `OR` und `NOT` sicher an. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L031`](https://chatelao.github.io/sql-schulung/#curriculum/L031)
 
 | A | B | `A AND B` | `A OR B` | `NOT A` |
@@ -190,7 +190,7 @@ SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___
       Ohne Klammern würde `AND` vor `OR` binden!
 
 ### `L032` — Precedence Rules (`NOT` → `AND` → `OR`)
-- **Lernziel**: Du verhinderst logische Fehler durch Verstehen von `AND` vor `OR` und durch Klammern.
+- **Lernziel**: Du verhinderst logische Fehler durch Verstehen von `AND` vor `OR` und durch Klammern. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L032`](https://chatelao.github.io/sql-schulung/#curriculum/L032)
 - **Beispiel**:
   ```sql
@@ -208,7 +208,7 @@ SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___
       Nur `TURNER` (`comm = 0`). Die 10 Zeilen mit `comm IS NULL` ergeben `NOT (UNKNOWN)` = `UNKNOWN` und werden **nicht** zurückgegeben!
 
 ### `L033` — Interaktives Precedence-Training (10 Grenzfälle auf `HR` & `SCOTT`)
-- **Lernziel**: Du löst komplexe kombinierte `WHERE`-Filter sicher ohne IDE.
+- **Lernziel**: Du löst komplexe kombinierte `WHERE`-Filter sicher ohne IDE. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L033`](https://chatelao.github.io/sql-schulung/#curriculum/L033)
 - **Selbstlern-Aufgaben (Löse zuerst 1–5 im Kopf, dann in FreeSQL prüfen)**:
   1. `SCOTT.EMP`: Alle Mitarbeiter aus `deptno = 20` oder `30`, die mindestens `2850` verdienen (erwartet: 4 Zeilen).
@@ -234,7 +234,7 @@ SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___
 ## Sorting & Row Limiting (`L034`–`L037`)
 
 ### `L034` — Sortieren mit `ORDER BY` (`ASC` / `DESC`)
-- **Lernziel**: Du sortierst Ergebnisse nach einer oder mehreren Spalten auf- und absteigend.
+- **Lernziel**: Du sortierst Ergebnisse nach einer oder mehreren Spalten auf- und absteigend. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L034`](https://chatelao.github.io/sql-schulung/#curriculum/L034) · [SQL Ref: Sorting Query Results](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Sorting-Query-Results.html)
 - **Beispiel**: `SELECT ename, deptno, sal FROM scott.emp ORDER BY deptno ASC, sal DESC;` (Standard ohne Angabe ist immer `ASC`).
 
@@ -249,7 +249,7 @@ SELECT deptno, ename, sal FROM scott.emp ORDER BY deptno ___, sal ___;
       `ASC` ist Standard, `DESC` sortiert absteigend (`14 Zeilen`).
 
 ### `L035` — Sortieren nach Alias, Spaltenposition & `NULLS FIRST/LAST`
-- **Lernziel**: Du nutzt Column Aliases und Spaltenpositionen in `ORDER BY` und steuerst die Position von `NULL`.
+- **Lernziel**: Du nutzt Column Aliases und Spaltenpositionen in `ORDER BY` und steuerst die Position von `NULL`. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L035`](https://chatelao.github.io/sql-schulung/#curriculum/L035)
 - **Beispiel**:
   ```sql
@@ -271,7 +271,7 @@ SELECT ename, comm FROM scott.emp ORDER BY comm ASC ___;
       Standard bei `ASC` ist `NULLS LAST`; mit `NULLS FIRST` stehen die 10 `NULL`-Zeilen oben.
 
 ### `L036` — Row Limiting (`OFFSET` & `FETCH FIRST ... ONLY`)
-- **Lernziel**: Du begrenzt Ergebnisse und blätterst seitenweise (Pagination) mit ANSI-Syntax.
+- **Lernziel**: Du begrenzt Ergebnisse und blätterst seitenweise (Pagination) mit ANSI-Syntax. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L036`](https://chatelao.github.io/sql-schulung/#curriculum/L036)
 - **Beispiel**:
   ```sql
@@ -293,7 +293,7 @@ SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET ___ ROWS FETCH NEXT __
       `OFFSET 3` überspringt `KING`, `SCOTT`, `FORD`; `WITH TIES` nimmt Gleichstände auf dem 3. Rang der Ausgabe mit.
 
 ### `L037` — `ONLY` vs. `WITH TIES` & `PERCENT`
-- **Lernziel**: Du unterscheidest exakte Zeilenzahl (`ONLY`) von Gleichstands-Mitnahme (`WITH TIES`).
+- **Lernziel**: Du unterscheidest exakte Zeilenzahl (`ONLY`) von Gleichstands-Mitnahme (`WITH TIES`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L037`](https://chatelao.github.io/sql-schulung/#curriculum/L037)
 - **Beispiel**:
   ```sql
@@ -309,7 +309,7 @@ SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET ___ ROWS FETCH NEXT __
 ## SQL\*Plus Substitution Variables (`L038`–`L040`)
 
 ### `L038` — Single Ampersand (`&`) vs. Double Ampersand (`&&`)
-- **Lernziel**: Du kennst den Unterschied zwischen einmaliger (`&`) und session-persistenter (`&&`) Ersetzung.
+- **Lernziel**: Du kennst den Unterschied zwischen einmaliger (`&`) und session-persistenter (`&&`) Ersetzung. *(Bloom: Analysieren)*
 - **Studio-Link**: [Tracker `L038`](https://chatelao.github.io/sql-schulung/#curriculum/L038) · [Spool-Transkripte](../cheatsheets/sqlplus-transcripts.md)
 - **Beispiel**:
   ```sql
@@ -327,7 +327,7 @@ SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET ___ ROWS FETCH NEXT __
       `&dept` fragt bei jeder Ausführung (oder jedem Auftreten im Statement) erneut nach dem Wert. `&&dept` merkt sich den Wert für die gesamte Session (`DEFINE`), bis `UNDEFINE dept` aufgerufen wird.
 
 ### `L039` — `DEFINE`, `UNDEFINE` & `SET VERIFY ON/OFF`
-- **Lernziel**: Du setzt und löschst Variablen explizit und liest `old:`/`new:`-Ausgaben korrekt.
+- **Lernziel**: Du setzt und löschst Variablen explizit und liest `old:`/`new:`-Ausgaben korrekt. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L039`](https://chatelao.github.io/sql-schulung/#curriculum/L039)
 - **Beispiel**:
   ```sql
@@ -352,7 +352,7 @@ SELECT ename FROM scott.emp WHERE job = '&v_job';
       `SET VERIFY OFF` unterdrückt die `old:`/`new:`-Meldungen im Spool.
 
 ### `L040` — Variante A CLI-Lab vs. Variante B Simulator
-- **Lernziel**: Du trainierst Substitution Variables praktisch in deiner gewählten Umgebung.
+- **Lernziel**: Du trainierst Substitution Variables praktisch in deiner gewählten Umgebung. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L040`](https://chatelao.github.io/sql-schulung/#curriculum/L040) · [SQL\*Plus Simulator öffnen ↗](https://chatelao.github.io/sql-schulung/#labs/sqlplus)
 - **Aufgabe**: Teste alle drei Vorlagen (`& Single`, `&& Double`, `DEFINE + VERIFY`) im **SQL\*Plus Simulator** (Variante B) bzw. in `sqlcl`/`sqlplus` (Variante A) und vergleiche die Ausgabe mit den [Spool-Transkripten](../cheatsheets/sqlplus-transcripts.md).
 
@@ -365,7 +365,7 @@ SELECT ename FROM scott.emp WHERE job = '&v_job';
       Beim zweiten `SELECT` mit `&dno` wird ohne erneute Eingabe der gespeicherte Wert verwendet; erst nach `UNDEFINE dno` fragt SQL*Plus erneut.
 
 ### `L041` — Identical Checkpoint #1 (Assessment)
-- **Lernziel**: Du misst deinen objektiven Fortschritt nach Phase 1 & 2.
+- **Lernziel**: Du misst deinen objektiven Fortschritt nach Phase 1 & 2. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L041`](https://chatelao.github.io/sql-schulung/#curriculum/L041) · [Checkpoint `CP-1` starten ↗](https://chatelao.github.io/sql-schulung/#checkpoints/CP-1)
 - **Erwartetes Niveau**: **30–40 %** gesamt (Domains 1 & 2 sollten deutlich gestiegen sein).
 
@@ -374,7 +374,7 @@ SELECT ename FROM scott.emp WHERE job = '&v_job';
       Ziel nach Phase 2: **30–40 %** Gesamtscore, mit deutlichem Anstieg in Domains 1 & 2 gegenüber `CP-0`.
 
 ### `L042` — Fortschrittsvergleich & Reflexion (`CP-1` vs. `CP-0`)
-- **Lernziel**: Du erkennst Blind Spots und setzt dein Lernziel für Phase 3 (25 % Exam-Gewicht!).
+- **Lernziel**: Du erkennst Blind Spots und setzt dein Lernziel für Phase 3 (25 % Exam-Gewicht!). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L042`](https://chatelao.github.io/sql-schulung/#curriculum/L042) · [`CP-1` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-1)
 - **Pflicht-Check**: Exportiere nach `CP-1` dein wöchentliches Lernstand-Backup (`.json`).
 
