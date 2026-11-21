@@ -294,3 +294,114 @@ window.CURRICULUM_PHASES = [
     ]
   }
 ];
+
+window.ADVANCED_PHASES = [
+  {
+    id: "A1",
+    title: "Modul 1: Self-Joins, Hierarchien & Rekursive Joins",
+    examNote: "A001–A010",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/advanced/modul-01-hierarchies/",
+    lessons: [
+      { id: "A001", title: "Mehrstufige Self-Joins & Peer-Vergleiche", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A002", title: "Klassische Oracle-Hierarchien: `START WITH` & `CONNECT BY PRIOR`", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A003", title: "Hierarchie-Visualisierung & Pfadbildung", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A004", title: "Sortieren & Filtern in `CONNECT BY`-Hierarchien", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A005", title: "Zyklen erkennen & abfangen (`NOCYCLE`)", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A006", title: "ANSI-Standard: Rekursive Subquery Factoring (`WITH` CTE)", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A007", title: "Tiefen- vs. Breitensuche in rekursiven CTEs", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A008", title: "Zykluserkennung in rekursiven CTEs (`CYCLE`)", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A009", title: "Stücklisten (Bill of Materials) & Mengen-Aggregation", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+      { id: "A010", title: "Modul-1-Lab: Org-Chart- & BOM-Reporting", tag: "Advanced", refLabel: "Hierarchical Queries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html" },
+    ]
+  },
+  {
+    id: "A2",
+    title: "Modul 2: Regular Expressions in Oracle SQL",
+    examNote: "A011–A020",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/advanced/modul-02-regex/",
+    lessons: [
+      { id: "A011", title: "Regex-Grundlagen & Match-Parameter", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A012", title: "`REGEXP_LIKE` in `WHERE` und `CHECK` Constraints", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A013", title: "`REGEXP_INSTR`: Treffer-Positionen exakt bestimmen", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A014", title: "`REGEXP_SUBSTR`: Text- und Log-Extraktion", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A015", title: "Capture Groups (`(...)`) & der `subexpr`-Parameter", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A016", title: "`REGEXP_REPLACE`: Bereinigung & Backreferences (`\1`, `\2`)", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A017", title: "`REGEXP_COUNT` & Wort-/Token-Analysen", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A018", title: "Greedy vs. Non-Greedy (Lazy) Quantifiers", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A019", title: "Regex-Performance & Alternativen", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+      { id: "A020", title: "Modul-2-Lab: Logfile- & Stammdaten-Bereinigung", tag: "Advanced", refLabel: "REGEXP_SUBSTR", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html" },
+    ]
+  },
+  {
+    id: "A3",
+    title: "Modul 3: JSON in Oracle SQL",
+    examNote: "A021–A032",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/advanced/modul-03-json/",
+    lessons: [
+      { id: "A021", title: "JSON-Speicherung & `IS JSON` Constraints", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A022", title: "JSON Path Expressions & Simple Dot Notation", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A023", title: "`JSON_VALUE`: Skalarwerte typsicher extrahieren", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A024", title: "`JSON_QUERY`: Objekte & Arrays extrahieren", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A025", title: "`JSON_EXISTS`: Filtern auf JSON-Inhalte", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A026", title: "`JSON_TABLE`: JSON relational abfragen (Teil 1)", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A027", title: "`JSON_TABLE`: Verschachtelte Arrays & `NESTED PATH` (Teil 2)", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A028", title: "JSON aus relationalen Tabellen erzeugen (`JSON_OBJECT`, `JSON_ARRAY`)", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A029", title: "JSON-Aggregation (`JSON_OBJECTAGG`, `JSON_ARRAYAGG`)", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A030", title: "JSON gezielt ändern: `JSON_TRANSFORM` & `JSON_MERGEPATCH`", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A031", title: "JSON Search Indexes & 23ai JSON Relational Duality Views", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A032", title: "Modul-3-Lab: E-Commerce-Order-Pipeline", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+    ]
+  },
+  {
+    id: "A4",
+    title: "Modul 4: XML in Oracle SQL",
+    examNote: "A033–A042",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/advanced/modul-04-xml/",
+    lessons: [
+      { id: "A033", title: "`XMLType` Grundlagen & `XMLPARSE`", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A034", title: "XML generieren: `XMLELEMENT` & `XMLATTRIBUTES`", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A035", title: "`XMLFOREST` & `XMLCONCAT` für kompaktes XML", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A036", title: "`XMLAGG` & hierarchisches XML (Department -> Employees)", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A037", title: "XPath & XQuery mit `XMLQUERY` und `XMLEXISTS`", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A038", title: "`XMLCAST` & `XMLSERIALIZE`", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A039", title: "`XMLTABLE`: XML in relationale Zeilen & Spalten zerlegen", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A040", title: "XML Namespaces in `XMLTABLE` & `XMLEXISTS`", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A041", title: "`XMLTRANSFORM` (XSLT) & XML-vs.-JSON-Vergleich", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+      { id: "A042", title: "Modul-4-Lab: Produktkatalog- & Rechnungs-Parsing", tag: "Advanced", refLabel: "XMLTABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html" },
+    ]
+  },
+  {
+    id: "A5",
+    title: "Modul 5: Window Functions & Pivoting",
+    examNote: "A043–A052",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/advanced/modul-05-window-pivoting/",
+    lessons: [
+      { id: "A043", title: "Mental Model: `GROUP BY` vs. `OVER (PARTITION BY ...)`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A044", title: "Ranking Functions: `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `NTILE`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A045", title: "Windowing Clauses: `ROWS BETWEEN` vs. `RANGE BETWEEN`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A046", title: "Navigation: `LAG` & `LEAD`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A047", title: "`FIRST_VALUE`, `LAST_VALUE` & `NTH_VALUE`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A048", title: "String-Aggregation mit `LISTAGG`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A049", title: "Zeilen zu Spalten drehen: `PIVOT`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A050", title: "Spalten zu Zeilen drehen: `UNPIVOT`", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A051", title: "Ratio-to-Report & statistische Analytic Functions", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+      { id: "A052", title: "Modul-5-Lab: HR-Gehaltsanalyse & Zeitreihen-Reporting", tag: "Advanced", refLabel: "Analytic Functions", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html" },
+    ]
+  },
+  {
+    id: "A6",
+    title: "Modul 6: Query-Patterns & Performance",
+    examNote: "A053–A060",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/advanced/modul-06-patterns-performance/",
+    lessons: [
+      { id: "A053", title: "Mehrdimensionale Aggregation: `ROLLUP`, `CUBE` & `GROUPING SETS`", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A054", title: "`GROUPING()` & `GROUPING_ID()`", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A055", title: "`LATERAL` Inline Views & `CROSS APPLY` / `OUTER APPLY`", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A056", title: "Row Pattern Matching: `MATCH_RECOGNIZE` (Teil 1)", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A057", title: "`MATCH_RECOGNIZE` (Teil 2): Islands & Gaps / Sessionization", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A058", title: "Komplexe `WITH`-Pipelines & CTE-Optimierung", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A059", title: "Execution Plans lesen (`EXPLAIN PLAN` & `DBMS_XPLAN.DISPLAY`)", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+      { id: "A060", title: "Capstone-Projekt: End-to-End-Analyse-Query", tag: "Advanced", refLabel: "SQL Tuning Guide", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html" },
+    ]
+  },
+];

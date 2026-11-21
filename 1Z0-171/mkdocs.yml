@@ -84,6 +84,7 @@ nav:
       - "Modul 4: XML in Oracle SQL": advanced/modul-04-xml.md
       - "Modul 5: Window Functions & Pivoting": advanced/modul-05-window-pivoting.md
       - "Modul 6: Query-Patterns & Performance": advanced/modul-06-patterns-performance.md
+      - "Checkpoints (ACP-1 & ACP-2)": advanced/checkpoints.md
   - "Trainer & Hybrid-Kurs (Firma)":
       - Kursstart & Organisation (vor Tag 1): trainer/index.md
       - Technik- & Raum-Checkliste (3+3): trainer/hybrid-raum-checkliste.md

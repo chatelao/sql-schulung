@@ -54,6 +54,81 @@ ORDER BY part_name;
 
 ---
 
+### Visuelle Orientierung: Hierarchie-Traversierung
+```mermaid
+flowchart TD
+    Root["START WITH mgr_id IS NULL (Wurzel)"] --> P["CONNECT BY PRIOR emp_id = mgr_id (Top-Down)"]
+    P --> L["LEVEL, CONNECT_BY_ROOT, SYS_CONNECT_BY_PATH"]
+    P --> C["NOCYCLE + CONNECT_BY_ISCYCLE bei Schleifen"]
+```
+*Alt-Text: Ablauf einer hierarchischen Abfrage mit START WITH, CONNECT BY PRIOR, Pseudospalten und NOCYCLE.*
+
+---
+
+## Lektionen im Detail
+
+### `A001` — Mehrstufige Self-Joins & Peer-Vergleiche
+- **Lernziel:** 2- bis 3-stufige Self-Joins (`Mitarbeiter -> Manager -> Abteilungsleiter`), Paare innerhalb derselben Gruppe ohne Duplikate (`a.empno < b.empno`), Lücken- und Überlappungsprüfung
+- **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT a.ename, b.ename FROM scott.emp a JOIN scott.emp b ON a.deptno = b.deptno AND a.empno ___ b.empno;`
+  ??? success "Musterlösung & Erklärung"
+      a.empno < b.empno verhindert Selbst-Paare und doppelte (B,A)-Paare.
+
+### `A002` — Klassische Oracle-Hierarchien: `START WITH` & `CONNECT BY PRIOR`
+- **Lernziel:** Wurzelknoten definieren, Richtung der Rekursion (`PRIOR empno = mgr` Top-Down vs. `PRIOR mgr = empno` Bottom-Up), Pseudospalte `LEVEL`
+- **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT LPAD(' ', (LEVEL-1)*2) || emp_name FROM adv_org_emp START WITH mgr_id ___ CONNECT BY ___ emp_id = mgr_id;`
+  ??? success "Musterlösung & Erklärung"
+      START WITH mgr_id IS NULL CONNECT BY PRIOR emp_id = mgr_id (Top-Down).
+
+### `A003` — Hierarchie-Visualisierung & Pfadbildung
+- **Lernziel:** Einrückung mit `LPAD(' ', (LEVEL - 1) * 2) \
+- **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT emp_name, ___ emp_name AS wurzel, SYS_CONNECT_BY_PATH(emp_name, '/') AS pfad FROM adv_org_emp START WITH mgr_id IS NULL CONNECT BY PRIOR emp_id = mgr_id;`
+  ??? success "Musterlösung & Erklärung"
+      CONNECT_BY_ROOT liefert den Namen des Wurzelknotens für jeden Ast.
+
+### `A004` — Sortieren & Filtern in `CONNECT BY`-Hierarchien
+- **Lernziel:** `ORDER SIBLINGS BY` (Geschwisterknoten sortieren, ohne Baumstruktur zu zerstören), Unterschied zwischen `WHERE`-Filter (nach Baumaufbau) und `CONNECT BY ... AND`-Filter (Ast abschneiden)
+- **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT emp_name FROM adv_org_emp START WITH mgr_id IS NULL CONNECT BY PRIOR emp_id = mgr_id ___ BY emp_name;`
+  ??? success "Musterlösung & Erklärung"
+      ORDER SIBLINGS BY sortiert Geschwisterknoten, ohne die Baumstruktur zu zerstören.
+
+### `A005` — Zyklen erkennen & abfangen (`NOCYCLE`)
+- **Lernziel:** Fehler `ORA-01436: CONNECT BY loop in user data` gezielt provozieren und mit `CONNECT BY NOCYCLE` + `CONNECT_BY_ISCYCLE` sauber auflösen
+- **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT emp_name, ___ FROM adv_org_emp START WITH emp_id = 1 CONNECT BY ___ PRIOR emp_id = mgr_id;`
+  ??? success "Musterlösung & Erklärung"
+      CONNECT BY NOCYCLE verhindert ORA-01436; CONNECT_BY_ISCYCLE markiert Schleifen (1).
+
+### `A006` — ANSI-Standard: Rekursive Subquery Factoring (`WITH` CTE)
+- **Lernziel:** Aufbau einer rekursiven `WITH`-Klausel (`Anchor Member UNION ALL Recursive Member`), Pflicht zur Spaltenliste nach dem CTE-Namen
+- **Selbstlern-Aufgabe (Lückentext/Check):** `WITH tree (emp_id, mgr_id, lvl) AS (SELECT emp_id, mgr_id, 1 FROM adv_org_emp WHERE mgr_id IS NULL ___ SELECT e.emp_id, e.mgr_id, t.lvl+1 FROM adv_org_emp e JOIN tree t ON e.mgr_id = t.emp_id) SELECT * FROM tree;`
+  ??? success "Musterlösung & Erklärung"
+      UNION ALL verbindet Anchor Member und Recursive Member.
+
+### `A007` — Tiefen- vs. Breitensuche in rekursiven CTEs
+- **Lernziel:** `SEARCH DEPTH FIRST BY ... SET order_col` vs. `SEARCH BREADTH FIRST BY ... SET order_col`, Pfad-Akkumulation per String-Konkatenation
+- **Selbstlern-Aufgabe (Lückentext/Check):** `... SEARCH ___ FIRST BY emp_name SET ord_seq SELECT * FROM tree ORDER BY ord_seq;`
+  ??? success "Musterlösung & Erklärung"
+      SEARCH DEPTH FIRST (Tiefensuche) oder SEARCH BREADTH FIRST (Breitensuche).
+
+### `A008` — Zykluserkennung in rekursiven CTEs (`CYCLE`)
+- **Lernziel:** `CYCLE empno SET is_cycle TO 'Y' DEFAULT 'N'`, Vergleich von `NOCYCLE` vs. `CYCLE`-Klausel
+- **Selbstlern-Aufgabe (Lückentext/Check):** `... ___ emp_id SET is_cyc TO 'Y' DEFAULT 'N' SELECT * FROM tree;`
+  ??? success "Musterlösung & Erklärung"
+      CYCLE emp_id SET is_cyc TO 'Y' DEFAULT 'N' erkennt Zyklen im ANSI-CTE.
+
+### `A009` — Stücklisten (Bill of Materials) & Mengen-Aggregation
+- **Lernziel:** Multiplikation von Stückzahlen über mehrere Ebenen in einer rekursiven CTE und anschließende Aggregation der Gesamtkomponenten
+- **Selbstlern-Aufgabe (Lückentext/Check):** `WITH bom (part, qty) AS (... UNION ALL SELECT c.child, b.qty * c.qty FROM ...) SELECT part, ___(qty) FROM bom GROUP BY part;`
+  ??? success "Musterlösung & Erklärung"
+      Multiplikation je Ebene, am Ende SUM(qty) je Komponente.
+
+### `A010` — Modul-1-Lab: Org-Chart- & BOM-Reporting
+- **Lernziel:** Vergleich derselben Problemstellung in `CONNECT BY` und rekursiver `WITH`-CTE inkl. Pfad, Ebene und Blatt-Kennzeichnung
+- **Selbstlern-Aufgabe (Lückentext/Check):** `Vergleiche CONNECT BY vs. rekursive WITH-CTE in advanced-queries-sandbox.sql (Anzahl Zeilen & Pfadformat).`
+  ??? success "Musterlösung & Erklärung"
+      Beide liefern identische Baumtiefe; WITH-CTE ist ANSI-portabel.
+
+---
+
 ## Selbstlern-Aufgaben (Modul 1)
 
 1. **(★)** Gib mit `CONNECT BY` die gesamte Berichtskette **Bottom-Up** ausgehend von `'Becker'` (`emp_id = 5`) bis zum CEO aus.

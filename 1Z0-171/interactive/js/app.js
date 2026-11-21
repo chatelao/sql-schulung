@@ -222,8 +222,10 @@
   const phasesContainer = document.getElementById("phases-container");
 
   function initCurriculum() {
-    phaseFilter.innerHTML = `<option value="ALL">Alle 10 Phasen (200 Lektionen)</option>` +
-      window.CURRICULUM_PHASES.map((p) => `<option value="${p.id}">Phase ${p.id}: ${escapeHtml(p.title.replace(/^Phase \d+: /, ""))}</option>`).join("");
+    phaseFilter.innerHTML = `<option value="ALL">Alle 10 Phasen 1Z0-171 (200 Lektionen)</option>` +
+      window.CURRICULUM_PHASES.map((p) => `<option value="${p.id}">Phase ${p.id}: ${escapeHtml(p.title.replace(/^Phase \d+: /, ""))}</option>`).join("") +
+      (window.ADVANCED_PHASES ? `<optgroup label="Advanced SQL (A001–A060)"><option value="ADV_ALL">Alle 6 Advanced-Module (60 Lektionen)</option>` +
+      window.ADVANCED_PHASES.map((p) => `<option value="${p.id}">${escapeHtml(p.title)} (${p.examNote})</option>`).join("") + `</optgroup>` : "");
 
     variantSelect.value = state.variant || "B";
     variantSelect.addEventListener("change", () => {
@@ -259,17 +261,21 @@
 
   function renderPhases() {
     const doneSet = new Set(state.completedLessons);
-    const totalDone = doneSet.size;
-    document.getElementById("lessons-done-count").textContent = totalDone;
-    const pct = Math.round((totalDone / 200) * 100);
+    const selectedPhase = phaseFilter.value;
+    const isAdv = selectedPhase === "ADV_ALL" || String(selectedPhase).startsWith("A");
+    const activeList = isAdv && window.ADVANCED_PHASES ? window.ADVANCED_PHASES : window.CURRICULUM_PHASES;
+    const totalTarget = isAdv ? 60 : 200;
+    const prefix = isAdv ? "A" : "L";
+    const totalDone = state.completedLessons.filter((id) => String(id).startsWith(prefix)).length;
+    document.getElementById("lessons-done-count").textContent = `${totalDone}/${totalTarget}`;
+    const pct = Math.round((totalDone / totalTarget) * 100);
     document.getElementById("lessons-done-pct").textContent = `${pct}%`;
     document.getElementById("lessons-progress-bar").style.width = `${pct}%`;
 
-    const selectedPhase = phaseFilter.value;
     const q = lessonSearch.value.trim().toLowerCase();
 
-    const html = window.CURRICULUM_PHASES
-      .filter((p) => selectedPhase === "ALL" || String(p.id) === selectedPhase)
+    const html = activeList
+      .filter((p) => selectedPhase === "ALL" || selectedPhase === "ADV_ALL" || String(p.id) === selectedPhase)
       .map((p) => {
         const filteredLessons = p.lessons.filter(
           (l) => !q || l.id.toLowerCase().includes(q) || l.title.toLowerCase().includes(q) || l.tag.toLowerCase().includes(q)
@@ -280,7 +286,7 @@
           <div class="phase-block" id="phase-${p.id}">
             <div class="phase-header">
               <div class="phase-title-row">
-                <span class="phase-tag">Phase ${p.id}</span>
+                <span class="phase-tag">${String(p.id).startsWith('A') ? 'Advanced' : 'Phase ' + p.id}</span>
                 <strong>${escapeHtml(p.title.replace(/^Phase \d+:\s*/, ""))}</strong>
                 <span class="muted-sm" style="margin:0;">(${escapeHtml(p.examNote)})</span>
                 <a class="permalink-badge" href="#curriculum/phase-${p.id}" title="Permanente URL zu Phase ${p.id}">#phase-${p.id}</a>
