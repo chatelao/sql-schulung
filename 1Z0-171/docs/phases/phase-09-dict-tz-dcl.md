@@ -281,6 +281,13 @@ flowchart LR
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Analysieren):** A gibt `SELECT ON t` `WITH GRANT OPTION` an B, B an C. A führt `REVOKE SELECT ON t FROM B` aus. Wer behält das Recht? *(Lösung: Niemand — Objektprivilegien kaskadieren beim `REVOKE` und entziehen C das Recht mit.)*
+- **Basis:** Suche eigene Tabellen und Constraints in `USER_TABLES` / `USER_CONSTRAINTS`.
+- **Plus:** Vergleiche `SYSDATE` mit `CURRENT_TIMESTAMP` nach `ALTER SESSION SET TIME_ZONE = 'America/New_York'`.
+- **Challenge:** Protokolliere den DCL-Kaskaden-Test mit `student_0X_peer`.
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Data-Dictionary-Schnitzeljagd):** Findet ausschliesslich über `USER_TABLES`, `USER_TAB_COLUMNS` und `USER_CONSTRAINTS` heraus, welche Fremdschlüssel auf eure Testtabellen zeigen.

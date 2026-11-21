@@ -412,6 +412,13 @@ flowchart LR
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Bewerten):** Finde den Denkfehler in `SELECT ename FROM scott.emp WHERE deptno = 10 OR deptno = 20 AND sal > 2000;`. *(Lösung: `AND` bindet stärker als `OR`; es fehlen Klammern um `deptno = 10 OR deptno = 20`.)*
+- **Basis:** Alle `CLERK`s in `scott.emp` sortiert nach `sal DESC`.
+- **Plus:** Top-3-Verdiener in `hr.employees` mit `FETCH FIRST 3 ROWS WITH TIES` + `NVL(commission_pct, 0)`.
+- **Challenge:** Kombiniere `LIKE '_A%'`, `BETWEEN` auf `hiredate` (`DATE '1981-01-01'`) und `NULLS LAST`.
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Klammer-Falle):** Vergleicht `WHERE deptno = 10 OR deptno = 20 AND sal > 2000` mit geklammerter Variante `WHERE (deptno = 10 OR deptno = 20) AND sal > 2000` auf `scott.emp`. Dokumentiert vor dem Ausführen im Teams-Chat, welche Zeilen sich unterscheiden.

@@ -416,6 +416,13 @@ flowchart TD
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Analysieren):** Welche Query wirft `ORA-01722` und warum? (A) `NVL(TO_CHAR(comm), 'N/A')` (B) `NVL(comm, 'N/A')`. *(Lösung: B — `comm` ist `NUMBER`, `'N/A'` lässt sich nicht implizit in eine Zahl wandeln.)*
+- **Basis:** `UPPER(ename)`, `LENGTH(ename)` und `SUBSTR(ename, 1, 3)` auf `scott.emp`.
+- **Plus:** Berechne das Eintrittsjahr mit `EXTRACT(YEAR FROM hiredate)` und formatiere `sal` mit `TO_CHAR(..., '99,990.00')`.
+- **Challenge (Advanced-Ausblick):** Extrahiere E-Mail-Domains per `REGEXP_SUBSTR` ([Modul 2](../advanced/modul-02-regex.md)).
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (String-Zwiebel):** Extrahiert aus `hr.employees.email` bzw. `scott.emp.ename` per verschachteltem `SUBSTR`/`INSTR` Initialen und Domain-Teile. Der Navigator liest die Funktionsaufrufe **von innen nach aussen** laut vor.

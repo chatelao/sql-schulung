@@ -3,7 +3,7 @@
 [![Read the Docs Handbuch](https://img.shields.io/badge/Read%20the%20Docs-Handbuch-8CA1AF?logo=readthedocs&logoColor=white)](https://sql-schulung.readthedocs.io/)
 [![GitHub Pages Interactive Studio](https://img.shields.io/badge/GitHub%20Pages-Interactive%20Studio-222222?logo=githubpages&logoColor=white)](https://chatelao.github.io/sql-schulung/)
 
-Dieses Repository bietet ein vollständig strukturiertes **Selbststudium-Programm für Oracle SQL (Oracle Database 23ai)** — von **null Vorkenntnissen** bis zur Zertifizierung **Oracle AI Database SQL Associate (`1Z0-171`)** sowie weiterführenden **Advanced-SQL-Techniken**.
+Dieses Repository bietet ein vollständig strukturiertes **Selbststudium-Programm für Oracle SQL (Oracle AI Database 26ai (kompatibel mit 23ai Free))** — von **null Vorkenntnissen** bis zur Zertifizierung **Oracle AI Database SQL Associate (`1Z0-171`)** sowie weiterführenden **Advanced-SQL-Techniken**.
 
 ---
 
@@ -21,7 +21,7 @@ Dieses Repository bietet ein vollständig strukturiertes **Selbststudium-Program
 1. **Handbuch öffnen**: Lies auf [Read the Docs](https://sql-schulung.readthedocs.io/) zuerst den **Selbststudium-Leitfaden** (`1Z0-171/docs/getting-started/self-study-guide.md`).
 2. **Lab-Umgebung wählen**:
    - **Ohne Installation (empfohlen für den schnellen Start)**: [Oracle FreeSQL (`freesql.com`)](https://freesql.com/) im Browser (Variante B).
-   - **Lokal / In-House**: `Oracle Database 23ai Free` Container oder interne PDB (Variante A).
+   - **Lokal / In-House**: `Oracle AI Database 26ai (kompatibel mit 23ai Free) Free` Container oder interne PDB (Variante A).
 3. **Interactive Studio öffnen**: Starte das [GitHub Pages Interactive Studio](https://chatelao.github.io/sql-schulung/) für:
    - den **200-Lektionen-Fortschrittstracker**,
    - **Checkpoint `CP-0`** (Baseline-Test zu Kursbeginn in `L001–L002`),

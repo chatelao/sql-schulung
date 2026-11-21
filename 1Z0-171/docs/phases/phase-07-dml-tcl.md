@@ -302,6 +302,13 @@ flowchart TD
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Bewerten):** Nach `INSERT ...; SAVEPOINT sp1; UPDATE ...; CREATE TABLE tmp(x NUMBER); ROLLBACK TO sp1;` — was passiert und warum? *(Lösung: `CREATE TABLE` löst ein implizites `COMMIT` aus; `ROLLBACK TO sp1` wirft `ORA-01086`, weil `sp1` nicht mehr existiert!)*
+- **Basis:** `INSERT`, `UPDATE`, `DELETE` in `my_emp` mit `ROLLBACK`.
+- **Plus:** `MERGE INTO my_emp` mit `WHEN MATCHED` und `WHEN NOT MATCHED`.
+- **Challenge:** Teste `SELECT ... FOR UPDATE NOWAIT` zwischen zwei Sessions.
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Zwei-Session-Locking live):** Beide Partner arbeiten mit demselben Test-Datensatz bzw. beobachten Session 1 (`UPDATE` ohne `COMMIT`) und Session 2 (`SELECT` vor/nach `COMMIT`, danach `UPDATE` auf dieselbe Zeile). Protokolliert Lese-Konsistenz und Lock-Verhalten.

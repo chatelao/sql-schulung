@@ -347,6 +347,13 @@ erDiagram
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Analysieren):** Warum liefert `SELECT ename, sal + comm FROM scott.emp;` bei 10 von 14 Mitarbeitenden `NULL`? Prüfe, welche der beiden Korrekturen stimmt: `NVL(sal + comm, 0)` vs. `sal + NVL(comm, 0)`. *(Lösung: Nur `sal + NVL(comm, 0)` bewahrt `sal`, während `NVL(sal + comm, 0)` das gesamte Gehalt auf `0` setzen würde!)*
+- **Basis:** Gib `empno, ename, sal` für alle `scott.emp` aus.
+- **Plus:** Gib `ename || ' verdient ' || (sal + NVL(comm, 0))` mit sauberem Alias aus.
+- **Challenge:** Vergleiche die Ausgabe mit `q'[...]'`-Quote-Literals und prüfe in `hr.employees`, warum dort `commission_pct` eine Dezimalzahl (`0.2`) statt eines Fixbetrags ist.
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 *Arbeitsmodus: Je 1 Person vor Ort (Headset) + 1 Person via Teams im Breakout-Room; Rollenwechsel Driver/Navigator nach 8 Minuten.*

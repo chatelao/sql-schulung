@@ -347,6 +347,13 @@ flowchart LR
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Analysieren):** Warum liefert `WHERE empno NOT IN (SELECT mgr FROM scott.emp)` 0 Zeilen, obwohl nur 6 Personen Manager sind? *(Lösung: `KING` hat `mgr IS NULL`, und `x != NULL` ergibt `UNKNOWN`.)*
+- **Basis:** Single-Row Subquery (`sal > (SELECT AVG(sal) FROM scott.emp)`).
+- **Plus:** Correlated Subquery + `NOT EXISTS` für Abteilungen ohne Mitarbeitende.
+- **Challenge (Advanced-Ausblick):** Vergleiche `WITH`-CTE mit einer rekursiven CTE ([Modul 1](../advanced/modul-01-hierarchies.md)) oder `ROW_NUMBER()` ([Modul 5](../advanced/modul-05-window-pivoting.md)).
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (`NOT IN` vs. `NOT EXISTS`):** Testet auf `scott.emp`: Warum liefert `WHERE empno NOT IN (SELECT mgr FROM emp)` **0 Zeilen**? Schreibt die sichere `NOT EXISTS`-Alternative.

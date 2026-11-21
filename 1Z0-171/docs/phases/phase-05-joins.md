@@ -331,6 +331,13 @@ flowchart TD
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Analysieren):** Warum verwandelt `LEFT JOIN scott.dept d ON e.deptno = d.deptno WHERE d.loc = 'NEW YORK'` den Outer Join faktisch in einen Inner Join? *(Lösung: `WHERE` verwirft alle Zeilen mit `d.loc IS NULL`; der Filter muss ins `ON`.)*
+- **Basis:** `INNER JOIN` zwischen `scott.emp` und `scott.dept`.
+- **Plus:** `LEFT OUTER JOIN` auf `hr.employees` + `hr.departments` + `hr.locations` (alle 107 Zeilen erhalten!).
+- **Challenge (Advanced-Ausblick):** Baue den Self-Join `EMP -> MGR` zu einer vollständigen Hierarchie mit `CONNECT BY` aus ([Modul 1](../advanced/modul-01-hierarchies.md)).
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Verschwundene Zeilen):** Führt auf `hr.employees` und `hr.departments` zuerst einen `INNER JOIN`, dann `LEFT OUTER JOIN` und schliesslich einen `LEFT OUTER JOIN` mit `WHERE d.location_id = 1700` aus. Markiert gemeinsam `Kimberely Grant` und erklärt, wann sie verschwindet.

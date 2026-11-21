@@ -252,10 +252,14 @@
   }
 
   function renderVariantBanner() {
+    const doneCnt = (state.completedLessons || []).length;
+    const lastBk = state.lastBackupAt ? new Date(state.lastBackupAt).getTime() : 0;
+    const needsBk = doneCnt >= 5 && (!lastBk || (Date.now() - lastBk) > 7 * 86400000);
+    const bkHint = needsBk ? `<div style="margin-top:6px;color:#b45309;"><strong>Backup-Tipp:</strong> Du hast ${doneCnt} Lektionen erledigt — sichere deinen Lernstand regelmässig über <em>„Lernstand sichern (.json)“</em>.</div>` : "";
     if (state.variant === "A") {
-      variantBanner.innerHTML = `<strong>Variante A (In-House Oracle DB):</strong> Führe die <code>SCOTT/TIGER</code>- &amp; <code>HR</code>-Labs in VS Code / SQL Developer aus und teste <code>&amp;</code>/<code>&amp;&amp;</code> sowie Multi-User-DCL nativ in <code>sqlcl</code>/<code>sqlplus</code>.`;
+      variantBanner.innerHTML = bkHint + `<strong>Variante A (In-House Oracle DB):</strong> Führe die <code>SCOTT/TIGER</code>- &amp; <code>HR</code>-Labs in VS Code / SQL Developer aus und teste <code>&amp;</code>/<code>&amp;&amp;</code> sowie Multi-User-DCL nativ in <code>sqlcl</code>/<code>sqlplus</code>.`;
     } else {
-      variantBanner.innerHTML = `<strong>Variante B (Kostenlose Online-Cloud):</strong> Führe tägliche SQL-Queries in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> (23ai, mit vorgeladenem <code>SCOTT</code> &amp; <code>HR</code>) aus, nutze unseren Tab <strong>SQL*Plus Simulator</strong> für <code>&amp;</code>/<code>&amp;&amp;</code> und <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">OCI Always Free</a> für Multi-User-DCL.`;
+      variantBanner.innerHTML = bkHint + `<strong>Variante B (Kostenlose Online-Cloud):</strong> Führe tägliche SQL-Queries in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> (23ai, mit vorgeladenem <code>SCOTT</code> &amp; <code>HR</code>) aus, nutze unseren Tab <strong>SQL*Plus Simulator</strong> für <code>&amp;</code>/<code>&amp;&amp;</code> und <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">OCI Always Free</a> für Multi-User-DCL.`;
     }
   }
 

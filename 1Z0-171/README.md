@@ -5,7 +5,7 @@
 
 ## Prüfungsüberblick (Exam Overview)
 
-Die Zertifizierung **Oracle AI Database SQL Associate (1Z0-171)** (auch bekannt als **Oracle Database 23ai SQL Associate**) bestätigt fundierte Grundlagenkenntnisse in SQL-Konzepten sowie die praktische Fähigkeit, Daten und Datenbankobjekte in einer Oracle-Database-Umgebung abzufragen, zu manipulieren und zu verwalten.
+Die Zertifizierung **Oracle AI Database SQL Associate (1Z0-171)** (auch bekannt als **Oracle AI Database 26ai (kompatibel mit 23ai Free) SQL Associate**) bestätigt fundierte Grundlagenkenntnisse in SQL-Konzepten sowie die praktische Fähigkeit, Daten und Datenbankobjekte in einer Oracle-Database-Umgebung abzufragen, zu manipulieren und zu verwalten.
 
 | Merkmal | Details |
 | :--- | :--- |
@@ -19,7 +19,7 @@ Die Zertifizierung **Oracle AI Database SQL Associate (1Z0-171)** (auch bekannt 
 | **Voraussetzungen** | Keine (Einstieg ohne Vorkenntnisse möglich) |
 
 > [!NOTE]
-> Trotz des Produktnamens „AI Database“ (Oracle Database 23ai) prüft das **1Z0-171**-Examen ausschließlich Standard- und Oracle-SQL-Grundlagen – nicht AI Vector Search, JSON oder prozedurale PL/SQL-Programmierung.
+> Trotz des Produktnamens „AI Database“ (Oracle AI Database 26ai (kompatibel mit 23ai Free)) prüft das **1Z0-171**-Examen ausschließlich Standard- und Oracle-SQL-Grundlagen – nicht AI Vector Search, JSON oder prozedurale PL/SQL-Programmierung.
 
 ---
 
@@ -135,7 +135,7 @@ Die Prüfung umfasst 11 Domains, die sowohl theoretische Relational-Database-Kon
 
 | Merkmal | 1Z0-171 (Oracle AI Database SQL) | 1Z0-071 (Oracle Database SQL) |
 | :--- | :--- | :--- |
-| **Target Database** | Oracle Database 23ai | Oracle Database 12c / 19c |
+| **Target Database** | Oracle AI Database 26ai (kompatibel mit 23ai Free) | Oracle Database 12c / 19c |
 | **Anzahl Fragen** | 60 | 63 |
 | **Zeitlimit** | 120 Minuten | 120 Minuten |
 | **Passing Score** | 65 % (39 richtige Antworten) | 63 % (40 richtige Antworten) |

@@ -35,7 +35,7 @@ Jede der **200 Lektionen (`L001`–`L200`)** folgt demselben wiederkehrenden 45-
 
 ## Wähle deine Lab-Umgebung
 
-- **[Variante A: In-House Oracle Database](getting-started/variant-a-inhouse.md)** — Lokaler Docker/Podman-Container (`Oracle Database 23ai Free`) oder interne Pluggable Database (PDB) mit VS Code / SQL Developer & `sqlcl`/`sqlplus`.
+- **[Variante A: In-House Oracle Database](getting-started/variant-a-inhouse.md)** — Lokaler Docker/Podman-Container (`Oracle AI Database 26ai (kompatibel mit 23ai Free) Free`) oder interne Pluggable Database (PDB) mit VS Code / SQL Developer & `sqlcl`/`sqlplus`.
 - **[Variante B: Kostenlose Online-Cloud-Umgebung](getting-started/variant-b-online.md)** — Sofort startbares Browser-Setup ohne Installation mit **Oracle FreeSQL** (`freesql.com`), **OCI Always Free Autonomous Database** und **db<>fiddle**.
 
 ---

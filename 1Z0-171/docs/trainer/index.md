@@ -81,6 +81,28 @@ Fällt eine Person wegen Projekt-/Kundenterminen aus, nutzt sie den **Nachhol-Pf
 
 ---
 
+## 6. Modulkarten: Präsenz vs. Selbststudium (`E6`)
+
+| Modul / Phase | Route A (Anwender) | Route B (1Z0-171) | Hybrid-Zeit | Selbststudium | Abschlusskriterium |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| Phase 1–2 (`L001–L042`) | Pflicht | Pflicht | 6 Std. | 9 Std. | Smoke-Test + `CP-1` |
+| Phase 3–4 (`L043–L082`) | Pflicht | Pflicht | 7,5 Std. | 12 Std. | Functions/Grouping-Lab + `CP-2` |
+| Phase 5–6 (`L083–L122`) | Pflicht | Pflicht | 9 Std. | 14 Std. | Join-/Subquery-Lab + `CP-3` |
+| Phase 7–8 (`L123–L162`) | Optional | Pflicht | 7,5 Std. | 12 Std. | DML-/DDL-Lab + `CP-4` |
+| Phase 9 (`L163–L178`) | Teilweise | Pflicht | 3 Std. | 5 Std. | Dictionary & Time Zones |
+| Phase 10 (`L179–L200`) | — | Pflicht | 3 Std. | 8 Std. | Mock #1/#2 ≥ 75 %, `CP-5` ≥ 85 % |
+
+---
+
+## 7. Transfer-Sicherung nach Kursende (`E5`)
+
+1. **Persönlicher Transfer-Plan (in Phase 10):** Jede Person definiert **3 konkrete SQL-Abfragen/Prüfungen**, die sie in den nächsten 4 Wochen im Job umsetzt.
+2. **Follow-up-Termin (60 Min., nach 4–6 Wochen):** Alle 6 treffen sich erneut in Teams; jede Person zeigt 1 echte Praxis-Query (anonymisierte Daten) und bespricht aufgetretene Stolpersteine.
+3. **Interner Teams-Kanal „SQL-Praxis“:** Bleibt nach Kursende als Peer-Hilfe für Alltagsfragen offen.
+
+---
+
 ## Weiterführend im Trainer-Bereich
 - [Technik- & Raum-Checkliste Hybrid (3 vor Ort + 3 Teams)](hybrid-raum-checkliste.md)
-- [Sitzungspläne & Hybrid-Moderation](sitzungsplaene.md) *(folgt in Sprint 2)*
+- [Sitzungspläne & Hybrid-Moderation (Phasen 1–10)](sitzungsplaene.md)
+- [Hybrid-Foliendeck (Marp, Phasen 1–10)](../slides/phase-01-10-overview.md)

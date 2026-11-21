@@ -376,6 +376,13 @@ flowchart LR
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Analysieren):** Nach `CREATE TABLE e_copy AS SELECT * FROM hr.employees;` lässt sich eine doppelte `employee_id` einfügen. Warum? *(Lösung: `CTAS` kopiert keine `PRIMARY KEY`/`UNIQUE`-Constraints, sondern nur `NOT NULL`.)*
+- **Basis:** `CREATE TABLE` mit `PRIMARY KEY` und `CHECK`.
+- **Plus:** `VIEW` mit `WITH CHECK OPTION` + `SEQUENCE` + Function-Based Index.
+- **Challenge:** Teste `ON DELETE SET NULL` vs. `ON DELETE CASCADE` an zwei verknüpften Tabellen.
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Schema-Design):** Entwerft gemeinsam zwei verknüpfte Tabellen (`projekte` + `zuweisungen`) mit `PRIMARY KEY`, `FOREIGN KEY (ON DELETE SET NULL)`, `CHECK` und `DEFAULT` und testet bewusst Constraint-Verletzungen.

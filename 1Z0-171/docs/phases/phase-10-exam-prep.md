@@ -130,6 +130,13 @@ flowchart LR
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Bewerten):** Wähle eine falsche Antwort aus Mock #1/#2 und formuliere schriftlich, **warum jede der anderen Optionen falsch ist** (Ausschlussbegründung).
+- **Basis:** Alle 6 Human Compiler Clinics durchgehen.
+- **Plus:** Mock Exam #2 mit ≥ 78 % abschliessen.
+- **Challenge:** Starte nach `CP-5` direkt mit [Advanced SQL Modul 1–6](../advanced/modul-01-hierarchies.md).
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (Human Compiler ohne DB):** Jeder Partner wählt 3 Drills aus den Clinics 1–6, lässt den anderen laut Zeile für Zeile auswerten (ohne IDE!) und deckt erst danach die Lösung auf.

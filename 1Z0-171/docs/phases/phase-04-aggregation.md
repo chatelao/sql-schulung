@@ -244,6 +244,13 @@ flowchart LR
 
 ---
 
+## Gemischtes Training & Differenzierung (Basis / Plus / Challenge)
+
+- **Analyse-Aufgabe (Bloom: Bewerten):** Ein Manager fragt nach der durchschnittlichen Provision in `scott.emp`. Warum ist `AVG(comm)` (`550`) fachlich falsch, wenn 10 Personen `0` Provision erhalten? *(Lösung: `AVG(comm)` ignoriert die 10 `NULL`-Zeilen; korrekt für alle 14 Personen ist `AVG(NVL(comm, 0))` = `157.14`.)*
+- **Basis:** `COUNT(*)`, `MIN(sal)`, `MAX(sal)` je `deptno`.
+- **Plus:** Filtere per `WHERE sal >= 1000` und `HAVING COUNT(*) >= 3`, sortiert nach `AVG(sal) DESC`.
+- **Challenge (Advanced-Ausblick):** Ergänze Zwischensummen mit `ROLLUP(deptno, job)` ([Modul 6](../advanced/modul-06-patterns-performance.md)).
+
 ## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
 
 1. **Paaraufgabe A (NULL-Verzerrung):** Vergleicht in `scott.emp` `AVG(comm)` mit `AVG(NVL(comm, 0))` sowie `COUNT(*)` mit `COUNT(comm)`. Erklärt in 2 Sätzen, welche Kennzahl für das Management irreführend wäre.

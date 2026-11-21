@@ -29,3 +29,19 @@ Statt sechs völlig unterschiedliche Tests zu schreiben – bei denen unklar ble
 
 !!! warning "Warum der Answer Key bis `CP-5` gesperrt bleibt"
     Bei `CP-0` bis `CP-4` siehst du deine **Prozentwerte je Domain** (z. B. *Domain 3: 75 %*), nicht jedoch die einzelnen Musterlösungen. So spiegeln deine Punktesprünge echtes SQL-Verständnis wider und kein Auswendiglernen von 22 Antworten. Bei `CP-5` (`L199–L200`) werden alle Lösungen und Erklärungen automatisch freigeschaltet.
+
+> **Formative Standortbestimmung (Erwachsenenbildung):** Checkpoints dienen ausschliesslich deiner persönlichen Orientierung — es gibt **keine Rangfolgen** und keine Weitergabe individueller Scores an Vorgesetzte.
+
+---
+
+## Bewertungsrubrik für offene SQL-Aufgaben (Part B, max. 8 Punkte je Task)
+
+Nutze diese Rubrik zur Selbsteinschätzung oder im **Peer-Review** (z. B. im Hybrid-Paar oder über GitHub Discussions):
+
+| Kriterium | 0 Punkte | 1 Punkt | 2 Punkte |
+| :--- | :--- | :--- | :--- |
+| **Fachliche Korrektheit** | Syntaxfehler oder falsche Ergebnismenge | Grundidee richtig, kleiner Randfehler | Läuft fehlerfrei, exakt richtige Zeilen & Spalten |
+| **`NULL`-Sicherheit** | `NULL`-Falle übersehen (`sal + comm`, `NOT IN`) | Teilweise abgefangen | Vollständig `NULL`-sicher (`NVL`, `IS NULL`, `NOT EXISTS`) |
+| **Lesbarkeit & Struktur** | Unleserlich, fehlende Aliase/Formatierung | Lesbar, aber uneinheitliche Aliase | Klare Einrückung, eindeutige Tabellen-/Spaltenaliase |
+| **SQL-Idiomatik / Performance** | Unnötiger `CROSS JOIN` / veraltete Syntax | Funktioniert, aber umständlich | Sauberes ANSI-SQL (`JOIN ... ON`, `WITH`, gezieltes `WHERE`) |
+
