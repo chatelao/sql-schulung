@@ -1027,6 +1027,197 @@
     rightEl.innerHTML = rightHtml;
     resEl.innerHTML = renderHtmlTable(resCols, resRows);
     countEl.textContent = resRows.length;
+    renderJoinCrowsFootErd(mode);
+  }
+
+  function renderJoinCrowsFootErd(mode) {
+    const erdEl = document.getElementById("join-erd-container");
+    const badgeEl = document.getElementById("join-erd-badge");
+    const capEl = document.getElementById("join-erd-caption");
+    if (!erdEl) return;
+
+    const cfg = {
+      INNER: {
+        badge: "SCOTT.EMP >|—|| SCOTT.DEPT · INNER JOIN (ON e.deptno = d.deptno)",
+        caption: "Krähenfuss-Notation: Eine Abteilung (DEPT, || = genau 1) beschäftigt 0..N Mitarbeitende (EMP, >|○ = null oder viele). Beim INNER JOIN erscheinen nur Paare mit Treffer — DEPT 40 (0 Mitarbeitende) fällt heraus.",
+        leftBox: { title: "SCOTT.EMP (e)", sub: "14 Zeilen · Kind-Tabelle (N)", active: true, rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "    SAL      NUMBER(7,2)", "FK  DEPTNO   NUMBER(2)  -->"] },
+        rightBox: { title: "SCOTT.DEPT (d)", sub: "3/4 Zeilen gematcht (DEPT 40 fehlt)", active: true, unmatchedNote: "DEPT 40 (0 EMP) ausgeblendet", rows: ["PK  DEPTNO   NUMBER(2)  <--", "    DNAME    VARCHAR2(14)", "    LOC      VARCHAR2(13)"] },
+        relLabel: "e.deptno = d.deptno",
+        relSub: "INNER JOIN (Schnittmenge: 14 Zeilen)",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "one-mandatory",
+        lineStyle: "solid",
+        vennMode: "INNER"
+      },
+      LEFT: {
+        badge: "SCOTT.EMP >|—○| SCOTT.DEPT · LEFT OUTER JOIN",
+        caption: "Krähenfuss-Notation: LEFT OUTER JOIN garantiert alle Zeilen der linken Entität (EMP). Hätte ein Employee DEPTNO IS NULL (wie Kimberely Grant in HR), bliebe er mit NULL-Werten für DEPT erhalten.",
+        leftBox: { title: "SCOTT.EMP (e) [ALLE BEHALTEN]", sub: "14/14 Zeilen garantiert", active: true, rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "    SAL      NUMBER(7,2)", "FK  DEPTNO   NUMBER(2)  -->"] },
+        rightBox: { title: "SCOTT.DEPT (d) [OPTIONAL]", sub: "Nur gematchte Abteilungen (10,20,30)", active: false, unmatchedNote: "Bei fehlendem Match -> NULL", rows: ["PK  DEPTNO   NUMBER(2)  <--", "    DNAME    VARCHAR2(14)", "    LOC      VARCHAR2(13)"] },
+        relLabel: "LEFT OUTER JOIN ON e.deptno = d.deptno",
+        relSub: "Linke Seite vollständig (14 Zeilen)",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "zero-one",
+        lineStyle: "solid",
+        vennMode: "LEFT"
+      },
+      RIGHT: {
+        badge: "SCOTT.EMP ○|<—|| SCOTT.DEPT · RIGHT OUTER JOIN",
+        caption: "Krähenfuss-Notation: RIGHT OUTER JOIN garantiert alle 4 Zeilen der rechten Entität (DEPT). Da DEPT 40 (OPERATIONS) 0 Mitarbeitende hat (○|< am Krähenfuss!), erscheint DEPT 40 mit NULL für EMPNO/ENAME.",
+        leftBox: { title: "SCOTT.EMP (e) [OPTIONAL]", sub: "14 Zeilen + 1 NULL-Ergänzung", active: false, unmatchedNote: "Für DEPT 40 -> EMP-Spalten NULL", rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "    SAL      NUMBER(7,2)", "FK  DEPTNO   NUMBER(2)  -->"] },
+        rightBox: { title: "SCOTT.DEPT (d) [ALLE 4 BEHALTEN]", sub: "Inkl. DEPT 40 OPERATIONS!", active: true, rows: ["PK  DEPTNO   NUMBER(2)  <--", "    DNAME    VARCHAR2(14)", "    LOC      VARCHAR2(13)"] },
+        relLabel: "RIGHT OUTER JOIN ON e.deptno = d.deptno",
+        relSub: "Rechte Seite vollständig (15 Zeilen inkl. DEPT 40)",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "one-mandatory",
+        lineStyle: "solid",
+        vennMode: "RIGHT"
+      },
+      FULL: {
+        badge: "SCOTT.EMP ○|<—>○| SCOTT.DEPT · FULL OUTER JOIN",
+        caption: "Krähenfuss-Notation: FULL OUTER JOIN behält sowohl Mitarbeitende ohne Abteilung (links) als auch Abteilungen ohne Mitarbeitende (rechts, DEPT 40 OPERATIONS).",
+        leftBox: { title: "SCOTT.EMP (e) [ALLE BEHALTEN]", sub: "Alle 14 Employees", active: true, rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "    SAL      NUMBER(7,2)", "FK  DEPTNO   NUMBER(2)  -->"] },
+        rightBox: { title: "SCOTT.DEPT (d) [ALLE BEHALTEN]", sub: "Alle 4 Depts (inkl. DEPT 40)", active: true, rows: ["PK  DEPTNO   NUMBER(2)  <--", "    DNAME    VARCHAR2(14)", "    LOC      VARCHAR2(13)"] },
+        relLabel: "FULL OUTER JOIN ON e.deptno = d.deptno",
+        relSub: "Beide Seiten vollständig (15 Zeilen)",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "zero-one",
+        lineStyle: "solid",
+        vennMode: "FULL"
+      },
+      CROSS: {
+        badge: "SCOTT.EMP × SCOTT.DEPT · CROSS JOIN (Kein FK-Pfad!)",
+        caption: "Warnung im ERD: Ein CROSS JOIN ignoriert die Foreign-Key-Beziehung (e.deptno = d.deptno) komplett und bildet das kartesische Produkt (14 × 4 = 56 Zeilen).",
+        leftBox: { title: "SCOTT.EMP (e)", sub: "14 Zeilen", active: true, rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "FK  DEPTNO   (ignoriert!)"] },
+        rightBox: { title: "SCOTT.DEPT (d)", sub: "4 Zeilen", active: true, rows: ["PK  DEPTNO   (ignoriert!)", "    DNAME    VARCHAR2(14)", "    LOC      VARCHAR2(13)"] },
+        relLabel: "CROSS JOIN (ohne ON-Bedingung)",
+        relSub: "Kartesisches Produkt: 14 × 4 = 56 Zeilen",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "crows-zero-many",
+        lineStyle: "dashed",
+        vennMode: "FULL"
+      },
+      SELF: {
+        badge: "SCOTT.EMP (e) >|○—○| SCOTT.EMP (m) · Rekursive 1:N Self-Join-Beziehung",
+        caption: "Krähenfuss-Notation (Pig's Ear / Self-Relationship): Ein Manager (EMP m, 0..1, da KING keinen Chef hat: ○|) führt 0..N Mitarbeitende (EMP e, >|○). Der Foreign Key EMP.MGR zeigt auf EMP.EMPNO derselben Tabelle!",
+        leftBox: { title: "SCOTT.EMP e (Rolle: Mitarbeiter)", sub: "14 Zeilen (KING hat MGR = NULL)", active: true, rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "FK  MGR      NUMBER(4)  -->"] },
+        rightBox: { title: "SCOTT.EMP m (Rolle: Manager)", sub: "Gleiche Tabelle über Alias m", active: true, unmatchedNote: "Für KING -> m.ENAME IS NULL", rows: ["PK  EMPNO    NUMBER(4)  <--", "    ENAME    VARCHAR2(10)", "    JOB      VARCHAR2(9)"] },
+        relLabel: "LEFT JOIN ON e.mgr = m.empno",
+        relSub: "Self-Join (Mitarbeiter -> Vorgesetzter, 14 Zeilen)",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "zero-one",
+        lineStyle: "solid",
+        vennMode: "LEFT"
+      },
+      NONEQUI: {
+        badge: "SCOTT.EMP >|○—|| SCOTT.SALGRADE · Non-Equijoin (BETWEEN)",
+        caption: "Krähenfuss-Notation bei Bereichs-Join: Zwischen EMP und SALGRADE gibt es keinen Gleichheits-FK (=), sondern eine Bereichszuordnung (e.sal BETWEEN s.losal AND s.hisal). Jedes Gehalt fällt in genau 1 Gehaltsstufe (||), eine Stufe umfasst 0..N Mitarbeitende (>|○).",
+        leftBox: { title: "SCOTT.EMP (e)", sub: "14 Zeilen · Prüfspalte: SAL", active: true, rows: ["PK  EMPNO    NUMBER(4)", "    ENAME    VARCHAR2(10)", "    SAL      NUMBER(7,2) -->"] },
+        rightBox: { title: "SCOTT.SALGRADE (s)", sub: "5 Gehaltsbänder (Grade 1..5)", active: true, rows: ["PK  GRADE    NUMBER", "    LOSAL    NUMBER      <--", "    HISAL    NUMBER      <--"] },
+        relLabel: "ON e.sal BETWEEN s.losal AND s.hisal",
+        relSub: "Non-Equijoin (Bereichs-Match: 14 Zeilen)",
+        leftSymbol: "crows-zero-many",
+        rightSymbol: "one-mandatory",
+        lineStyle: "solid",
+        vennMode: "INNER"
+      }
+    }[mode] || {
+      badge: `SET-Operator (${mode}) · Vertikale Mengenoperation auf DEPTNO`,
+      caption: "SET-Operatoren (UNION, UNION ALL, INTERSECT, MINUS) verknüpfen keine Spalten horizontal entlang der Krähenfuss-Beziehung, sondern kombinieren zwei kompatible SELECT-Ergebnismengen vertikal.",
+      leftBox: { title: "Query 1: SCOTT.EMP", sub: "Projektion: SELECT deptno", active: true, rows: ["FK  DEPTNO   NUMBER(2)", "    Werte: {10, 20, 30}", "    (14 Zeilen mit Duplikaten)"] },
+      rightBox: { title: "Query 2: SCOTT.DEPT", sub: "Projektion: SELECT deptno", active: true, rows: ["PK  DEPTNO   NUMBER(2)", "    Werte: {10, 20, 30, 40}", "    (4 eindeutige Zeilen)"] },
+      relLabel: mode.replace("_", " "),
+      relSub: mode === "MINUS" ? "DEPT MINUS EMP -> {40}" : (mode === "INTERSECT" ? "Schnittmenge -> {10, 20, 30}" : "Vertikale Mengenvereinigung"),
+      leftSymbol: "crows-zero-many",
+      rightSymbol: "one-mandatory",
+      lineStyle: "dashed",
+      vennMode: mode === "INTERSECT" ? "INNER" : (mode === "MINUS" ? "RIGHT" : "FULL")
+    };
+
+    if (badgeEl) badgeEl.textContent = cfg.badge;
+    if (capEl) capEl.textContent = cfg.caption;
+
+    // Helper for Crow's Foot markers at left connector end (x=275, y=92) and right connector end (x=545, y=92)
+    const drawLeftCrowsFoot = (sym) => {
+      // Connects at x=275 (right edge of left entity), extending rightwards to x=303
+      if (sym === "crows-zero-many") {
+        return `
+          <!-- Crow's foot (3 prongs towards left entity at x=275) + optional circle at x=298 -->
+          <line x1="292" y1="92" x2="275" y2="80" stroke="#1a222d" stroke-width="2.2" />
+          <line x1="292" y1="92" x2="275" y2="92" stroke="#1a222d" stroke-width="2.2" />
+          <line x1="292" y1="92" x2="275" y2="104" stroke="#1a222d" stroke-width="2.2" />
+          <circle cx="299" cy="92" r="5.5" fill="#ffffff" stroke="#1a222d" stroke-width="2" />
+        `;
+      }
+      return `<line x1="286" y1="81" x2="286" y2="103" stroke="#1a222d" stroke-width="2.2" />`;
+    };
+
+    const drawRightCrowsFoot = (sym) => {
+      // Connects at x=545 (left edge of right entity), symbols around x=520..545
+      if (sym === "one-mandatory") {
+        return `
+          <!-- Mandatory One: double vertical bar || -->
+          <line x1="535" y1="81" x2="535" y2="103" stroke="#1a222d" stroke-width="2.2" />
+          <line x1="527" y1="81" x2="527" y2="103" stroke="#1a222d" stroke-width="2.2" />
+        `;
+      }
+      if (sym === "zero-one") {
+        return `
+          <!-- Optional One: circle + vertical bar ○| -->
+          <circle cx="523" cy="92" r="5.5" fill="#ffffff" stroke="#1a222d" stroke-width="2" />
+          <line x1="535" y1="81" x2="535" y2="103" stroke="#1a222d" stroke-width="2.2" />
+        `;
+      }
+      return `
+        <line x1="528" y1="92" x2="545" y2="80" stroke="#1a222d" stroke-width="2.2" />
+        <line x1="528" y1="92" x2="545" y2="92" stroke="#1a222d" stroke-width="2.2" />
+        <line x1="528" y1="92" x2="545" y2="104" stroke="#1a222d" stroke-width="2.2" />
+        <circle cx="521" cy="92" r="5.5" fill="#ffffff" stroke="#1a222d" stroke-width="2" />
+      `;
+    };
+
+    const leftFill = cfg.vennMode === "LEFT" || cfg.vennMode === "FULL" ? "#0f6e6e" : "#e5dfd3";
+    const rightFill = cfg.vennMode === "RIGHT" || cfg.vennMode === "FULL" ? "#c74634" : "#e5dfd3";
+    const midFill = ["INNER", "LEFT", "RIGHT", "FULL"].includes(cfg.vennMode) ? "#0f6e6e" : "#e5dfd3";
+
+    const renderEntityBox = (x, box, borderCol, headFill) => `
+      <g>
+        <rect x="${x}" y="18" width="255" height="148" rx="8" fill="#ffffff" stroke="${borderCol}" stroke-width="${box.active ? 2.4 : 1.6}" />
+        <rect x="${x}" y="18" width="255" height="42" rx="8" fill="${headFill}" />
+        <text x="${x + 12}" y="37" font-size="12.5" font-weight="700" fill="#1a222d">${escapeHtml(box.title)}</text>
+        <text x="${x + 12}" y="53" font-size="10.5" fill="#4e5a6b">${escapeHtml(box.sub)}</text>
+        <line x1="${x}" y1="60" x2="${x + 255}" y2="60" stroke="${borderCol}" stroke-width="1.2" />
+        ${box.rows.map((r, i) => `
+          <text x="${x + 12}" y="${80 + i * 20}" font-family="JetBrains Mono, monospace" font-size="11" fill="${r.startsWith("PK") || r.startsWith("FK") ? "#0f6e6e" : "#1a222d"}" font-weight="${r.startsWith("PK") || r.startsWith("FK") ? "700" : "400"}">${escapeHtml(r)}</text>
+        `).join("")}
+        ${box.unmatchedNote ? `<text x="${x + 12}" y="156" font-size="10" font-style="italic" fill="#b45309">${escapeHtml(box.unmatchedNote)}</text>` : ""}
+      </g>
+    `;
+
+    erdEl.innerHTML = `
+      <svg viewBox="0 0 820 185" role="img" aria-label="ERD mit Krähenfuss-Notation für ${escapeHtml(mode)}" style="width:100%;height:auto;max-height:215px;display:block;">
+        ${renderEntityBox(20, cfg.leftBox, cfg.leftBox.active ? "#0f6e6e" : "#9aa5b4", cfg.leftBox.active ? "#e6f3f3" : "#f4f1ea")}
+        ${renderEntityBox(545, cfg.rightBox, cfg.rightBox.active ? "#c74634" : "#9aa5b4", cfg.rightBox.active ? "#fbeae7" : "#f4f1ea")}
+
+        <!-- Relationship line between left entity (x=275) and right entity (x=545) -->
+        <line x1="275" y1="92" x2="545" y2="92" stroke="#1a222d" stroke-width="2.2" ${cfg.lineStyle === "dashed" ? 'stroke-dasharray="6 4"' : ""} />
+        ${drawLeftCrowsFoot(cfg.leftSymbol)}
+        ${drawRightCrowsFoot(cfg.rightSymbol)}
+
+        <!-- Join / Cardinality Pill & Mini-Venn -->
+        <rect x="312" y="28" width="196" height="44" rx="6" fill="#fffdf9" stroke="#d8d1c5" />
+        <text x="410" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="#1a222d">${escapeHtml(cfg.relLabel)}</text>
+        <text x="410" y="62" text-anchor="middle" font-size="10" fill="#4e5a6b">${escapeHtml(cfg.relSub)}</text>
+
+        <!-- Mini Venn & Crow's Foot Legend under relationship line -->
+        <g transform="translate(370, 110)">
+          <circle cx="28" cy="20" r="15" fill="${leftFill}" fill-opacity="0.38" stroke="#0f6e6e" stroke-width="1.5" />
+          <circle cx="52" cy="20" r="15" fill="${rightFill}" fill-opacity="0.38" stroke="#c74634" stroke-width="1.5" />
+          <path d="M 40,7 A 15,15 0 0,1 40,33 A 15,15 0 0,1 40,7 Z" fill="${midFill}" fill-opacity="0.65" />
+        </g>
+        <text x="410" y="162" text-anchor="middle" font-size="10" fill="#4e5a6b">Legende: &gt;|&#9675; = 0..N (Krähenfuss) &middot; || = genau 1 &middot; &#9675;| = 0..1</text>
+      </svg>
+    `;
   }
 
   // Lab B: 1-Based SUBSTR & INSTR Slicer

@@ -1250,3 +1250,41 @@ body.beamer-mode textarea {
   color: #ffffff;
   border-color: #0f6e6e;
 }
+
+/* Crow's Foot ERD Card in Join Visualizer */
+.erd-card {
+  margin-bottom: 1.1rem;
+  background: #fffdf9;
+  border: 1px solid #d8d1c5;
+}
+.erd-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.erd-card-head h3 {
+  margin: 0;
+}
+.erd-legend {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0f6e6e;
+  background: #e6f3f3;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+.erd-canvas {
+  background: #ffffff;
+  border: 1px solid #e5dfd3;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  overflow-x: auto;
+}
+.erd-caption {
+  margin: 0.5rem 0 0 0;
+  line-height: 1.45;
+}
