@@ -240,12 +240,75 @@
     });
     lessonSearch.addEventListener("input", renderPhases);
     document.getElementById("reset-lessons-btn").addEventListener("click", () => {
-      if (confirm("Alle 200 Lektions-Häkchen zurücksetzen?")) {
+      if (confirm("Alle Lektions-Häkchen zurücksetzen?")) {
         state.completedLessons = [];
         saveState();
+        renderVariantBanner();
         renderPhases();
       }
     });
+
+    const exportStateBtn = document.getElementById("export-state-btn");
+    if (exportStateBtn) {
+      exportStateBtn.addEventListener("click", () => {
+        state.lastBackupAt = new Date().toISOString();
+        saveState();
+        renderVariantBanner();
+        const gradedCheckpoints = {};
+        window.CHECKPOINT_SLOTS.forEach((s) => {
+          const d = state.checkpoints && state.checkpoints[s.id];
+          if (d && d.submitted) {
+            gradedCheckpoints[s.id] = {
+              score: gradeCheckpoint(d),
+              confidence: d.confidence,
+              reflection: d.reflection,
+              submittedAt: d.submittedAt
+            };
+          }
+        });
+        const backupPayload = Object.assign({}, state, {
+          exportedAt: state.lastBackupAt,
+          gradedCheckpoints
+        });
+        const blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `oracle-1z0-171-lernstand-${state.lastBackupAt.slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+    }
+
+    const importStateBtn = document.getElementById("import-state-btn");
+    const importStateFile = document.getElementById("import-state-file");
+    if (importStateBtn && importStateFile) {
+      importStateBtn.addEventListener("click", () => importStateFile.click());
+      importStateFile.addEventListener("change", (ev) => {
+        const file = ev.target.files && ev.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const parsed = JSON.parse(String(reader.result || "{}"));
+            if (Array.isArray(parsed.completedLessons) || parsed.checkpoints) {
+              state = Object.assign(loadState(), parsed, { lastBackupAt: new Date().toISOString() });
+              saveState();
+              variantSelect.value = state.variant || "B";
+              renderVariantBanner();
+              renderPhases();
+              renderCheckpointsUI();
+              alert("Lernstand erfolgreich geladen!");
+            } else {
+              alert("Ungültige Backup-Datei (keine Lektions- oder Checkpoint-Daten gefunden).");
+            }
+          } catch (_) {
+            alert("Fehler beim Lesen der JSON-Datei.");
+          }
+          importStateFile.value = "";
+        };
+        reader.readAsText(file);
+      });
+    }
 
     renderVariantBanner();
     renderPhases();
@@ -717,6 +780,11 @@
   }
 
   function exportCheckpoints(format) {
+    if (format === "json") {
+      state.lastBackupAt = new Date().toISOString();
+      saveState();
+      renderVariantBanner();
+    }
     const payload = {
       exportedAt: new Date().toISOString(),
       completedLessonsCount: state.completedLessons.length,

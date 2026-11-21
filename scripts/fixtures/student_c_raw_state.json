@@ -1,0 +1,24 @@
+{
+  "completedLessons": [
+    "L001"
+  ],
+  "checkpoints": {
+    "CP-1": {
+      "submitted": true,
+      "answers": {
+        "CPQ-01": [
+          1
+        ],
+        "CPQ-02": [
+          2
+        ],
+        "CPQ-03": [
+          1
+        ],
+        "CPQ-04": [
+          0
+        ]
+      }
+    }
+  }
+}

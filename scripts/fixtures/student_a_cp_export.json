@@ -1,0 +1,73 @@
+{
+  "exportedAt": "2026-11-21T07:00:00Z",
+  "completedLessonsCount": 82,
+  "checkpoints": {
+    "CP-2": {
+      "score": {
+        "totalCorrect": 13,
+        "total": 22,
+        "pct": 59,
+        "domainScores": {
+          "1": {
+            "correct": 2,
+            "total": 2
+          },
+          "2": {
+            "correct": 2,
+            "total": 2
+          },
+          "3": {
+            "correct": 2,
+            "total": 2
+          },
+          "4": {
+            "correct": 2,
+            "total": 2
+          },
+          "5": {
+            "correct": 2,
+            "total": 2
+          },
+          "6": {
+            "correct": 0,
+            "total": 2
+          },
+          "7": {
+            "correct": 0,
+            "total": 2
+          },
+          "8": {
+            "correct": 0,
+            "total": 2
+          },
+          "9": {
+            "correct": 0,
+            "total": 2
+          },
+          "10": {
+            "correct": 0,
+            "total": 2
+          },
+          "11": {
+            "correct": 0,
+            "total": 2
+          }
+        }
+      },
+      "confidence": {
+        "1": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+        "10": 3,
+        "11": 3
+      },
+      "submittedAt": "2026-11-21T06:55:00Z"
+    }
+  }
+}
