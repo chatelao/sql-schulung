@@ -113,7 +113,7 @@
       <div class="section-head">
         <div>
           <h1 id="labs-heading">Interaktive SQL-Labs &amp; Visualisierer</h1>
-          <p class="lead">Visuelle Lernwerkzeuge für Einsteiger auf Basis des klassischen 14-Zeilen-Schemas <code>SCOTT/TIGER</code> und der Oracle-23ai-Syntaxregeln.</p>
+          <p class="lead">Visuelle Lernwerkzeuge für Einsteiger auf Basis des klassischen 14-Zeilen-Schemas <code>SCOTT/TIGER</code> und der Oracle-26ai/23ai-Syntaxregeln.</p>
         </div>
       </div>
 
@@ -122,7 +122,7 @@
         <button class="subtab-btn" data-lab="slicer" id="tab-lab-slicer">1-basierter SUBSTR / INSTR Slicer</button>
         <button class="subtab-btn" data-lab="sqlplus" id="tab-lab-sqlplus">SQL*Plus &amp; / &amp;&amp; Simulator</button>
         <button class="subtab-btn" data-lab="compiler" id="tab-lab-compiler">Human Compiler (Ohne IDE)</button>
-        <button class="subtab-btn" data-lab="freesql" id="tab-lab-freesql">Oracle FreeSQL (23ai) Launcher</button>
+        <button class="subtab-btn" data-lab="freesql" id="tab-lab-freesql">Oracle FreeSQL (26ai/23ai) Launcher</button>
       </div>
 
       <!-- Lab A: Join & Set Visualizer -->
@@ -146,7 +146,7 @@
         <div class="sql-preview-box">
           <pre><code id="join-sql-code"></code></pre>
           <div class="sql-preview-actions">
-            <button class="btn btn-sm btn-teal" id="join-run-freesql-btn" type="button">Query in Oracle 23ai FreeSQL ausführen &nearr;</button>
+            <button class="btn btn-sm btn-teal" id="join-run-freesql-btn" type="button">Query in Oracle 26ai / 23ai FreeSQL ausführen &nearr;</button>
             <button class="btn btn-sm" id="join-open-launcher-btn" type="button">Im FreeSQL Launcher bearbeiten</button>
           </div>
           <p id="join-explanation" class="callout callout-info"></p>
@@ -226,7 +226,7 @@
             <div id="sqlplus-defined-vars" class="defined-vars"></div>
           </div>
           <div class="sqlplus-terminal">
-            <div class="terminal-bar">SQL*Plus 23ai Transcript</div>
+            <div class="terminal-bar">SQL*Plus 26ai/23ai Transcript</div>
             <pre id="sqlplus-output"></pre>
           </div>
         </div>
@@ -256,10 +256,10 @@
         <div id="compiler-list" class="compiler-list"></div>
       </div>
 
-      <!-- Lab E: Oracle FreeSQL (23ai) Launcher -->
+      <!-- Lab E: Oracle FreeSQL (26ai/23ai) Launcher -->
       <div class="lab-pane" id="lab-freesql">
         <div class="callout callout-info">
-          <strong>Oracle FreeSQL (23ai) Launcher:</strong> Wähle ein beliebiges Phase Lab Pack (oder bearbeite dein eigenes SQL unten) und öffne es direkt vorausgefüllt in einer Oracle Database 23ai Browser-Sandbox (<code>freesql.com/embedded/</code>), bette das Live-Worksheet unten ein oder lade die <code>.sql</code>-Datei für <strong>My Content &rarr; Upload Script</strong> herunter.
+          <strong>Oracle FreeSQL (26ai/23ai) Launcher:</strong> Wähle ein beliebiges Phase Lab Pack (oder bearbeite dein eigenes SQL unten) und öffne es direkt vorausgefüllt in einer Oracle Database 26ai/23ai Browser-Sandbox (<code>freesql.com/embedded/</code>), bette das Live-Worksheet unten ein oder lade die <code>.sql</code>-Datei für <strong>My Content &rarr; Upload Script</strong> herunter.
         </div>
         <div class="freesql-toolbar">
           <div class="filter-group">
@@ -282,10 +282,10 @@
         </div>
         <div id="freesql-embed-container" class="freesql-embed-container" hidden>
           <div class="freesql-embed-bar">
-            <span>Eingebettete Oracle FreeSQL (23ai) Sandbox &middot; Falls der Login im Iframe blockiert wird, klicke oben auf <strong>In FreeSQL öffnen (Neuer Tab) &nearr;</strong>.</span>
+            <span>Eingebettete Oracle FreeSQL (26ai/23ai) Sandbox &middot; Falls der Login im Iframe blockiert wird, klicke oben auf <strong>In FreeSQL öffnen (Neuer Tab) &nearr;</strong>.</span>
             <button class="btn btn-sm" id="freesql-hide-embed-btn" type="button">Sandbox ausblenden</button>
           </div>
-          <iframe id="freesql-embed-frame" title="Oracle FreeSQL 23ai Live Sandbox" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe id="freesql-embed-frame" title="Oracle FreeSQL 26ai/23ai Live Sandbox" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </section>
@@ -336,7 +336,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <span>Oracle 1Z0-171 Zero-to-Certified Curriculum &middot; Read the Docs + GitHub Pages</span>
-      <span>Tipp: Teste deine Queries immer live in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> oder deiner lokalen Oracle 23ai Free PDB.</span>
+      <span>Tipp: Teste deine Queries immer live in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> oder deiner lokalen Oracle 26ai / 23ai Free PDB.</span>
     </div>
   </footer>
 

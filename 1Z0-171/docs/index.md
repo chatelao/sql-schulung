@@ -13,7 +13,7 @@ Willkommen zum offiziellen statischen Lehrbuch für das **200-Lektionen-Einsteig
 | Merkmal | Spezifikation |
 | :--- | :--- |
 | **Exam Code** | `1Z0-171` — Oracle AI Database SQL Associate |
-| **Target Database** | Oracle AI Database (23ai) |
+| **Target Database** | Oracle AI Database (26ai/23ai) |
 | **Fragen & Format** | 60 Multiple-Choice-Fragen (inkl. Multi-Select) |
 | **Dauer** | 120 Minuten |
 | **Passing Score** | **65 %** (39 richtige Antworten) |

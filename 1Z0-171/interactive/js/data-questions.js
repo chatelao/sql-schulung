@@ -344,7 +344,7 @@ window.FLASHCARDS_1Z0_171 = [
   { id: "FC47", domainId: 5, phaseId: 6, q: "In welchen Klauseln darf eine Subquery stehen?", a: "SELECT (Scalar), FROM (Inline View), WHERE, HAVING (und DML-WHERE/SET). Nicht in GROUP BY." },
   { id: "FC48", domainId: 6, phaseId: 6, q: "Was sind die 3 Regeln für SET Operators (UNION, INTERSECT, MINUS)?", a: "1) Gleiche Spaltenanzahl.\n2) Kompatible Datentyp-Gruppen.\n3) Spaltennamen vom 1. SELECT; ORDER BY nur ganz am Ende." },
   { id: "FC49", domainId: 6, phaseId: 6, q: "Welcher SET Operator entfernt KEINE Duplikate und sortiert die Ausgabe nicht?", a: "UNION ALL (schnellster SET Operator, da Sortierung/Deduplizierung entfällt)." },
-  { id: "FC50", domainId: 6, phaseId: 6, q: "Wie lautet in Oracle Database 23ai das ANSI-Synonym für MINUS?", a: "EXCEPT (gibt Zeilen der ersten Query zurück, die nicht in der zweiten Query vorkommen)." },
+  { id: "FC50", domainId: 6, phaseId: 6, q: "Wie lautet in Oracle Database 26ai/23ai das ANSI-Synonym für MINUS?", a: "EXCEPT (gibt Zeilen der ersten Query zurück, die nicht in der zweiten Query vorkommen)." },
   { id: "FC51", domainId: 6, phaseId: 6, q: "Wie ergänzt du eine fehlende Zahlenspalte im zweiten SELECT bei UNION ALL?", a: "Mit TO_NUMBER(NULL) (analog TO_CHAR(NULL) oder TO_DATE(NULL) für Text/Datum)." },
   { id: "FC52", domainId: 7, phaseId: 7, q: "Was unterscheidet bedingtes INSERT ALL von INSERT FIRST?", a: "INSERT ALL prüft jede WHEN-Klausel und kann eine Zeile in mehrere Tabellen schreiben.\nINSERT FIRST stoppt bei der ersten zutreffenden WHEN-Klausel." },
   { id: "FC53", domainId: 7, phaseId: 7, q: "Welche Zeilen kann eine DELETE WHERE-Klausel innerhalb eines MERGE Statements entfernen?", a: "Nur Zeilen, die von diesem MERGE Statement GEMATCHT und AKTUALISIERT wurden (ausgewertet anhand der neuen Werte nach dem Update)." },
@@ -504,7 +504,7 @@ window.MOCK_EXAM_QUESTIONS = [
     "Liefert stillschweigend 0 Zeilen"
   ], answer: [1], explanation: "Ein Single-Row Operator (=) mit einer Subquery, die 2 Zeilen liefert, löst ORA-01427 aus." },
   { id: "M36", domainId: 5, prompt: "Warum wird NOT EXISTS oft gegenüber NOT IN bevorzugt, um Parent-Zeilen ohne Child-Zeilen (z. B. DEPT 40) zu finden?", options: [
-    "NOT EXISTS ist die einzige in Oracle 23ai erlaubte Syntax",
+    "NOT EXISTS ist die einzige in Oracle 26ai/23ai erlaubte Syntax",
     "NOT EXISTS geht sicher mit NULL-Werten in der Subquery-Tabelle um, ohne 0 Zeilen zurückzugeben",
     "NOT IN funktioniert nicht mit Zahlen",
     "NOT EXISTS sortiert die Ausgabe automatisch"

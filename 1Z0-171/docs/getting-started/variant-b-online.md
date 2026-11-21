@@ -1,6 +1,6 @@
 # Variante B: Kostenlose Online-Cloud-Umgebung (Zero Installation)
 
-Nutze dieses Setup, wenn du keine lokalen Admin-Rechte hast, auf einem Chromebook oder gesperrten Laptop arbeitest oder innerhalb von 60 Sekunden ohne Software-Installation echtes Oracle-23ai-SQL schreiben möchtest.
+Nutze dieses Setup, wenn du keine lokalen Admin-Rechte hast, auf einem Chromebook oder gesperrten Laptop arbeitest oder innerhalb von 60 Sekunden ohne Software-Installation echtes Oracle-26ai/23ai-SQL schreiben möchtest.
 
 ---
 
@@ -8,7 +8,7 @@ Nutze dieses Setup, wenn du keine lokalen Admin-Rechte hast, auf einem Chromeboo
 
 - **URL**: [https://freesql.com/](https://freesql.com/) (auch erreichbar über [https://livesql.oracle.com/](https://livesql.oracle.com/))
 - **Kosten**: 100 % kostenlos, kein Zeitlimit, keine Kreditkarte erforderlich.
-- **Engine**: Läuft auf einer echten **Oracle Database 23ai**-Instanz.
+- **Engine**: Läuft auf einer echten **Oracle Database 26ai/23ai**-Instanz.
 
 ### Schritt-für-Schritt-Quickstart
 1. Öffne [freesql.com](https://freesql.com/) im Browser.
@@ -32,7 +32,7 @@ Nutze dieses Setup, wenn du keine lokalen Admin-Rechte hast, auf einem Chromeboo
 FreeSQL bietet jedem Lernenden genau ein persönliches Schema. Um **Two-Session Locking** (Phase 7) und **Multi-User `GRANT`/`REVOKE`-Kaskaden** (Phase 9) praktisch durchzuführen:
 
 - **URL**: [https://www.oracle.com/cloud/free/](https://www.oracle.com/cloud/free/)
-- **Was du bekommst**: 2 **Always Free Oracle Autonomous Databases (23ai)** ohne Ablaufdatum inklusive browserbasiertem **Database Actions (SQL Developer Web)**.
+- **Was du bekommst**: 2 **Always Free Oracle Autonomous Databases (26ai/23ai)** ohne Ablaufdatum inklusive browserbasiertem **Database Actions (SQL Developer Web)**.
 - **Einsatz im Kurs**: Lege in Database Actions zwei zusätzliche User (`APP_USER_B`, `APP_USER_C`) an und öffne zwei Browser-Tabs, um `WITH GRANT OPTION` vs. `WITH ADMIN OPTION` beim `REVOKE` live zu beobachten.
 
 ---
@@ -40,7 +40,7 @@ FreeSQL bietet jedem Lernenden genau ein persönliches Schema. Um **Two-Session 
 ## 3. Schneller teilbarer Scratchpad: db<>fiddle
 
 - **URL**: [https://dbfiddle.uk/?rdbms=oracle_23](https://dbfiddle.uk/?rdbms=oracle_23)
-- **Ideal für**: Fehlersuche ohne Login. Kleines `CREATE TABLE` + `SELECT` einfügen, auf Oracle 23ai ausführen und die URL mit Trainer oder Lerngruppe teilen.
+- **Ideal für**: Fehlersuche ohne Login. Kleines `CREATE TABLE` + `SELECT` einfügen, auf Oracle 26ai/23ai ausführen und die URL mit Trainer oder Lerngruppe teilen.
 
 ---
 

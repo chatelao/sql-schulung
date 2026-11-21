@@ -322,7 +322,7 @@
     if (state.variant === "A") {
       variantBanner.innerHTML = bkHint + `<strong>Variante A (In-House Oracle DB):</strong> Führe die <code>SCOTT/TIGER</code>- &amp; <code>HR</code>-Labs in VS Code / SQL Developer aus und teste <code>&amp;</code>/<code>&amp;&amp;</code> sowie Multi-User-DCL nativ in <code>sqlcl</code>/<code>sqlplus</code>.`;
     } else {
-      variantBanner.innerHTML = bkHint + `<strong>Variante B (Kostenlose Online-Cloud):</strong> Führe tägliche SQL-Queries in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> (23ai, mit vorgeladenem <code>SCOTT</code> &amp; <code>HR</code>) aus, nutze unseren Tab <strong>SQL*Plus Simulator</strong> für <code>&amp;</code>/<code>&amp;&amp;</code> und <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">OCI Always Free</a> für Multi-User-DCL.`;
+      variantBanner.innerHTML = bkHint + `<strong>Variante B (Kostenlose Online-Cloud):</strong> Führe tägliche SQL-Queries in <a href="https://freesql.com/" target="_blank" rel="noopener">Oracle FreeSQL</a> (26ai/23ai, mit vorgeladenem <code>SCOTT</code> &amp; <code>HR</code>) aus, nutze unseren Tab <strong>SQL*Plus Simulator</strong> für <code>&amp;</code>/<code>&amp;&amp;</code> und <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">OCI Always Free</a> für Multi-User-DCL.`;
     }
   }
 
@@ -1146,7 +1146,7 @@
         return replaced;
       });
       out.push("");
-      out.push("Ausgeführtes SQL an Oracle 23ai:");
+      out.push("Ausgeführtes SQL an Oracle 26ai/23ai:");
       out.push(newSqlLines.join("\n"));
     }
 
@@ -1225,7 +1225,7 @@
     });
   }
 
-  // Lab E: Oracle FreeSQL (23ai) Launcher
+  // Lab E: Oracle FreeSQL (26ai/23ai) Launcher
   let freeSqlActiveFilename = "phase-01-foundations.sql";
 
   function setFreeSqlStatus(msg) {
@@ -1290,7 +1290,7 @@
     });
 
     document.getElementById("freesql-open-tab-btn").addEventListener("click", () => {
-      setFreeSqlStatus("Öffne Oracle 23ai FreeSQL in einem neuen Tab...");
+      setFreeSqlStatus("Öffne Oracle 26ai / 23ai FreeSQL in einem neuen Tab...");
       openInFreeSqlTab(editor.value);
     });
 
@@ -1299,7 +1299,7 @@
       const url = await buildFreeSqlEmbedUrl(editor.value);
       embedFrame.src = url;
       embedContainer.hidden = false;
-      setFreeSqlStatus("Eingebettete Oracle 23ai FreeSQL-Sandbox unten geladen.");
+      setFreeSqlStatus("Eingebettete Oracle 26ai / 23ai FreeSQL-Sandbox unten geladen.");
     });
 
     document.getElementById("freesql-hide-embed-btn").addEventListener("click", () => {

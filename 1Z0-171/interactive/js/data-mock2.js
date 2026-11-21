@@ -7,7 +7,7 @@ window.MOCK_EXAM_2_QUESTIONS = [
   { id: "M203", domainId: 1, prompt: "Welche Aussage zu einem RDBMS-Tabellendesign trifft zu?", options: ["Die physische Speicherreihenfolge der Zeilen ist ohne ORDER BY garantiert", "Jede Zeile wird durch einen eindeutigen Primary Key identifiziert (keine Duplikate, kein NULL)", "Spaltennamen dürfen innerhalb derselben Tabelle doppelt vorkommen", "Ein Foreign Key darf niemals NULL sein"], answer: [1], explanation: "Ein Primary Key ist eindeutig und NOT NULL. Ein Foreign Key hingegen darf NULL sein (sofern nicht NOT NULL definiert), und Zeilenreihenfolge ist ohne ORDER BY nicht garantiert." },
 
   // Domain 2 (9 Fragen - 15%)
-  { id: "M204", domainId: 2, prompt: "Was liefert SELECT 'Oracle ' || NULL || '23ai' FROM dual; zurück?", options: ["NULL", "'Oracle 23ai'", "ORA-00932", "'Oracle NULL23ai'"], answer: [1], explanation: "Anders als Arithmetik (+) behandelt der Verkettungsoperator || einen NULL-Wert wie einen leeren String." },
+  { id: "M204", domainId: 2, prompt: "Was liefert SELECT 'Oracle ' || NULL || '26ai/23ai' FROM dual; zurück?", options: ["NULL", "'Oracle 26ai/23ai'", "ORA-00932", "'Oracle NULL26ai/23ai'"], answer: [1], explanation: "Anders als Arithmetik (+) behandelt der Verkettungsoperator || einen NULL-Wert wie einen leeren String." },
   { id: "M205", domainId: 2, prompt: "Welche Query liefert in SCOTT.EMP alle Mitarbeiter, die weder 'CLERK' noch 'SALESMAN' sind und mindestens 2500 verdienen?", options: [
     "SELECT ename FROM scott.emp WHERE job NOT IN ('CLERK', 'SALESMAN') AND sal >= 2500;",
     "SELECT ename FROM scott.emp WHERE job <> 'CLERK' OR job <> 'SALESMAN' AND sal >= 2500;",
@@ -98,12 +98,12 @@ window.MOCK_EXAM_2_QUESTIONS = [
   ], answer: [1], explanation: "FOR UPDATE setzt Row Locks; NOWAIT wartet nicht auf fremde Locks, sondern meldet sofort ORA-00054." },
 
   // Domain 8 (9 Fragen - 15%)
-  { id: "M243", domainId: 8, prompt: "Welche Aussage über Oracle 23ai BOOLEAN in CREATE TABLE ist wahr?", options: [
-    "BOOLEAN existiert in Oracle 23ai nur in PL/SQL, nicht als Tabellenspalte",
+  { id: "M243", domainId: 8, prompt: "Welche Aussage über Oracle 26ai/23ai BOOLEAN in CREATE TABLE ist wahr?", options: [
+    "BOOLEAN existiert in Oracle 26ai/23ai nur in PL/SQL, nicht als Tabellenspalte",
     "BOOLEAN kann direkt als Spaltentyp in CREATE TABLE verwendet werden (TRUE/FALSE/NULL)",
     "BOOLEAN speichert nur 'Y' oder 'N'",
     "BOOLEAN ist ein Alias für NUMBER(1)"
-  ], answer: [1], explanation: "Oracle Database 23ai unterstützt den nativen SQL-Datentyp BOOLEAN direkt in Tabellen und Abfragen." },
+  ], answer: [1], explanation: "Oracle Database 26ai/23ai unterstützt den nativen SQL-Datentyp BOOLEAN direkt in Tabellen und Abfragen." },
   { id: "M244", domainId: 8, prompt: "Welche Daten werden bei CREATE TABLE emp_empty AS SELECT * FROM scott.emp WHERE 1 = 0; erstellt?", options: [
     "Alle 14 Zeilen + alle Constraints",
     "Die Tabellenstruktur (Spaltennamen/Typen + explizite NOT NULLs) mit 0 Zeilen",

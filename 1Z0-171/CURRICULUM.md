@@ -57,18 +57,18 @@ Das Schulungs-Repository publiziert automatisch auf zwei ergänzende Plattformen
 
 | Dimension | Variante A: In-House Oracle Database | Variante B: Kostenlose Online-Umgebung |
 | :--- | :--- | :--- |
-| **Primäre Plattform** | On-Premises / Container **Oracle Database 23ai Free** (`container-registry.oracle.com/database/free:latest`) oder interne Corporate PDB | **Oracle FreeSQL** ([freesql.com](https://freesql.com/) / [livesql.oracle.com](https://livesql.oracle.com/)) + **OCI Always Free Autonomous Database (23ai)** |
+| **Primäre Plattform** | On-Premises / Container **Oracle AI Database 26ai / 23ai Free** (`container-registry.oracle.com/database/free:latest`) oder interne Corporate PDB | **Oracle FreeSQL** ([freesql.com](https://freesql.com/) / [livesql.oracle.com](https://livesql.oracle.com/)) + **OCI Always Free Autonomous Database (26ai/23ai)** |
 | **Client-Tooling** | VS Code (Oracle SQL Developer Extension), Oracle SQL Developer und `sqlplus` / `sqlcl` CLI | Browser Worksheet (FreeSQL / Database Actions Web) oder optional externe SQL*Net-Verbindung |
 | **Setup-Zeit** | 15–30 Minuten (Docker/Podman oder IT-bereitgestellte PDB) | 0 Minuten (FreeSQL läuft sofort im Browser; OCI Always Free dauert ca. 5 Minuten) |
-| **Sample Schemas** | Klassisches **`SCOTT/TIGER`** (`EMP`, `DEPT`, `SALGRADE`, `BONUS`) + offizielle `db-sample-schemas-23ai` (`HR`, `CO`, `SH`) | Vorinstallierte Read-Only-Schemas (`SCOTT`, `HR`, `SH`, `CO`) in FreeSQL + eigenes schreibbares Schema (mit `scott_tiger.sql` für DML/DDL-Labs) |
+| **Sample Schemas** | Klassisches **`SCOTT/TIGER`** (`EMP`, `DEPT`, `SALGRADE`, `BONUS`) + offizielle `db-sample-schemas-26ai/23ai` (`HR`, `CO`, `SH`) | Vorinstallierte Read-Only-Schemas (`SCOTT`, `HR`, `SH`, `CO`) in FreeSQL + eigenes schreibbares Schema (mit `scott_tiger.sql` für DML/DDL-Labs) |
 | **Abdeckung der 1Z0-171-Themen** | **100 %** (Multi-User DCL, `&`/`&&`, `DEFINE`/`VERIFY`, External Tables, Two-Session Locking) | **~90 % allein mit FreeSQL**; **100 %** in Kombination mit OCI Always Free + GitHub Pages `sqlplus`-Simulator |
 
 ### Variante A: In-House Oracle Database Setup
 1. **Database Engine**:
-   - **Schulungsserver**: Bereitstellung einer Pluggable Database (`PDB_TRAINING`) auf einem internen Oracle Database 23ai (oder 19c+) Server mit einem Schema pro Teilnehmendem (`STUDENT_01` .. `STUDENT_N`) plus Peer-Account (`STUDENT_01_PEER`) für `GRANT`/`REVOKE`-Übungen.
+   - **Schulungsserver**: Bereitstellung einer Pluggable Database (`PDB_TRAINING`) auf einem internen Oracle Database 26ai/23ai (oder 19c+) Server mit einem Schema pro Teilnehmendem (`STUDENT_01` .. `STUDENT_N`) plus Peer-Account (`STUDENT_01_PEER`) für `GRANT`/`REVOKE`-Übungen.
    - **Lokaler Container**:
      ```bash
-     docker run -d --name oracle23ai -p 1521:1521 -e ORACLE_PWD=Welcome123! \
+     docker run -d --name oracle26ai/23ai -p 1521:1521 -e ORACLE_PWD=Welcome123! \
        container-registry.oracle.com/database/free:latest
      ```
 2. **Client-Tools**:
@@ -81,12 +81,12 @@ Das Schulungs-Repository publiziert automatisch auf zwei ergänzende Plattformen
 ### Variante B: Kostenlose Online-Umgebung (Zero Installation)
 1. **Primäre Tages-Sandbox — Oracle FreeSQL (Live SQL v2)**:
    - **URL**: [https://freesql.com/](https://freesql.com/) (oder [https://livesql.oracle.com/](https://livesql.oracle.com/))
-   - Läuft auf **Oracle Database 23ai**, 100 % kostenlos im Browser, enthält vorinstallierte `SCOTT`-, `HR`-, `SH`- und `CO`-Schemas sowie ein persönliches schreibbares Schema und optionalen SQL*Net-Zugang.
-2. **Ergänzendes Cloud-Lab — OCI Always Free Autonomous Database (23ai)**:
+   - Läuft auf **Oracle Database 26ai/23ai**, 100 % kostenlos im Browser, enthält vorinstallierte `SCOTT`-, `HR`-, `SH`- und `CO`-Schemas sowie ein persönliches schreibbares Schema und optionalen SQL*Net-Zugang.
+2. **Ergänzendes Cloud-Lab — OCI Always Free Autonomous Database (26ai/23ai)**:
    - **URL**: [Oracle Cloud Free Tier](https://www.oracle.com/cloud/free/)
-   - Bietet 2 dauerhaft kostenlose Oracle 23ai Autonomous Databases mit **Database Actions (SQL Developer Web)** im Browser. Genutzt in Phase 7 & Phase 9 für Multi-Session Locking und Multi-User `GRANT`/`REVOKE`/`ROLE`.
+   - Bietet 2 dauerhaft kostenlose Oracle 26ai/23ai Autonomous Databases mit **Database Actions (SQL Developer Web)** im Browser. Genutzt in Phase 7 & Phase 9 für Multi-Session Locking und Multi-User `GRANT`/`REVOKE`/`ROLE`.
 3. **Schneller Scratchpad — db<>fiddle**:
-   - **URL**: [https://dbfiddle.uk/?rdbms=oracle_23](https://dbfiddle.uk/?rdbms=oracle_23) — Oracle-23ai-Scratchpad ohne Login für teilbare Debugging-Links.
+   - **URL**: [https://dbfiddle.uk/?rdbms=oracle_23](https://dbfiddle.uk/?rdbms=oracle_23) — Oracle-26ai/23ai-Scratchpad ohne Login für teilbare Debugging-Links.
 
 > [!IMPORTANT]
 > **Variante-B-Brücke über GitHub Pages**: Browser-Worksheets behandeln `sqlplus`-Substitution-Variables (`&`, `&&`, `DEFINE`, `VERIFY`) und `EXTERNAL TABLES` anders als die CLI. In Phase 2 und Phase 8 nutzen Variante-B-Lernende daher den interaktiven `sqlplus`-Simulator auf **GitHub Pages** sowie kommentierte Spool-Transkripte auf **Read the Docs**.
@@ -165,11 +165,11 @@ Damit der eigene Lernfortschritt für Einsteiger glasklar sichtbar wird, absolvi
   - `L003–L005`: **Vom Spreadsheet zur Relational Table** — Warum Excel an Grenzen stößt; Tables, Rows (Tupel), Columns (Attribute), Primary Keys und Foreign Keys anhand von `SCOTT.DEPT` (4 Rows) und `SCOTT.EMP` (14 Rows).
   - `L006–L008`: **ERDs lesen & SQL Statement Families** — Crow's-Foot-Notation (`1:1`, `1:M`, `M:N`), ERD-Entitäten auf `SELECT`-Klauseln abbilden, DML/DDL/DCL/TCL unterscheiden.
   - `L009–L012`: **Lab-Setup & erste Queries** —
-    - *Variante A*: Verbindung über VS Code / SQL Developer & `sqlcl` zu lokalem/In-House Oracle 23ai (`scott/tiger` und `HR`).
+    - *Variante A*: Verbindung über VS Code / SQL Developer & `sqlcl` zu lokalem/In-House Oracle 26ai/23ai (`scott/tiger` und `HR`).
     - *Variante B*: Kostenlosen Account auf [freesql.com](https://freesql.com/) anlegen, vorinstallierte `SCOTT`- und `HR`-Schemas erkunden.
     - `SELECT * FROM scott.dept;` und `DESCRIBE scott.emp;` ausführen, `ORA-`-Fehlermeldungen ruhig lesen lernen.
   - `L013–L016`: **Projections, Arithmetik & `NULL`-Grundlagen** — Gezielte Spaltenauswahl, Operator Precedence (`*`, `/`, `+`, `-`, Klammern) und warum `sal + comm` zu `NULL` wird, wenn `comm` leer ist.
-  - `L017–L020`: **Aliases, Concatenation, Literals, `DISTINCT` & `DUAL`** — `AS` vs. `"Double Quotes"` vs. `'Single Quotes'`, String Concatenation (`||`), Alternative Quote Operator (`q'[...]'`), `DISTINCT` über mehrere Spalten und `DUAL` (inkl. optionalem `FROM` in 23ai).
+  - `L017–L020`: **Aliases, Concatenation, Literals, `DISTINCT` & `DUAL`** — `AS` vs. `"Double Quotes"` vs. `'Single Quotes'`, String Concatenation (`||`), Alternative Quote Operator (`q'[...]'`), `DISTINCT` über mehrere Spalten und `DUAL` (inkl. optionalem `FROM` in 26ai/23ai).
 * **Publishing-Aufteilung**:
   - *Read the Docs*: Illustrierter „Spreadsheet-to-SQL“-Leitfaden, druckbare `SCOTT`- & `HR`-ERDs sowie Einsteiger-Hilfe zu `ORA-00904`/`ORA-00942`.
   - *GitHub Pages*: Interaktiver `CP-0`-Runner, Flashcards und direkter FreeSQL Launcher.
@@ -234,7 +234,7 @@ Damit der eigene Lernfortschritt für Einsteiger glasklar sichtbar wird, absolvi
   - `L103–L107`: **Single-Row Subqueries** — „Wer verdient mehr als JONES?“ (`SCOTT.EMP`), Subqueries in `WHERE`, `HAVING` und Scalar Subqueries in `SELECT`; Umgang mit `ORA-01427` und leeren Subqueries (`NULL`).
   - `L108–L112`: **Multi-Row Subqueries (`IN`, `ANY`, `ALL`) & die `NOT IN` + `NULL`-Falle** — Demonstration an `SCOTT.EMP.MGR`, warum `WHERE empno NOT IN (SELECT mgr FROM scott.emp)` **0 Rows** liefert (`KING` hat `MGR = NULL`), und Lösung mit `IS NOT NULL` oder `NOT EXISTS`.
   - `L113–L116`: **Inline Views, Multi-Column & Correlated Subqueries** — Subqueries im `FROM`, Pairwise vs. Non-Pairwise Multi-Column Comparisons, Correlated Subqueries und `EXISTS` / `NOT EXISTS`.
-  - `L117–L120`: **`SET` Operators** — `UNION`, `UNION ALL`, `INTERSECT`, `MINUS` (und 23ai `EXCEPT`), Regeln zu Spaltenanzahl & Datentypen, Dummy Columns (`TO_CHAR(NULL)`) und `ORDER BY` ausschließlich am Ende.
+  - `L117–L120`: **`SET` Operators** — `UNION`, `UNION ALL`, `INTERSECT`, `MINUS` (und 26ai/23ai `EXCEPT`), Regeln zu Spaltenanzahl & Datentypen, Dummy Columns (`TO_CHAR(NULL)`) und `ORDER BY` ausschließlich am Ende.
   - `L121–L122`: **Identical Checkpoint #3 (Assessment + Reflexion)** — Vergleich `CP-3` vs. `CP-0..2`; Ziel: erstmaliges Überschreiten der 65-%-Bestehensgrenze.
 
 ---
@@ -254,7 +254,7 @@ Damit der eigene Lernfortschritt für Einsteiger glasklar sichtbar wird, absolvi
 ### Phase 8: DDL, Constraints, Views, Sequences, Indexes & Synonyms (`L139`–`L162` | 24 Lektionen)
 * **Einsteiger-Ziel**: Saubere relationale Schemas von Grund auf entwerfen und jedes prüfungsrelevante Database Object verstehen.
 * **Lektionsaufbau**:
-  - `L139–L144`: **Data Types, `CREATE TABLE`, `CTAS` & `ALTER TABLE`** — Naming Rules, `VARCHAR2`, `CHAR`, `NUMBER(p,s)`, `DATE`, `CLOB`, `BLOB`, natives `BOOLEAN` (23ai); `CREATE TABLE ... AS SELECT` (kopiert nur explizites `NOT NULL`!); `ALTER TABLE` (`ADD`, `MODIFY`, `DROP COLUMN`, `SET UNUSED`, `DROP UNUSED COLUMNS`); `TRUNCATE TABLE` vs. `DELETE` vs. `DROP TABLE ... PURGE`.
+  - `L139–L144`: **Data Types, `CREATE TABLE`, `CTAS` & `ALTER TABLE`** — Naming Rules, `VARCHAR2`, `CHAR`, `NUMBER(p,s)`, `DATE`, `CLOB`, `BLOB`, natives `BOOLEAN` (26ai/23ai); `CREATE TABLE ... AS SELECT` (kopiert nur explizites `NOT NULL`!); `ALTER TABLE` (`ADD`, `MODIFY`, `DROP COLUMN`, `SET UNUSED`, `DROP UNUSED COLUMNS`); `TRUNCATE TABLE` vs. `DELETE` vs. `DROP TABLE ... PURGE`.
   - `L145–L150`: **Constraints im Detail** — Inline- vs. Out-of-Line-Syntax für `NOT NULL`, `UNIQUE` (erlaubt mehrere `NULL`s!), `PRIMARY KEY`, `FOREIGN KEY` (`ON DELETE CASCADE` vs. `ON DELETE SET NULL`) und `CHECK`; `ENABLE`/`DISABLE`, `DEFERRABLE` und `DROP TABLE ... CASCADE CONSTRAINTS`.
   - `L151–L153`: **Global Temporary Tables & External Tables** — `ON COMMIT DELETE ROWS` vs. `ON COMMIT PRESERVE ROWS`; Lesen externer Dateien über `ORGANIZATION EXTERNAL` (`ORACLE_LOADER`, `ORACLE_DATAPUMP` — live in Variante A, Syntax-Walkthrough + Drill in Variante B).
   - `L154–L157`: **Views** — `CREATE OR REPLACE [FORCE] VIEW`, Simple vs. Complex Views (wann DML erlaubt/blockiert ist), `WITH CHECK OPTION` und `WITH READ ONLY`.

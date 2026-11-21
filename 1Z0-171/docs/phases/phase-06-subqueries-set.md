@@ -247,8 +247,8 @@ WHERE ___ (SELECT 1 FROM scott.emp e WHERE e.deptno = d.deptno);
   ??? success "Musterlösung & Erklärung"
       `UNION` sortiert beide Ergebnismengen und entfernt Duplikate. `UNION ALL` hängt alles direkt aneinander, behält Duplikate und ist deutlich schneller.
 
-### `L118` — `INTERSECT` & `MINUS` (`EXCEPT` in 23ai)
-- **Lernziel**: Du bildest Schnittmengen (`INTERSECT`) und Differenzmengen (`MINUS` / 23ai `EXCEPT`). *(Bloom: Anwenden)*
+### `L118` — `INTERSECT` & `MINUS` (`EXCEPT` in 26ai/23ai)
+- **Lernziel**: Du bildest Schnittmengen (`INTERSECT`) und Differenzmengen (`MINUS` / 26ai/23ai `EXCEPT`). *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L118`](https://chatelao.github.io/sql-schulung/#curriculum/L118) · [SET Visualizer: MINUS ↗](https://chatelao.github.io/sql-schulung/#labs/joins/MINUS)
 - **Beispiel**:
   ```sql

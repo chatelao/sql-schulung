@@ -8,7 +8,7 @@ Dieses Modul baut direkt auf dem Grundlagen-Curriculum ([`1Z0-171`](../1Z0-171/R
 | :---: | :---: | :--- | :--- |
 | **1** | `A001`–`A010` | **Self-Joins, Hierarchien & Rekursion** | Multi-Level Self-Joins, `CONNECT BY PRIOR`, `START WITH`, `SYS_CONNECT_BY_PATH`, Rekursive `WITH`-Klauseln (CTE), `CYCLE` |
 | **2** | `A011`–`A020` | **Regular Expressions** | `REGEXP_LIKE`, `REGEXP_INSTR`, `REGEXP_SUBSTR`, `REGEXP_REPLACE`, `REGEXP_COUNT`, Capture Groups, POSIX/Perl-Klassen |
-| **3** | `A021`–`A032` | **JSON in Oracle SQL (23ai)** | Nativer `JSON`-Typ, Dot-Notation, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`, `JSON_TABLE`, `JSON_OBJECT`/`ARRAY`/`AGG`, `JSON_TRANSFORM`, Duality Views |
+| **3** | `A021`–`A032` | **JSON in Oracle SQL (26ai/23ai)** | Nativer `JSON`-Typ, Dot-Notation, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`, `JSON_TABLE`, `JSON_OBJECT`/`ARRAY`/`AGG`, `JSON_TRANSFORM`, Duality Views |
 | **4** | `A033`–`A042` | **XML in Oracle SQL** | `XMLType`, `XMLELEMENT`, `XMLATTRIBUTES`, `XMLFOREST`, `XMLAGG`, `XMLQUERY`, `XMLEXISTS`, `XMLTABLE`, `XMLCAST`, `XMLSERIALIZE` |
 | **5** | `A043`–`A052` | **Analytic / Window Functions & Pivoting** | `OVER (PARTITION BY ... ORDER BY ...)`, `ROWS`/`RANGE`, `ROW_NUMBER`/`RANK`/`DENSE_RANK`, `LAG`/`LEAD`, `LISTAGG`, `PIVOT`/`UNPIVOT` |
 | **6** | `A053`–`A060` | **Moderne Query-Patterns & Performance** | `ROLLUP`/`CUBE`/`GROUPING SETS`, `CROSS`/`OUTER APPLY`, `MATCH_RECOGNIZE`, `DBMS_XPLAN.DISPLAY`, Capstone-Analyse |
@@ -18,7 +18,7 @@ Dieses Modul baut direkt auf dem Grundlagen-Curriculum ([`1Z0-171`](../1Z0-171/R
 ## Voraussetzungen & Lab-Umgebung
 
 - **Voraussetzungen**: Sicherer Umgang mit `SELECT`, Joins, Subqueries, `GROUP BY` und Single-Row Functions (entspricht Phasen 1–6 des [`1Z0-171`-Curriculums](../1Z0-171/CURRICULUM.md)).
-- **Ziel-Datenbank**: Oracle Database 23ai Free (lokal per Container) oder **Oracle FreeSQL** (`freesql.com`).
+- **Ziel-Datenbank**: Oracle AI Database 26ai / 23ai Free (lokal per Container) oder **Oracle FreeSQL** (`freesql.com`).
 - **Übungsskript**: Das eigenständige Lab-Skript [advanced-queries-sandbox.sql](docs/labs/advanced-queries-sandbox.sql) erstellt alle benötigten Beispieltabellen (Organisationshierarchie, JSON-Bestellungen, XML-Produktkataloge, Log-Strings) ohne `&`-Prompts und funktioniert direkt in FreeSQL, `sqlcl` und SQL Developer.
 
 ---

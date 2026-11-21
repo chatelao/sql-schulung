@@ -67,13 +67,13 @@ SELECT ___(first_name, ___(' ', last_name)) AS full_name, LENGTH(last_name) FROM
 
 ## String Slicing & Searching (`L047`–`L050`)
 
-- **Selbstlern-Aufgabe:** Lückentext: Ersetze in `'ORACLE 23ai'` die Zeichenfolge `'23ai'` durch `'26ai'`:
+- **Selbstlern-Aufgabe:** Lückentext: Ersetze in `'ORACLE 26ai/23ai'` die Zeichenfolge `'26ai/23ai'` durch `'26ai'`:
 ```sql
-SELECT ___('ORACLE 23ai', '23ai', '26ai') FROM dual;
+SELECT ___('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
 ```
   ??? success "Musterlösung & Erklärung"
       ```sql
-      SELECT REPLACE('ORACLE 23ai', '23ai', '26ai') FROM dual;
+      SELECT REPLACE('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
       ```
       Ergebnis: `'ORACLE 26ai'`.
 

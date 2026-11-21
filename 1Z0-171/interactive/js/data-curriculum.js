@@ -176,7 +176,7 @@ window.CURRICULUM_PHASES = [
       { id: "L115", title: "Correlated Subqueries (Zeile-für-Zeile-Auswertung)", tag: "Lab", refLabel: "Using Subqueries", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Using-Subqueries.html" },
       { id: "L116", title: "EXISTS und NOT EXISTS (Null-sicherer Department-Check)", tag: "SCOTT/TIGER", refLabel: "EXISTS Condition", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/EXISTS-Condition.html" },
       { id: "L117", title: "SET Operators: UNION vs. UNION ALL", tag: "Join Visualizer", refLabel: "UNION ALL, INTERSECT, MINUS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/The-UNION-ALL-INTERSECT-MINUS-Operators.html", toolHash: "#labs/joins/UNION", toolLabel: "SET Visualizer" },
-      { id: "L118", title: "INTERSECT & MINUS (sowie 23ai EXCEPT)", tag: "HR Schema", refLabel: "UNION ALL, INTERSECT, MINUS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/The-UNION-ALL-INTERSECT-MINUS-Operators.html", toolHash: "#labs/joins/MINUS", toolLabel: "SET Visualizer" },
+      { id: "L118", title: "INTERSECT & MINUS (sowie 26ai/23ai EXCEPT)", tag: "HR Schema", refLabel: "UNION ALL, INTERSECT, MINUS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/The-UNION-ALL-INTERSECT-MINUS-Operators.html", toolHash: "#labs/joins/MINUS", toolLabel: "SET Visualizer" },
       { id: "L119", title: "Spaltenabgleich, Dummy Nulls & ORDER BY-Platzierung", tag: "Exam Trap", refLabel: "UNION ALL, INTERSECT, MINUS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/The-UNION-ALL-INTERSECT-MINUS-Operators.html" },
       { id: "L120", title: "Compound Query Lab (HR.EMPLOYEES + JOB_HISTORY)", tag: "Lab", refLabel: "UNION ALL, INTERSECT, MINUS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/The-UNION-ALL-INTERSECT-MINUS-Operators.html" },
       { id: "L121", title: "Identical Checkpoint #3 (Assessment)", tag: "Checkpoint CP-3", toolHash: "#checkpoints/CP-3", toolLabel: "CP-3 starten", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Joins.html" },
@@ -213,7 +213,7 @@ window.CURRICULUM_PHASES = [
     docsUrl: "https://sql-schulung.readthedocs.io/en/latest/phases/phase-08-ddl-objects/",
     examNote: "Domain 8 (15 %) + Domain 9 (5 %)",
     lessons: [
-      { id: "L139", title: "Object Naming Rules & Oracle Data Types (inkl. 23ai BOOLEAN)", tag: "Konzept", refLabel: "Data Types", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Data-Types.html" },
+      { id: "L139", title: "Object Naming Rules & Oracle Data Types (inkl. 26ai/23ai BOOLEAN)", tag: "Konzept", refLabel: "Data Types", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Data-Types.html" },
       { id: "L140", title: "CREATE TABLE & Column DEFAULT Values", tag: "Lab", refLabel: "CREATE TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CREATE-TABLE.html" },
       { id: "L141", title: "CREATE TABLE ... AS SELECT (CTAS) Constraint-Falle", tag: "Exam Trap", refLabel: "CREATE TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CREATE-TABLE.html" },
       { id: "L142", title: "ALTER TABLE: ADD, MODIFY, DROP & RENAME Columns", tag: "Lab", refLabel: "ALTER TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ALTER-TABLE.html" },
@@ -348,7 +348,7 @@ window.ADVANCED_PHASES = [
       { id: "A028", title: "JSON aus relationalen Tabellen erzeugen (`JSON_OBJECT`, `JSON_ARRAY`)", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
       { id: "A029", title: "JSON-Aggregation (`JSON_OBJECTAGG`, `JSON_ARRAYAGG`)", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
       { id: "A030", title: "JSON gezielt ändern: `JSON_TRANSFORM` & `JSON_MERGEPATCH`", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
-      { id: "A031", title: "JSON Search Indexes & 23ai JSON Relational Duality Views", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
+      { id: "A031", title: "JSON Search Indexes & 26ai/23ai JSON Relational Duality Views", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
       { id: "A032", title: "Modul-3-Lab: E-Commerce-Order-Pipeline", tag: "Advanced", refLabel: "JSON_TABLE", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html" },
     ]
   },

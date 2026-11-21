@@ -125,7 +125,7 @@ SELECT ___, ___ FROM scott.___;
 ## Lab Setup & erste Queries (`L009`–`L012`)
 
 ### `L009` — Mit der Lab-Umgebung verbinden
-- **Lernziel**: Du verbindest dich erfolgreich mit deiner Oracle-23ai-Umgebung und führst das Phase-1-Lab-Skript aus. *(Bloom: Anwenden)*
+- **Lernziel**: Du verbindest dich erfolgreich mit deiner Oracle-26ai/23ai-Umgebung und führst das Phase-1-Lab-Skript aus. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L009`](https://chatelao.github.io/sql-schulung/#curriculum/L009) · [Phase 1 in FreeSQL öffnen ↗](https://chatelao.github.io/sql-schulung/#labs/freesql/phase-1)
 - **Schritte**:
   - **Variante A**: Verbinde VS Code / SQL Developer oder `sqlcl` mit `FREEPDB1` / `PDB_TRAINING` (siehe [Variante A Setup](../getting-started/variant-a-inhouse.md)).
@@ -305,7 +305,7 @@ SELECT ___ deptno, job FROM scott.emp ORDER BY deptno, job;
   ```sql
   SELECT 24 * 60 AS mins_per_day, SYSDATE FROM dual;
   ```
-  *(23ai-Hinweis)*: Oracle 23ai erlaubt auch `SELECT 24 * 60;`, für `1Z0-171` bleibt `FROM dual` der Prüfungsstandard.
+  *(26ai/23ai-Hinweis)*: Oracle 26ai/23ai erlaubt auch `SELECT 24 * 60;`, für `1Z0-171` bleibt `FROM dual` der Prüfungsstandard.
 - **Phase-1-Abschlussaufgabe**: Schreibe eine Query auf `SCOTT.EMP`, die für alle 14 Mitarbeiter den Satz `SMITH (CLERK) earns 800 per month` in einer Spalte `"Employee Summary"` ausgibt.
   ??? success "Musterlösung & Erklärung"
       ```sql

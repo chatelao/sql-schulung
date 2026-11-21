@@ -40,7 +40,7 @@ FROM adv_orders_json o,
 ## 2. JSON aus relationalen Tabellen erzeugen & ändern (`A028`–`A031`)
 - **`JSON_OBJECT` / `JSON_ARRAY` / `JSON_ARRAYAGG`**: Erzeugen strukturierte JSON-Payloads direkt aus `SCOTT.EMP` und `SCOTT.DEPT`.
 - **`JSON_TRANSFORM`**: Deklarative Teil-Updates (`SET`, `INSERT`, `REMOVE`, `APPEND`) ohne das gesamte Dokument neu zu schreiben.
-- **23ai JSON Relational Duality Views**: Verbinden relationale Normalisierung mit direktem Dokumenten-Zugriff (REST/Mongo-kompatibel).
+- **26ai/23ai JSON Relational Duality Views**: Verbinden relationale Normalisierung mit direktem Dokumenten-Zugriff (REST/Mongo-kompatibel).
 
 ---
 
@@ -118,8 +118,8 @@ flowchart TD
   ??? success "Musterlösung & Erklärung"
       CREATE SEARCH INDEX ... FOR JSON beschleunigt flexible JSON_EXISTS-Filter.
 
-### `A031` — JSON Search Indexes & 23ai JSON Relational Duality Views
-- **Lernziel:** Überblick über `CREATE SEARCH INDEX ... FOR JSON` sowie das 23ai-Konzept von JSON Relational Duality Views *(Bloom: Verstehen)*
+### `A031` — JSON Search Indexes & 26ai/23ai JSON Relational Duality Views
+- **Lernziel:** Überblick über `CREATE SEARCH INDEX ... FOR JSON` sowie das 26ai/23ai-Konzept von JSON Relational Duality Views *(Bloom: Verstehen)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Wann nutzt man eine JSON Relational Duality View (23ai/26ai)?`
   ??? success "Musterlösung & Erklärung"
       Wenn Anwendungen ein JSON-Dokument lesen/schreiben, die Daten aber normalisiert in relationalen Tabellen liegen sollen.

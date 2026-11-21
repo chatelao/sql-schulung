@@ -10,7 +10,7 @@ Lege dir für das Selbststudium drei Browser-Tabs (oder Fenster) nebeneinander b
 
 1. **Tab 1 — Lehrbuch (Read the Docs)**: Hier liest du das Konzept, schaust dir das ausgearbeitete Beispiel mit erwarteter Ausgabe an und löst die Mikro-Aufgaben (Lösungen bleiben zunächst zugeklappt).
 2. **Tab 2 — [Interactive Studio (GitHub Pages)](https://chatelao.github.io/sql-schulung/)**: Hier hakst du abgeschlossene Lektionen (`L001`–`L200`) ab, machst die 5-Minuten-Warm-up-Flashcards, übst mit Visualizern/Simulator und absolvierst die 6 Checkpoints (`CP-0` bis `CP-5`) sowie die beiden Mock Exams.
-3. **Tab 3 — Deine Oracle-Datenbank**: Entweder **Oracle FreeSQL** (`freesql.com`, Variante B) im Browser oder **VS Code / `sqlcl`** gegen deine lokale Oracle 23ai Free Datenbank (Variante A).
+3. **Tab 3 — Deine Oracle-Datenbank**: Entweder **Oracle FreeSQL** (`freesql.com`, Variante B) im Browser oder **VS Code / `sqlcl`** gegen deine lokale Oracle 26ai / 23ai Free Datenbank (Variante A).
 
 ---
 
@@ -61,3 +61,13 @@ Beantworte drei kurze Fragen:
 
 > **Meilenstein-Checkliste für unterwegs**:
 > `L001–L002` (**CP-0** Baseline) → `L041–L042` (**CP-1**, Ziel 30–40 %) → `L081–L082` (**CP-2**, Ziel 50–60 %) → `L121–L122` (**CP-3**, Ziel ≥ 65 %) → `L161–L162` (**CP-4**, Ziel 75–85 %) → `L179–L198` (6 Clinics + 2 Mock Exams ≥ 75 %) → `L199–L200` (**CP-5**, Ziel ≥ 85 %).
+
+---
+
+## Austausch & Peer-Review (Community of Inquiry)
+
+Auch im reinen Selbststudium musst du nicht allein lernen:
+
+1. **GitHub Discussions & Fragen:** Nutze [GitHub Discussions im Repository](https://github.com/chatelao/sql-schulung/discussions), um Fragen zu einzelnen Lektionen (`L001–L200`, `A001–A060`) oder `ORA-`-Fehlermeldungen zu stellen.
+2. **Peer-Review für Checkpoint Part B:** Teile deine 3 SQL-Lösungen aus Part B nach einem Checkpoint mit einer Lernpartnerin / einem Lernpartner (oder in Discussions) und bewertet eure Queries gegenseitig anhand der [4-Kriterien-Rubrik (0–8 Punkte)](../checkpoints/benchmark-guide.md#bewertungsrubrik-fur-offene-sql-aufgaben-part-b-max-8-punkte-je-task).
+3. **Versions-Hinweis (`26ai` / `23ai Free`):** Alle Erklärungen und Handbuch-Links verweisen auf die aktuelle **Oracle AI Database 26ai** Referenz und sind zu 100 % kompatibel mit **Oracle Database 23ai Free** (Docker) und **Oracle FreeSQL**.

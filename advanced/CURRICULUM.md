@@ -79,7 +79,7 @@ Oracle Database (insbesondere 21c/23ai) bietet erstklassige native JSON-Unterst�
 | `A028` | **JSON aus relationalen Tabellen erzeugen (`JSON_OBJECT`, `JSON_ARRAY`)** | Aufbau strukturierter JSON-Dokumente aus `SCOTT`/`HR`, `ABSENT ON NULL` vs. `NULL ON NULL` |
 | `A029` | **JSON-Aggregation (`JSON_OBJECTAGG`, `JSON_ARRAYAGG`)** | Gruppierte JSON-Arrays und Key-Value-Objekte (`ORDER BY` innerhalb von `JSON_ARRAYAGG`, `RETURNING CLOB`/`JSON`) |
 | `A030` | **JSON gezielt ändern: `JSON_TRANSFORM` & `JSON_MERGEPATCH`** | Deklarative Updates auf JSON-Feldern (`SET`, `INSERT`, `REMOVE`, `APPEND`, `RENAME`) in `UPDATE`- und `SELECT`-Statements |
-| `A031` | **JSON Search Indexes & 23ai JSON Relational Duality Views** | Überblick über `CREATE SEARCH INDEX ... FOR JSON` sowie das 23ai-Konzept von JSON Relational Duality Views |
+| `A031` | **JSON Search Indexes & 26ai/23ai JSON Relational Duality Views** | Überblick über `CREATE SEARCH INDEX ... FOR JSON` sowie das 26ai/23ai-Konzept von JSON Relational Duality Views |
 | `A032` | **Modul-3-Lab: E-Commerce-Order-Pipeline** | Relationale `HR`/`SCOTT`-Daten als JSON-API-Payload exportieren, verschachtelte Bestell-JSONs mit `JSON_TABLE` auswerten und aggregieren |
 
 ---

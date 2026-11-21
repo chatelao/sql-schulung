@@ -11,7 +11,7 @@ Die Zertifizierung **Oracle AI Database SQL Associate (1Z0-171)** (auch bekannt 
 | :--- | :--- |
 | **Exam Code** | 1Z0-171 |
 | **Exam Title** | Oracle AI Database SQL Associate |
-| **Target Version** | Oracle AI Database (23ai) |
+| **Target Version** | Oracle AI Database (26ai/23ai) |
 | **Format** | Multiple Choice (inkl. Multi-Select) |
 | **Anzahl Fragen** | 60 |
 | **Dauer** | 120 Minuten |
@@ -102,7 +102,7 @@ Die Prüfung umfasst 11 Domains, die sowohl theoretische Relational-Database-Kon
 - Transaction Control: `COMMIT`, `ROLLBACK`, `SAVEPOINT`, Implicit Commits sowie Grundlagen zu Read Consistency und Locking
 
 ### 8. DDL for Tables and Relationships (15 %)
-- Naming Rules, Tabellenstrukturen und zentrale Oracle Data Types (`VARCHAR2`, `CHAR`, `NUMBER`, `DATE`, `CLOB`, `BLOB`, `BOOLEAN` in 23ai)
+- Naming Rules, Tabellenstrukturen und zentrale Oracle Data Types (`VARCHAR2`, `CHAR`, `NUMBER`, `DATE`, `CLOB`, `BLOB`, `BOOLEAN` in 26ai/23ai)
 - Erstellen von Tabellen (`CREATE TABLE`, `CREATE TABLE AS SELECT`)
 - Anpassen von Tabellendefinitionen (`ALTER TABLE` zum Hinzufügen, Ändern, Löschen von Columns oder `SET UNUSED`)
 - Definieren und Verwalten von Constraints (`PRIMARY KEY`, `FOREIGN KEY` mit `ON DELETE CASCADE` / `ON DELETE SET NULL`, `UNIQUE`, `NOT NULL`, `CHECK`)
