@@ -10,7 +10,7 @@
 
 ### `L043` — Case Manipulation (`LOWER`, `UPPER`, `INITCAP`)
 - **Lernziel**: Du wandelst Groß-/Kleinschreibung in der Ausgabe um und suchst case-insensitiv.
-- **Studio-Link**: [Tracker `L043`](https://chatelao.github.io/sql-schulung/#curriculum/L043) · [SQL Ref: LOWER](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/LOWER.html)
+- **Studio-Link**: [Tracker `L043`](https://chatelao.github.io/sql-schulung/#curriculum/L043) · [SQL Ref: LOWER](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/LOWER.html)
 - **Beispiel**:
   ```sql
   SELECT ename, INITCAP(ename) AS proper, LOWER(job) AS job_low FROM scott.emp;
@@ -25,13 +25,13 @@
 
 ### `L044` — `CONCAT` vs. `||` und `LENGTH`
 - **Lernziel**: Du kennst die strikte 2-Argument-Grenze von `CONCAT` und misst Stringlängen mit `LENGTH`.
-- **Studio-Link**: [Tracker `L044`](https://chatelao.github.io/sql-schulung/#curriculum/L044) · [SQL Ref: CONCAT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CONCAT.html)
+- **Studio-Link**: [Tracker `L044`](https://chatelao.github.io/sql-schulung/#curriculum/L044) · [SQL Ref: CONCAT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CONCAT.html)
 - !!! warning "1Z0-171 Exam Trap"
     `CONCAT('A', 'B', 'C')` wirft **`ORA-00909: invalid number of arguments`**, weil `CONCAT` **strikt 2 Argumente** akzeptiert! Für 3+ Teile musst du `CONCAT` verschachteln (`CONCAT(CONCAT('A','B'),'C')`) oder besser `||` verwenden.
 
 ### `L045` — `TRIM`, `LTRIM`, `RTRIM`
 - **Lernziel**: Du entfernst führende/nachfolgende Zeichen gezielt und kennst die `ORA-30001`-Regel.
-- **Studio-Link**: [Tracker `L045`](https://chatelao.github.io/sql-schulung/#curriculum/L045) · [SQL Ref: TRIM](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TRIM.html)
+- **Studio-Link**: [Tracker `L045`](https://chatelao.github.io/sql-schulung/#curriculum/L045) · [SQL Ref: TRIM](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TRIM.html)
 - **Beispiel**:
   ```sql
   SELECT TRIM('S' FROM 'SMITHS') FROM dual;         -- 'MITH'
@@ -42,7 +42,7 @@
 
 ### `L046` — `REPLACE`
 - **Lernziel**: Du ersetzt oder löschst Teilstrings innerhalb eines Textes.
-- **Studio-Link**: [Tracker `L046`](https://chatelao.github.io/sql-schulung/#curriculum/L046) · [SQL Ref: REPLACE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/REPLACE.html)
+- **Studio-Link**: [Tracker `L046`](https://chatelao.github.io/sql-schulung/#curriculum/L046) · [SQL Ref: REPLACE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REPLACE.html)
 - **Beispiel**:
   ```sql
   SELECT REPLACE('JACK AND JUE', 'J', 'BL') FROM dual; -- 'BLACK AND BLUE'
@@ -75,7 +75,7 @@
 
 ### `L049` — `INSTR` (Suchen & n-tes Vorkommen)
 - **Lernziel**: Du bestimmst die exakte Position des 1., 2. oder n-ten Vorkommens eines Substrings.
-- **Studio-Link**: [Tracker `L049`](https://chatelao.github.io/sql-schulung/#curriculum/L049) · [SQL Ref: INSTR](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/INSTR.html)
+- **Studio-Link**: [Tracker `L049`](https://chatelao.github.io/sql-schulung/#curriculum/L049) · [SQL Ref: INSTR](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/INSTR.html)
 - **Beispiel**: `SELECT INSTR('CORPORATE FLOOR', 'OR', 3, 2) FROM dual;` → **`14`** (ab Pos. 3 ist das 1. `'OR'` an Pos. 5, das 2. `'OR'` an Pos. 14; nicht gefunden liefert `0`).
 
 ### `L050` — `LPAD`, `RPAD` & Verschachtelung von `SUBSTR` + `INSTR`
@@ -93,17 +93,17 @@
 
 ### `L051` — `ROUND(number, decimals)`
 - **Lernziel**: Du rundest Zahlen kaufmännisch auf Nachkomma- und Zehner-/Hunderterstellen.
-- **Studio-Link**: [Tracker `L051`](https://chatelao.github.io/sql-schulung/#curriculum/L051) · [SQL Ref: ROUND (number)](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/ROUND-number.html)
+- **Studio-Link**: [Tracker `L051`](https://chatelao.github.io/sql-schulung/#curriculum/L051) · [SQL Ref: ROUND (number)](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ROUND-number.html)
 - **Beispiel**: `ROUND(45.926, 2)` → `45.93` | `ROUND(45.926, 0)` → `46` | `ROUND(45.926, -1)` → `50`.
 
 ### `L052` — `TRUNC(number, decimals)`
 - **Lernziel**: Du schneidest Ziffern ohne Rundung Richtung Null ab.
-- **Studio-Link**: [Tracker `L052`](https://chatelao.github.io/sql-schulung/#curriculum/L052) · [SQL Ref: TRUNC (number)](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TRUNC-number.html)
+- **Studio-Link**: [Tracker `L052`](https://chatelao.github.io/sql-schulung/#curriculum/L052) · [SQL Ref: TRUNC (number)](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TRUNC-number.html)
 - **Beispiel**: `TRUNC(45.926, 2)` → `45.92` | `TRUNC(45.926, 0)` → `45` | `TRUNC(45.926, -1)` → `40`.
 
 ### `L053` — `MOD`, `CEIL` & `FLOOR`
 - **Lernziel**: Du berechnest Divisionsreste und rundest strikt auf (`CEIL`) oder ab (`FLOOR`) — auch bei negativen Zahlen.
-- **Studio-Link**: [Tracker `L053`](https://chatelao.github.io/sql-schulung/#curriculum/L053) · [SQL Ref: MOD](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/MOD.html)
+- **Studio-Link**: [Tracker `L053`](https://chatelao.github.io/sql-schulung/#curriculum/L053) · [SQL Ref: MOD](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/MOD.html)
 - **Beispiel**: `MOD(17, 5)` → `2` | `CEIL(-4.2)` → **`-4`** (`-4 >= -4.2`) | `FLOOR(-4.2)` → **`-5`**.
 
 ### `L054` — Numeric Practice Clinic auf `SCOTT.EMP`
@@ -125,7 +125,7 @@
 
 ### `L055` — Wie Oracle `DATE` & `SYSDATE` speichert
 - **Lernziel**: Du weißt, dass `DATE` in Oracle immer auch Uhrzeit (Stunde, Minute, Sekunde) enthält.
-- **Studio-Link**: [Tracker `L055`](https://chatelao.github.io/sql-schulung/#curriculum/L055) · [SQL Ref: SYSDATE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SYSDATE.html)
+- **Studio-Link**: [Tracker `L055`](https://chatelao.github.io/sql-schulung/#curriculum/L055) · [SQL Ref: SYSDATE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SYSDATE.html)
 
 ### `L056` — Date Arithmetic (`+` / `-` Tage)
 - **Lernziel**: Du addierst Tage zu einem Datum und berechnest Tagesdifferenzen.
@@ -134,7 +134,7 @@
 
 ### `L057` — `MONTHS_BETWEEN` & `ADD_MONTHS`
 - **Lernziel**: Du berechnest exakte Monatsabstände und addierst Kalendermonate inkl. Monatsende-Logik.
-- **Studio-Link**: [Tracker `L057`](https://chatelao.github.io/sql-schulung/#curriculum/L057) · [SQL Ref: MONTHS_BETWEEN](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/MONTHS_BETWEEN.html)
+- **Studio-Link**: [Tracker `L057`](https://chatelao.github.io/sql-schulung/#curriculum/L057) · [SQL Ref: MONTHS_BETWEEN](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/MONTHS_BETWEEN.html)
 - **Beispiel**:
   ```sql
   SELECT MONTHS_BETWEEN(DATE '1981-11-17', DATE '1980-12-17') FROM dual; -- 11
@@ -143,7 +143,7 @@
 
 ### `L058` — `NEXT_DAY` & `LAST_DAY`
 - **Lernziel**: Du ermittelst den nächsten Wochentag und das Monatsende eines Datums.
-- **Studio-Link**: [Tracker `L058`](https://chatelao.github.io/sql-schulung/#curriculum/L058) · [SQL Ref: LAST_DAY](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/LAST_DAY.html)
+- **Studio-Link**: [Tracker `L058`](https://chatelao.github.io/sql-schulung/#curriculum/L058) · [SQL Ref: LAST_DAY](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/LAST_DAY.html)
 - **Beispiel**: `NEXT_DAY(DATE '2026-11-19', 'FRIDAY')` → `2026-11-20`; `LAST_DAY(DATE '2026-02-10')` → `2026-02-28`.
 
 ### `L059` — `ROUND(date, fmt)` & `TRUNC(date, fmt)`
@@ -187,7 +187,7 @@
 
 ### `L064` — `TO_DATE`, `RR` vs. `YY` & `fx` Exact Match
 - **Lernziel**: Du wendest die `RR`-Jahrhundertregel und den `fx`-Modifier fehlerfrei an.
-- **Studio-Link**: [Tracker `L064`](https://chatelao.github.io/sql-schulung/#curriculum/L064) · [SQL Ref: TO_DATE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TO_DATE.html)
+- **Studio-Link**: [Tracker `L064`](https://chatelao.github.io/sql-schulung/#curriculum/L064) · [SQL Ref: TO_DATE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TO_DATE.html)
 
 | Aktuelles Jahr | Angegebenes 2-stelliges Jahr | `YY` Ergebnis | `RR` Ergebnis |
 | :---: | :---: | :---: | :---: |

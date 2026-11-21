@@ -10,7 +10,7 @@
 
 ### `L069` — `SUM`, `AVG`, `MIN`, `MAX`
 - **Lernziel**: Du fasst viele Zeilen zu Kennzahlen zusammen und kennst die zulässigen Datentypen je Funktion.
-- **Studio-Link**: [Tracker `L069`](https://chatelao.github.io/sql-schulung/#curriculum/L069) · [SQL Ref: Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Aggregate-Functions.html)
+- **Studio-Link**: [Tracker `L069`](https://chatelao.github.io/sql-schulung/#curriculum/L069) · [SQL Ref: Aggregate Functions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Aggregate-Functions.html)
 - **Beispiel**:
   ```sql
   SELECT MIN(sal), MAX(sal), ROUND(AVG(sal), 2), SUM(sal) FROM scott.emp;
@@ -20,7 +20,7 @@
 
 ### `L070` — `COUNT(*)`, `COUNT(col)` & `COUNT(DISTINCT col)`
 - **Lernziel**: Du unterscheidest das Zählen aller Zeilen (`COUNT(*)`) vom Zählen gefüllter (`COUNT(col)`) und eindeutiger Werte (`COUNT(DISTINCT col)`).
-- **Studio-Link**: [Tracker `L070`](https://chatelao.github.io/sql-schulung/#curriculum/L070) · [SQL Ref: COUNT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/COUNT.html)
+- **Studio-Link**: [Tracker `L070`](https://chatelao.github.io/sql-schulung/#curriculum/L070) · [SQL Ref: COUNT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html)
 - **Beispiel**:
   ```sql
   SELECT COUNT(*) AS total_rows,

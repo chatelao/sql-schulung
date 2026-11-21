@@ -58,3 +58,8 @@ FROM adv_catalog_xml c,
     LEFT JOIN scott.emp e ON d.deptno = e.deptno
     GROUP BY d.deptno, d.dname;
     ```
+
+## Oracle-Referenz (26ai)
+
+- [XMLTABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/XMLTABLE.html)
+- [XML DB Developer's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/adxdb/index.html)

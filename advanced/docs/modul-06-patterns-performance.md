@@ -75,3 +75,8 @@ Achte besonders auf: **Operation** (`TABLE ACCESS FULL` vs. `INDEX RANGE SCAN`),
       DEFINE consec AS n = PREV(n) + 1
     );
     ```
+
+## Oracle-Referenz (26ai)
+
+- [SELECT (MATCH_RECOGNIZE)](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
+- [SQL Tuning Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/tgsql/index.html)

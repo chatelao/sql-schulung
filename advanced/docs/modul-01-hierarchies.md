@@ -87,3 +87,8 @@ ORDER BY part_name;
     )
     SELECT lvl, emp_name, org_path FROM org_cte;
     ```
+
+## Oracle-Referenz (26ai)
+
+- [Hierarchical Queries](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Hierarchical-Queries.html)
+- [SELECT (inkl. Subquery Factoring / rekursive WITH)](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)

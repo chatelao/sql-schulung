@@ -9,7 +9,7 @@
 
 ### `L139` — Object Naming Rules & zentrale Oracle Data Types
 - **Lernziel**: Du wählst passende Datentypen (`VARCHAR2`, `CHAR`, `NUMBER(p,s)`, `DATE`, `CLOB`, `BLOB`, 23ai `BOOLEAN`) und kennst Namensregeln.
-- **Studio-Link**: [Tracker `L139`](https://chatelao.github.io/sql-schulung/#curriculum/L139) · [SQL Ref: Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html)
+- **Studio-Link**: [Tracker `L139`](https://chatelao.github.io/sql-schulung/#curriculum/L139) · [SQL Ref: Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Data-Types.html)
 - **Exam Trap**: Bei `NUMBER(5, -2)` rundet eine negative Scale `-2` auf den nächsten **Hunderter**: `1256` wird als **`1300`** gespeichert!
 
 ### `L140` — `CREATE TABLE` & `DEFAULT` Values
@@ -33,7 +33,7 @@
 
 ### `L142` — `ALTER TABLE` (`ADD`, `MODIFY`, `DROP`, `RENAME`)
 - **Lernziel**: Du passt bestehende Tabellenstrukturen nachträglich an.
-- **Studio-Link**: [Tracker `L142`](https://chatelao.github.io/sql-schulung/#curriculum/L142) · [SQL Ref: ALTER TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/ALTER-TABLE.html)
+- **Studio-Link**: [Tracker `L142`](https://chatelao.github.io/sql-schulung/#curriculum/L142) · [SQL Ref: ALTER TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ALTER-TABLE.html)
 - **Regel**: Die Länge einer `VARCHAR2`-Spalte lässt sich nur verkleinern, wenn die Tabelle leer ist oder alle vorhandenen Werte in die neue Größe passen.
 
 ### `L143` — `SET UNUSED` & `DROP UNUSED COLUMNS`

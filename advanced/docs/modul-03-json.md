@@ -76,3 +76,8 @@ FROM adv_orders_json o,
     LEFT JOIN scott.emp e ON d.deptno = e.deptno
     GROUP BY d.dname;
     ```
+
+## Oracle-Referenz (26ai)
+
+- [JSON_TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/JSON_TABLE.html)
+- [JSON Developer's Guide](https://docs.oracle.com/en/database/oracle/oracle-database/26/adjsn/index.html)

@@ -50,3 +50,8 @@
     )
     ORDER BY job;
     ```
+
+## Oracle-Referenz (26ai)
+
+- [Analytic Functions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Analytic-Functions.html)
+- [SELECT (PIVOT / UNPIVOT)](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)

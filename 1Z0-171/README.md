@@ -146,4 +146,4 @@ Die Prüfung umfasst 11 Domains, die sowohl theoretische Relational-Database-Kon
 ## Offizielle Ressourcen
 
 - [Oracle MyLearn: Oracle AI Database SQL Associate (1Z0-171)](https://mylearn.oracle.com/ou/exam/oracle-ai-database-sql-associate-1z0-171/38560/138638/219330)
-- [Oracle Database 23ai SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/)
+- [Oracle Database 26ai SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/)

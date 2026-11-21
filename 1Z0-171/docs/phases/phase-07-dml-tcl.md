@@ -10,7 +10,7 @@
 
 ### `L123` — Deine beschreibbare Sandbox einrichten (`my_emp` & `my_dept`)
 - **Lernziel**: Du legst eigene schreibbare Tabellenkopien an, um DML gefahrlos zu üben.
-- **Studio-Link**: [Tracker `L123`](https://chatelao.github.io/sql-schulung/#curriculum/L123) · [SQL Ref: CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CREATE-TABLE.html)
+- **Studio-Link**: [Tracker `L123`](https://chatelao.github.io/sql-schulung/#curriculum/L123) · [SQL Ref: CREATE TABLE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CREATE-TABLE.html)
 - **Setup**:
   ```sql
   CREATE TABLE my_dept AS SELECT * FROM scott.dept;
@@ -19,7 +19,7 @@
 
 ### `L124` — `INSERT INTO ... VALUES` (Explizites & implizites `NULL`, `DEFAULT`)
 - **Lernziel**: Du fügst neue Zeilen mit expliziten Spaltenlisten und `NULL`/`DEFAULT`-Werten ein.
-- **Studio-Link**: [Tracker `L124`](https://chatelao.github.io/sql-schulung/#curriculum/L124) · [SQL Ref: INSERT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/INSERT.html)
+- **Studio-Link**: [Tracker `L124`](https://chatelao.github.io/sql-schulung/#curriculum/L124) · [SQL Ref: INSERT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/INSERT.html)
 - **Beispiel**:
   ```sql
   INSERT INTO my_dept (deptno, dname, loc) VALUES (50, 'ENGINEERING', 'BERLIN');
@@ -33,7 +33,7 @@
 
 ### `L126` — `DELETE` vs. Referential Integrity Errors (`ORA-02292`)
 - **Lernziel**: Du löschst Zeilen sicher und verstehst `ORA-02292` bei Foreign-Key-Beziehungen.
-- **Studio-Link**: [Tracker `L126`](https://chatelao.github.io/sql-schulung/#curriculum/L126) · [SQL Ref: DELETE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/DELETE.html)
+- **Studio-Link**: [Tracker `L126`](https://chatelao.github.io/sql-schulung/#curriculum/L126) · [SQL Ref: DELETE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/DELETE.html)
 - **Exam Trap**: Das Löschen einer Parent Row in `DEPT` (z. B. `deptno = 10`), solange noch Child Rows in `EMP` existieren, wirft `ORA-02292: integrity constraint violated - child record found`. *(Hinweis: `my_dept`/`my_emp` aus `CTAS` haben noch keinen FK; in Phase 8 baust du diesen explizit ein.)*
 
 ---
@@ -93,7 +93,7 @@
 
 ### `L131` — Das `MERGE` Statement (Upsert)
 - **Lernziel**: Du kombinierst `UPDATE`, `DELETE` und `INSERT` atomar in einem `MERGE`.
-- **Studio-Link**: [Tracker `L131`](https://chatelao.github.io/sql-schulung/#curriculum/L131) · [SQL Ref: MERGE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/MERGE.html)
+- **Studio-Link**: [Tracker `L131`](https://chatelao.github.io/sql-schulung/#curriculum/L131) · [SQL Ref: MERGE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/MERGE.html)
 - **Beispiel**:
   ```sql
   MERGE INTO my_emp tgt
@@ -129,7 +129,7 @@
 
 ### `L133` — `COMMIT`, `ROLLBACK` & `SAVEPOINT`
 - **Lernziel**: Du steuerst Transaktionen gezielt und rollst Teiländerungen auf einen `SAVEPOINT` zurück.
-- **Studio-Link**: [Tracker `L133`](https://chatelao.github.io/sql-schulung/#curriculum/L133) · [SQL Ref: COMMIT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/COMMIT.html)
+- **Studio-Link**: [Tracker `L133`](https://chatelao.github.io/sql-schulung/#curriculum/L133) · [SQL Ref: COMMIT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COMMIT.html)
 - **Beispiel**:
   ```sql
   UPDATE my_emp SET sal = 9999 WHERE empno = 7369;
@@ -141,7 +141,7 @@
 
 ### `L134` — Implicit `COMMIT` & `ROLLBACK` Triggers
 - **Lernziel**: Du weißt exakt, wann Oracle eine Transaktion automatisch festschreibt oder zurückrollt.
-- **Studio-Link**: [Tracker `L134`](https://chatelao.github.io/sql-schulung/#curriculum/L134) · [SQL Ref: ROLLBACK](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/ROLLBACK.html)
+- **Studio-Link**: [Tracker `L134`](https://chatelao.github.io/sql-schulung/#curriculum/L134) · [SQL Ref: ROLLBACK](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ROLLBACK.html)
 - **Auto-`COMMIT`**: Jedes DDL (`CREATE`, `ALTER`, `DROP`, `TRUNCATE`), jedes DCL (`GRANT`, `REVOKE`), reguläres `EXIT` aus `sqlplus`.
 - **Auto-`ROLLBACK`**: Verbindungsabbruch, Session-Absturz, explizites `ROLLBACK`.
 

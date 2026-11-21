@@ -10,7 +10,7 @@
 
 ### `L021` — Zeilen filtern mit `WHERE`
 - **Lernziel**: Du schränkst Abfrageergebnisse gezielt auf relevante Zeilen ein.
-- **Studio-Link**: [Tracker `L021`](https://chatelao.github.io/sql-schulung/#curriculum/L021) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
+- **Studio-Link**: [Tracker `L021`](https://chatelao.github.io/sql-schulung/#curriculum/L021) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
 - **Beispiel**:
   ```sql
   SELECT ename, job, sal FROM scott.emp WHERE deptno = 10;
@@ -25,7 +25,7 @@
 
 ### `L022` — Comparison Operators (`=`, `<>`, `!=`, `<`, `>`, `<=`, `>=`)
 - **Lernziel**: Du verwendest Vergleichsoperatoren sicher und beachtest Case-Sensitivity bei Zeichenketten.
-- **Studio-Link**: [Tracker `L022`](https://chatelao.github.io/sql-schulung/#curriculum/L022) · [SQL Ref: Comparison Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Comparison-Conditions.html)
+- **Studio-Link**: [Tracker `L022`](https://chatelao.github.io/sql-schulung/#curriculum/L022) · [SQL Ref: Comparison Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Comparison-Conditions.html)
 - **Konzept**: SQL-Schlüsselwörter sind case-insensitive (`select` = `SELECT`), aber **Zeichenketten innerhalb von `'...'` sind case-sensitive** (`'CLERK'` ≠ `'clerk'`).
 - **Selbstlern-Aufgabe**: Warum liefert `SELECT ename FROM scott.emp WHERE job = 'clerk';` **0 Zeilen**, obwohl es 4 Clerks gibt?
   ??? success "Musterlösung & Erklärung"
@@ -33,7 +33,7 @@
 
 ### `L023` — Date Literals in `WHERE`
 - **Lernziel**: Du filterst Datumsspalten portabel mit dem ANSI-Date-Literal `DATE 'YYYY-MM-DD'`.
-- **Studio-Link**: [Tracker `L023`](https://chatelao.github.io/sql-schulung/#curriculum/L023) · [SQL Ref: Literals](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Literals.html)
+- **Studio-Link**: [Tracker `L023`](https://chatelao.github.io/sql-schulung/#curriculum/L023) · [SQL Ref: Literals](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Literals.html)
 - **Beispiel**:
   ```sql
   SELECT ename, hiredate FROM scott.emp
@@ -59,7 +59,7 @@
 
 ### `L025` — Inklusive Bereiche mit `BETWEEN ... AND ...`
 - **Lernziel**: Du filterst Wertebereiche inklusiv und vermeidest die Reihenfolge-Falle.
-- **Studio-Link**: [Tracker `L025`](https://chatelao.github.io/sql-schulung/#curriculum/L025) · [SQL Ref: BETWEEN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/BETWEEN-Condition.html)
+- **Studio-Link**: [Tracker `L025`](https://chatelao.github.io/sql-schulung/#curriculum/L025) · [SQL Ref: BETWEEN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/BETWEEN-Condition.html)
 - **Beispiel**:
   ```sql
   SELECT ename, sal FROM scott.emp WHERE sal BETWEEN 1250 AND 2850;
@@ -70,7 +70,7 @@
 
 ### `L026` — Mengenzugehörigkeit mit `IN` und `NOT IN`
 - **Lernziel**: Du prüfst Zugehörigkeit zu Wertelisten kompakt mit `IN`.
-- **Studio-Link**: [Tracker `L026`](https://chatelao.github.io/sql-schulung/#curriculum/L026) · [SQL Ref: IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/IN-Condition.html)
+- **Studio-Link**: [Tracker `L026`](https://chatelao.github.io/sql-schulung/#curriculum/L026) · [SQL Ref: IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/IN-Condition.html)
 - **Beispiel**:
   ```sql
   SELECT ename, job FROM scott.emp WHERE job IN ('MANAGER', 'ANALYST');
@@ -79,7 +79,7 @@
 
 ### `L027` — Pattern Matching mit `LIKE` (`%`, `_`, `ESCAPE`)
 - **Lernziel**: Du suchst Textmuster mit `%` (0..n Zeichen), `_` (exakt 1 Zeichen) und maskierst wörtliche Unterstriche mit `ESCAPE`.
-- **Studio-Link**: [Tracker `L027`](https://chatelao.github.io/sql-schulung/#curriculum/L027) · [SQL Ref: About SQL Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/About-SQL-Conditions.html)
+- **Studio-Link**: [Tracker `L027`](https://chatelao.github.io/sql-schulung/#curriculum/L027) · [SQL Ref: About SQL Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/About-SQL-Conditions.html)
 - **Beispiel**:
   ```sql
   SELECT ename FROM scott.emp WHERE ename LIKE 'A%';     -- ALLEN, ADAMS (2 Zeilen)
@@ -95,7 +95,7 @@
 
 ### `L028` — Null-Werte filtern (`IS NULL` / `IS NOT NULL`)
 - **Lernziel**: Du filterst fehlende Werte korrekt mit `IS NULL` / `IS NOT NULL`.
-- **Studio-Link**: [Tracker `L028`](https://chatelao.github.io/sql-schulung/#curriculum/L028) · [SQL Ref: Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Nulls.html)
+- **Studio-Link**: [Tracker `L028`](https://chatelao.github.io/sql-schulung/#curriculum/L028) · [SQL Ref: Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Nulls.html)
 - **Beispiel**:
   ```sql
   SELECT ename, comm FROM scott.emp WHERE comm IS NULL;     -- 10 Zeilen
@@ -170,7 +170,7 @@
 
 ### `L034` — Sortieren mit `ORDER BY` (`ASC` / `DESC`)
 - **Lernziel**: Du sortierst Ergebnisse nach einer oder mehreren Spalten auf- und absteigend.
-- **Studio-Link**: [Tracker `L034`](https://chatelao.github.io/sql-schulung/#curriculum/L034) · [SQL Ref: Sorting Query Results](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Sorting-Query-Results.html)
+- **Studio-Link**: [Tracker `L034`](https://chatelao.github.io/sql-schulung/#curriculum/L034) · [SQL Ref: Sorting Query Results](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Sorting-Query-Results.html)
 - **Beispiel**: `SELECT ename, deptno, sal FROM scott.emp ORDER BY deptno ASC, sal DESC;` (Standard ohne Angabe ist immer `ASC`).
 
 ### `L035` — Sortieren nach Alias, Spaltenposition & `NULLS FIRST/LAST`

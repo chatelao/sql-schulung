@@ -40,7 +40,7 @@
 
 ### `L166` — Metadaten-Kommentare hinzufügen (`COMMENT ON`)
 - **Lernziel**: Du dokumentierst Tabellen und Spalten direkt in der Datenbank.
-- **Studio-Link**: [Tracker `L166`](https://chatelao.github.io/sql-schulung/#curriculum/L166) · [SQL Ref: COMMENT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/COMMENT.html)
+- **Studio-Link**: [Tracker `L166`](https://chatelao.github.io/sql-schulung/#curriculum/L166) · [SQL Ref: COMMENT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COMMENT.html)
 - **Beispiel**:
   ```sql
   COMMENT ON TABLE my_emp IS 'Writable copy of classic SCOTT.EMP for training';
@@ -53,14 +53,14 @@
 
 ### `L167` — `TIMESTAMP`, `TIMESTAMP WITH TIME ZONE`, `TIMESTAMP WITH LOCAL TIME ZONE`
 - **Lernziel**: Du unterscheidest Oracles drei Timestamp-Varianten sicher.
-- **Studio-Link**: [Tracker `L167`](https://chatelao.github.io/sql-schulung/#curriculum/L167) · [SQL Ref: Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html)
+- **Studio-Link**: [Tracker `L167`](https://chatelao.github.io/sql-schulung/#curriculum/L167) · [SQL Ref: Data Types](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Data-Types.html)
 - `TIMESTAMP(p)`: Genauigkeit der Sekundenbruchteile (`0`–`9`, Standard `6`).
 - `TIMESTAMP WITH TIME ZONE`: speichert exakt die Zeitzonenregion oder den Offset (`+02:00`, `Europe/Berlin`).
 - `TIMESTAMP WITH LOCAL TIME ZONE`: normalisiert beim Speichern auf **`DBTIMEZONE`** und rechnet bei der Abfrage dynamisch in **`SESSIONTIMEZONE`** um!
 
 ### `L168` — `CURRENT_DATE`, `CURRENT_TIMESTAMP` & `LOCALTIMESTAMP`
 - **Lernziel**: Du erkennst, welche Funktion Serverzeit vs. Session-Zeit liefert.
-- **Studio-Link**: [Tracker `L168`](https://chatelao.github.io/sql-schulung/#curriculum/L168) · [SQL Ref: CURRENT_TIMESTAMP](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/CURRENT_TIMESTAMP.html)
+- **Studio-Link**: [Tracker `L168`](https://chatelao.github.io/sql-schulung/#curriculum/L168) · [SQL Ref: CURRENT_TIMESTAMP](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/CURRENT_TIMESTAMP.html)
 
 | Function | Rückgabetyp | Verwendete Time Zone |
 | :--- | :--- | :--- |
@@ -72,7 +72,7 @@
 
 ### `L169` — `DBTIMEZONE`, `SESSIONTIMEZONE`, `TZ_OFFSET` & `FROM_TZ`
 - **Lernziel**: Du änderst Session-Zeitzonen und versiehst Timestamps mit Zeitzonen.
-- **Studio-Link**: [Tracker `L169`](https://chatelao.github.io/sql-schulung/#curriculum/L169) · [SQL Ref: FROM_TZ](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/FROM_TZ.html)
+- **Studio-Link**: [Tracker `L169`](https://chatelao.github.io/sql-schulung/#curriculum/L169) · [SQL Ref: FROM_TZ](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/FROM_TZ.html)
 - **Beispiel**:
   ```sql
   ALTER SESSION SET TIME_ZONE = '+02:00';
@@ -93,7 +93,7 @@
 
 ### `L171` — `EXTRACT`, `TO_TIMESTAMP`, `TO_YMINTERVAL` & `TO_DSINTERVAL`
 - **Lernziel**: Du extrahierst Datumsteile mit `EXTRACT` und konvertierst Strings in Timestamps/Intervalle.
-- **Studio-Link**: [Tracker `L171`](https://chatelao.github.io/sql-schulung/#curriculum/L171) · [SQL Ref: TO_TIMESTAMP](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/TO_TIMESTAMP.html)
+- **Studio-Link**: [Tracker `L171`](https://chatelao.github.io/sql-schulung/#curriculum/L171) · [SQL Ref: TO_TIMESTAMP](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TO_TIMESTAMP.html)
 - **Beispiel**:
   ```sql
   SELECT EXTRACT(YEAR FROM hiredate) AS yr, EXTRACT(MONTH FROM hiredate) AS mo FROM scott.emp;
@@ -119,7 +119,7 @@
 
 ### `L173` — System Privileges vs. Object Privileges
 - **Lernziel**: Du unterscheidest Datenbank-Fähigkeiten (`CREATE SESSION`, `CREATE TABLE`) von Objekt-Rechten (`SELECT`, `UPDATE (sal)`).
-- **Studio-Link**: [Tracker `L173`](https://chatelao.github.io/sql-schulung/#curriculum/L173) · [SQL Ref: GRANT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/GRANT.html)
+- **Studio-Link**: [Tracker `L173`](https://chatelao.github.io/sql-schulung/#curriculum/L173) · [SQL Ref: GRANT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/GRANT.html)
 
 ### `L174` — Users anlegen, Passwörter ändern & Roles
 - **Lernziel**: Du erstellst User und Roles und weist Rechte gebündelt zu.
@@ -141,7 +141,7 @@
 
 ### `L176` — Die kritische `REVOKE`-Kaskadenregel (Prüfungsliebling!)
 - **Lernziel**: Du sagst bei mehrstufigen Rechteketten sofort voraus, wer sein Recht behält und wer es verliert.
-- **Studio-Link**: [Tracker `L176`](https://chatelao.github.io/sql-schulung/#curriculum/L176) · [SQL Ref: REVOKE](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/REVOKE.html)
+- **Studio-Link**: [Tracker `L176`](https://chatelao.github.io/sql-schulung/#curriculum/L176) · [SQL Ref: REVOKE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REVOKE.html)
 - !!! warning "1Z0-171 Exam Trap (Kaskadenregel)"
     - **Object Privilege (`WITH GRANT OPTION`)**: Bei `SYS → Alice → Bob` **KASKADIERT** `REVOKE SELECT ON ... FROM alice` und entzieht das Recht automatisch auch **Bob**!
     - **System Privilege (`WITH ADMIN OPTION`)**: Bei `SYS → Alice → Bob` **KASKADIERT** `REVOKE CREATE TABLE FROM alice` **NICHT** – **Bob behält `CREATE TABLE`**!

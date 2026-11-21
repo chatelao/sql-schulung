@@ -10,7 +10,7 @@
 
 ### `L103` — Was ist eine Subquery? („Wer verdient mehr als `JONES`?“)
 - **Lernziel**: Du verwendest verschachtelte `SELECT`-Abfragen in `WHERE`, wenn ein Vergleichswert zuerst aus der Datenbank ermittelt werden muss.
-- **Studio-Link**: [Tracker `L103`](https://chatelao.github.io/sql-schulung/#curriculum/L103) · [SQL Ref: Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Using-Subqueries.html)
+- **Studio-Link**: [Tracker `L103`](https://chatelao.github.io/sql-schulung/#curriculum/L103) · [SQL Ref: Using Subqueries](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Using-Subqueries.html)
 - **Beispiel**:
   ```sql
   SELECT ename, sal
@@ -60,7 +60,7 @@
 
 ### `L108` — `IN`, `ANY` und `ALL` Operators
 - **Lernziel**: Du wendest Mengenoperatoren auf Subqueries mit mehreren Zeilen an.
-- **Studio-Link**: [Tracker `L108`](https://chatelao.github.io/sql-schulung/#curriculum/L108) · [SQL Ref: IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/IN-Condition.html)
+- **Studio-Link**: [Tracker `L108`](https://chatelao.github.io/sql-schulung/#curriculum/L108) · [SQL Ref: IN Condition](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/IN-Condition.html)
 - **Merksatz**: `> ANY` = größer als das **Minimum**; `> ALL` = größer als das **Maximum**; `< ANY` = kleiner als das **Maximum**; `< ALL` = kleiner als das **Minimum**.
 - **Beispiel**: `SELECT ename, sal FROM scott.emp WHERE sal > ALL (SELECT sal FROM scott.emp WHERE job = 'SALESMAN');` → 5 Zeilen (`> 1600`).
 
@@ -141,7 +141,7 @@
 
 ### `L116` — `EXISTS` und `NOT EXISTS` (Null-Safe!)
 - **Lernziel**: Du prüfst Existenz sicher mit `EXISTS`/`NOT EXISTS` statt `NOT IN`.
-- **Studio-Link**: [Tracker `L116`](https://chatelao.github.io/sql-schulung/#curriculum/L116) · [SQL Ref: EXISTS](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/EXISTS-Condition.html)
+- **Studio-Link**: [Tracker `L116`](https://chatelao.github.io/sql-schulung/#curriculum/L116) · [SQL Ref: EXISTS](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/EXISTS-Condition.html)
 - **Beispiel**:
   ```sql
   SELECT d.deptno, d.dname FROM scott.dept d

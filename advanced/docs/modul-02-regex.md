@@ -51,3 +51,8 @@ WHERE REGEXP_LIKE(raw_line, '\[(WARN|ERROR)\]');
     FROM dual
     CONNECT BY LEVEL <= REGEXP_COUNT('SQL,PLSQL,APEX,JSON', ',') + 1;
     ```
+
+## Oracle-Referenz (26ai)
+
+- [REGEXP_SUBSTR](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/REGEXP_SUBSTR.html)
+- [SQL Language Reference](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/index.html)

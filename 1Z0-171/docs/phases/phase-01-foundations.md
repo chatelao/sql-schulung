@@ -47,7 +47,7 @@
 
 ### `L004` — Tables, Rows, Columns & Primary Keys
 - **Lernziel**: Du identifizierst Tables, Rows (Tupel), Columns (Attribute) und Primary Keys anhand von `SCOTT.DEPT`.
-- **Studio-Link**: [Tracker `L004`](https://chatelao.github.io/sql-schulung/#curriculum/L004) · [SQL Ref: Database Objects](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Database-Objects.html)
+- **Studio-Link**: [Tracker `L004`](https://chatelao.github.io/sql-schulung/#curriculum/L004) · [SQL Ref: Database Objects](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Database-Objects.html)
 - **Konzept**: Eine **Table** ist wie ein Aktenschrank für genau eine Objektart (z. B. `DEPT` für Abteilungen). Jede **Row** (Zeile) ist ein konkreter Datensatz, jede **Column** (Spalte) ein Merkmal (`deptno`, `dname`, `loc`). Der **Primary Key (PK)** ist die eindeutige ID jeder Zeile: Er darf **niemals doppelt** vorkommen und **niemals `NULL`** (leer) sein.
 - **Beispiel (`SCOTT.DEPT`)**: `DEPTNO` (`10, 20, 30, 40`) ist der Primary Key; `EMPNO` (`7369`..`7934`) ist der Primary Key in `SCOTT.EMP`.
 - **Selbstlern-Aufgabe**: Prüfe die Datentabelle in [`SCOTT/TIGER`](../schemas/scott-tiger.md): Warum taugt `ENAME` in `SCOTT.EMP` **nicht** als Primary Key, auch wenn aktuell alle 14 Namen verschieden sind?
@@ -56,7 +56,7 @@
 
 ### `L005` — Tables mit Foreign Keys verknüpfen
 - **Lernziel**: Du verstehst, wie ein Foreign Key (FK) zwei Tabellen über einen Primary Key verbindet und ungültige Verweise verhindert.
-- **Studio-Link**: [Tracker `L005`](https://chatelao.github.io/sql-schulung/#curriculum/L005) · [SQL Ref: constraint](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/constraint.html)
+- **Studio-Link**: [Tracker `L005`](https://chatelao.github.io/sql-schulung/#curriculum/L005) · [SQL Ref: constraint](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/constraint.html)
 - **Konzept**: `EMP.DEPTNO` ist ein **Foreign Key (FK)**, der auf den Primary Key `DEPT.DEPTNO` zeigt. Oracle garantiert dadurch **Referential Integrity**: Du kannst in `EMP` keinen Mitarbeiter mit `deptno = 99` anlegen, solange `99` nicht in `DEPT` existiert.
 - **Selbstlern-Aufgabe**: Schau in [`SCOTT.EMP`](../schemas/scott-tiger.md#emp-14-rows): Welche zweite Spalte in `EMP` verweist ebenfalls auf einen Mitarbeiter in derselben Tabelle (`EMPNO`)?
   ??? success "Musterlösung & Erklärung"
@@ -79,7 +79,7 @@ erDiagram
 
 ### `L007` — ERDs auf `SELECT`-Queries abbilden
 - **Lernziel**: Du ordnest Bestandteile eines ERD den passenden Klauseln eines `SELECT`-Statements zu (direktes `1Z0-171`-Prüfungsziel!).
-- **Studio-Link**: [Tracker `L007`](https://chatelao.github.io/sql-schulung/#curriculum/L007) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
+- **Studio-Link**: [Tracker `L007`](https://chatelao.github.io/sql-schulung/#curriculum/L007) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
 - **Konzept**:
   - **Entity** (Rechteck im ERD) → **Table** in `FROM dept`
   - **Attribute** (Eigenschaft im Rechteck) → **Column** in `SELECT dname, loc` / `WHERE`
@@ -89,7 +89,7 @@ erDiagram
 
 ### `L008` — Die vier SQL Statement Families
 - **Lernziel**: Du unterscheidest `DML`, `DDL`, `DCL` und `TCL` inklusive ihres Commit-Verhaltens.
-- **Studio-Link**: [Tracker `L008`](https://chatelao.github.io/sql-schulung/#curriculum/L008) · [SQL Ref: Types of SQL Statements](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Types-of-SQL-Statements.html)
+- **Studio-Link**: [Tracker `L008`](https://chatelao.github.io/sql-schulung/#curriculum/L008) · [SQL Ref: Types of SQL Statements](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Types-of-SQL-Statements.html)
 
 | Familie | Vollständiger Name | Kernbefehle | Auto-Commit? |
 | :--- | :--- | :--- | :---: |
@@ -115,7 +115,7 @@ erDiagram
 
 ### `L010` — Dein erstes `SELECT *` & `DESCRIBE`
 - **Lernziel**: Du inspizierst Tabellenstrukturen mit `DESCRIBE` und fragst alle Zeilen mit `SELECT *` ab.
-- **Studio-Link**: [Tracker `L010`](https://chatelao.github.io/sql-schulung/#curriculum/L010) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/SELECT.html)
+- **Studio-Link**: [Tracker `L010`](https://chatelao.github.io/sql-schulung/#curriculum/L010) · [SQL Ref: SELECT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html)
 - **Beispiel**:
   ```sql
   DESCRIBE scott.dept;
@@ -170,7 +170,7 @@ erDiagram
 
 ### `L014` — Arithmetische Ausdrücke (`+`, `-`, `*`, `/`)
 - **Lernziel**: Du berechnest abgeleitete Werte direkt in der `SELECT`-Liste, ohne die Tabelle zu verändern.
-- **Studio-Link**: [Tracker `L014`](https://chatelao.github.io/sql-schulung/#curriculum/L014) · [SQL Ref: Arithmetic Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Arithmetic-Operators.html)
+- **Studio-Link**: [Tracker `L014`](https://chatelao.github.io/sql-schulung/#curriculum/L014) · [SQL Ref: Arithmetic Operators](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Arithmetic-Operators.html)
 - **Beispiel**:
   ```sql
   SELECT ename, sal, sal * 12 AS annual_sal, sal * 12 + 500 AS with_bonus
@@ -180,7 +180,7 @@ erDiagram
 
 ### `L015` — Operator Precedence (Punkt vor Strich)
 - **Lernziel**: Du wendest Oracles Auswertungsreihenfolge (`*`, `/` vor `+`, `-`) und Klammern korrekt an.
-- **Studio-Link**: [Tracker `L015`](https://chatelao.github.io/sql-schulung/#curriculum/L015) · [SQL Ref: About SQL Operators](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/About-SQL-Operators.html)
+- **Studio-Link**: [Tracker `L015`](https://chatelao.github.io/sql-schulung/#curriculum/L015) · [SQL Ref: About SQL Operators](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/About-SQL-Operators.html)
 - **Selbstlern-Aufgabe**: Sage für `SMITH` (`sal = 800`) das Ergebnis beider Ausdrücke voraus, bevor du sie ausführst:
   1. `sal + 200 * 12`
   2. `(sal + 200) * 12`
@@ -190,7 +190,7 @@ erDiagram
 
 ### `L016` — Die goldene Regel für `NULL`
 - **Lernziel**: Du unterscheidest `NULL` (unbekannt/leer) sauber von `0` und weißt, warum Arithmetik mit `NULL` immer `NULL` ergibt.
-- **Studio-Link**: [Tracker `L016`](https://chatelao.github.io/sql-schulung/#curriculum/L016) · [SQL Ref: Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Nulls.html)
+- **Studio-Link**: [Tracker `L016`](https://chatelao.github.io/sql-schulung/#curriculum/L016) · [SQL Ref: Nulls](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Nulls.html)
 - **Beispiel**:
   ```sql
   -- Achte genau auf SMITH vs. ALLEN vs. TURNER!
@@ -221,7 +221,7 @@ erDiagram
 
 ### `L018` — Concatenation (`||`), Literals & Alternative Quotes (`q'[...]'`)
 - **Lernziel**: Du verkettest Spalten mit Textliteralen und gehst sicher mit Apostrophen im Text um.
-- **Studio-Link**: [Tracker `L018`](https://chatelao.github.io/sql-schulung/#curriculum/L018) · [SQL Ref: Concatenation Operator](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Concatenation-Operator.html)
+- **Studio-Link**: [Tracker `L018`](https://chatelao.github.io/sql-schulung/#curriculum/L018) · [SQL Ref: Concatenation Operator](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Concatenation-Operator.html)
 - **Beispiel**:
   ```sql
   SELECT ename || ' works as a ' || job AS summary FROM scott.emp;
@@ -244,7 +244,7 @@ erDiagram
 
 ### `L020` — Die `DUAL`-Tabelle & Phase-1-Review
 - **Lernziel**: Du nutzt `DUAL` für einmalige Berechnungen und prüfst deinen Phase-1-Wissensstand.
-- **Studio-Link**: [Tracker `L020`](https://chatelao.github.io/sql-schulung/#curriculum/L020) · [SQL Ref: Selecting from DUAL](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Selecting-from-the-DUAL-Table.html)
+- **Studio-Link**: [Tracker `L020`](https://chatelao.github.io/sql-schulung/#curriculum/L020) · [SQL Ref: Selecting from DUAL](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Selecting-from-the-DUAL-Table.html)
 - **Beispiel**:
   ```sql
   SELECT 24 * 60 AS mins_per_day, SYSDATE FROM dual;
