@@ -200,3 +200,13 @@
 ### `L122` — Fortschrittsvergleich & Reflexion (`CP-3` vs. `CP-0..2`)
 - **Lernziel**: Du prüfst deine Wachstumskurve auf GitHub Pages und dokumentierst den Fokus für DML/DDL (Phasen 7–8).
 - **Studio-Link**: [Tracker `L122`](https://chatelao.github.io/sql-schulung/#curriculum/L122) · [`CP-3` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-3)
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (`NOT IN` vs. `NOT EXISTS`):** Testet auf `scott.emp`: Warum liefert `WHERE empno NOT IN (SELECT mgr FROM emp)` **0 Zeilen**? Schreibt die sichere `NOT EXISTS`-Alternative.
+2. **Paaraufgabe B (`SET`-Abgleich):** Findet mit `MINUS` (und alternativ mit `LEFT JOIN ... IS NULL`) alle `hr.departments`, die aktuell keine Mitarbeitenden haben.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Formuliere eine typische Abweichungs- oder Ausreisser-Analyse aus deinem Job (*„Welche Kunden haben dieses Jahr bestellt, aber nicht letztes Jahr?“* oder *„Welche Positionen liegen über dem Gruppen-Durchschnitt?“*) mit `NOT EXISTS` / `MINUS` oder korrelierter Subquery.

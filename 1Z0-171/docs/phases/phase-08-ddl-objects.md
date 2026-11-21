@@ -229,3 +229,13 @@
 ### `L162` — Fortschrittsvergleich & Reflexion (`CP-4` vs. `CP-0..3`)
 - **Lernziel**: Du prüfst dein Verlaufsdiagramm auf GitHub Pages und planst den Endspurt (Phase 9 & 10).
 - **Studio-Link**: [Tracker `L162`](https://chatelao.github.io/sql-schulung/#curriculum/L162) · [`CP-4` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-4)
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (Schema-Design):** Entwerft gemeinsam zwei verknüpfte Tabellen (`projekte` + `zuweisungen`) mit `PRIMARY KEY`, `FOREIGN KEY (ON DELETE SET NULL)`, `CHECK` und `DEFAULT` und testet bewusst Constraint-Verletzungen.
+2. **Paaraufgabe B (View & Sequence):** Erstellt eine `VIEW` mit `WITH CHECK OPTION` und eine `SEQUENCE`; prüft gemeinsam, was nach einem `ROLLBACK` mit `NEXTVAL` passiert.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Definiere für eine deiner typischen Arbeits-Abfragen eine wiederverwendbare `VIEW` (saubere Spaltennamen, `NULL`-Absicherung) und prüfe, welche Spalten für häufige `WHERE`-Filter indiziert werden sollten.

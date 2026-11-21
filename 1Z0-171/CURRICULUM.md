@@ -20,6 +20,8 @@ Dieses Curriculum richtet sich an **echte Einsteiger** (ohne Vorkenntnisse in SQ
 | **4. Independent Practice** | 12 Min. | 2–4 abgestufte Mikro-Aufgaben (Ergebnis zuerst vorhersagen, dann ausführen) | **GitHub Pages + Oracle DB** |
 | **5. Takeaway & Pitfall** | 3 Min. | 1 „Exam Trap“ im persönlichen Cheat Sheet festhalten | **Read the Docs / Notizen** |
 
+> **Hybrider Firmenunterricht (3 vor Ort + 3 via Teams):** Nutze das angepasste Hybrid-Schema (Teams-Umfrage, Predict-Pausen im Chat, 3 gemischte Breakout-Paare, „Remote first“) und die 10 Sitzungspläne im [Trainer- & Hybrid-Bereich](docs/trainer/index.md).
+
 ---
 
 ## 2. Publishing-Architektur: Read the Docs vs. GitHub Pages

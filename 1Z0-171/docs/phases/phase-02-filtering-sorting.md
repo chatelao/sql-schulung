@@ -256,3 +256,13 @@
 - **Lernziel**: Du erkennst Blind Spots und setzt dein Lernziel für Phase 3 (25 % Exam-Gewicht!).
 - **Studio-Link**: [Tracker `L042`](https://chatelao.github.io/sql-schulung/#curriculum/L042) · [`CP-1` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-1)
 - **Pflicht-Check**: Exportiere nach `CP-1` dein wöchentliches Lernstand-Backup (`.json`).
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (Klammer-Falle):** Vergleicht `WHERE deptno = 10 OR deptno = 20 AND sal > 2000` mit geklammerter Variante `WHERE (deptno = 10 OR deptno = 20) AND sal > 2000` auf `scott.emp`. Dokumentiert vor dem Ausführen im Teams-Chat, welche Zeilen sich unterscheiden.
+2. **Paaraufgabe B (Top-N-Ranking):** Erstellt in `hr.employees` eine Top-5-Gehaltsliste einmal mit `FETCH FIRST 5 ROWS ONLY` und einmal mit `WITH TIES` — erklärt im Plenum (Remote first), warum sich die Zeilenzahl unterscheidet.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Übersetze einen typischen Filter aus deinem Berichtswesen (z. B. *„Alle offenen Vorgänge der letzten 30 Tage aus Abteilung A oder B über 1.000 CHF“*) in ein `WHERE`-Statement mit expliziter Klammerung und `ORDER BY ... NULLS LAST`.

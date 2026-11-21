@@ -158,3 +158,13 @@
 | **4** | `ADMIN` / `SYS` | `GRANT SELECT ON scott.emp TO alice WITH GRANT OPTION;` | `alice` darf `scott.emp` abfragen & weitergeben |
 | **5** | `alice` | `GRANT SELECT ON scott.emp TO bob;` | `bob` darf `scott.emp` abfragen |
 | **6** | `ADMIN` / `SYS` | `REVOKE SELECT ON scott.emp FROM alice;` | **Sowohl `alice` als auch `bob` verlieren `SELECT`!** |
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (Data-Dictionary-Schnitzeljagd):** Findet ausschliesslich über `USER_TABLES`, `USER_TAB_COLUMNS` und `USER_CONSTRAINTS` heraus, welche Fremdschlüssel auf eure Testtabellen zeigen.
+2. **Paaraufgabe B (DCL-Kaskade mit `student_0X_peer`):** Ein Partner loggt sich als `student_0X` ein, der andere als `student_0X_peer`. Testet `GRANT SELECT ... WITH GRANT OPTION` und beobachtet das Verhalten nach `REVOKE`.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Analysiere ein globales Zeitzonen-Szenario aus deiner Firma (z. B. UTC-Server vs. Lokalzeit Zürich/Berlin) mit `TIMESTAMP WITH TIME ZONE` vs. `WITH LOCAL TIME ZONE` und prüfe über `ALL_TAB_COLUMNS` die Datentypen eurer Produktiv-Tabellen.

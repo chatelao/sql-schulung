@@ -66,3 +66,13 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
 - Öffne dein vollständiges Verlaufsdiagramm auf GitHub Pages und verfolge deinen Weg von **CP-0 (10–25 %)** bis **CP-5 (≥ 85 %)**.
 - Exportiere dein finales Lernportfolio (`.json` und `.md`).
 - **Wie geht es nach `1Z0-171` weiter?** Starte direkt im Aufbau-Modul **[Advanced Oracle SQL (`A001`–`A060`)](../advanced/modul-01-hierarchies.md)** (Hierarchien, Regex, JSON, XML, Window Functions, `MATCH_RECOGNIZE`).
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (Human Compiler ohne DB):** Jeder Partner wählt 3 Drills aus den Clinics 1–6, lässt den anderen laut Zeile für Zeile auswerten (ohne IDE!) und deckt erst danach die Lösung auf.
+2. **Paaraufgabe B (Mock-Debrief):** Besprecht zu zweit eure 3 schwierigsten Fragen aus Mock Exam #1/#2 und formuliert für jede eine 1-Satz-Faustregel.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe (Transfer-Plan):** Lege fest, welche **3 konkreten SQL-Auswertungen oder Datenprüfungen** du in den nächsten 4 Wochen in deinem Arbeitsalltag umsetzt, und notiere den Termin für das 60-Minuten-Follow-up mit der Gruppe.

@@ -143,3 +143,13 @@
 ### `L082` — Fortschrittsvergleich & Reflexion (`CP-2` vs. `CP-0..1`)
 - **Lernziel**: Du wertest dein Delta-Diagramm aus und identifizierst verbleibende Blind Spots in Domains 1–3.
 - **Studio-Link**: [Tracker `L082`](https://chatelao.github.io/sql-schulung/#curriculum/L082) · [`CP-2` Reflexion](https://chatelao.github.io/sql-schulung/#checkpoints/CP-2)
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (NULL-Verzerrung):** Vergleicht in `scott.emp` `AVG(comm)` mit `AVG(NVL(comm, 0))` sowie `COUNT(*)` mit `COUNT(comm)`. Erklärt in 2 Sätzen, welche Kennzahl für das Management irreführend wäre.
+2. **Paaraufgabe B (`WHERE` vs. `HAVING`):** Schreibt eine Auswertung auf `hr.employees`, die nur Mitarbeitende mit `salary >= 3000` berücksichtigt (`WHERE`) und nur Abteilungen mit mindestens 5 solchen Personen und Durchschnittsgehalt > 6000 anzeigt (`HAVING`).
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Baue ein Monats- oder Abteilungs-KPI-Reporting aus deinem Arbeitsalltag nach (`COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `GROUP BY`, `HAVING`) und dokumentiere explizit, wie `NULL`-Werte in der Kennzahl behandelt werden.

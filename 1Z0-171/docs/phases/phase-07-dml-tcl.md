@@ -164,3 +164,13 @@
 | **2** | — | `SELECT sal FROM my_emp WHERE empno = 7369;` | Sieht noch **`800`** (Read Consistency!) |
 | **3** | — | `UPDATE my_emp SET sal = 1111 WHERE empno = 7369;` | **Blockiert / wartet**, bis Session 1 entscheidet |
 | **4** | `COMMIT;` | *(läuft sofort weiter)* | Erst nach `COMMIT` wird Session 2 entsperrt |
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (Zwei-Session-Locking live):** Beide Partner arbeiten mit demselben Test-Datensatz bzw. beobachten Session 1 (`UPDATE` ohne `COMMIT`) und Session 2 (`SELECT` vor/nach `COMMIT`, danach `UPDATE` auf dieselbe Zeile). Protokolliert Lese-Konsistenz und Lock-Verhalten.
+2. **Paaraufgabe B (`SAVEPOINT` & impliziter `COMMIT`):** Führt `INSERT` → `SAVEPOINT sp1` → `UPDATE` → `ROLLBACK TO sp1` aus und testet anschliessend die Wirkung eines `CREATE TABLE`-Statements auf die offene Transaktion.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Entwirf für eine regelmässige Datenübernahme in deinem Umfeld einen `MERGE INTO`-Ablauf (Upsert) und definiere, wo `COMMIT`, `ROLLBACK` und Fehlerbehandlung greifen müssen.

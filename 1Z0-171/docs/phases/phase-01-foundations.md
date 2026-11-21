@@ -257,3 +257,15 @@ erDiagram
       FROM scott.emp;
       ```
       Danach: Wiederhole die [Flashcards D1](https://chatelao.github.io/sql-schulung/#flashcards/D1) und starte Phase 2!
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+*Arbeitsmodus: Je 1 Person vor Ort (Headset) + 1 Person via Teams im Breakout-Room; Rollenwechsel Driver/Navigator nach 8 Minuten.*
+
+1. **Paaraufgabe A (NULL-Detektiv):** Analysiert gemeinsam `scott.emp` und formuliert eine Query, die `ename`, `sal`, `comm`, das fehlerhafte `sal + comm` und ein korrektes Gesamtgehalt mit `NVL(comm, 0)` ausgibt. Schreibt eine zweite Variante mit `q'[...]'`-Literal als formatierten Satz.
+2. **Paaraufgabe B (Fehler-Bingo):** Ein Partner baut absichtlich je einen `ORA-00942`- und `ORA-00904`-Fehler in ein `SELECT` ein und teilt den Screen; der Navigator benennt Ursache und Fix, ohne die Tastatur zu berühren.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Nimm eine Tabelle oder einen CSV-/Excel-Export aus deinem Arbeitsalltag (Lern-Backlog). Identifiziere **Primary Key**, **Foreign Key** und mindestens **eine Spalte, die `NULL` sein darf**. Formuliere ein `SELECT` mit sinnvollen Spalten-Aliasen und `DISTINCT` auf eine Kategorien-Spalte.

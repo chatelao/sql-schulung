@@ -234,3 +234,13 @@
 - **Beispiel**: `SELECT ename, DECODE(comm, NULL, 'None', 0, 'Zero', 'Paid') FROM scott.emp;`
 - !!! warning "1Z0-171 Exam Trap"
     `DECODE` wertet `NULL` gleich `NULL` als **Treffer**! Ein einfaches `CASE comm WHEN NULL THEN ...` greift dagegen **niemals** (nur `CASE WHEN comm IS NULL THEN ...` funktioniert).
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (String-Zwiebel):** Extrahiert aus `hr.employees.email` bzw. `scott.emp.ename` per verschachteltem `SUBSTR`/`INSTR` Initialen und Domain-Teile. Der Navigator liest die Funktionsaufrufe **von innen nach aussen** laut vor.
+2. **Paaraufgabe B (Datums- und `CASE`-Check):** Berechnet die Betriebszugehörigkeit in vollen Jahren (`MONTHS_BETWEEN`) und ordnet via `CASE` Stufen (`Junior`, `Senior`, `Veteran`) zu — inkl. `NVL` für `commission_pct`.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Wähle eine unsaubere Text- oder Datumsspalte aus deinen Firmendaten (z. B. Produktcodes, Kostenstellen, Datumsstrings) und schreibe eine Bereinigungs-Query mit `TRIM`, `UPPER`, `SUBSTR`/`INSTR` oder `TO_DATE` + `CASE`.

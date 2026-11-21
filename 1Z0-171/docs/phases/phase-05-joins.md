@@ -189,3 +189,13 @@
       GROUP BY d.department_name
       ORDER BY headcount DESC, d.department_name;
       ```
+
+---
+## Hybrid-Paaraufgaben (3 gemischte Paare: Remote + Vor Ort)
+
+1. **Paaraufgabe A (Verschwundene Zeilen):** Führt auf `hr.employees` und `hr.departments` zuerst einen `INNER JOIN`, dann `LEFT OUTER JOIN` und schliesslich einen `LEFT OUTER JOIN` mit `WHERE d.location_id = 1700` aus. Markiert gemeinsam `Kimberely Grant` und erklärt, wann sie verschwindet.
+2. **Paaraufgabe B (Self-Join Organigramm):** Erstellt in `scott.emp` eine Manager-Mitarbeiter-Liste (`e.ename || ' -> ' || NVL(m.ename, 'TOP')`), bei der auch `KING` erhalten bleibt.
+
+## Praxis-Transfer in deinen Arbeitsalltag (Firmenbezug)
+
+- **Aufgabe:** Skizziere zwei Tabellen aus deinem Fachbereich (z. B. *Aufträge* + *Kunden* oder *Tickets* + *Bearbeiter*), entscheide bewusst zwischen `INNER` und `LEFT OUTER JOIN` und prüfe, ob unzugeordnete Datensätze sichtbar bleiben müssen.
