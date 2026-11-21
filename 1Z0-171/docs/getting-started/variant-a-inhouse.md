@@ -74,18 +74,22 @@ Lade anschließend [`scott_tiger.sql`](../schemas/scott_tiger.sql) herunter und 
 sqlplus scott/tiger@localhost:1521/FREEPDB1 @scott_tiger.sql
 ```
 
-Falls du über `student_01` arbeitest, erteile als `scott` (oder `SYSDBA`) Leserechte für `student_01`:
+Falls du über `student_01..student_06` arbeitest, erteile als `scott` (oder `SYSDBA`) Leserechte für alle 6 Kurs-Accounts:
 
 ```sql
-GRANT SELECT ON scott.dept     TO student_01;
-GRANT SELECT ON scott.emp      TO student_01;
-GRANT SELECT ON scott.salgrade TO student_01;
-GRANT SELECT ON scott.bonus    TO student_01;
+BEGIN
+  FOR i IN 1..6 LOOP
+    FOR t IN (SELECT column_value AS tbl FROM sys.odcivarchar2list('DEPT','EMP','SALGRADE','BONUS')) LOOP
+      EXECUTE IMMEDIATE 'GRANT SELECT ON scott.' || t.tbl || ' TO student_0' || i;
+    END LOOP;
+  END LOOP;
+END;
+/
 ```
 
 > **Alternative (nur eigenes Schema):** Wenn du `scott_tiger.sql` direkt in deinem eigenen Schema (`student_01`) ausführst, lasse in den Abfragen der Phasen 1–6 den Präfix `scott.` weg (`FROM emp` statt `FROM scott.emp`).
 
-### 2. Offizielles Oracle 23ai `HR` Sample Schema
+### 2. Offizielles Oracle `HR` Sample Schema
 Klone oder lade das offizielle Repository [Oracle Database Sample Schemas](https://github.com/oracle-samples/db-sample-schemas) herunter und installiere `HR` in `FREEPDB1`:
 
 ```bash
@@ -93,7 +97,19 @@ git clone https://github.com/oracle-samples/db-sample-schemas.git
 sqlplus sys/Welcome123!@localhost:1521/FREEPDB1 as sysdba @db-sample-schemas/human_resources/hr_install.sql
 ```
 
-Falls du als `student_01` arbeitest, erteile danach `GRANT SELECT ON hr.employees TO student_01;` (analog für `departments`, `jobs`, `job_history`, `locations`, `countries`, `regions`).
+Erteile anschließend Leserechte auf die `HR`-Tabellen für alle 6 Kurs-Accounts:
+
+```sql
+BEGIN
+  FOR i IN 1..6 LOOP
+    FOR t IN (SELECT column_value AS tbl FROM sys.odcivarchar2list(
+                'EMPLOYEES','DEPARTMENTS','JOBS','JOB_HISTORY','LOCATIONS','COUNTRIES','REGIONS')) LOOP
+      EXECUTE IMMEDIATE 'GRANT SELECT ON hr.' || t.tbl || ' TO student_0' || i;
+    END LOOP;
+  END LOOP;
+END;
+/
+```
 
 !!! tip "Setup überprüfen"
     Führe diesen kurzen Smoke-Test sowohl in VS Code als auch in `sqlcl`/`sqlplus` aus:
