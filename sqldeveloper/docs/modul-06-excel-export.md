@@ -78,17 +78,44 @@ flowchart LR
 
 ---
 
-## 4. Entscheidungsmatrix für alle Datentypen & Zeilenzahlen (`D029`)
+## 4. Schnelles Copy-Paste (`Strg+Umschalt+C` / `Ctrl+Shift+C`) & Excel-Spalten als „Text“ vorbereiten (`D029`)
+
+Für kleine Ad-hoc-Abfragen (wenige Zeilen) greift man im Alltag oft zu Copy-Paste aus dem Ergebnis-Grid statt zum Export-Assistenten. Damit dabei weder Spaltenköpfe noch 33-stellige Zahlen verloren gehen, sind **zwei Schritte zwingend**:
+
+### Schritt 1: Richtig kopieren im SQL-Developer-Grid
+
+| Shortcut / Aktion | Was wird kopiert? | Wichtiger Hinweis |
+| :--- | :--- | :--- |
+| **`Strg+C`** (`Ctrl+C`) | Nur die markierten **Datenwerte** (ohne Spaltennamen) | Für einzelne Werte oder Einfügen in bestehende Listen |
+| **`Strg+Umschalt+C`** (`Ctrl+Shift+C`) | Markierte Zeilen **inklusive Spaltenüberschriften** (*Copy with Headers*) | **Standard für Excel-Übernahmen** — behält die Kopfzeile |
+| **`Strg+Ende` → `Strg+A` → `Strg+Umschalt+C`** | Alle Zeilen der Abfrage **inklusive Spaltenüberschriften** | Ohne `Strg+Ende` (ganz nach unten scrollen) kopiert `F9` **nur die ersten 50 Zeilen**! |
+
+### Schritt 2: Zielspalten in Excel **vor dem Einfügen** als „Text“ vorbereiten
+
+Wenn du 33-stellige Zahlen, Postleitzahlen (`01067`) oder Codes (`03-04`) direkt in ein leeres Excel-Blatt (`Standard`) einfügst, wandelt Excel sie **sofort beim Einfügen** in `1,23457E+32` um — ein nachträgliches Umstellen auf `Text` repariert die verlorenen Stellen **nicht**!
+
+1. **In Excel *vor* dem Einfügen** die Zielspalten (z. B. Spalte `B` für `TX_REF_33`, Spalte `C` für `POSTAL_CODE`, Spalte `D` für `PRODUCT_CODE`) komplett markieren.
+2. **`Start → Zahl → Text`** (oder `Strg+1` → Kategorie **`Text`**) auswählen — die Zellen sind nun **vorbereitet**, noch bevor Daten hineinkommen.
+3. **Einfügen über `Inhalte einfügen` (wichtig!):**
+   - Wähle in Excel **`Start → Einfügen → Inhalte einfügen... → Text`** (bzw. *An Zielformatierung anpassen* / unformatierter Text) statt blindem `Strg+V` — so übernimmt Excel die vorbereitete `Text`-Formatierung der Zielspalte, statt eigene HTML-/Zwischenablage-Typen anzuwenden.
+4. **Sofortige Kontrolle:** In der Formelzeile stehen alle **33 Ziffern ohne `E+32`**, Excel zeigt ggf. das kleine grüne Dreieck (*„Als Text gespeicherte Zahl“* — hier ausdrücklich **erwünscht**, *nicht* in Zahl konvertieren!), und `=LÄNGE(B2)` liefert `33`.
+
+!!! warning "Wann Copy-Paste trotzdem tabu ist"
+    Sobald Zeilenumbrüche (`CHR(10)`) oder Tabulatoren im Text vorkommen, viele Zeilen (> 500) benötigt werden oder das Ergebnis reproduzierbar im Team geteilt wird, immer **Goldstandard 1 (`.xlsx` + `TO_CHAR`)** oder **Goldstandard 2 (`CSV` + Power Query)** nutzen.
+
+---
+
+## 5. Entscheidungsmatrix für alle Datentypen & Zeilenzahlen (`D029`)
 
 | Datentyp / Sonderfall | Problem bei naivem Export | Empfohlene Lösung |
 | :--- | :--- | :--- |
-| **33-stellige ID (`NUMBER(38)`)** | `E+32` + Rundung nach 15 Stellen | `TO_CHAR(...)` + `.xlsx` **oder** `CSV` + Power Query (`Text`) |
-| **Führende Nullen (`'01067'`)** | Wird in CSV zu `1067` | `VARCHAR2` / `LPAD(..., '0')` + `.xlsx` **oder** Power Query (`Text`) |
-| **Code wie `'03-04'`** | Excel macht `03. Apr` daraus | `VARCHAR2` + `.xlsx` **oder** Power Query (`Text`) |
+| **33-stellige ID (`NUMBER(38)`)** | `E+32` + Rundung nach 15 Stellen | `TO_CHAR(...)` + `.xlsx` **oder** `CSV` + Power Query (`Text`) **oder** Zielspalte vorab als `Text` + `Strg+Umschalt+C` |
+| **Führende Nullen (`'01067'`)** | Wird in CSV/Standard zu `1067` | `VARCHAR2` / `LPAD(..., '0')` + `.xlsx` **oder** Power Query (`Text`) **oder** Excel-Spalte vorab `Text` |
+| **Code wie `'03-04'`** | Excel macht `03. Apr` daraus | `VARCHAR2` + `.xlsx` **oder** Power Query (`Text`) **oder** Excel-Spalte vorab `Text` |
 | **Beträge (`1234.56`)** | Punkt- vs. Komma-Dezimaltrennzeichen | Als echtes `NUMBER` in `.xlsx` (kulturunabhängig!) oder Power Query *„Mit Gebietsschema verwenden → Englisch (USA)“* |
 | **Umlaute (`München`, `Zürich`)** | `MÃ¼nchen` bei ANSI/Win-1252 | Immer `UTF-8` beim Export und `65001: Unicode (UTF-8)` in Power Query |
-| **Zeilenumbrüche (`CHR(10)`)** | Zerreisst Zeilen in naiven CSV-Parsern | `REPLACE(col, CHR(10), ' ')` oder `.xlsx` / sauberes CSV-Quoting (`"`) |
-| **> 50 Zeilen** | `Strg+A`/`Strg+C` ohne Scrollen kopiert nur 50 Zeilen | Immer `Rechtsklick → Exportieren...` nutzen |
+| **Zeilenumbrüche (`CHR(10)`)** | Zerreisst Zeilen in naiven CSV-/Clipboard-Parsern | `REPLACE(col, CHR(10), ' ')` oder `.xlsx` / sauberes CSV-Quoting (`"`) |
+| **> 50 Zeilen** | `Strg+A`/`Strg+Umschalt+C` ohne Scrollen kopiert nur 50 Zeilen | Vorher `Strg+Ende` drücken oder `Rechtsklick → Exportieren...` nutzen |
 | **> 1.048.576 Zeilen** | Excel-Blattlimit überschritten | `CSV` (`/*csv*/` + `SPOOL`) → in Excel *„Nur Verbindung erstellen / Datenmodell (Power Pivot)“* |
 
 !!! tip "Rückweg Excel → Oracle"
@@ -119,12 +146,12 @@ flowchart LR
   ??? success "Musterlösung & Erklärung"
       Sie erzeugt eine Excel-Formel statt eines reinen Datenwerts, löst in sicheren Umgebungen CSV-Injection-Warnungen aus und stört automatische Weiterverarbeitungen (Power Query, SVERWEIS, Datenbank-Reimport).
 
-### `D029` — Alle Datentypen sicher exportieren & Rückweg Excel → Oracle
-- **Lernziel:** Du wählst für Beträge, führende Nullen, Datumsfallen (`'03-04'`), Umlaute, `CHR(10)` und grosse Datenmengen (> 50 bzw. > 1 Mio. Zeilen) das jeweils passende Exportverfahren *(Bloom: Bewerten)*
-- **Menüpfad / Shortcut (DE / EN):** `Exportieren...` (`xlsx`/`csv`) sowie `Tabellen → Daten importieren...` (`Import Data...`)
-- **Selbstlern-Aufgabe (Lückentext/Check):** `Du exportierst 65 Zeilen mit einem Betragsfeld (amount = 1234.56) und einer 33-stelligen ID (tx_ref_33) nach .xlsx. Welche der beiden Spalten darf KEIN TO_CHAR bekommen, damit =SUMME(...) in Excel rechnet?`
+### `D029` — Copy-Paste (`Ctrl+Shift+C`), Excel-Text-Vorbereitung & alle Datentypen sicher überführen
+- **Lernziel:** Du nutzt `Strg+Umschalt+C` (*Copy with Headers*) in Kombination mit vorab als `Text` formatierten Excel-Zielspalten (`Inhalte einfügen → Text`) und wählst für jeden Datentyp und jede Datenmenge das passende Verfahren *(Bloom: Bewerten)*
+- **Menüpfad / Shortcut (DE / EN):** `Strg+Ende` → `Strg+A` → `Strg+Umschalt+C` (`Ctrl+Shift+C`) → in Excel: Zielspalte `Strg+1` (`Text`) → `Inhalte einfügen → Text`; bzw. `Exportieren...` (`xlsx`/`csv`) und `Daten importieren...`
+- **Selbstlern-Aufgabe (Lückentext/Check):** `Du möchtest 4 Zeilen aus dem Grid per Tastenkürzel INKLUSIVE Spaltenüberschriften kopieren und in Excel verlustfrei einfügen: Im Grid drückst du ___, und in Excel formatierst du die Zielspalte VOR dem Einfügen auf ___.`
   ??? success "Musterlösung & Erklärung"
-      **`amount`** bleibt als echtes `NUMBER` erhalten (damit Excel direkt rechnen kann); nur **`tx_ref_33`** (Identifikator) erhält `TO_CHAR(tx_ref_33)`.
+      Im Grid **`Strg+Umschalt+C`** (`Ctrl+Shift+C`), in Excel vorab **`Text`** (über `Start → Zahl → Text` bzw. `Strg+1 → Text`, anschliessend über `Inhalte einfügen → Text` einfügen). Nachträgliches Umstellen auf `Text` kann bereits gerundete Ziffern nicht wiederherstellen.
 
 ### `D030` — Modul-6-Lab & Capstone: End-to-End-Finanzexport mit Excel-Integritätsprüfung
 - **Lernziel:** Du führst den kompletten Export über `sd_customers`, `sd_accounts` und `sd_transactions` durch und verifizierst die Datenintegrität direkt in Excel per Kontrollformeln *(Bloom: Bewerten)*
@@ -140,11 +167,11 @@ flowchart LR
 ## Selbstlern-Aufgaben (Modul 6)
 
 1. **(★)** Führe `SELECT tx_id, tx_ref_33 FROM sd_transactions WHERE tx_id <= 4;` einmal ohne und einmal mit `SET NUMWIDTH 38` über `F5` aus und vergleiche die Skriptausgabe.
-2. **(★★)** Exportiere alle 65 Zeilen mit der Goldstandard-Query aus [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) als `.xlsx` (inkl. SQL-Arbeitsblatt) und prüfe in Excel `=LÄNGE(B2)=33`, `=RECHTS(B2;5)="90123"`, `postal_code = "01067"` und `product_code = "03-04"`.
-3. **(★★★)** Exportiere dieselbe Abfrage als `CSV (UTF-8)` und importiere sie über `Excel → Daten → Aus Text/CSV → Daten transformieren`, sodass `tx_ref_33_txt`, `postal_code` und `product_code` als `Text`, `amount` aber über Gebietsschema `Englisch (USA)` als `Dezimalzahl` geladen wird.
+2. **(★★)** Markiere dieselben 4 Zeilen im `F9`-Grid und kopiere sie mit **`Strg+Umschalt+C`** (`Ctrl+Shift+C`). Formatiere in einem neuen Excel-Blatt Spalte `B` **vorab** als `Text`, füge über `Inhalte einfügen → Text` ein und prüfe `=LÄNGE(B2)=33` sowie `=ISTTEXT(B2)=WAHR`.
+3. **(★★★)** Exportiere alle 65 Zeilen mit der Goldstandard-Query aus [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) als `.xlsx` (inkl. SQL-Arbeitsblatt) sowie als `CSV (UTF-8)` über `Excel → Daten → Aus Text/CSV → Daten transformieren` (`tx_ref_33_txt`, `postal_code`, `product_code` als `Text`; `amount` über Gebietsschema `Englisch (USA)` als `Dezimalzahl`).
 
 ??? success "Musterlösungen zu Modul 6"
-    Siehe [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) (Modul 6). Bei `tx_id = 1` liefert `=RECHTS(B2;5)` exakt `"90123"`, `postal_code` bleibt `"01067"` (Länge 5), `product_code` bleibt `"03-04"` und `=SUMME(...)` über alle 65 `amount`-Werte rechnet ohne `#WERT!`-Fehler.
+    Siehe [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) (Modul 6). Sowohl bei Copy-Paste (`Strg+Umschalt+C` + vorab als `Text` formatierte Excel-Spalte + `Inhalte einfügen → Text`) als auch bei `.xlsx` / Power Query liefert `=RECHTS(B2;5)` für `tx_id = 1` exakt `"90123"`, `postal_code` bleibt `"01067"` (Länge 5), `product_code` bleibt `"03-04"` und `=SUMME(...)` über alle 65 `amount`-Werte rechnet ohne `#WERT!`-Fehler.
 
 ---
 
