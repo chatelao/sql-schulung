@@ -4,17 +4,38 @@
 
 ---
 
-## 1. XML generieren & abfragen (`XMLType`, `XMLELEMENT`, `XMLTABLE`)
+## 1. Vom einfachsten Einstieg (`EXTRACTVALUE`) bis `XMLTABLE`
 
-| Konstrukt | Zweck |
-| :--- | :--- |
-| `XMLELEMENT("emp", XMLATTRIBUTES(empno AS "id"), ename)` | Erzeugt XML-Elemente & Attribute |
-| `XMLFOREST(ename, job, sal)` | Erzeugt mehrere Kind-Elemente (lässt `NULL`s weg) |
-| `XMLAGG(XMLELEMENT(...) ORDER BY ...)` | Aggregiert mehrere Zeilen in einen XML-Baum |
-| `XMLEXISTS` / `XMLQUERY` / `XMLCAST` | XPath-/XQuery-Filter & skalare Extraktion |
-| `XMLTABLE` | Zerlegt XML-Knoten in relationale Zeilen & Spalten |
+Der schnellste Weg, einen **einzelnen** Wert aus einer `XMLTYPE`-Spalte zu lesen, sind die klassischen Einzeiler **`EXTRACTVALUE`**, **`EXTRACT`** und **`EXISTSNODE`**. Sobald mehrere Knoten (`1:N`) in relationale Zeilen zerlegt werden müssen, folgt der moderne Standard **`XMLTABLE` / `XMLQUERY` mit `PASSING`**.
 
-### `XMLTABLE`-Beispiel
+### Stufe 1: Der einfachste Fall (`EXTRACTVALUE`, `EXTRACT`, `EXISTSNODE`)
+```sql
+SELECT c.cat_id,
+       EXTRACTVALUE(c.xml_doc, '/catalog/@dept')             AS dept,
+       EXTRACTVALUE(c.xml_doc, '/catalog/product[1]/name')   AS first_prod,
+       EXTRACTVALUE(c.xml_doc, '/catalog/product[1]/price')  AS first_price
+FROM adv_catalog_xml c
+WHERE EXISTSNODE(c.xml_doc, '/catalog/product[@id="P20"]') = 1;
+```
+- **`EXTRACTVALUE(xml, xpath)`**: Liefert genau **einen** Skalarwert (Text/Zahl). Gibt es mehr als einen Treffer (z. B. `/catalog/product/name` ohne `[1]`), bricht Oracle mit **`ORA-19025: EXTRACTVALUE returns value of only one node`** ab!
+- **`EXTRACT(xml, xpath)`**: Liefert ein `XMLTYPE`-Fragment (auch bei mehreren Treffern).
+- **`EXISTSNODE(xml, xpath)`**: Prüft in `WHERE`, ob der Pfad existiert (`1` = ja, `0` = nein).
+
+!!! warning "Hinweis zur Aktualität (Legacy vs. Modern)"
+    `EXTRACTVALUE`, `EXTRACT` und `EXISTSNODE` sind in Oracle seit 11gR2/12c **deprecated** (funktionieren in Oracle 26ai/23ai aber weiterhin und begegnen dir oft in Bestandscode). Für neuen Code nutzt du **`XMLCAST(XMLQUERY(... PASSING ...))`**, **`XMLEXISTS(... PASSING ...)`** und **`XMLTABLE(... PASSING ...)`**.
+
+### Stufe 2: Moderner Ersatz für Einzelwerte & Filter (`XMLQUERY` / `XMLCAST` / `XMLEXISTS`)
+```sql
+SELECT c.cat_id,
+       XMLCAST(
+         XMLQUERY('/catalog/@dept' PASSING c.xml_doc RETURNING CONTENT)
+         AS VARCHAR2(20)
+       ) AS dept
+FROM adv_catalog_xml c
+WHERE XMLEXISTS('/catalog/product[price > 80]' PASSING c.xml_doc);
+```
+
+### Stufe 3: `1:N`-Listen relational zerlegen (`XMLTABLE` mit `PASSING`)
 ```sql
 SELECT c.cat_id, xt.dept, xt.prod_id, xt.prod_name, xt.price, xt.currency
 FROM adv_catalog_xml c,
@@ -30,16 +51,25 @@ FROM adv_catalog_xml c,
      ) xt;
 ```
 
+## 2. XML generieren (`XMLELEMENT`, `XMLFOREST`, `XMLAGG`)
+
+| Konstrukt | Zweck |
+| :--- | :--- |
+| `XMLELEMENT("emp", XMLATTRIBUTES(empno AS "id"), ename)` | Erzeugt XML-Elemente & Attribute |
+| `XMLFOREST(ename, job, sal)` | Erzeugt mehrere Kind-Elemente (lässt `NULL`s weg) |
+| `XMLAGG(XMLELEMENT(...) ORDER BY ...)` | Aggregiert mehrere Zeilen in einen XML-Baum |
+
 ---
 
-### Visuelle Orientierung: XML in Oracle SQL
+### Visuelle Orientierung: Vom einfachen Einzelwert zu `XMLTABLE`
 ```mermaid
 flowchart LR
-    X["XMLTYPE"] --> T["XMLTABLE ('/root/row' PASSING doc COLUMNS ...)"]
-    X --> E["XMLEXISTS (XPath in WHERE)"]
+    X["XMLTYPE (adv_catalog_xml)"] --> L["1. EXTRACTVALUE / EXISTSNODE (einfach, 1 Knoten, Legacy)"]
+    X --> M["2. XMLCAST(XMLQUERY(... PASSING)) & XMLEXISTS (modern)"]
+    X --> T["3. XMLTABLE ('/catalog/product' PASSING ... COLUMNS ...) (1:N Zeilen)"]
     R["Relationale Zeilen"] --> G["XMLELEMENT / XMLAGG -> XML-Export"]
 ```
-*Alt-Text: Relationale Zerlegung mit XMLTABLE/XMLEXISTS und XML-Generierung mit XMLELEMENT/XMLAGG.*
+*Alt-Text: Steigerung in der XML-Abfrage: vom einfachen Legacy-Einzelwert mit EXTRACTVALUE über XMLQUERY/XMLEXISTS mit PASSING bis zur 1:N-Tabellenzerlegung mit XMLTABLE sowie XML-Generierung.*
 
 ---
 
@@ -73,12 +103,12 @@ flowchart LR
 ??? success "Musterlösung & Erklärung"
     PASSING doc prüft per XPath in der WHERE-Klausel.
 
-### `A037` — XPath & XQuery mit `XMLQUERY` und `XMLEXISTS`
-- **Lernziel:** Filtern von XML-Dokumenten in `WHERE` mit `XMLEXISTS`, Extraktion über `XMLQUERY(... PASSING ... RETURNING CONTENT)` *(Bloom: Anwenden)*
-- **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT XMLELEMENT("dept", XMLATTRIBUTES(deptno AS "id"), XMLELEMENT("dname", dname)) FROM scott.dept;`
+### `A037` — XPath & XQuery mit `EXTRACTVALUE`, `XMLQUERY` und `XMLEXISTS`
+- **Lernziel:** Einfache Einzelwerte (`EXTRACTVALUE` / `EXISTSNODE`, `ORA-19025`-Grenze) sowie den modernen Ersatz `XMLEXISTS` und `XMLQUERY(... PASSING ... RETURNING CONTENT)` einsetzen *(Bloom: Anwenden)*
+- **Selbstlern-Aufgabe (Lückentext/Check):** `Warum wirft EXTRACTVALUE(xml_doc, '/catalog/product/name') auf adv_catalog_xml den Fehler ORA-19025, und womit löst man 1:N-Knoten modern auf?`
 
 ??? success "Musterlösung & Erklärung"
-    Erzeugt <dept id="10"><dname>ACCOUNTING</dname></dept>.
+    Weil zwei `<product>`-Knoten existieren und EXTRACTVALUE genau einen Knoten verlangt. Einzelwert-Fix: `/catalog/product[1]/name` (Legacy) oder `XMLCAST(XMLQUERY(... PASSING ...))`; für alle Zeilen: `XMLTABLE(... PASSING ...)`.
 
 ### `A038` — `XMLCAST` & `XMLSERIALIZE`
 - **Lernziel:** Konvertierung von XML-Fragmenten in SQL-Skalare (`XMLCAST(XMLQUERY(...) AS VARCHAR2(100))`) und formatierte Ausgabe (`INDENT`) *(Bloom: Anwenden)*
@@ -119,14 +149,16 @@ flowchart LR
 
 ## Selbstlern-Aufgaben (Modul 4)
 
-1. **(★)** Filtere `adv_catalog_xml` mit `XMLEXISTS`, sodass nur Kataloge gefunden werden, die ein Produkt mit `price > 80` enthalten.
-2. **(★★)** Berechne per `XMLTABLE` den Durchschnittspreis aller Produkte in `adv_catalog_xml`.
+1. **(★)** Lies aus `adv_catalog_xml` zuerst das Attribut `@dept` per `EXTRACTVALUE` aus und filtere danach mit `XMLEXISTS`, sodass nur Kataloge mit `price > 80` gefunden werden.
+2. **(★★)** Berechne per `XMLTABLE` (`PASSING c.xml_doc`) den Durchschnittspreis aller Produkte in `adv_catalog_xml`.
 3. **(★★★)** Exportiere `SCOTT.DEPT` (mit verschachtelten `EMP`-Elementen per `XMLAGG`) als wohlgeformtes XML-Dokument.
 
 ??? success "Musterlösungen zu Modul 4"
     ```sql
     -- 1:
-    SELECT cat_id FROM adv_catalog_xml
+    SELECT cat_id,
+           EXTRACTVALUE(xml_doc, '/catalog/@dept') AS dept_legacy
+    FROM adv_catalog_xml
     WHERE XMLEXISTS('/catalog/product[price > 80]' PASSING xml_doc);
 
     -- 2:
