@@ -31,6 +31,8 @@ Jede der **200 Lektionen (`L001`–`L200`)** folgt demselben wiederkehrenden 45-
 4. **Independent Practice (12 Min.)** — Sage die Query-Ausgabe *vor* dem Ausführen in deiner Oracle-Datenbank voraus.
 5. **Exam Trap Takeaway (3 Min.)** — Notiere den genauen `ORA-`-Fehler oder Edge Case für das `1Z0-171`-Examen.
 
+> **Lernstufen im Handbuch:** Jedes Lernziel trägt eine Einordnung nach der **[Bloom-Taxonomie](getting-started/bloom-taxonomy.md)** — dort erfährst du auch, warum bereits Stufe 1 (*„Wissen, dass es etwas gibt“*) den grössten Hebel gegen stille Datenfehler bietet.
+
 ---
 
 ## Wähle deine Lab-Umgebung

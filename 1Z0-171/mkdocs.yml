@@ -52,6 +52,7 @@ nav:
   - Start: index.md
   - Einstieg & Setup:
       - Selbststudium-Leitfaden: getting-started/self-study-guide.md
+      - "Lernstufen (Bloom-Taxonomie)": getting-started/bloom-taxonomy.md
       - Variante A (In-House Oracle DB): getting-started/variant-a-inhouse.md
       - Variante B (Kostenlose Online-Cloud): getting-started/variant-b-online.md
       - FreeSQL Lab Pack & Live-Sandboxes: labs/freesql-upload-pack.md

@@ -1,6 +1,6 @@
 # Selbststudium-Leitfaden (Ohne Trainer zum Erfolg)
 
-Dieses Curriculum ist so aufgebaut, dass du **komplett eigenständig ohne Dozent** von null SQL-Kenntnissen bis zur bestandenen Prüfung **Oracle AI Database SQL Associate (`1Z0-171`)** gelangst. Diese Seite zeigt dir exakt, wie du die drei Werkzeuge im Alltag kombinierst, deine Ergebnisse selbst prüfst und typische Selbstlern-Fallen vermeidest.
+Dieses Curriculum ist so aufgebaut, dass du **komplett eigenständig ohne Dozent** von null SQL-Kenntnissen bis zur bestandenen Prüfung **Oracle AI Database SQL Associate (`1Z0-171`)** gelangst. Diese Seite zeigt dir exakt, wie du die drei Werkzeuge im Alltag kombinierst, deine Ergebnisse selbst prüfst und typische Selbstlern-Fallen vermeidest. *(Tipp zur Lernstrategie: Warum schon die erste Stufe „Wissen, dass es etwas gibt“ so wertvoll ist, erklärt das Kapitel [Lernstufen & Bloom-Taxonomie](bloom-taxonomy.md).)*
 
 ---
 
