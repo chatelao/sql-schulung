@@ -54,3 +54,11 @@ Jede der **200 Lektionen (`L001`–`L200`)** folgt demselben wiederkehrenden 45-
 | **[Phase 8](phases/phase-08-ddl-objects.md)** | `L139`–`L162` | DDL, Constraints, Views, Sequences, Indexes & Synonyms | 20 % | **CP-4** (`L161–L162`) |
 | **[Phase 9](phases/phase-09-dict-tz-dcl.md)** | `L163`–`L178` | Data Dictionary, Time Zones & User Access (DCL) | 10 % | — |
 | **[Phase 10](phases/phase-10-exam-prep.md)** | `L179`–`L200` | „Human Compiler“-Drills, Mock Exams & Abschlussbereitschaft | 100 % | **CP-5** (`L199–L200`) |
+
+---
+
+## Optionale Tracks ausserhalb der `1Z0-171`-Zertifizierung
+
+- **[Advanced SQL (`A001`–`A060`)](advanced/modul-01-hierarchies.md)** — Hierarchien, Regular Expressions, JSON, XML, Window Functions, `MATCH_RECOGNIZE` & Execution Plans.
+- **[SQL Developer Praxis (`D001`–`D030`)](sqldeveloper/modul-01-ui-grid-nls.md)** — Schachbrettmuster & NLS, Verbindungen & Schemenfilter, Objektsuche, Drag-and-Drop-Joins, Schnellformatierungen & verlustfreier Excel-Export (inkl. 33-stelliger Zahlen ohne `E`-Form).
+

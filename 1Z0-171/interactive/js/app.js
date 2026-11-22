@@ -250,7 +250,9 @@
     phaseFilter.innerHTML = `<option value="ALL">Alle 10 Phasen 1Z0-171 (200 Lektionen)</option>` +
       window.CURRICULUM_PHASES.map((p) => `<option value="${p.id}">Phase ${p.id}: ${escapeHtml(p.title.replace(/^Phase \d+: /, ""))}</option>`).join("") +
       (window.ADVANCED_PHASES ? `<optgroup label="Advanced SQL (A001–A060)"><option value="ADV_ALL">Alle 6 Advanced-Module (60 Lektionen)</option>` +
-      window.ADVANCED_PHASES.map((p) => `<option value="${p.id}">${escapeHtml(p.title)} (${p.examNote})</option>`).join("") + `</optgroup>` : "");
+      window.ADVANCED_PHASES.map((p) => `<option value="${p.id}">${escapeHtml(p.title)} (${p.examNote})</option>`).join("") + `</optgroup>` : "") +
+      (window.SQLDEV_PHASES ? `<optgroup label="SQL Developer Praxis (D001–D030)"><option value="DEV_ALL">Alle 6 SQL-Developer-Module (30 Lektionen)</option>` +
+      window.SQLDEV_PHASES.map((p) => `<option value="${p.id}">${escapeHtml(p.title)} (${p.examNote})</option>`).join("") + `</optgroup>` : "");
 
     variantSelect.value = state.variant || "B";
     variantSelect.addEventListener("change", () => {
@@ -354,12 +356,15 @@
   function renderPhases() {
     const doneSet = new Set(state.completedLessons);
     const selectedPhase = phaseFilter.value;
-    const isAdv = selectedPhase === "ADV_ALL" || String(selectedPhase).startsWith("A");
-    const activeList = isAdv && window.ADVANCED_PHASES ? window.ADVANCED_PHASES : window.CURRICULUM_PHASES;
-    const totalTarget = isAdv ? 60 : 200;
-    const prefix = isAdv ? "A" : "L";
+    const isAdv = selectedPhase === "ADV_ALL" || /^A\d+$/i.test(selectedPhase);
+    const isDev = selectedPhase === "DEV_ALL" || /^D\d+$/i.test(selectedPhase);
+    const activeList = isAdv && window.ADVANCED_PHASES
+      ? window.ADVANCED_PHASES
+      : (isDev && window.SQLDEV_PHASES ? window.SQLDEV_PHASES : window.CURRICULUM_PHASES);
+    const totalTarget = isAdv ? 60 : (isDev ? 30 : 200);
+    const prefix = isAdv ? "A" : (isDev ? "D" : "L");
     const totalDone = state.completedLessons.filter((id) => String(id).startsWith(prefix)).length;
-    document.getElementById("lessons-done-count").textContent = `${totalDone}/${totalTarget}`;
+    document.getElementById("lessons-done-count").textContent = `${totalDone} / ${totalTarget}`;
     const pct = Math.round((totalDone / totalTarget) * 100);
     document.getElementById("lessons-done-pct").textContent = `${pct}%`;
     document.getElementById("lessons-progress-bar").style.width = `${pct}%`;
@@ -367,25 +372,26 @@
     const q = lessonSearch.value.trim().toLowerCase();
 
     const html = activeList
-      .filter((p) => selectedPhase === "ALL" || selectedPhase === "ADV_ALL" || String(p.id) === selectedPhase)
+      .filter((p) => selectedPhase === "ALL" || selectedPhase === "ADV_ALL" || selectedPhase === "DEV_ALL" || String(p.id) === selectedPhase)
       .map((p) => {
         const filteredLessons = p.lessons.filter(
           (l) => !q || l.id.toLowerCase().includes(q) || l.title.toLowerCase().includes(q) || l.tag.toLowerCase().includes(q)
         );
         if (filteredLessons.length === 0) return "";
         const phaseDone = p.lessons.filter((l) => doneSet.has(l.id)).length;
+        const badgeLabel = isAdv ? "Advanced" : (isDev ? "SQL Developer" : `Phase ${p.id}`);
         return `
           <div class="phase-block" id="phase-${p.id}">
             <div class="phase-header">
               <div class="phase-title-row">
-                <span class="phase-tag">${String(p.id).startsWith('A') ? 'Advanced' : 'Phase ' + p.id}</span>
+                <span class="phase-tag">${badgeLabel}</span>
                 <strong>${escapeHtml(p.title.replace(/^Phase \d+:\s*/, ""))}</strong>
                 <span class="muted-sm" style="margin:0;">(${escapeHtml(p.examNote)})</span>
                 <a class="permalink-badge" href="#curriculum/phase-${p.id}" title="Permanente URL zu Phase ${p.id}">#phase-${p.id}</a>
               </div>
               <div class="phase-stats">
                 <span><strong>${phaseDone}</strong> / ${p.lessons.length} erledigt</span>
-                <button type="button" class="btn btn-sm btn-teal phase-freesql-btn" data-phase-id="${p.id}">Lab in FreeSQL &nearr;</button>
+                ${!isAdv && !isDev ? `<button type="button" class="btn btn-sm btn-teal phase-freesql-btn" data-phase-id="${p.id}">Lab in FreeSQL &nearr;</button>` : ""}
                 <a class="docs-link" href="${p.docsUrl}" target="_blank" rel="noopener">Kapitel lesen &nearr;</a>
               </div>
             </div>
@@ -1976,11 +1982,11 @@
 
     isApplyingRoute = true;
     try {
-      // Shorthands: #L042 or #phase-3 or #CP-2
-      if (/^l\d{3}$/i.test(first)) {
+      // Shorthands: #L042, #A012, #D026 or #phase-3 / #phase-D6 or #CP-2
+      if (/^[lad]\d{3}$/i.test(first)) {
         const lessonId = first.toUpperCase();
         switchView("curriculum");
-        phaseFilter.value = "ALL";
+        phaseFilter.value = lessonId.startsWith("A") ? "ADV_ALL" : (lessonId.startsWith("D") ? "DEV_ALL" : "ALL");
         lessonSearch.value = "";
         renderPhases();
         const target = document.getElementById(`lesson-${lessonId}`);
@@ -1988,8 +1994,9 @@
         setRouteHash(`#curriculum/${lessonId}`, false);
         return;
       }
-      if (/^phase-(\d+)$/i.test(first)) {
-        const pId = first.match(/^phase-(\d+)$/i)[1];
+      if (/^phase-(\d+|A\d+|D\d+|ADV_ALL|DEV_ALL)$/i.test(first)) {
+        const rawPid = first.match(/^phase-(\d+|A\d+|D\d+|ADV_ALL|DEV_ALL)$/i)[1];
+        const pId = /^\d+$/.test(rawPid) ? rawPid : rawPid.toUpperCase();
         switchView("curriculum");
         phaseFilter.value = pId;
         lessonSearch.value = "";
@@ -2019,16 +2026,17 @@
           saveState();
           renderVariantBanner();
         }
-        if (/^l\d{3}$/i.test(second)) {
+        if (/^[lad]\d{3}$/i.test(second)) {
           const lessonId = second.toUpperCase();
-          phaseFilter.value = "ALL";
+          phaseFilter.value = lessonId.startsWith("A") ? "ADV_ALL" : (lessonId.startsWith("D") ? "DEV_ALL" : "ALL");
           lessonSearch.value = "";
           renderPhases();
           const target = document.getElementById(`lesson-${lessonId}`);
           highlightAndScrollTo(target);
           setRouteHash(`#curriculum/${lessonId}`, false);
-        } else if (/^phase-(\d+)$/i.test(second)) {
-          const pId = second.match(/^phase-(\d+)$/i)[1];
+        } else if (/^phase-(\d+|A\d+|D\d+|ADV_ALL|DEV_ALL)$/i.test(second)) {
+          const rawPid = second.match(/^phase-(\d+|A\d+|D\d+|ADV_ALL|DEV_ALL)$/i)[1];
+          const pId = /^\d+$/.test(rawPid) ? rawPid : rawPid.toUpperCase();
           phaseFilter.value = pId;
           lessonSearch.value = "";
           renderPhases();

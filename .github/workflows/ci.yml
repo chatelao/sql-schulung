@@ -36,7 +36,7 @@ jobs:
       - name: Verify Oracle 26ai reference links (offline coverage & version check)
         run: python3 scripts/check_refs.py --offline
 
-      - name: Verify pedagogy standards (Bloom levels, 100% solutions, diagrams & advanced A001-A060)
+      - name: Verify pedagogy standards (Bloom levels, 100% solutions, diagrams, advanced A001-A060 & sqldeveloper D001-D030)
         run: python3 scripts/check_pedagogy.py
 
       - name: Verify anonymized class report generator against fixtures

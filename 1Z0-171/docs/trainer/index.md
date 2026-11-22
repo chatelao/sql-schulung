@@ -9,7 +9,7 @@ Dieser Bereich ergänzt das Selbststudium-Handbuch für **firmeninterne Hybrid-K
 Erwachsene lernen ziel- und problemorientiert. Kläre **vor Beginn** in einem 15-minütigen Onboarding-Call oder kurzen Fragebogen:
 
 1. **Kursziel je Person**:
-   - **Route A — Anwender-Pfad (Praxis im Job, ~60–75 Std.)**: Fokus auf Datenabfragen für Reporting, Analyse und Fachbereich (`Phase 1–6` + `Phase 9` Data Dictionary/Zeitzonen). Keine Zertifizierungsprüfung nötig.
+   - **Route A — Anwender-Pfad (Praxis im Job, ~60–75 Std.)**: Fokus auf Datenabfragen für Reporting, Analyse und Fachbereich (`Phase 1–6` + `Phase 9` Data Dictionary/Zeitzonen, optional ergänzt um **[SQL Developer Praxis (`D001`–`D030`)](../sqldeveloper/modul-01-ui-grid-nls.md)** für Objektsuche, Filter & verlustfreien Excel-Export). Keine Zertifizierungsprüfung nötig.
    - **Route B — Zertifizierungs-Pfad (`1Z0-171`, ~150 Std.)**: Alle 10 Phasen inkl. DML/DDL/DCL, Human Compiler Clinics und Mock Exams.
 2. **Vorwissen**: Wer kennt Excel/Pivot, wer hat bereits SQL gelesen, wer startet bei null?
 3. **Verfügbare Lernzeit pro Woche**: Realistische Wochenstunden zwischen den Terminen (inkl. Zusage durch Vorgesetzte).
@@ -91,6 +91,7 @@ Fällt eine Person wegen Projekt-/Kundenterminen aus, nutzt sie den **Nachhol-Pf
 | Phase 7–8 (`L123–L162`) | Optional | Pflicht | 7,5 Std. | 12 Std. | DML-/DDL-Lab + `CP-4` |
 | Phase 9 (`L163–L178`) | Teilweise | Pflicht | 3 Std. | 5 Std. | Dictionary & Time Zones |
 | Phase 10 (`L179–L200`) | — | Pflicht | 3 Std. | 8 Std. | Mock #1/#2 ≥ 75 %, `CP-5` ≥ 85 % |
+| SQL Developer Praxis (`D001–D030`) | Optional (empf.) | Optional | 6 Std. | 16,5 Std. | `DCP-1` & `DCP-2` (inkl. Excel-Check) |
 
 ---
 

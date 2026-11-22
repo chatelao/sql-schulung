@@ -49,7 +49,29 @@ for f in sorted(glob.glob("advanced/docs/modul-*.md")):
 if len(adv_ids) != 60:
     errs.append(f"Advanced SQL: {len(adv_ids)}/60 Lektionen gefunden")
 
-print(f"Geprüfte Phasen: 10 + 6 Advanced-Module ({len(adv_ids)} A-Lektionen), Probleme: {len(errs)}")
+dev_ids = set()
+for f in sorted(glob.glob("sqldeveloper/docs/modul-*.md")):
+    s = open(f, encoding="utf-8").read()
+    name = f.split("/")[-1]
+    secs = [sec for sec in re.split(r'(?=^### )', s, flags=re.M) if sec.startswith("### `D")]
+    for sec in secs:
+        head = sec.splitlines()[0]
+        m = re.match(r'^### `(D\d{3})`', head)
+        if m:
+            dev_ids.add(m.group(1))
+        if "??? success" not in sec:
+            errs.append(f"{name}: Keine Musterlösung in '{head}'")
+        if "(Bloom:" not in sec:
+            errs.append(f"{name}: Kein Bloom-Tag im Lernziel von '{head}'")
+    if s.count("```mermaid") < 1 or "*Alt-Text:" not in s:
+        errs.append(f"{name}: Fehlendes Mermaid-Diagramm oder Alt-Text")
+    if "___" not in s:
+        errs.append(f"{name}: Keine Lückentext-Fading-Aufgabe (___)")
+
+if len(dev_ids) != 30:
+    errs.append(f"SQL Developer Praxis: {len(dev_ids)}/30 Lektionen gefunden")
+
+print(f"Geprüfte Phasen: 10 + 6 Advanced-Module ({len(adv_ids)} A-Lektionen) + 6 SQL-Developer-Module ({len(dev_ids)} D-Lektionen), Probleme: {len(errs)}")
 if errs:
     print("\n".join(errs))
     sys.exit(1)

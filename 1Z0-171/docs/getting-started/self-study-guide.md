@@ -68,6 +68,6 @@ Beantworte drei kurze Fragen:
 
 Auch im reinen Selbststudium musst du nicht allein lernen:
 
-1. **GitHub Discussions & Fragen:** Nutze [GitHub Discussions im Repository](https://github.com/chatelao/sql-schulung/discussions), um Fragen zu einzelnen Lektionen (`L001–L200`, `A001–A060`) oder `ORA-`-Fehlermeldungen zu stellen.
+1. **GitHub Discussions & Fragen:** Nutze [GitHub Discussions im Repository](https://github.com/chatelao/sql-schulung/discussions), um Fragen zu einzelnen Lektionen (`L001–L200`, `A001–A060`, `D001–D030`) oder `ORA-`-Fehlermeldungen zu stellen.
 2. **Peer-Review für Checkpoint Part B:** Teile deine 3 SQL-Lösungen aus Part B nach einem Checkpoint mit einer Lernpartnerin / einem Lernpartner (oder in Discussions) und bewertet eure Queries gegenseitig anhand der [4-Kriterien-Rubrik (0–8 Punkte)](../checkpoints/benchmark-guide.md#bewertungsrubrik-fur-offene-sql-aufgaben-part-b-max-8-punkte-je-task).
 3. **Versions-Hinweis (`26ai` / `23ai Free`):** Alle Erklärungen und Handbuch-Links verweisen auf die aktuelle **Oracle AI Database 26ai** Referenz und sind zu 100 % kompatibel mit **Oracle Database 23ai Free** (Docker) und **Oracle FreeSQL**.

@@ -15,10 +15,10 @@ for f in files:
         if m and m.group(1) != LATEST:
             errs.append(f"Alte Version {m.group(1)}: {u}")
 cur = open(ROOT + "/1Z0-171/interactive/js/data-curriculum.js", encoding="utf-8").read()
-for m in re.finditer(r'\{ id: "(L\d+)"([^\n]*)', cur):
+for m in re.finditer(r'\{ id: "([LAD]\d+)"([^\n]*)', cur):
     if "refUrl" not in m.group(2):
         errs.append(f"Lektion {m.group(1)} ohne refUrl")
-for f in sorted(glob.glob(ROOT + "/advanced/docs/modul-*.md")):
+for f in sorted(glob.glob(ROOT + "/advanced/docs/modul-*.md")) + sorted(glob.glob(ROOT + "/sqldeveloper/docs/modul-*.md")):
     if "docs.oracle.com" not in open(f, encoding="utf-8").read():
         errs.append(f"{f} ohne Oracle-Referenz")
 if "--offline" not in sys.argv:

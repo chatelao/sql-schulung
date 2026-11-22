@@ -405,3 +405,84 @@ window.ADVANCED_PHASES = [
     ]
   },
 ];
+
+window.SQLDEV_PHASES = [
+  {
+    id: "D1",
+    title: "Modul 1: Oberfläche, Schachbrettmuster, Grid & NLS",
+    examNote: "D001–D005",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/sqldeveloper/modul-01-ui-grid-nls/",
+    lessons: [
+      { id: "D001", title: "SQL Developer im Überblick: Classic Desktop vs. VS Code Extension vs. Web", tag: "SQL Developer", refLabel: "SQL Developer Guide", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D002", title: "Schachbrett- & Zebramuster, NULL-Markierung & Lesbarkeit im Grid", tag: "SQL Developer", refLabel: "Worksheet Preferences", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D003", title: "NLS-Einstellungen: ISO-Datum, Dezimaltrennzeichen & Session-Sprache", tag: "SQL Developer", refLabel: "Format Models", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Format-Models.html" },
+      { id: "D004", title: "Fetch-Size (F9 vs. F5), Ergebnisse anpinnen & Single Record View", tag: "SQL Developer", refLabel: "SQL Worksheet", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D005", title: "Modul-1-Lab: Arbeitsplatz produktiv & präsentationstauglich einrichten", tag: "SQL Developer", refLabel: "SQL Developer Guide", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+    ]
+  },
+  {
+    id: "D2",
+    title: "Modul 2: Verbindungen, Import/Export & Schemenfilter",
+    examNote: "D006–D010",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/sqldeveloper/modul-02-connections-filters/",
+    lessons: [
+      { id: "D006", title: "Verbindungen anlegen, in Ordnern strukturieren & farbcodieren", tag: "SQL Developer", refLabel: "Connections", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D007", title: "Verbindungen exportieren & importieren (JSON, Passwort-Sicherheit)", tag: "SQL Developer", refLabel: "Export Connections", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/26.2/rptug/sql-developer-dialogs.html" },
+      { id: "D008", title: "Zentrale Verbindungsverwaltung mit tnsnames.ora & Fehlerdiagnose", tag: "SQL Developer", refLabel: "ORA-12154", refUrl: "https://docs.oracle.com/en/error-help/db/ora-12154/" },
+      { id: "D009", title: "Schemenfilter (Andere Benutzer) & Objektfilter anwenden/zurücksetzen", tag: "SQL Developer", refLabel: "Using Filters", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer-vscode/26.2/sqdnx/using-filters.html" },
+      { id: "D010", title: "Modul-2-Lab: Team-Verbindungspaket & Schema-Filter-Workflow", tag: "SQL Developer", refLabel: "Export Connections", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/26.2/rptug/sql-developer-dialogs.html" },
+    ]
+  },
+  {
+    id: "D3",
+    title: "Modul 3: Objekte suchen & inspizieren",
+    examNote: "D011–D015",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/sqldeveloper/modul-03-search-inspect/",
+    lessons: [
+      { id: "D011", title: "Datenbankobjekte suchen (Ansicht → Datenbankobjekt suchen)", tag: "SQL Developer", refLabel: "DB Object Search", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D012", title: "Spalten- & Quelltextsuche (COLUMN, SOURCE) vs. Data Dictionary (ALL_*)", tag: "SQL Developer", refLabel: "ALL_TAB_COLUMNS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/ALL_TAB_COLUMNS.html" },
+      { id: "D013", title: "Schnelle Objekt-Inspektion: Shift+F4, Ctrl+Click & Dependencies", tag: "SQL Developer", refLabel: "Database Objects", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D014", title: "Datenmodell im Reiter Modell (ERD) & eingebaute Berichte (Reports)", tag: "SQL Developer", refLabel: "Reports", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D015", title: "Modul-3-Lab: Unbekanntes Fachschema in 10 Minuten kartieren", tag: "SQL Developer", refLabel: "ALL_TAB_COLUMNS", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/ALL_TAB_COLUMNS.html" },
+    ]
+  },
+  {
+    id: "D4",
+    title: "Modul 4: Drag-and-Drop-Joins & Query Builder",
+    examNote: "D016–D020",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/sqldeveloper/modul-04-dragdrop-joins/",
+    lessons: [
+      { id: "D016", title: "Drag & Drop aus dem Navigator konfigurieren & nutzen", tag: "SQL Developer", refLabel: "Drag and Drop", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D017", title: "Visueller Query Builder (Abfrage-Generator): Tabellen & Join-Linien", tag: "SQL Developer", refLabel: "Query Builder", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D018", title: "Join-Typen (INNER/OUTER), Filter & ANSI-vs.-(+)-Ausgabe", tag: "SQL Developer", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Joins.html" },
+      { id: "D019", title: "Grenzen & Gefahren von Drag-and-Drop-Joins", tag: "SQL Developer", refLabel: "Joins", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Joins.html" },
+      { id: "D020", title: "Modul-4-Lab: Vom Drag-and-Drop-Entwurf zur sauberen Produktions-Query", tag: "SQL Developer", refLabel: "Query Builder", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+    ]
+  },
+  {
+    id: "D5",
+    title: "Modul 5: Schnellformatierungen & Produktivität",
+    examNote: "D021–D025",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/sqldeveloper/modul-05-formatting-productivity/",
+    lessons: [
+      { id: "D021", title: "Schnellformatierung (Strg+F7), Case-Toggle (Alt+') & Blockkommentare", tag: "SQL Developer", refLabel: "Code Formatting", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D022", title: "Eigene Formatter-Regeln (Format → Advanced) & Team-Styleguide als XML", tag: "SQL Developer", refLabel: "Formatter Preferences", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D023", title: "Code-Templates (ssf, ct), Completion Insight & SQL History (F8)", tag: "SQL Developer", refLabel: "SQL History", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D024", title: "Output-Formatierungs-Hints bei F5 (/*csv*/, /*insert*/, /*json*/)", tag: "SQL Developer", refLabel: "SQLcl Formatting", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/sqcug/formatting-query-results.html" },
+      { id: "D025", title: "Modul-5-Lab: Chaotische Legacy-Query in 2 Minuten standardisieren", tag: "SQL Developer", refLabel: "SQLcl Formatting", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/sqcug/formatting-query-results.html" },
+    ]
+  },
+  {
+    id: "D6",
+    title: "Modul 6: Daten & 33-stellige Zahlen nach Excel",
+    examNote: "D026–D030",
+    docsUrl: "https://sql-schulung.readthedocs.io/en/latest/sqldeveloper/modul-06-excel-export/",
+    lessons: [
+      { id: "D026", title: "Die Excel-Zahlenfalle: IEEE-754 (15 Stellen) vs. NUMBER(38) & SET NUMWIDTH", tag: "SQL Developer", refLabel: "SET NUMWIDTH", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqpug/SET-system-variable-summary.html" },
+      { id: "D027", title: "Goldstandard 1: Direkter .xlsx-Export mit TO_CHAR(...)", tag: "SQL Developer", refLabel: "TO_CHAR (number)", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TO_CHAR-number.html" },
+      { id: "D028", title: "Goldstandard 2: CSV (UTF-8) + Excel Power Query (Aus Text/CSV)", tag: "SQL Developer", refLabel: "Exporting Data", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D029", title: "Alle Datentypen sicher exportieren & Rückweg Excel → Oracle", tag: "SQL Developer", refLabel: "Exporting Data", refUrl: "https://docs.oracle.com/en/database/oracle/sql-developer/24.3/rptug/sql-developer-concepts-usage.html" },
+      { id: "D030", title: "Modul-6-Lab & Capstone: End-to-End-Finanzexport mit Excel-Prüfformeln", tag: "SQL Developer", refLabel: "TO_CHAR (number)", refUrl: "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/TO_CHAR-number.html" },
+    ]
+  },
+];

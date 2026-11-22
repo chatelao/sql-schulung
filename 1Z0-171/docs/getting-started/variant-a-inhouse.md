@@ -21,7 +21,7 @@ docker logs -f oracle26ai/23ai
 ```
 
 ### 2. Client-Tools installieren
-- **IDE**: Installiere **Visual Studio Code** + die offizielle **Oracle SQL Developer Extension for VSCode** (oder klassischen Oracle SQL Developer).
+- **IDE**: Installiere **Visual Studio Code** + die offizielle **Oracle SQL Developer Extension for VSCode** (oder klassischen Oracle SQL Developer — siehe auch den Praxistrack **[SQL Developer Praxis (`D001`–`D030`)](../sqldeveloper/modul-01-ui-grid-nls.md)** für Schachbrett-Grid, Verbindungs-Export, Filter & Excel-Export).
 - **CLI**: Installiere **Oracle SQLcl** (`sql`) oder **SQL*Plus** (`sqlplus`), das auch direkt im Container verfügbar ist:
   ```bash
   docker exec -it oracle26ai/23ai sqlplus sys/Welcome123!@FREEPDB1 as sysdba

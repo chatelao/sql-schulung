@@ -85,6 +85,14 @@ nav:
       - "Modul 5: Window Functions & Pivoting": advanced/modul-05-window-pivoting.md
       - "Modul 6: Query-Patterns & Performance": advanced/modul-06-patterns-performance.md
       - "Checkpoints (ACP-1 & ACP-2)": advanced/checkpoints.md
+  - "SQL Developer Praxis (D001–D030)":
+      - "Modul 1: Oberfläche, Schachbrett & NLS": sqldeveloper/modul-01-ui-grid-nls.md
+      - "Modul 2: Verbindungen & Schemenfilter": sqldeveloper/modul-02-connections-filters.md
+      - "Modul 3: Objekte suchen & inspizieren": sqldeveloper/modul-03-search-inspect.md
+      - "Modul 4: Drag & Drop Joins & Query Builder": sqldeveloper/modul-04-dragdrop-joins.md
+      - "Modul 5: Schnellformatierung & Produktivität": sqldeveloper/modul-05-formatting-productivity.md
+      - "Modul 6: Daten & 33-stellige Zahlen nach Excel": sqldeveloper/modul-06-excel-export.md
+      - "Checkpoints (DCP-1 & DCP-2)": sqldeveloper/checkpoints.md
   - "Trainer & Hybrid-Kurs (Firma)":
       - Kursstart & Organisation (vor Tag 1): trainer/index.md
       - Technik- & Raum-Checkliste (3+3): trainer/hybrid-raum-checkliste.md
