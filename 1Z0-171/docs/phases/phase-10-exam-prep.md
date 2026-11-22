@@ -28,8 +28,9 @@ Starte **[Mock Exam #1 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-1
 3. **Durchgang 3 (Minuten 105–120)**: Prüfe jede *„Wähle zwei“*/*„Wähle drei“*-Frage noch einmal genau (Oracle vergibt bei Multi-Select-Fragen **keine Teilpunkte**!).
 
 - **Selbstlern-Aufgabe:** Starte [Mock Exam #1 im Studio](https://chatelao.github.io/sql-schulung/#mock) (60 Fragen, Timer 90/120 Min.) und arbeite im 2-Durchgangs-Verfahren.
-  ??? success "Musterlösung & Erklärung"
-      Zielwert für sichere Prüfungsreife: **≥ 75 %** (Bestehensgrenze `1Z0-171`: ~65 %).
+
+??? success "Musterlösung & Erklärung"
+    Zielwert für sichere Prüfungsreife: **≥ 75 %** (Bestehensgrenze `1Z0-171`: ~65 %).
 
 ### `L188`–`L189` — Strukturierte Selbst-Nachbesprechung (Debrief)
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Bewerten)*
@@ -40,8 +41,9 @@ Notiere für jede falsche oder glücklich geratene Frage aus Mock Exam #1:
 | *z. B. M14* | *D3* | *`ROUND(156.78, -2)` als `160` gelesen* | *`-2` rundet auf Hunderter → `200`* | *Phase 3 (`L051`)* |
 
 - **Selbstlern-Aufgabe:** Klassifiziere jede falsche Frage aus Mock #1 als *Wissenslücke*, *Lesefehler* oder *Exam Trap*.
-  ??? success "Musterlösung & Erklärung"
-      Erfahrungswert: Über 30 % der Fehler im ersten Mock sind Lesefehler („NOT“, „SELECT two“, fehlendes `NULL` in Beispielzeilen).
+
+??? success "Musterlösung & Erklärung"
+    Erfahrungswert: Über 30 % der Fehler im ersten Mock sind Lesefehler („NOT“, „SELECT two“, fehlendes `NULL` in Beispielzeilen).
 
 ### `L190`–`L193` — Gezielte Remediation Labs
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
@@ -54,8 +56,9 @@ Notiere für jede falsche oder glücklich geratene Frage aus Mock Exam #1:
 ## Mock Exam #2 & Prüfungslogistik (`L194`–`L198`)
 
 - **Selbstlern-Aufgabe:** Lückentext-Warmup (`SELECT e.ename, d.dname FROM scott.emp e ___ scott.dept d ON e.deptno = d.deptno WHERE e.comm ___`) und öffne anschliessend die zwei schwächsten Domains aus Mock #1 im [Flashcard-Deck](https://chatelao.github.io/sql-schulung/#flashcards) und übe sie bis Status „Sicher“.
-  ??? success "Musterlösung & Erklärung"
-      Wiederhole dazu mindestens 10 Aufgaben aus dem jeweiligen `docs/labs/phase-XX-*.sql`.
+
+??? success "Musterlösung & Erklärung"
+    Wiederhole dazu mindestens 10 Aufgaben aus dem jeweiligen `docs/labs/phase-XX-*.sql`.
 
 ### `L194`–`L196` — Vollständiges Timed Mock Exam #2 (Unabhängiger 60-Fragen-Pool!)
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
@@ -63,16 +66,18 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
 - **Zielvorgabe für die Prüfungsreife**: **≥ 75 % (45/60)** (10 Prozentpunkte Sicherheitspuffer über den offiziellen 65 %).
 
 - **Selbstlern-Aufgabe:** Starte [Mock Exam #2 im Studio](https://chatelao.github.io/sql-schulung/#mock/exam-2) (unabhängiger 60-Fragen-Pool).
-  ??? success "Musterlösung & Erklärung"
-      Zielwert: **≥ 78–80 %** ohne Zeitnot (mind. 10 Min. Restzeit für Multi-Select-Check).
+
+??? success "Musterlösung & Erklärung"
+    Zielwert: **≥ 78–80 %** ohne Zeitnot (mind. 10 Min. Restzeit für Multi-Select-Check).
 
 ### `L197` — Debrief & Blind-Spot Final Check
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Bewerten)*
 - Prüfe alle falsch beantworteten Fragen aus Mock Exam #2 gegen das [Exam-Traps-Cheatsheet](../cheatsheets/exam-traps.md).
 
 - **Selbstlern-Aufgabe:** Prüfe nach Mock #2, ob die verbleibenden Fehler sich in einer bestimmten Domain häufen, und wiederhole die zugehörige [Human Compiler Clinic](https://chatelao.github.io/sql-schulung/#labs/compiler).
-  ??? success "Musterlösung & Erklärung"
-      Wenn alle Domains über 70 % liegen, bist du bereit für `CP-5`.
+
+??? success "Musterlösung & Erklärung"
+    Wenn alle Domains über 70 % liegen, bist du bereit für `CP-5`.
 
 ### `L198` — Buchung & Exam-Day Checklist
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
@@ -85,8 +90,9 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
 ## Identical Checkpoint #5 — Final Graduation (`L199`–`L200`)
 
 - **Selbstlern-Aufgabe:** Gehe die Proctoring-Checkliste durch: Lichtbildausweis, Systemtest (`OnVUE`/Oracle), ruhiger Raum, leere Schreibtischoberfläche.
-  ??? success "Musterlösung & Erklärung"
-      Plane den Systemtest mindestens 48 Stunden vor dem Prüfungstermin ein.
+
+??? success "Musterlösung & Erklärung"
+    Plane den Systemtest mindestens 48 Stunden vor dem Prüfungstermin ein.
 
 ### `L199` — Identical Checkpoint #5 (Abschlusslauf + Answer Key freigeschaltet!)
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Bewerten)*
@@ -94,8 +100,9 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
 - Bei `CP-5` werden der vollständige **Answer Key und alle ausgearbeiteten Erklärungen** automatisch freigeschaltet!
 
 - **Selbstlern-Aufgabe:** Absolviere [CP-5 im Studio](https://chatelao.github.io/sql-schulung/#checkpoints/CP-5) — der vollständige Answer Key wird jetzt automatisch freigeschaltet!
-  ??? success "Musterlösung & Erklärung"
-      Zielwert: **≥ 85 %** Gesamtscore. Lies nach Abgabe alle 22 Erklärungen zu Fragen, bei denen du unsicher warst.
+
+??? success "Musterlösung & Erklärung"
+    Zielwert: **≥ 85 %** Gesamtscore. Lies nach Abgabe alle 22 Erklärungen zu Fragen, bei denen du unsicher warst.
 
 ### `L200` — `CP-0 → CP-5` Longitudinal Retrospective & Weiterbildung
 - **Lernziel**: Du beherrschst und nutzt das Thema dieser Lektion sicher in der Praxis. *(Bloom: Anwenden)*
@@ -106,8 +113,9 @@ Starte **[Mock Exam #2 ↗](https://chatelao.github.io/sql-schulung/#mock/exam-2
 ---
 
 - **Selbstlern-Aufgabe:** Exportiere dein finales `CP-0 → CP-5` Portfolio (`.json` + `.md`) und starte optional mit [Advanced SQL (`A001–A060`)](../advanced/modul-01-hierarchies.md).
-  ??? success "Musterlösung & Erklärung"
-      Herzlichen Glückwunsch zum Abschluss des 200-Lektionen-Curriculums!
+
+??? success "Musterlösung & Erklärung"
+    Herzlichen Glückwunsch zum Abschluss des 200-Lektionen-Curriculums!
 
 ### Visuelle Orientierung: Prüfungsstrategie & Blind-Spot-Matrix
 

@@ -48,62 +48,72 @@ flowchart LR
 ### `A033` — `XMLType` Grundlagen & `XMLPARSE`
 - **Lernziel:** Speicherung als `XMLType`, Wohlgeformtheit prüfen (`XMLPARSE(DOCUMENT ... WELLFORMED)`), `XMLISVALID` *(Bloom: Analysieren)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Was ist der Unterschied zwischen einem wohlgeformten XML und einem Schema-validierten XMLTYPE?`
-  ??? success "Musterlösung & Erklärung"
-      XMLTYPE prüft Wohlgeformtheit; mit registriertem XSD erzwingt XMLTYPE zusätzlich Struktur- und Typvalidierung.
+
+??? success "Musterlösung & Erklärung"
+    XMLTYPE prüft Wohlgeformtheit; mit registriertem XSD erzwingt XMLTYPE zusätzlich Struktur- und Typvalidierung.
 
 ### `A034` — XML generieren: `XMLELEMENT` & `XMLATTRIBUTES`
 - **Lernziel:** Relationale Zeilen in XML-Tags und Attribute umwandeln, Umgang mit Sonderzeichen und `NULL`-Werten *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT XMLTABLE('/dept/emp' ___ x.doc COLUMNS ename VARCHAR2(20) PATH 'name') FROM adv_xml x;`
-  ??? success "Musterlösung & Erklärung"
-      PASSING x.doc übergibt die XMLTYPE-Spalte an XMLTABLE.
+
+??? success "Musterlösung & Erklärung"
+    PASSING x.doc übergibt die XMLTYPE-Spalte an XMLTABLE.
 
 ### `A035` — `XMLFOREST` & `XMLCONCAT` für kompaktes XML
 - **Lernziel:** Mehrere Spalten elegant als Kind-Elemente erzeugen (`XMLFOREST`), Unterdrückung leerer Tags bei `NULL` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `... COLUMNS empno NUMBER PATH '___', sal NUMBER PATH 'salary';`
-  ??? success "Musterlösung & Erklärung"
-      '@id' liest das XML-Attribut id aus (<emp id="7369">).
+
+??? success "Musterlösung & Erklärung"
+    '@id' liest das XML-Attribut id aus (<emp id="7369">).
 
 ### `A036` — `XMLAGG` & hierarchisches XML (Department -> Employees)
 - **Lernziel:** Mehrere Zeilen zu einem XML-Baum aggregieren (`XMLAGG(XMLELEMENT(...) ORDER BY ...)`), Verschachtelung mit Subqueries *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT * FROM adv_xml WHERE XMLEXISTS('/dept[loc="NEW YORK"]' ___ doc);`
-  ??? success "Musterlösung & Erklärung"
-      PASSING doc prüft per XPath in der WHERE-Klausel.
+
+??? success "Musterlösung & Erklärung"
+    PASSING doc prüft per XPath in der WHERE-Klausel.
 
 ### `A037` — XPath & XQuery mit `XMLQUERY` und `XMLEXISTS`
 - **Lernziel:** Filtern von XML-Dokumenten in `WHERE` mit `XMLEXISTS`, Extraktion über `XMLQUERY(... PASSING ... RETURNING CONTENT)` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT XMLELEMENT("dept", XMLATTRIBUTES(deptno AS "id"), XMLELEMENT("dname", dname)) FROM scott.dept;`
-  ??? success "Musterlösung & Erklärung"
-      Erzeugt <dept id="10"><dname>ACCOUNTING</dname></dept>.
+
+??? success "Musterlösung & Erklärung"
+    Erzeugt <dept id="10"><dname>ACCOUNTING</dname></dept>.
 
 ### `A038` — `XMLCAST` & `XMLSERIALIZE`
 - **Lernziel:** Konvertierung von XML-Fragmenten in SQL-Skalare (`XMLCAST(XMLQUERY(...) AS VARCHAR2(100))`) und formatierte Ausgabe (`INDENT`) *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `SELECT XMLELEMENT("emps", ___(XMLELEMENT("emp", ename))) FROM scott.emp GROUP BY deptno;`
-  ??? success "Musterlösung & Erklärung"
-      XMLAGG aggregiert mehrere XML-Kindelemente je Gruppe.
+
+??? success "Musterlösung & Erklärung"
+    XMLAGG aggregiert mehrere XML-Kindelemente je Gruppe.
 
 ### `A039` — `XMLTABLE`: XML in relationale Zeilen & Spalten zerlegen
 - **Lernziel:** XQuery-Row-Generator + `COLUMNS`-Definition (`PATH`, Datentypen, `FOR ORDINALITY`), Master-Detail über verschachtelte `XMLTABLE`-Joins *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Wie bindet man einen XML-Namespace in XMLTABLE ein?`
-  ??? success "Musterlösung & Erklärung"
-      Mit XMLNAMESPACES('http://...' AS "ns"), direkt vor dem XQuery-Ausdruck.
+
+??? success "Musterlösung & Erklärung"
+    Mit XMLNAMESPACES('http://...' AS "ns"), direkt vor dem XQuery-Ausdruck.
 
 ### `A040` — XML Namespaces in `XMLTABLE` & `XMLEXISTS`
 - **Lernziel:** Deklaration von `XMLNAMESPACES(DEFAULT '...', '...' AS "ns")` beim Abfragen realer Schnittstellen-XMLs *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche Performance-Massnahme hilft bei häufigen XPath-Abfragen auf grossen XMLTYPE-Spalten?`
-  ??? success "Musterlösung & Erklärung"
-      Binary XML Storage + XMLIndex (unstructured oder structured XMLIndex).
+
+??? success "Musterlösung & Erklärung"
+    Binary XML Storage + XMLIndex (unstructured oder structured XMLIndex).
 
 ### `A041` — `XMLTRANSFORM` (XSLT) & XML-vs.-JSON-Vergleich
 - **Lernziel:** Transformation von XML mittels XSLT-Stylesheet direkt in SQL, Gegenüberstellung `XMLTABLE` vs. `JSON_TABLE` *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Wann ist JSON gegenüber XML vorzuziehen, wann XML?`
-  ??? success "Musterlösung & Erklärung"
-      JSON für leichtgewichtige APIs/Events; XML bei strikten XSD-Verträgen, Attributen, Namespaces und Dokument-Standards (ISO 20022, UBL).
+
+??? success "Musterlösung & Erklärung"
+    JSON für leichtgewichtige APIs/Events; XML bei strikten XSD-Verträgen, Attributen, Namespaces und Dokument-Standards (ISO 20022, UBL).
 
 ### `A042` — Modul-4-Lab: Produktkatalog- & Rechnungs-Parsing
 - **Lernziel:** Komplexes XML mit Namespaces per `XMLTABLE` relational aufbereiten und aggregierte Auswertungen wieder als XML exportieren *(Bloom: Anwenden)*
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Zerlege adv_xml per XMLTABLE und joine das Ergebnis mit scott.dept.`
-  ??? success "Musterlösung & Erklärung"
-      XMLTABLE als virtuelle Tabelle im FROM-Teil direkt per JOIN verknüpfen.
+
+??? success "Musterlösung & Erklärung"
+    XMLTABLE als virtuelle Tabelle im FROM-Teil direkt per JOIN verknüpfen.
 
 ---
 

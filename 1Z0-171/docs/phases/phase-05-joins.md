@@ -13,8 +13,9 @@
 - **Studio-Link**: [Tracker `L083`](https://chatelao.github.io/sql-schulung/#curriculum/L083) · [Join Visualizer öffnen ↗](https://chatelao.github.io/sql-schulung/#labs/joins/INNER)
 
 - **Selbstlern-Aufgabe:** Wie viele Spalten und wie viele Zeilen entstehen theoretisch, wenn `SCOTT.EMP` (14×8) und `SCOTT.DEPT` (4×3) gejoint werden?
-  ??? success "Musterlösung & Erklärung"
-      `8 + 3 = 11` Spalten; ohne Join-Bedingung `14 × 4 = 56` Zeilen (`CROSS JOIN`), mit `e.deptno = d.deptno` genau **14 Zeilen**.
+
+??? success "Musterlösung & Erklärung"
+    `8 + 3 = 11` Spalten; ohne Join-Bedingung `14 × 4 = 56` Zeilen (`CROSS JOIN`), mit `e.deptno = d.deptno` genau **14 Zeilen**.
 
 ### `L084` — Cartesian Products (`CROSS JOIN`)
 - **Lernziel**: Du erkennst, wann ein Kreuzprodukt (`N × M` Zeilen) entsteht und wie du es mit `CROSS JOIN` explizit schreibst. *(Bloom: Anwenden)*
@@ -25,11 +26,12 @@
 ```sql
 SELECT e.ename, d.dname FROM scott.emp e ___ scott.dept d;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, d.dname FROM scott.emp e CROSS JOIN scott.dept d;
-      ```
-      Ergebnis: `14 × 4 = 56` Zeilen.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, d.dname FROM scott.emp e CROSS JOIN scott.dept d;
+    ```
+    Ergebnis: `14 × 4 = 56` Zeilen.
 
 ### `L085` — Mehrdeutige Spalten auflösen (`ORA-00918`)
 - **Lernziel**: Du qualifizierst gleichnamige Spalten konsequent mit Table Aliases. *(Bloom: Anwenden)*
@@ -41,8 +43,9 @@ SELECT e.ename, d.dname FROM scott.emp e ___ scott.dept d;
 ## `INNER JOIN ... ON`, `NATURAL JOIN` & `USING` (`L086`–`L092`)
 
 - **Selbstlern-Aufgabe:** Warum wirft `SELECT ename, deptno, dname FROM scott.emp e JOIN scott.dept d ON e.deptno = d.deptno;` den Fehler `ORA-00918`?
-  ??? success "Musterlösung & Erklärung"
-      `deptno` existiert in beiden Tabellen. In der `SELECT`-Liste muss sie qualifiziert werden (`e.deptno` oder `d.deptno`).
+
+??? success "Musterlösung & Erklärung"
+    `deptno` existiert in beiden Tabellen. In der `SELECT`-Liste muss sie qualifiziert werden (`e.deptno` oder `d.deptno`).
 
 ### `L086` — Standard `INNER JOIN ... ON`
 - **Lernziel**: Du verknüpfst zwei Tabellen über `INNER JOIN ... ON` und weißt, dass ungematchte Zeilen wegfallen. *(Bloom: Analysieren)*
@@ -59,11 +62,12 @@ SELECT e.ename, d.dname FROM scott.emp e ___ scott.dept d;
 ```sql
 SELECT e.ename, d.dname, d.loc FROM scott.emp e ___ scott.dept d ___ e.deptno = d.deptno;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, d.dname, d.loc FROM scott.emp e INNER JOIN scott.dept d ON e.deptno = d.deptno;
-      ```
-      Liefert 14 Zeilen (`DEPT 40 OPERATIONS` hat keine Mitarbeitenden und fehlt).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, d.dname, d.loc FROM scott.emp e INNER JOIN scott.dept d ON e.deptno = d.deptno;
+    ```
+    Liefert 14 Zeilen (`DEPT 40 OPERATIONS` hat keine Mitarbeitenden und fehlt).
 
 ### `L087` — Drei oder mehr Tabellen joinen (`HR`)
 - **Lernziel**: Du verkettest 3–4 Tabellen über `JOIN ... ON` entlang des ERD. *(Bloom: Anwenden)*
@@ -79,21 +83,23 @@ SELECT e.ename, d.dname, d.loc FROM scott.emp e ___ scott.dept d ___ e.deptno = 
   ```
 
 - **Selbstlern-Aufgabe:** Warum liefert der 4-Tabellen-`INNER JOIN` auf `hr.employees` (107 Zeilen) mit `hr.departments` nur **106 Zeilen**?
-  ??? success "Musterlösung & Erklärung"
-      `Kimberely Grant` hat `department_id IS NULL` — beim `INNER JOIN` gibt es keinen Match in `hr.departments`, also fällt sie heraus.
+
+??? success "Musterlösung & Erklärung"
+    `Kimberely Grant` hat `department_id IS NULL` — beim `INNER JOIN` gibt es keinen Match in `hr.departments`, also fällt sie heraus.
 
 ### `L088` — `WHERE` & `GROUP BY` mit Joins kombinieren
 - **Lernziel**: Du filterst und aggregierst über gejointe Tabellen hinweg. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L088`](https://chatelao.github.io/sql-schulung/#curriculum/L088)
 - **Selbstlern-Aufgabe**: Berechne je `d.dname` und `d.loc` in `SCOTT` die Mitarbeiteranzahl und Gehaltssumme für Mitarbeiter mit `e.sal >= 1000` (erwartet: 3 Zeilen).
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT d.dname, d.loc, COUNT(*) AS cnt, SUM(e.sal) AS total_sal
-      FROM scott.emp e
-      JOIN scott.dept d ON e.deptno = d.deptno
-      WHERE e.sal >= 1000
-      GROUP BY d.dname, d.loc;
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT d.dname, d.loc, COUNT(*) AS cnt, SUM(e.sal) AS total_sal
+    FROM scott.emp e
+    JOIN scott.dept d ON e.deptno = d.deptno
+    WHERE e.sal >= 1000
+    GROUP BY d.dname, d.loc;
+    ```
 
 ### `L089` — `NATURAL JOIN` & seine versteckte Multi-Column-Falle
 - **Lernziel**: Du durchschaust die Risiken von `NATURAL JOIN` bei mehreren gleichnamigen Spalten. *(Bloom: Anwenden)*
@@ -109,8 +115,9 @@ SELECT e.ename, d.dname, d.loc FROM scott.emp e ___ scott.dept d ___ e.deptno = 
   ```
 
 - **Selbstlern-Aufgabe:** Welche versteckte Gefahr birgt `SELECT * FROM hr.employees NATURAL JOIN hr.departments;`?
-  ??? success "Musterlösung & Erklärung"
-      `NATURAL JOIN` joint automatisch über **alle** gleichnamigen Spalten — hier sowohl `department_id` als auch `manager_id`! Dadurch verschwinden fast alle Mitarbeitenden (nur 32 Zeilen statt 106).
+
+??? success "Musterlösung & Erklärung"
+    `NATURAL JOIN` joint automatisch über **alle** gleichnamigen Spalten — hier sowohl `department_id` als auch `manager_id`! Dadurch verschwinden fast alle Mitarbeitenden (nur 32 Zeilen statt 106).
 
 ### `L090` — `JOIN ... USING (col)`
 - **Lernziel**: Du verknüpfst explizit benannte gleichnamige Spalten mit `USING`. *(Bloom: Anwenden)*
@@ -121,11 +128,12 @@ SELECT e.ename, d.dname, d.loc FROM scott.emp e ___ scott.dept d ___ e.deptno = 
 ```sql
 SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d ___ (deptno);
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d USING (deptno);
-      ```
-      `deptno` steht **ohne** Tabellen-Qualifier.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d USING (deptno);
+    ```
+    `deptno` steht **ohne** Tabellen-Qualifier.
 
 ### `L091` — Die `ORA-25154`-Regel (`USING`-Qualifier-Falle)
 - **Lernziel**: Du vermeidest den häufigsten Prüfungsfehler bei `USING`. *(Bloom: Analysieren)*
@@ -134,11 +142,12 @@ SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d ___ (deptno);
     Setze vor eine in `USING (...)` aufgeführte Spalte **niemals** einen Tabellennamen oder Alias – weder in `SELECT`, `WHERE`, `GROUP BY` noch in `ORDER BY`! `SELECT e.deptno ... USING (deptno)` wirft **`ORA-25154`**.
 
 - **Selbstlern-Aufgabe:** Korrigiere den `ORA-25154`-Fehler in `SELECT e.ename, e.deptno FROM scott.emp e JOIN scott.dept d USING (deptno);`.
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, deptno FROM scott.emp e JOIN scott.dept d USING (deptno);
-      ```
-      Eine in `USING (...)` genannte Spalte darf nirgends im Statement (auch nicht in `SELECT`/`WHERE`/`ORDER BY`) mit einem Tabellen-Alias qualifiziert werden!
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, deptno FROM scott.emp e JOIN scott.dept d USING (deptno);
+    ```
+    Eine in `USING (...)` genannte Spalte darf nirgends im Statement (auch nicht in `SELECT`/`WHERE`/`ORDER BY`) mit einem Tabellen-Alias qualifiziert werden!
 
 ### `L092` — Vergleich: `ON`, `USING` und `NATURAL JOIN`
 - **Lernziel**: Du wählst für jede Anforderung die passende Join-Variante. *(Bloom: Anwenden)*
@@ -155,8 +164,9 @@ SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d ___ (deptno);
 ## Outer Joins (`LEFT`, `RIGHT`, `FULL`) (`L093`–`L096`)
 
 - **Selbstlern-Aufgabe:** Wann musst du `JOIN ... ON` statt `USING` oder `NATURAL JOIN` verwenden?
-  ??? success "Musterlösung & Erklärung"
-      Immer dann, wenn die Join-Spalten **unterschiedlich heissen** (z. B. `e.mgr = m.empno`), bei **Non-Equijoins** (`BETWEEN`), oder wenn man mehrere gleichnamige Spalten kontrolliert auseinanderhalten will.
+
+??? success "Musterlösung & Erklärung"
+    Immer dann, wenn die Join-Spalten **unterschiedlich heissen** (z. B. `e.mgr = m.empno`), bei **Non-Equijoins** (`BETWEEN`), oder wenn man mehrere gleichnamige Spalten kontrolliert auseinanderhalten will.
 
 ### `L093` — `LEFT OUTER JOIN` (`HR` Unassigned Employees)
 - **Lernziel**: Du bewahrst alle Zeilen der linken Tabelle, auch ohne Treffer rechts. *(Bloom: Anwenden)*
@@ -167,11 +177,12 @@ SELECT e.ename, deptno, d.dname FROM scott.emp e JOIN scott.dept d ___ (deptno);
 ```sql
 SELECT e.last_name, d.department_name FROM hr.employees e ___ hr.departments d ON e.department_id = d.department_id;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.last_name, d.department_name FROM hr.employees e LEFT OUTER JOIN hr.departments d ON e.department_id = d.department_id;
-      ```
-      `Kimberely Grant` erscheint mit `department_name = NULL` (`107 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.last_name, d.department_name FROM hr.employees e LEFT OUTER JOIN hr.departments d ON e.department_id = d.department_id;
+    ```
+    `Kimberely Grant` erscheint mit `department_name = NULL` (`107 Zeilen`).
 
 ### `L094` — `RIGHT OUTER JOIN` (`SCOTT.DEPT` #40 `OPERATIONS` erhalten)
 - **Lernziel**: Du bewahrst alle Zeilen der rechten Tabelle. *(Bloom: Anwenden)*
@@ -182,19 +193,21 @@ SELECT e.last_name, d.department_name FROM hr.employees e ___ hr.departments d O
 ```sql
 SELECT d.dname, e.ename FROM scott.emp e ___ scott.dept d ON e.deptno = d.deptno;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT d.dname, e.ename FROM scott.emp e RIGHT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
-      ```
-      Ergebnis: `15 Zeilen` (14 Mitarbeitende + `OPERATIONS` mit `ename = NULL`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT d.dname, e.ename FROM scott.emp e RIGHT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
+    ```
+    Ergebnis: `15 Zeilen` (14 Mitarbeitende + `OPERATIONS` mit `ename = NULL`).
 
 ### `L095` — `FULL OUTER JOIN`
 - **Lernziel**: Du bewahrst ungematchte Zeilen von **beiden** Seiten. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L095`](https://chatelao.github.io/sql-schulung/#curriculum/L095) · [Join Visualizer: FULL ↗](https://chatelao.github.io/sql-schulung/#labs/joins/FULL)
 
 - **Selbstlern-Aufgabe:** Was leistet `FULL OUTER JOIN` zwischen `hr.employees` und `hr.departments`?
-  ??? success "Musterlösung & Erklärung"
-      Es bleiben sowohl Mitarbeitende ohne Abteilung (`Kimberely Grant`) als auch leere Abteilungen (mit `NULL` bei den Mitarbeiter-Spalten) im Ergebnis erhalten.
+
+??? success "Musterlösung & Erklärung"
+    Es bleiben sowohl Mitarbeitende ohne Abteilung (`Kimberely Grant`) als auch leere Abteilungen (mit `NULL` bei den Mitarbeiter-Spalten) im Ergebnis erhalten.
 
 ### `L096` — Outer Join `ON`- vs. `WHERE`-Filter-Falle
 - **Lernziel**: Du platzierst optionale Filter auf die äußere Tabelle korrekt in `ON` statt `WHERE`. *(Bloom: Anwenden)*
@@ -214,8 +227,9 @@ SELECT d.dname, e.ename FROM scott.emp e ___ scott.dept d ON e.deptno = d.deptno
 ## Self-Joins, Non-Equijoins & Reporting (`L097`–`L102`)
 
 - **Selbstlern-Aufgabe:** Warum macht `LEFT JOIN scott.dept d ON ... WHERE d.loc = 'NEW YORK'` den Outer Join wirkungslos?
-  ??? success "Musterlösung & Erklärung"
-      Der `WHERE`-Filter läuft **nach** dem Join und verwirft alle erzeugten `NULL`-Zeilen (`d.loc IS NULL`). Filter auf die äussere Tabelle gehören in die **`ON`-Klausel** (`AND d.loc = 'NEW YORK'`).
+
+??? success "Musterlösung & Erklärung"
+    Der `WHERE`-Filter läuft **nach** dem Join und verwirft alle erzeugten `NULL`-Zeilen (`d.loc IS NULL`). Filter auf die äussere Tabelle gehören in die **`ON`-Klausel** (`AND d.loc = 'NEW YORK'`).
 
 ### `L097` — Self-Join (`EMP` → `MGR`)
 - **Lernziel**: Du verknüpfst eine Tabelle mit sich selbst über zwei verschiedene Table Aliases. *(Bloom: Anwenden)*
@@ -232,11 +246,12 @@ SELECT d.dname, e.ename FROM scott.emp e ___ scott.dept d ON e.deptno = d.deptno
 ```sql
 SELECT e.ename AS mitarbeiter, NVL(m.ename, 'TOP') AS chef FROM scott.emp e ___ scott.emp m ON e.mgr = m.___;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename AS mitarbeiter, NVL(m.ename, 'TOP') AS chef FROM scott.emp e LEFT JOIN scott.emp m ON e.mgr = m.empno;
-      ```
-      `LEFT JOIN` bewahrt `KING` (`mgr IS NULL`, `14 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename AS mitarbeiter, NVL(m.ename, 'TOP') AS chef FROM scott.emp e LEFT JOIN scott.emp m ON e.mgr = m.empno;
+    ```
+    `LEFT JOIN` bewahrt `KING` (`mgr IS NULL`, `14 Zeilen`).
 
 ### `L098` — Non-Equijoin (`SCOTT.EMP` + `SCOTT.SALGRADE`)
 - **Lernziel**: Du joinst Tabellen über Wertebereiche (`BETWEEN`, `<`, `>`) statt `=`. *(Bloom: Anwenden)*
@@ -247,11 +262,12 @@ SELECT e.ename AS mitarbeiter, NVL(m.ename, 'TOP') AS chef FROM scott.emp e ___ 
 ```sql
 SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal ___ s.losal ___ s.hisal;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal;
-      ```
-      Klassischer Non-Equijoin (`14 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal;
+    ```
+    Klassischer Non-Equijoin (`14 Zeilen`).
 
 ### `L099` — Legacy Oracle `(+)` Join-Syntax erkennen
 - **Lernziel**: Du liest die ältere Oracle-`(+)`-Syntax sicher und übersetzt sie in ANSI-Outer-Joins. *(Bloom: Anwenden)*
@@ -259,25 +275,27 @@ SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal _
 - **Merkregel**: Das `(+)` steht immer auf der **optionalen/fehlenden** Seite (`WHERE e.deptno(+) = d.deptno` → alle `DEPT`-Zeilen bleiben erhalten = `RIGHT OUTER JOIN`). Ein `FULL OUTER JOIN` ist mit `(+)` **nicht** direkt möglich.
 
 - **Selbstlern-Aufgabe:** Übersetze in ANSI-Syntax: `SELECT e.ename, d.dname FROM scott.emp e, scott.dept d WHERE e.deptno = d.deptno(+);`
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, d.dname FROM scott.emp e LEFT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
-      ```
-      Das `(+)` steht bei Oracle-Legacy-Syntax auf der **optionalen** (NULL-ergänzten) Seite.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, d.dname FROM scott.emp e LEFT OUTER JOIN scott.dept d ON e.deptno = d.deptno;
+    ```
+    Das `(+)` steht bei Oracle-Legacy-Syntax auf der **optionalen** (NULL-ergänzten) Seite.
 
 ### `L100` — Multi-Way Join aus `EMP`, `DEPT`, `MGR` & `SALGRADE`
 - **Lernziel**: Du kombinierst Equi-Join, Self-Join und Non-Equijoin in einer einzigen Query. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L100`](https://chatelao.github.io/sql-schulung/#curriculum/L100)
 - **Selbstlern-Aufgabe**: Schreibe eine Query, die je Mitarbeiter in `SCOTT.EMP` seinen Namen, `d.dname`, den Namen seines Managers (`LEFT JOIN`), sein Gehalt und seinen `s.grade` ausgibt (erwartet: 14 Zeilen).
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT e.ename, d.dname, m.ename AS manager, e.sal, s.grade
-      FROM scott.emp e
-      JOIN scott.dept d ON e.deptno = d.deptno
-      LEFT JOIN scott.emp m ON e.mgr = m.empno
-      JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal
-      ORDER BY s.grade DESC, e.ename;
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT e.ename, d.dname, m.ename AS manager, e.sal, s.grade
+    FROM scott.emp e
+    JOIN scott.dept d ON e.deptno = d.deptno
+    LEFT JOIN scott.emp m ON e.mgr = m.empno
+    JOIN scott.salgrade s ON e.sal BETWEEN s.losal AND s.hisal
+    ORDER BY s.grade DESC, e.ename;
+    ```
 
 ### `L101`–`L102` — Multi-Table Reporting Lab (`SCOTT` & `HR`)
 - **Lernziel**: Du erstellst vollständige Fachberichte mit Joins, Aggregation und Outer-Join-Vollständigkeit. *(Bloom: Anwenden)*
@@ -285,22 +303,23 @@ SELECT e.ename, e.sal, s.grade FROM scott.emp e JOIN scott.salgrade s ON e.sal _
 - **Selbstlern-Aufgaben**:
   1. (`L101`) Liste **alle 4** `SCOTT.DEPT`-Abteilungen mit ihrer Mitarbeiteranzahl (inkl. `OPERATIONS = 0`!) und durchschnittlichem Gehalt (`0` bei leerer Abteilung) auf.
   2. (`L102`) Liste alle `HR`-Abteilungen (`department_name`) auf, inklusive der Abteilungen ohne Mitarbeiter, und zähle je Abteilung die Mitarbeiteranzahl (erwartet: 27 Zeilen).
-  ??? success "Musterlösungen zu L101–L102"
-      ```sql
-      -- L101:
-      SELECT d.dname, COUNT(e.empno) AS headcount, ROUND(AVG(NVL(e.sal, 0)), 2) AS avg_sal
-      FROM scott.dept d
-      LEFT JOIN scott.emp e ON d.deptno = e.deptno
-      GROUP BY d.dname
-      ORDER BY d.dname;
 
-      -- L102:
-      SELECT d.department_name, COUNT(e.employee_id) AS headcount
-      FROM hr.departments d
-      LEFT JOIN hr.employees e ON d.department_id = e.department_id
-      GROUP BY d.department_name
-      ORDER BY headcount DESC, d.department_name;
-      ```
+??? success "Musterlösungen zu L101–L102"
+    ```sql
+    -- L101:
+    SELECT d.dname, COUNT(e.empno) AS headcount, ROUND(AVG(NVL(e.sal, 0)), 2) AS avg_sal
+    FROM scott.dept d
+    LEFT JOIN scott.emp e ON d.deptno = e.deptno
+    GROUP BY d.dname
+    ORDER BY d.dname;
+
+    -- L102:
+    SELECT d.department_name, COUNT(e.employee_id) AS headcount
+    FROM hr.departments d
+    LEFT JOIN hr.employees e ON d.department_id = e.department_id
+    GROUP BY d.department_name
+    ORDER BY headcount DESC, d.department_name;
+    ```
 
 ---
 ### Visuelle Orientierung: Join-Typen, Outer-Filter & Self-Join

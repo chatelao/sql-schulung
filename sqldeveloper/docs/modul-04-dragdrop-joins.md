@@ -44,36 +44,41 @@ flowchart LR
 - **Lernziel:** Du konfigurierst das Drag-and-Drop-Verhalten und erzeugst per Mehrfachauswahl (`Strg+Klick`) einen automatischen Mehr-Tabellen-Join im Worksheet *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Extras → Voreinstellungen → Datenbank → Drag-and-Drop` / `Tools → Preferences → Database → Drag And Drop`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Markiere SD_CUSTOMERS und SD_ACCOUNTS gleichzeitig mit Strg+Klick und ziehe sie ins Worksheet. Welche Option im Drag-and-Drop-Dialog erzeugt ein SELECT mit Join?`
-  ??? success "Musterlösung & Erklärung"
-      Die Aktion **`Select`** (mit Option für Join-Erzeugung anhand definierter Foreign Keys). SQL Developer verknüpft `SD_CUSTOMERS.CUSTOMER_ID = SD_ACCOUNTS.CUSTOMER_ID` automatisch.
+
+??? success "Musterlösung & Erklärung"
+    Die Aktion **`Select`** (mit Option für Join-Erzeugung anhand definierter Foreign Keys). SQL Developer verknüpft `SD_CUSTOMERS.CUSTOMER_ID = SD_ACCOUNTS.CUSTOMER_ID` automatisch.
 
 ### `D017` — Visueller Query Builder (`Abfrage-Generator`): Tabellen & Join-Linien
 - **Lernziel:** Du wechselst in den `Abfrage-Generator`, platzierst verknüpfte Tabellen und verbindest bei Bedarf zwei Spalten manuell per Drag-and-Drop *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** Reiter `Abfrage-Generator` / `Query Builder` direkt über dem SQL-Worksheet
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Ziehe SD_CUSTOMERS, SD_ACCOUNTS und SD_TRANSACTIONS in den Abfrage-Generator. Wie viele Join-Linien erscheinen automatisch zwischen den 3 Tabellen?`
-  ??? success "Musterlösung & Erklärung"
-      Genau **2 Join-Linien** (`FK_SD_ACC_CUST` und `FK_SD_TX_ACC`), weil die Sandbox-Tabellen explizite Foreign-Key-Constraints besitzen.
+
+??? success "Musterlösung & Erklärung"
+    Genau **2 Join-Linien** (`FK_SD_ACC_CUST` und `FK_SD_TX_ACC`), weil die Sandbox-Tabellen explizite Foreign-Key-Constraints besitzen.
 
 ### `D018` — Join-Typen (`INNER`/`OUTER`), Filter & ANSI-vs.-`(+)`-Ausgabe
 - **Lernziel:** Du stellst im Query Builder einen `LEFT OUTER JOIN` ein und prüfst im generierten SQL den Unterschied zwischen ANSI-Syntax und Oracle-`(+)`-Syntax *(Bloom: Analysieren)*
 - **Menüpfad / Shortcut (DE / EN):** Rechtsklick auf Join-Linie im `Abfrage-Generator` → Join-Eigenschaften
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welcher Kunde aus der Sandbox hat ein Konto (1005), aber 0 Transaktionen — erscheint also nur bei einem ___ JOIN zwischen SD_ACCOUNTS und SD_TRANSACTIONS?`
-  ??? success "Musterlösung & Erklärung"
-      **`LEFT`** (bzw. `LEFT OUTER JOIN`): Konto `1005` (`Nordlicht Reederei`) hat keine Zeilen in `sd_transactions` und würde beim `INNER JOIN` verschwinden.
+
+??? success "Musterlösung & Erklärung"
+    **`LEFT`** (bzw. `LEFT OUTER JOIN`): Konto `1005` (`Nordlicht Reederei`) hat keine Zeilen in `sd_transactions` und würde beim `INNER JOIN` verschwinden.
 
 ### `D019` — Grenzen & Gefahren von Drag-and-Drop-Joins
 - **Lernziel:** Du erkennst die Risiken visuell generierter Queries (kartesisches Produkt bei fehlender Linie, kryptische Aliase, fehlende CTEs) und entscheidest, wann Hand-Coding überlegen ist *(Bloom: Bewerten)*
 - **Menüpfad / Shortcut (DE / EN):** Wechsel zwischen `Abfrage-Generator` und `Arbeitsblatt` (`Query Builder` ↔ `Worksheet`)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Was passiert in der Sandbox (5 Kunden × 5 Konten × 65 Transaktionen), wenn du im Query Builder vergisst, eine Join-Linie zwischen SD_ACCOUNTS und SD_TRANSACTIONS zu ziehen?`
-  ??? success "Musterlösung & Erklärung"
-      Es entsteht ein **kartesisches Produkt** (`CROSS JOIN`): Jedes Konto wird mit allen 65 Transaktionen kombiniert (5 × 65 = **325 Zeilen** statt 65)!
+
+??? success "Musterlösung & Erklärung"
+    Es entsteht ein **kartesisches Produkt** (`CROSS JOIN`): Jedes Konto wird mit allen 65 Transaktionen kombiniert (5 × 65 = **325 Zeilen** statt 65)!
 
 ### `D020` — Modul-4-Lab: Vom Drag-and-Drop-Entwurf zur sauberen Produktions-Query
 - **Lernziel:** Du überführst einen Query-Builder-Entwurf durch Umbenennen von Aliasen, explizite Spaltenliste und `LEFT JOIN`-Kontrolle in produktionsreifen SQL-Code *(Bloom: Bewerten)*
 - **Menüpfad / Shortcut (DE / EN):** `Abfrage-Generator` → `Arbeitsblatt` + `Strg+F7`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Erzeuge den 3-Tabellen-Join im Abfrage-Generator, stelle SD_ACCOUNTS -> SD_TRANSACTIONS auf LEFT JOIN um und bereinige die Aliase auf c, a, t.`
-  ??? success "Musterlösung & Erklärung"
-      Siehe [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) (Modul 4): `COUNT(t.tx_id)` liefert für `Nordlicht Reederei` (`account_id = 1005`) korrekt `0`.
+
+??? success "Musterlösung & Erklärung"
+    Siehe [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) (Modul 4): `COUNT(t.tx_id)` liefert für `Nordlicht Reederei` (`account_id = 1005`) korrekt `0`.
 
 ---
 

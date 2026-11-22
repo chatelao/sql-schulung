@@ -50,36 +50,41 @@ Mit eingebauten **Formatter-Kommentaren** direkt nach `SELECT` formatiert SQL De
 - **Lernziel:** Du formatierst unübersichtliche SQL-Statements mit `Strg+F7`, passt Gross-/Kleinschreibung mit `Alt+'` an und kommentierst Blöcke mit `Strg+/` ein/aus *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Strg+F7`, `Alt+'`, `Strg+/` (auch auf markierten Teilblöcken)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welcher Shortcut formatiert im SQL-Developer-Editor entweder das gesamte Skript oder nur den aktuell markierten Block: ___?`
-  ??? success "Musterlösung & Erklärung"
-      **`Strg+F7`** (engl. `Ctrl+F7`). Tipp: Markiere bei einem sehr langen Skript nur ein einzelnes `SELECT`, damit `Strg+F7` nicht ungewollt alte Kommentare anderer Blöcke verschiebt.
+
+??? success "Musterlösung & Erklärung"
+    **`Strg+F7`** (engl. `Ctrl+F7`). Tipp: Markiere bei einem sehr langen Skript nur ein einzelnes `SELECT`, damit `Strg+F7` nicht ungewollt alte Kommentare anderer Blöcke verschiebt.
 
 ### `D022` — Eigene Formatter-Regeln (`Format → Advanced`) & Team-Styleguide als XML
 - **Lernziel:** Du konfigurierst eigene Formatter-Regeln (Keywords `UPPER`, Bezeichner `lower`, Einrückung) und exportierst das Profil als `.xml` für dein Team *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Extras → Voreinstellungen → Code-Editor → Format → Erweiterte Formatierung` / `Code Editor → Format → Advanced Format`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `In welchem Format werden benutzerdefinierte SQL-Developer-Formatter-Profile exportiert und im Team geteilt (.json, .xml oder .sql)?`
-  ??? success "Musterlösung & Erklärung"
-      Als **`.xml`**-Datei (über den Button *Exportieren* direkt im Einstellungsfenster *Erweiterte Formatierung*).
+
+??? success "Musterlösung & Erklärung"
+    Als **`.xml`**-Datei (über den Button *Exportieren* direkt im Einstellungsfenster *Erweiterte Formatierung*).
 
 ### `D023` — Code-Templates (`ssf`, `ct`), Completion Insight (`Strg+Leertaste`) & SQL History (`F8`)
 - **Lernziel:** Du legst ein eigenes Code-Template an, nutzt Completion Insight für fehlerfreie Spaltennamen und findest frühere Statements in `F8` wieder *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Datenbank → SQL-Editor-Codevorlagen`; `Strg+Leertaste`; `F8`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Mit welcher Funktionstaste öffnest du die durchsuchbare Historie aller bisher ausgeführten SQL-Statements: ___?`
-  ??? success "Musterlösung & Erklärung"
-      **`F8`** (öffnet `SQL-Historie` / `SQL History` mit Suchfeld für Tabellennamen oder Datum).
+
+??? success "Musterlösung & Erklärung"
+    **`F8`** (öffnet `SQL-Historie` / `SQL History` mit Suchfeld für Tabellennamen oder Datum).
 
 ### `D024` — Output-Formatierungs-Hints bei `F5` (`/*csv*/`, `/*insert*/`, `/*json*/`, `/*ansiconsole*/`)
 - **Lernziel:** Du nutzt die eingebauten Output-Hints in `SELECT`-Statements, um per `F5` direkt CSV, JSON oder `INSERT`-Skripte zu erzeugen *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** Hint direkt hinter `SELECT` im SQL-Worksheet + `F5` (`Skript ausführen`)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welchen Hint schreibst du direkt nach SELECT, um bei F5 sofort ausführbare INSERT-Statements für Testdaten zu erhalten?`
-  ??? success "Musterlösung & Erklärung"
-      `SELECT /*insert*/ * FROM sd_customers;` — ideal, um kleine Referenztabellen als reproduzierbares SQL-Skript zu sichern.
+
+??? success "Musterlösung & Erklärung"
+    `SELECT /*insert*/ * FROM sd_customers;` — ideal, um kleine Referenztabellen als reproduzierbares SQL-Skript zu sichern.
 
 ### `D025` — Modul-5-Lab: Chaotische Legacy-Query in 2 Minuten standardisieren
 - **Lernziel:** Du bereinigst eine unleserliche Einzeiler-Query per `Strg+F7` und gibst das Ergebnis wahlweise per `/*csv*/` und `/*json*/` über `F5` aus *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Strg+F7` + `F5`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Formatiere SELECT c.customer_name,t.tx_id,t.amount FROM sd_customers c join sd_accounts a on c.customer_id=a.customer_id join sd_transactions t on a.account_id=t.account_id where t.amount>1000; mit Strg+F7 und ergänze /*csv*/ für F5.`
-  ??? success "Musterlösung & Erklärung"
-      Siehe [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) (Modul 5). Achte darauf, dass der Kommentar `/*csv*/` direkt nach `SELECT` steht.
+
+??? success "Musterlösung & Erklärung"
+    Siehe [sqldeveloper-solutions.sql](labs/sqldeveloper-solutions.sql) (Modul 5). Achte darauf, dass der Kommentar `/*csv*/` direkt nach `SELECT` steht.
 
 ---
 

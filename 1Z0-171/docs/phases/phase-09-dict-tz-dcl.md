@@ -21,11 +21,12 @@
 ```sql
 SELECT table_name FROM ___ WHERE table_name LIKE '%CONSTRAINT%';
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT table_name FROM dictionary WHERE table_name LIKE '%CONSTRAINT%';
-      ```
-      `DICT` ist das Public Synonym für `DICTIONARY`.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT table_name FROM dictionary WHERE table_name LIKE '%CONSTRAINT%';
+    ```
+    `DICT` ist das Public Synonym für `DICTIONARY`.
 
 ### `L164` — Tables, Columns & Objects inspizieren
 - **Lernziel**: Du prüfst bestehende Tabellen, Spalten und Objektstatus per SQL. *(Bloom: Anwenden)*
@@ -39,8 +40,9 @@ SELECT table_name FROM ___ WHERE table_name LIKE '%CONSTRAINT%';
 - **Hinweis**: Tabellennamen stehen im Data Dictionary standardmäßig in **GROSSBUCHSTABEN** (`'MY_EMP'`, nicht `'my_emp'`).
 
 - **Selbstlern-Aufgabe:** Worin unterscheiden sich `USER_TABLES` und `ALL_TABLES`?
-  ??? success "Musterlösung & Erklärung"
-      `USER_TABLES` zeigt nur Tabellen, die **dir selbst** gehören (`OWNER = USER`). `ALL_TABLES` zeigt zusätzlich fremde Tabellen, auf die du Leserechte hast (z. B. `SCOTT.EMP`).
+
+??? success "Musterlösung & Erklärung"
+    `USER_TABLES` zeigt nur Tabellen, die **dir selbst** gehören (`OWNER = USER`). `ALL_TABLES` zeigt zusätzlich fremde Tabellen, auf die du Leserechte hast (z. B. `SCOTT.EMP`).
 
 ### `L165` — Constraints, Views, Sequences & Indexes inspizieren
 - **Lernziel**: Du liest Constraint-Typen und Metadaten aus `USER_CONSTRAINTS`, `USER_VIEWS`, `USER_SEQUENCES` und `USER_IND_COLUMNS`. *(Bloom: Anwenden)*
@@ -56,11 +58,12 @@ SELECT table_name FROM ___ WHERE table_name LIKE '%CONSTRAINT%';
 ```sql
 SELECT constraint_name, constraint_type FROM ___ WHERE table_name = 'MY_EMP';
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT constraint_name, constraint_type FROM user_constraints WHERE table_name = 'MY_EMP';
-      ```
-      Wichtig: Objektnamen stehen im Dictionary immer in **GROSSBUCHSTABEN**!
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT constraint_name, constraint_type FROM user_constraints WHERE table_name = 'MY_EMP';
+    ```
+    Wichtig: Objektnamen stehen im Dictionary immer in **GROSSBUCHSTABEN**!
 
 ### `L166` — Metadaten-Kommentare hinzufügen (`COMMENT ON`)
 - **Lernziel**: Du dokumentierst Tabellen und Spalten direkt in der Datenbank. *(Bloom: Anwenden)*
@@ -79,11 +82,12 @@ SELECT constraint_name, constraint_type FROM ___ WHERE table_name = 'MY_EMP';
 ```sql
 ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      COMMENT ON TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
-      SELECT comments FROM user_tab_comments WHERE table_name = 'MY_EMP';
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    COMMENT ON TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
+    SELECT comments FROM user_tab_comments WHERE table_name = 'MY_EMP';
+    ```
 
 ### `L167` — `TIMESTAMP`, `TIMESTAMP WITH TIME ZONE`, `TIMESTAMP WITH LOCAL TIME ZONE`
 - **Lernziel**: Du unterscheidest Oracles drei Timestamp-Varianten sicher. *(Bloom: Verstehen)*
@@ -93,8 +97,9 @@ ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
 - `TIMESTAMP WITH LOCAL TIME ZONE`: normalisiert beim Speichern auf **`DBTIMEZONE`** und rechnet bei der Abfrage dynamisch in **`SESSIONTIMEZONE`** um!
 
 - **Selbstlern-Aufgabe:** Welcher Unterschied besteht zwischen `TIMESTAMP WITH TIME ZONE` und `TIMESTAMP WITH LOCAL TIME ZONE`?
-  ??? success "Musterlösung & Erklärung"
-      `WITH TIME ZONE` speichert die übergebene Zeitzone mit ab. `WITH LOCAL TIME ZONE` normalisiert auf die DB-Zeitzone und zeigt beim `SELECT` immer die Zeitzone der abfragenden Session.
+
+??? success "Musterlösung & Erklärung"
+    `WITH TIME ZONE` speichert die übergebene Zeitzone mit ab. `WITH LOCAL TIME ZONE` normalisiert auf die DB-Zeitzone und zeigt beim `SELECT` immer die Zeitzone der abfragenden Session.
 
 ### `L168` — `CURRENT_DATE`, `CURRENT_TIMESTAMP` & `LOCALTIMESTAMP`
 - **Lernziel**: Du erkennst, welche Funktion Serverzeit vs. Session-Zeit liefert. *(Bloom: Anwenden)*
@@ -109,8 +114,9 @@ ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
 | `LOCALTIMESTAMP` | `TIMESTAMP` (ohne TZ!) | `SESSIONTIMEZONE` |
 
 - **Selbstlern-Aufgabe:** Warum unterscheiden sich `SYSDATE` und `CURRENT_DATE` manchmal um mehrere Stunden?
-  ??? success "Musterlösung & Erklärung"
-      `SYSDATE` liefert Datum/Uhrzeit des **Datenbank-Servers**; `CURRENT_DATE` liefert Datum/Uhrzeit in der **`SESSIONTIMEZONE`** des Clients.
+
+??? success "Musterlösung & Erklärung"
+    `SYSDATE` liefert Datum/Uhrzeit des **Datenbank-Servers**; `CURRENT_DATE` liefert Datum/Uhrzeit in der **`SESSIONTIMEZONE`** des Clients.
 
 ### `L169` — `DBTIMEZONE`, `SESSIONTIMEZONE`, `TZ_OFFSET` & `FROM_TZ`
 - **Lernziel**: Du änderst Session-Zeitzonen und versiehst Timestamps mit Zeitzonen. *(Bloom: Anwenden)*
@@ -128,11 +134,12 @@ ___ TABLE my_emp IS 'Uebungstabelle fuer DML-Labs';
 ALTER SESSION SET ___ = 'Europe/Zurich';
 SELECT CURRENT_TIMESTAMP FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      ALTER SESSION SET TIME_ZONE = 'Europe/Zurich';
-      SELECT CURRENT_TIMESTAMP FROM dual;
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    ALTER SESSION SET TIME_ZONE = 'Europe/Zurich';
+    SELECT CURRENT_TIMESTAMP FROM dual;
+    ```
 
 ### `L170` — `INTERVAL YEAR TO MONTH` & `INTERVAL DAY TO SECOND`
 - **Lernziel**: Du addierst und subtrahierst Zeitspannen exakt per Intervall-Literal. *(Bloom: Anwenden)*
@@ -148,10 +155,11 @@ SELECT CURRENT_TIMESTAMP FROM dual;
 ```sql
 SELECT SYSDATE + INTERVAL '1-6' ___ FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT SYSDATE + INTERVAL '1-6' YEAR TO MONTH FROM dual;
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT SYSDATE + INTERVAL '1-6' YEAR TO MONTH FROM dual;
+    ```
 
 ### `L171` — `EXTRACT`, `TO_TIMESTAMP`, `TO_YMINTERVAL` & `TO_DSINTERVAL`
 - **Lernziel**: Du extrahierst Datumsteile mit `EXTRACT` und konvertierst Strings in Timestamps/Intervalle. *(Bloom: Anwenden)*
@@ -166,24 +174,26 @@ SELECT SYSDATE + INTERVAL '1-6' ___ FROM dual;
 ```sql
 SELECT ___(YEAR FROM SYSDATE) FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT EXTRACT(YEAR FROM SYSDATE) FROM dual;
-      ```
-      Für `HOUR`/`MINUTE`/`SECOND` benötigt `EXTRACT` einen `TIMESTAMP` (nicht `DATE`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT EXTRACT(YEAR FROM SYSDATE) FROM dual;
+    ```
+    Für `HOUR`/`MINUTE`/`SECOND` benötigt `EXTRACT` einen `TIMESTAMP` (nicht `DATE`).
 
 ### `L172` — Global Flight Schedule Time-Zone Lab
 - **Lernziel**: Du berechnest internationale Abflug- und Ankunftszeiten über Zeitzonen hinweg. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L172`](https://chatelao.github.io/sql-schulung/#curriculum/L172)
 - **Selbstlern-Aufgabe**: Ein Flug startet am `2026-11-19 10:00:00` in `'Europe/Berlin'` und dauert `9 Stunden 15 Minuten` (`TO_DSINTERVAL('0 09:15:00')`). Berechne die Ankunftszeit in `'America/New_York'` mittels `FROM_TZ`, `+ TO_DSINTERVAL(...)` und `AT TIME ZONE`.
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT (FROM_TZ(TIMESTAMP '2026-11-19 10:00:00', 'Europe/Berlin')
-              + TO_DSINTERVAL('0 09:15:00'))
-             AT TIME ZONE 'America/New_York' AS arrival_ny
-      FROM dual;
-      -- Ergebnis: 2026-11-19 13:15:00 AMERICA/NEW_YORK (6h Zeitdifferenz!)
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT (FROM_TZ(TIMESTAMP '2026-11-19 10:00:00', 'Europe/Berlin')
+            + TO_DSINTERVAL('0 09:15:00'))
+           AT TIME ZONE 'America/New_York' AS arrival_ny
+    FROM dual;
+    -- Ergebnis: 2026-11-19 13:15:00 AMERICA/NEW_YORK (6h Zeitdifferenz!)
+    ```
 
 ---
 
@@ -194,9 +204,10 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
 - **Studio-Link**: [Tracker `L173`](https://chatelao.github.io/sql-schulung/#curriculum/L173) · [SQL Ref: GRANT](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/GRANT.html)
 
 - **Selbstlern-Aufgabe:** Ordne zu: Ist `CREATE VIEW` ein System- oder ein Objektprivileg? Und `SELECT ON scott.emp`?
-  ??? success "Musterlösung & Erklärung"
-      - `CREATE VIEW` → **Systemprivileg** (Fähigkeit, ein Objekt zu erstellen)
-      - `SELECT ON scott.emp` → **Objektprivileg** (Zugriff auf ein bestimmtes Objekt)
+
+??? success "Musterlösung & Erklärung"
+    - `CREATE VIEW` → **Systemprivileg** (Fähigkeit, ein Objekt zu erstellen)
+    - `SELECT ON scott.emp` → **Objektprivileg** (Zugriff auf ein bestimmtes Objekt)
 
 ### `L174` — Users anlegen, Passwörter ändern & Roles
 - **Lernziel**: Du erstellst User und Roles und weist Rechte gebündelt zu. *(Bloom: Anwenden)*
@@ -211,8 +222,9 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
   ```
 
 - **Selbstlern-Aufgabe:** Was fehlt nach `CREATE USER u1 IDENTIFIED BY secret;` noch, damit `u1` sich einloggen kann?
-  ??? success "Musterlösung & Erklärung"
-      Das Systemprivileg **`GRANT CREATE SESSION TO u1;`** (oder eine Role wie `CONNECT`, die `CREATE SESSION` enthält).
+
+??? success "Musterlösung & Erklärung"
+    Das Systemprivileg **`GRANT CREATE SESSION TO u1;`** (oder eine Role wie `CONNECT`, die `CREATE SESSION` enthält).
 
 ### `L175` — `WITH GRANT OPTION` vs. `WITH ADMIN OPTION`
 - **Lernziel**: Du vergibst weitergebbare Rechte mit der jeweils richtigen Klausel. *(Bloom: Anwenden)*
@@ -221,9 +233,10 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
 - `GRANT CREATE TABLE TO alice WITH ADMIN OPTION;` (**System Privilege / Role**).
 
 - **Selbstlern-Aufgabe:** Welche Option gehört zu Systemprivilegien und welche zu Objektprivilegien?
-  ??? success "Musterlösung & Erklärung"
-      - Systemprivilegien: **`WITH ADMIN OPTION`**
-      - Objektprivilegien: **`WITH GRANT OPTION`**
+
+??? success "Musterlösung & Erklärung"
+    - Systemprivilegien: **`WITH ADMIN OPTION`**
+    - Objektprivilegien: **`WITH GRANT OPTION`**
 
 ### `L176` — Die kritische `REVOKE`-Kaskadenregel (Prüfungsliebling!)
 - **Lernziel**: Du sagst bei mehrstufigen Rechteketten sofort voraus, wer sein Recht behält und wer es verliert. *(Bloom: Anwenden)*
@@ -233,8 +246,9 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
     - **System Privilege (`WITH ADMIN OPTION`)**: Bei `SYS → Alice → Bob` **KASKADIERT** `REVOKE CREATE TABLE FROM alice` **NICHT** – **Bob behält `CREATE TABLE`**!
 
 - **Selbstlern-Aufgabe:** User A gibt `SELECT ON t` `WITH GRANT OPTION` an B; B gibt `SELECT ON t` an C. Was passiert nach `REVOKE SELECT ON t FROM B`?
-  ??? success "Musterlösung & Erklärung"
-      **Kaskade:** Sowohl **B als auch C** verlieren `SELECT ON t` sofort! (Bei einem Systemprivileg mit `WITH ADMIN OPTION` würde C sein Recht hingegen behalten.)
+
+??? success "Musterlösung & Erklärung"
+    **Kaskade:** Sowohl **B als auch C** verlieren `SELECT ON t` sofort! (Bei einem Systemprivileg mit `WITH ADMIN OPTION` würde C sein Recht hingegen behalten.)
 
 ### `L177`–`L178` — Multi-User Privilege Cascade Lab (3-User-Drehbuch)
 - **Lernziel**: Du testest die Kaskadenregel praktisch in zwei Varianten (PDB / OCI Always Free) oder vollziehst das Drehbuch im Kopf nach. *(Bloom: Anwenden)*
@@ -252,8 +266,9 @@ SELECT ___(YEAR FROM SYSDATE) FROM dual;
 ---
 
 - **Selbstlern-Aufgabe:** Spiele das 3-User-DCL-Drehbuch in `docs/labs/phase-09-dict-tz-dcl.sql` durch (oder mit `student_0X_peer`) und prüfe `USER_TAB_PRIVS`.
-  ??? success "Musterlösung & Erklärung"
-      Nach dem `REVOKE` bei Objektprivilegien verschwindet der Eintrag von User C ebenfalls aus den Privileg-Views.
+
+??? success "Musterlösung & Erklärung"
+    Nach dem `REVOKE` bei Objektprivilegien verschwindet der Eintrag von User C ebenfalls aus den Privileg-Views.
 
 ### Visuelle Orientierung: Data Dictionary, Zeitzonen & DCL-Kaskaden
 

@@ -46,36 +46,41 @@ flowchart LR
 - **Lernziel:** Du nutzt `Datenbankobjekt suchen` gezielt mit Verbindung, Schema-Auswahl und `%`-Wildcards, um Tabellen, Views und Constraints sofort zu finden *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Ansicht → Datenbankobjekt suchen` / `View → Find DB Object` (Fernglas-Symbol)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welchen Suchbegriff nutzt du in „Datenbankobjekt suchen“, um alle Objekte zu finden, die irgendwo das Wort TX enthalten: ___?`
-  ??? success "Musterlösung & Erklärung"
-      **`%TX%`** (mit Prozentzeichen als Wildcard vor und nach `TX`). Je nach Version ist „Alle“ oder `TABLE` + `VIEW` aktiviert.
+
+??? success "Musterlösung & Erklärung"
+    **`%TX%`** (mit Prozentzeichen als Wildcard vor und nach `TX`). Je nach Version ist „Alle“ oder `TABLE` + `VIEW` aktiviert.
 
 ### `D012` — Spalten- & Quelltextsuche (`COLUMN`, `SOURCE`) vs. Data Dictionary (`ALL_*`)
 - **Lernziel:** Du unterscheidest die Suche nach Spaltennamen von der Quelltextsuche in Views/PL-SQL und überträgst beide auf `ALL_TAB_COLUMNS` bzw. `ALL_SOURCE` *(Bloom: Analysieren)*
 - **Menüpfad / Shortcut (DE / EN):** `Find DB Object → Typ: COLUMN / SOURCE` bzw. SQL auf `ALL_TAB_COLUMNS` / `ALL_VIEWS` / `ALL_SOURCE`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche Data-Dictionary-View durchsucht SQL Developer intern bei einer Quelltextsuche über Packages, Prozeduren und Funktionen: ___?`
-  ??? success "Musterlösung & Erklärung"
-      **`ALL_SOURCE`** (bzw. `USER_SOURCE` für das eigene Schema). Für View-Definitionen wird zusätzlich `ALL_VIEWS` (`TEXT`) herangezogen.
+
+??? success "Musterlösung & Erklärung"
+    **`ALL_SOURCE`** (bzw. `USER_SOURCE` für das eigene Schema). Für View-Definitionen wird zusätzlich `ALL_VIEWS` (`TEXT`) herangezogen.
 
 ### `D013` — Schnelle Objekt-Inspektion: `Shift+F4`, `Ctrl+Click` & `Dependencies`
 - **Lernziel:** Du inspizierst Tabellen und Views direkt aus dem SQL-Editor heraus per `Shift+F4` ohne den Fokus auf das Arbeitsblatt zu verlieren *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** Cursor auf Objektnamen → `Umschalt+F4` (`Shift+F4`) oder `Strg+Klick` (`Ctrl+Click`)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Markiere in einem Worksheet sd_accounts und drücke Shift+F4. Welcher Reiter zeigt dir, welche View und welche Tabelle von sd_accounts abhängen?`
-  ??? success "Musterlösung & Erklärung"
-      Der Reiter **`Abhängigkeiten`** (`Dependencies`) zeigt sowohl referenzierte Objekte (`sd_customers`) als auch abhängige Objekte (`sd_transactions`, `sd_v_tx_export`).
+
+??? success "Musterlösung & Erklärung"
+    Der Reiter **`Abhängigkeiten`** (`Dependencies`) zeigt sowohl referenzierte Objekte (`sd_customers`) als auch abhängige Objekte (`sd_transactions`, `sd_v_tx_export`).
 
 ### `D014` — Datenmodell im Reiter `Modell` (ERD) & eingebaute Berichte (`Reports`)
 - **Lernziel:** Du lässt dir im Reiter `Modell` das lokale Entity-Relationship-Diagramm einer Tabelle generieren und nutzt eingebaute Berichte zur Qualitätsprüfung *(Bloom: Analysieren)*
 - **Menüpfad / Shortcut (DE / EN):** Objekt öffnen → Reiter `Modell` (`Model`); `Ansicht → Berichte` (`View → Reports → Data Dictionary Reports`)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Öffne sd_accounts per Strg+Klick und wechsle auf den Reiter „Modell“. Welche zwei Tabellen sind dort über FK-Pfeile mit sd_accounts verbunden?`
-  ??? success "Musterlösung & Erklärung"
-      **`SD_CUSTOMERS`** (über `FK_SD_ACC_CUST`) und **`SD_TRANSACTIONS`** (über `FK_SD_TX_ACC`).
+
+??? success "Musterlösung & Erklärung"
+    **`SD_CUSTOMERS`** (über `FK_SD_ACC_CUST`) und **`SD_TRANSACTIONS`** (über `FK_SD_TX_ACC`).
 
 ### `D015` — Modul-3-Lab: Unbekanntes Fachschema in 10 Minuten kartieren
 - **Lernziel:** Du kombinierst `Find DB Object`, `Shift+F4`, `Modell` und eine `USER_TAB_COLUMNS`-Abfrage, um ein unbekanntes Schema systematisch zu erschliessen *(Bloom: Analysieren)*
 - **Menüpfad / Shortcut (DE / EN):** `Find DB Object` + `Shift+F4` + `SQL Worksheet`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Finde per Spaltensuche alle Tabellen und Views, die die Spalte POSTAL_CODE oder TX_REF_33 enthalten, und prüfe den Datentyp von TX_REF_33.`
-  ??? success "Musterlösung & Erklärung"
-      `POSTAL_CODE` liegt in `SD_CUSTOMERS` (`VARCHAR2(10)`) und `SD_V_TX_EXPORT`; `TX_REF_33` liegt in `SD_TRANSACTIONS` (`NUMBER(38)`) und `SD_V_TX_EXPORT`.
+
+??? success "Musterlösung & Erklärung"
+    `POSTAL_CODE` liegt in `SD_CUSTOMERS` (`VARCHAR2(10)`) und `SD_V_TX_EXPORT`; `TX_REF_33` liegt in `SD_TRANSACTIONS` (`NUMBER(38)`) und `SD_V_TX_EXPORT`.
 
 ---
 

@@ -129,38 +129,43 @@ Wenn du 33-stellige Zahlen, Postleitzahlen (`01067`) oder Codes (`03-04`) direkt
 - **Lernziel:** Du erklärst die technische Ursache (IEEE-754 15 Stellen), reproduzierst die `E`-Notation in `F5` und behebst die `F5`-Anzeige mit `SET NUMWIDTH 38` *(Bloom: Analysieren)*
 - **Menüpfad / Shortcut (DE / EN):** `F5` (Skriptausgabe) mit `SET NUMWIDTH 38` vs. Excel-Zellformat `Standard`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Ab wie vielen signifikanten Stellen verliert Excel durch IEEE-754 bei normalen Zahlen unumkehrbar Genauigkeit (12, ___ oder 33)?`
-  ??? success "Musterlösung & Erklärung"
-      Ab **15** signifikanten Stellen (ab 12 Stellen schaltet die Anzeige auf `E+...`, ab der **16. Stelle** werden alle weiteren Ziffern auf `0` gerundet). In SQL Developer `F5` verhindert `SET NUMWIDTH 38` die `E`-Anzeige in der Skriptausgabe.
+
+??? success "Musterlösung & Erklärung"
+    Ab **15** signifikanten Stellen (ab 12 Stellen schaltet die Anzeige auf `E+...`, ab der **16. Stelle** werden alle weiteren Ziffern auf `0` gerundet). In SQL Developer `F5` verhindert `SET NUMWIDTH 38` die `E`-Anzeige in der Skriptausgabe.
 
 ### `D027` — Goldstandard 1: Direkter `.xlsx`-Export mit `TO_CHAR(...)`
 - **Lernziel:** Du wandelst lange Zahlen in SQL gezielt mit `TO_CHAR(...)` um und exportierst aus dem Grid als `.xlsx` inklusive Audit-SQL-Tab *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `F9` → Rechtsklick im Grid → `Exportieren...` / `Export...` → `excel 2003+ (xlsx)`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Ergänze die Export-Query so, dass tx_ref_33 als echte Textzelle in .xlsx landet: SELECT tx_id, ___(tx_ref_33) AS tx_ref_33_txt FROM sd_transactions;`
-  ??? success "Musterlösung & Erklärung"
-      `TO_CHAR(tx_ref_33)` — dadurch liefert Oracle den Spaltentyp `VARCHAR2`, und SQL Developer schreibt im `.xlsx` eine String-Zelle statt einer numerischen Zelle.
+
+??? success "Musterlösung & Erklärung"
+    `TO_CHAR(tx_ref_33)` — dadurch liefert Oracle den Spaltentyp `VARCHAR2`, und SQL Developer schreibt im `.xlsx` eine String-Zelle statt einer numerischen Zelle.
 
 ### `D028` — Goldstandard 2: `CSV (UTF-8)` + Excel Power Query (`Aus Text/CSV`)
 - **Lernziel:** Du importierst UTF-8-CSVs verlustfrei über Excel Power Query (`Aus Text/CSV`) und setzt den Spaltentyp explizit auf `Text`, statt die Datei per Doppelklick zu öffnen *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Exportieren... → csv (UTF-8)` → in Excel: `Daten → Daten abrufen → Aus Datei → Aus Text/CSV` → `Daten transformieren`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Warum ist die Formel-Schreibweise ="1234567890..." im CSV-Export trotz korrekter Anzeige ein Anti-Pattern?`
-  ??? success "Musterlösung & Erklärung"
-      Sie erzeugt eine Excel-Formel statt eines reinen Datenwerts, löst in sicheren Umgebungen CSV-Injection-Warnungen aus und stört automatische Weiterverarbeitungen (Power Query, SVERWEIS, Datenbank-Reimport).
+
+??? success "Musterlösung & Erklärung"
+    Sie erzeugt eine Excel-Formel statt eines reinen Datenwerts, löst in sicheren Umgebungen CSV-Injection-Warnungen aus und stört automatische Weiterverarbeitungen (Power Query, SVERWEIS, Datenbank-Reimport).
 
 ### `D029` — Copy-Paste (`Ctrl+Shift+C`), Excel-Text-Vorbereitung & alle Datentypen sicher überführen
 - **Lernziel:** Du nutzt `Strg+Umschalt+C` (*Copy with Headers*) in Kombination mit vorab als `Text` formatierten Excel-Zielspalten (`Inhalte einfügen → Text`) und wählst für jeden Datentyp und jede Datenmenge das passende Verfahren *(Bloom: Bewerten)*
 - **Menüpfad / Shortcut (DE / EN):** `Strg+Ende` → `Strg+A` → `Strg+Umschalt+C` (`Ctrl+Shift+C`) → in Excel: Zielspalte `Strg+1` (`Text`) → `Inhalte einfügen → Text`; bzw. `Exportieren...` (`xlsx`/`csv`) und `Daten importieren...`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Du möchtest 4 Zeilen aus dem Grid per Tastenkürzel INKLUSIVE Spaltenüberschriften kopieren und in Excel verlustfrei einfügen: Im Grid drückst du ___, und in Excel formatierst du die Zielspalte VOR dem Einfügen auf ___.`
-  ??? success "Musterlösung & Erklärung"
-      Im Grid **`Strg+Umschalt+C`** (`Ctrl+Shift+C`), in Excel vorab **`Text`** (über `Start → Zahl → Text` bzw. `Strg+1 → Text`, anschliessend über `Inhalte einfügen → Text` einfügen). Nachträgliches Umstellen auf `Text` kann bereits gerundete Ziffern nicht wiederherstellen.
+
+??? success "Musterlösung & Erklärung"
+    Im Grid **`Strg+Umschalt+C`** (`Ctrl+Shift+C`), in Excel vorab **`Text`** (über `Start → Zahl → Text` bzw. `Strg+1 → Text`, anschliessend über `Inhalte einfügen → Text` einfügen). Nachträgliches Umstellen auf `Text` kann bereits gerundete Ziffern nicht wiederherstellen.
 
 ### `D030` — Modul-6-Lab & Capstone: End-to-End-Finanzexport mit Excel-Integritätsprüfung
 - **Lernziel:** Du führst den kompletten Export über `sd_customers`, `sd_accounts` und `sd_transactions` durch und verifizierst die Datenintegrität direkt in Excel per Kontrollformeln *(Bloom: Bewerten)*
 - **Menüpfad / Shortcut (DE / EN):** `F9` → `Exportieren... (xlsx)` → Prüfung in Excel
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche drei Excel-Prüfformeln beweisen nach dem Öffnen der Exportdatei, dass tx_ref_33_txt in Zelle B2 exakt und ungerundet angekommen ist?`
-  ??? success "Musterlösung & Erklärung"
-      1. `=LÄNGE(B2)` → **`33`** (keine Kürzung)  
-      2. `=ISTTEXT(B2)` → **`WAHR`** (keine IEEE-754-Zahl)  
-      3. `=RECHTS(B2;5)` → **`"90123"`** für `tx_id = 1` (Endziffern nicht auf `"00000"` gerundet!)
+
+??? success "Musterlösung & Erklärung"
+    1. `=LÄNGE(B2)` → **`33`** (keine Kürzung)  
+    2. `=ISTTEXT(B2)` → **`WAHR`** (keine IEEE-754-Zahl)  
+    3. `=RECHTS(B2;5)` → **`"90123"`** für `tx_id = 1` (Endziffern nicht auf `"00000"` gerundet!)
 
 ---
 

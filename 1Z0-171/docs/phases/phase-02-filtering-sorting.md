@@ -17,19 +17,21 @@
   ```
   **Erwartete Ausgabe**: 3 Zeilen (`CLARK`, `KING`, `MILLER`).
 - **Selbstlern-Aufgabe**: Finde alle Mitarbeiter in `SCOTT.EMP`, die mehr als `2500` verdienen (erwartet: 5 Zeilen).
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, job, sal FROM scott.emp WHERE sal > 2500;
-      -- JONES (2975), BLAKE (2850), SCOTT (3000), KING (5000), FORD (3000)
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, job, sal FROM scott.emp WHERE sal > 2500;
+    -- JONES (2975), BLAKE (2850), SCOTT (3000), KING (5000), FORD (3000)
+    ```
 
 ### `L022` — Comparison Operators (`=`, `<>`, `!=`, `<`, `>`, `<=`, `>=`)
 - **Lernziel**: Du verwendest Vergleichsoperatoren sicher und beachtest Case-Sensitivity bei Zeichenketten. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L022`](https://chatelao.github.io/sql-schulung/#curriculum/L022) · [SQL Ref: Comparison Conditions](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Comparison-Conditions.html)
 - **Konzept**: SQL-Schlüsselwörter sind case-insensitive (`select` = `SELECT`), aber **Zeichenketten innerhalb von `'...'` sind case-sensitive** (`'CLERK'` ≠ `'clerk'`).
 - **Selbstlern-Aufgabe**: Warum liefert `SELECT ename FROM scott.emp WHERE job = 'clerk';` **0 Zeilen**, obwohl es 4 Clerks gibt?
-  ??? success "Musterlösung & Erklärung"
-      In `SCOTT.EMP` ist `JOB` in Großbuchstaben (`'CLERK'`) gespeichert. Mit `'CLERK'` liefert die Abfrage `SMITH`, `ADAMS`, `JAMES`, `MILLER`.
+
+??? success "Musterlösung & Erklärung"
+    In `SCOTT.EMP` ist `JOB` in Großbuchstaben (`'CLERK'`) gespeichert. Mit `'CLERK'` liefert die Abfrage `SMITH`, `ADAMS`, `JAMES`, `MILLER`.
 
 ### `L023` — Date Literals in `WHERE`
 - **Lernziel**: Du filterst Datumsspalten portabel mit dem ANSI-Date-Literal `DATE 'YYYY-MM-DD'`. *(Bloom: Anwenden)*
@@ -45,23 +47,25 @@
 ```sql
 SELECT ename, hiredate FROM scott.emp WHERE hiredate > DATE '___';
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, hiredate FROM scott.emp WHERE hiredate > DATE '1982-01-01';
-      ```
-      ANSI Date Literals nutzen immer das Format `DATE 'YYYY-MM-DD'` unabhängig von `NLS_DATE_FORMAT` (`2 Zeilen`: `SCOTT`, `ADAMS`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, hiredate FROM scott.emp WHERE hiredate > DATE '1982-01-01';
+    ```
+    ANSI Date Literals nutzen immer das Format `DATE 'YYYY-MM-DD'` unabhängig von `NLS_DATE_FORMAT` (`2 Zeilen`: `SCOTT`, `ADAMS`).
 
 ### `L024` — Warum `SELECT`-Aliases in `WHERE` fehlschlagen
 - **Lernziel**: Du verstehst die logische Verarbeitungsreihenfolge (`FROM` → `WHERE` → `SELECT` → `ORDER BY`). *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L024`](https://chatelao.github.io/sql-schulung/#curriculum/L024) · [SQL Syntax Cheat Sheet](../cheatsheets/sql-syntax.md)
 - **Exam Trap**: `SELECT ename, sal * 12 annual FROM scott.emp WHERE annual > 30000;` wirft **`ORA-00904: "ANNUAL": invalid identifier`**, weil Oracle `WHERE` *vor* `SELECT` auswertet.
 - **Selbstlern-Aufgabe**: Korrigiere die fehlerhafte Query so, dass sie alle Mitarbeiter mit Jahresgehalt > 30.000 liefert (erwartet: 5 Zeilen).
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, sal * 12 AS annual
-      FROM scott.emp
-      WHERE sal * 12 > 30000;
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, sal * 12 AS annual
+    FROM scott.emp
+    WHERE sal * 12 > 30000;
+    ```
 
 ---
 
@@ -82,11 +86,12 @@ SELECT ename, hiredate FROM scott.emp WHERE hiredate > DATE '___';
 ```sql
 SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, sal FROM scott.emp WHERE sal BETWEEN 1250 AND 1600;
-      ```
-      `BETWEEN` ist immer inklusive (`>= 1250 AND <= 1600`, `4 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, sal FROM scott.emp WHERE sal BETWEEN 1250 AND 1600;
+    ```
+    `BETWEEN` ist immer inklusive (`>= 1250 AND <= 1600`, `4 Zeilen`).
 
 ### `L026` — Mengenzugehörigkeit mit `IN` und `NOT IN`
 - **Lernziel**: Du prüfst Zugehörigkeit zu Wertelisten kompakt mit `IN`. *(Bloom: Anwenden)*
@@ -98,8 +103,9 @@ SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
   **Erwartete Ausgabe**: 5 Zeilen (`JONES`, `BLAKE`, `CLARK`, `SCOTT`, `FORD`).
 
 - **Selbstlern-Aufgabe:** Warum liefert `SELECT ename FROM scott.emp WHERE empno NOT IN (7369, NULL);` **0 Zeilen**?
-  ??? success "Musterlösung & Erklärung"
-      `NOT IN (7369, NULL)` entspricht `empno != 7369 AND empno != NULL`. Da `empno != NULL` immer `UNKNOWN` ergibt, ist die gesamte `AND`-Bedingung für jede Zeile `UNKNOWN` → 0 Zeilen!
+
+??? success "Musterlösung & Erklärung"
+    `NOT IN (7369, NULL)` entspricht `empno != 7369 AND empno != NULL`. Da `empno != NULL` immer `UNKNOWN` ergibt, ist die gesamte `AND`-Bedingung für jede Zeile `UNKNOWN` → 0 Zeilen!
 
 ### `L027` — Pattern Matching mit `LIKE` (`%`, `_`, `ESCAPE`)
 - **Lernziel**: Du suchst Textmuster mit `%` (0..n Zeichen), `_` (exakt 1 Zeichen) und maskierst wörtliche Unterstriche mit `ESCAPE`. *(Bloom: Anwenden)*
@@ -111,11 +117,12 @@ SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
   SELECT job_id FROM hr.jobs WHERE job_id LIKE 'SA\_%' ESCAPE '\'; -- SA_MAN, SA_REP (2 Zeilen)
   ```
 - **Selbstlern-Aufgabe**: Finde alle Mitarbeiter in `SCOTT.EMP`, deren Name an der zweiten Stelle ein `'L'` hat (erwartet: 3 Zeilen).
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename FROM scott.emp WHERE ename LIKE '_L%';
-      -- ALLEN, BLAKE, CLARK
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename FROM scott.emp WHERE ename LIKE '_L%';
+    -- ALLEN, BLAKE, CLARK
+    ```
 
 ### `L028` — Null-Werte filtern (`IS NULL` / `IS NOT NULL`)
 - **Lernziel**: Du filterst fehlende Werte korrekt mit `IS NULL` / `IS NOT NULL`. *(Bloom: Anwenden)*
@@ -136,11 +143,12 @@ SELECT ename, sal FROM scott.emp WHERE sal ___ 1250 ___ 1600;
 ```sql
 SELECT ename FROM scott.emp WHERE ename LIKE '___';
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename FROM scott.emp WHERE ename LIKE '_A%';
-      ```
-      `_` steht für genau 1 Zeichen, `%` für 0..N Zeichen (`WARD`, `MARTIN`, `JAMES`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename FROM scott.emp WHERE ename LIKE '_A%';
+    ```
+    `_` steht für genau 1 Zeichen, `%` für 0..N Zeichen (`WARD`, `MARTIN`, `JAMES`).
 
 ### `L029` — Bedingungen kombinieren mit `AND`
 - **Lernziel**: Du verknüpfst mehrere Pflichtbedingungen mit `AND`. *(Bloom: Anwenden)*
@@ -151,11 +159,12 @@ SELECT ename FROM scott.emp WHERE ename LIKE '___';
 ```sql
 SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' ___ sal < 1200;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' AND sal < 1200;
-      ```
-      Liefert `SMITH` (`800`), `ADAMS` (`1100`) und `JAMES` (`950`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' AND sal < 1200;
+    ```
+    Liefert `SMITH` (`800`), `ADAMS` (`1100`) und `JAMES` (`950`).
 
 ### `L030` — Bedingungen erweitern mit `OR`
 - **Lernziel**: Du lässt alternative Kriterien mit `OR` zu. *(Bloom: Anwenden)*
@@ -163,11 +172,12 @@ SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' ___ sal < 1200;
 - **Beispiel**: `SELECT ename, deptno, job FROM scott.emp WHERE deptno = 10 OR job = 'CLERK';` → 6 Zeilen (3 aus Dept 10 + 3 weitere Clerks).
 
 - **Selbstlern-Aufgabe:** Korrigiere die `NULL`-Prüfung: `SELECT ename FROM scott.emp WHERE comm = NULL;` liefert 0 Zeilen.
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename FROM scott.emp WHERE comm IS NULL;
-      ```
-      Vergleiche mit `NULL` nutzen immer `IS NULL` bzw. `IS NOT NULL` (`10 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename FROM scott.emp WHERE comm IS NULL;
+    ```
+    Vergleiche mit `NULL` nutzen immer `IS NULL` bzw. `IS NOT NULL` (`10 Zeilen`).
 
 ### `L031` — Negieren mit `NOT` & 3-Valued Logic
 - **Lernziel**: Du wendest die 3-wertige Logik (`TRUE`, `FALSE`, `UNKNOWN`) auf `AND`, `OR` und `NOT` sicher an. *(Bloom: Anwenden)*
@@ -183,11 +193,12 @@ SELECT ename, job, sal FROM scott.emp WHERE job = 'CLERK' ___ sal < 1200;
 ```sql
 SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___ sal >= 2500;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 OR deptno = 20) AND sal >= 2500;
-      ```
-      Ohne Klammern würde `AND` vor `OR` binden!
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 OR deptno = 20) AND sal >= 2500;
+    ```
+    Ohne Klammern würde `AND` vor `OR` binden!
 
 ### `L032` — Precedence Rules (`NOT` → `AND` → `OR`)
 - **Lernziel**: Du verhinderst logische Fehler durch Verstehen von `AND` vor `OR` und durch Klammern. *(Bloom: Analysieren)*
@@ -204,8 +215,9 @@ SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___
   ```
 
 - **Selbstlern-Aufgabe:** Welche Zeilen liefert `SELECT ename, comm FROM scott.emp WHERE NOT (comm > 0);`?
-  ??? success "Musterlösung & Erklärung"
-      Nur `TURNER` (`comm = 0`). Die 10 Zeilen mit `comm IS NULL` ergeben `NOT (UNKNOWN)` = `UNKNOWN` und werden **nicht** zurückgegeben!
+
+??? success "Musterlösung & Erklärung"
+    Nur `TURNER` (`comm = 0`). Die 10 Zeilen mit `comm IS NULL` ergeben `NOT (UNKNOWN)` = `UNKNOWN` und werden **nicht** zurückgegeben!
 
 ### `L033` — Interaktives Precedence-Training (10 Grenzfälle auf `HR` & `SCOTT`)
 - **Lernziel**: Du löst komplexe kombinierte `WHERE`-Filter sicher ohne IDE. *(Bloom: Anwenden)*
@@ -216,18 +228,19 @@ SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___
   3. `SCOTT.EMP`: Warum liefert `WHERE NOT (comm > 0)` nicht `SMITH` (erwartet: nur `TURNER`!)?
   4. `HR.EMPLOYEES`: Alle Mitarbeiter mit `department_id IN (50, 80)` und `salary >= 10000` (erwartet: 15 Zeilen).
   5. `HR.EMPLOYEES`: Alle Mitarbeiter ohne `commission_pct`, die `IT_PROG` oder `SA_REP` sind (erwartet: 5 Zeilen — alle `IT_PROG`, denn `SA_REP` hat immer eine Provision).
-  ??? success "Musterlösungen zu L033 (1–5)"
-      ```sql
-      -- 1:
-      SELECT ename, deptno, sal FROM scott.emp WHERE deptno IN (20, 30) AND sal >= 2850;
-      -- 2:
-      SELECT ename, job FROM scott.emp WHERE job NOT IN ('CLERK', 'SALESMAN');
-      -- 3: Bei SMITH ist comm NULL -> NOT (NULL > 0) = NOT (UNKNOWN) = UNKNOWN! Nur TURNER (comm = 0) ergibt TRUE.
-      -- 4:
-      SELECT employee_id, last_name, salary FROM hr.employees WHERE department_id IN (50, 80) AND salary >= 10000;
-      -- 5:
-      SELECT employee_id, last_name, job_id FROM hr.employees WHERE commission_pct IS NULL AND job_id IN ('IT_PROG', 'SA_REP');
-      ```
+
+??? success "Musterlösungen zu L033 (1–5)"
+    ```sql
+    -- 1:
+    SELECT ename, deptno, sal FROM scott.emp WHERE deptno IN (20, 30) AND sal >= 2850;
+    -- 2:
+    SELECT ename, job FROM scott.emp WHERE job NOT IN ('CLERK', 'SALESMAN');
+    -- 3: Bei SMITH ist comm NULL -> NOT (NULL > 0) = NOT (UNKNOWN) = UNKNOWN! Nur TURNER (comm = 0) ergibt TRUE.
+    -- 4:
+    SELECT employee_id, last_name, salary FROM hr.employees WHERE department_id IN (50, 80) AND salary >= 10000;
+    -- 5:
+    SELECT employee_id, last_name, job_id FROM hr.employees WHERE commission_pct IS NULL AND job_id IN ('IT_PROG', 'SA_REP');
+    ```
 
 ---
 
@@ -242,11 +255,12 @@ SELECT ename, deptno, sal FROM scott.emp WHERE (deptno = 10 ___ deptno = 20) ___
 ```sql
 SELECT deptno, ename, sal FROM scott.emp ORDER BY deptno ___, sal ___; 
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT deptno, ename, sal FROM scott.emp ORDER BY deptno ASC, sal DESC;
-      ```
-      `ASC` ist Standard, `DESC` sortiert absteigend (`14 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT deptno, ename, sal FROM scott.emp ORDER BY deptno ASC, sal DESC;
+    ```
+    `ASC` ist Standard, `DESC` sortiert absteigend (`14 Zeilen`).
 
 ### `L035` — Sortieren nach Alias, Spaltenposition & `NULLS FIRST/LAST`
 - **Lernziel**: Du nutzt Column Aliases und Spaltenpositionen in `ORDER BY` und steuerst die Position von `NULL`. *(Bloom: Anwenden)*
@@ -264,11 +278,12 @@ SELECT deptno, ename, sal FROM scott.emp ORDER BY deptno ___, sal ___;
 ```sql
 SELECT ename, comm FROM scott.emp ORDER BY comm ASC ___; 
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, comm FROM scott.emp ORDER BY comm ASC NULLS FIRST;
-      ```
-      Standard bei `ASC` ist `NULLS LAST`; mit `NULLS FIRST` stehen die 10 `NULL`-Zeilen oben.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, comm FROM scott.emp ORDER BY comm ASC NULLS FIRST;
+    ```
+    Standard bei `ASC` ist `NULLS LAST`; mit `NULLS FIRST` stehen die 10 `NULL`-Zeilen oben.
 
 ### `L036` — Row Limiting (`OFFSET` & `FETCH FIRST ... ONLY`)
 - **Lernziel**: Du begrenzt Ergebnisse und blätterst seitenweise (Pagination) mit ANSI-Syntax. *(Bloom: Anwenden)*
@@ -286,11 +301,12 @@ SELECT ename, comm FROM scott.emp ORDER BY comm ASC ___;
 ```sql
 SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET ___ ROWS FETCH NEXT ___ ROWS ___; 
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET 3 ROWS FETCH NEXT 3 ROWS WITH TIES;
-      ```
-      `OFFSET 3` überspringt `KING`, `SCOTT`, `FORD`; `WITH TIES` nimmt Gleichstände auf dem 3. Rang der Ausgabe mit.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET 3 ROWS FETCH NEXT 3 ROWS WITH TIES;
+    ```
+    `OFFSET 3` überspringt `KING`, `SCOTT`, `FORD`; `WITH TIES` nimmt Gleichstände auf dem 3. Rang der Ausgabe mit.
 
 ### `L037` — `ONLY` vs. `WITH TIES` & `PERCENT`
 - **Lernziel**: Du unterscheidest exakte Zeilenzahl (`ONLY`) von Gleichstands-Mitnahme (`WITH TIES`). *(Bloom: Verstehen)*
@@ -301,8 +317,9 @@ SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET ___ ROWS FETCH NEXT __
   SELECT ename, sal FROM scott.emp ORDER BY sal DESC FETCH FIRST 2 ROWS WITH TIES;
   ```
 - **Selbstlern-Aufgabe**: Warum wirft `SELECT ename, sal FROM scott.emp FETCH FIRST 2 ROWS WITH TIES;` (ohne `ORDER BY`) in Oracle einen Fehler?
-  ??? success "Musterlösung & Erklärung"
-      `WITH TIES` erfordert zwingend eine `ORDER BY`-Klausel, da Oracle sonst nicht definieren kann, welche Werte „gleichauf“ (tied) sind (`ORA-30483` / Syntaxfehler).
+
+??? success "Musterlösung & Erklärung"
+    `WITH TIES` erfordert zwingend eine `ORDER BY`-Klausel, da Oracle sonst nicht definieren kann, welche Werte „gleichauf“ (tied) sind (`ORA-30483` / Syntaxfehler).
 
 ---
 
@@ -323,8 +340,9 @@ SELECT ename, sal FROM scott.emp ORDER BY sal DESC OFFSET ___ ROWS FETCH NEXT __
   ```
 
 - **Selbstlern-Aufgabe:** Was ist der Unterschied zwischen `&dept` und `&&dept` in SQL*Plus / SQLcl?
-  ??? success "Musterlösung & Erklärung"
-      `&dept` fragt bei jeder Ausführung (oder jedem Auftreten im Statement) erneut nach dem Wert. `&&dept` merkt sich den Wert für die gesamte Session (`DEFINE`), bis `UNDEFINE dept` aufgerufen wird.
+
+??? success "Musterlösung & Erklärung"
+    `&dept` fragt bei jeder Ausführung (oder jedem Auftreten im Statement) erneut nach dem Wert. `&&dept` merkt sich den Wert für die gesamte Session (`DEFINE`), bis `UNDEFINE dept` aufgerufen wird.
 
 ### `L039` — `DEFINE`, `UNDEFINE` & `SET VERIFY ON/OFF`
 - **Lernziel**: Du setzt und löschst Variablen explizit und liest `old:`/`new:`-Ausgaben korrekt. *(Bloom: Anwenden)*
@@ -343,13 +361,14 @@ SET VERIFY ___
 ___ v_job = 'CLERK'
 SELECT ename FROM scott.emp WHERE job = '&v_job';
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SET VERIFY OFF
-      DEFINE v_job = 'CLERK'
-      SELECT ename FROM scott.emp WHERE job = '&v_job';
-      ```
-      `SET VERIFY OFF` unterdrückt die `old:`/`new:`-Meldungen im Spool.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SET VERIFY OFF
+    DEFINE v_job = 'CLERK'
+    SELECT ename FROM scott.emp WHERE job = '&v_job';
+    ```
+    `SET VERIFY OFF` unterdrückt die `old:`/`new:`-Meldungen im Spool.
 
 ### `L040` — Variante A CLI-Lab vs. Variante B Simulator
 - **Lernziel**: Du trainierst Substitution Variables praktisch in deiner gewählten Umgebung. *(Bloom: Anwenden)*
@@ -361,8 +380,9 @@ SELECT ename FROM scott.emp WHERE job = '&v_job';
 ## Checkpoint #1 (`L041`–`L042`)
 
 - **Selbstlern-Aufgabe:** Teste im [SQL*Plus Simulator](https://chatelao.github.io/sql-schulung/#labs/sqlplus) ein Statement mit `&&dno` und anschliessendem `UNDEFINE dno`.
-  ??? success "Musterlösung & Erklärung"
-      Beim zweiten `SELECT` mit `&dno` wird ohne erneute Eingabe der gespeicherte Wert verwendet; erst nach `UNDEFINE dno` fragt SQL*Plus erneut.
+
+??? success "Musterlösung & Erklärung"
+    Beim zweiten `SELECT` mit `&dno` wird ohne erneute Eingabe der gespeicherte Wert verwendet; erst nach `UNDEFINE dno` fragt SQL*Plus erneut.
 
 ### `L041` — Identical Checkpoint #1 (Assessment)
 - **Lernziel**: Du misst deinen objektiven Fortschritt nach Phase 1 & 2. *(Bloom: Anwenden)*
@@ -370,8 +390,9 @@ SELECT ename FROM scott.emp WHERE job = '&v_job';
 - **Erwartetes Niveau**: **30–40 %** gesamt (Domains 1 & 2 sollten deutlich gestiegen sein).
 
 - **Selbstlern-Aufgabe:** Starte [CP-1 im Studio](https://chatelao.github.io/sql-schulung/#checkpoints/CP-1) und absolviere alle 22 Fragen + Part B + Part C.
-  ??? success "Musterlösung & Erklärung"
-      Ziel nach Phase 2: **30–40 %** Gesamtscore, mit deutlichem Anstieg in Domains 1 & 2 gegenüber `CP-0`.
+
+??? success "Musterlösung & Erklärung"
+    Ziel nach Phase 2: **30–40 %** Gesamtscore, mit deutlichem Anstieg in Domains 1 & 2 gegenüber `CP-0`.
 
 ### `L042` — Fortschrittsvergleich & Reflexion (`CP-1` vs. `CP-0`)
 - **Lernziel**: Du erkennst Blind Spots und setzt dein Lernziel für Phase 3 (25 % Exam-Gewicht!). *(Bloom: Anwenden)*
@@ -381,8 +402,9 @@ SELECT ename FROM scott.emp WHERE job = '&v_job';
 ---
 
 - **Selbstlern-Aufgabe:** Vergleiche deinen `CP-1`-Score mit `CP-0` und notiere mindestens 1 Domain, in der deine Confidence zu hoch war (Blind Spot).
-  ??? success "Musterlösung & Erklärung"
-      Typisch nach Phase 2: `NULLS FIRST/LAST` oder `FETCH ... WITH TIES` werden oft überschätzt, wenn man sie selten tippt.
+
+??? success "Musterlösung & Erklärung"
+    Typisch nach Phase 2: `NULLS FIRST/LAST` oder `FETCH ... WITH TIES` werden oft überschätzt, wenn man sie selten tippt.
 
 ### Visuelle Orientierung: 3-wertige Logik, Präzedenz & Top-N
 

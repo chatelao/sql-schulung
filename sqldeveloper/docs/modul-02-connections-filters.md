@@ -48,36 +48,41 @@ flowchart TD
 - **Lernziel:** Du legst Verbindungen sauber in Ordnern an und hinterlegst DEV/TEST/PROD-Farbcodes für Editor-Rahmen und Statusleiste *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Rechtsklick auf Verbindung → Eigenschaften → Verbindungsfarbe` / `Properties → Connection Color`; `Zur Gruppe hinzufügen` / `Add to Folder`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche Farbe empfiehlt sich im Connection-Dialog für produktive Datenbanken (PROD), um versehentliche Schreibbefehle sofort optisch zu bremsen?`
-  ??? success "Musterlösung & Erklärung"
-      **Rot** für PROD (Gelb/Orange für TEST/QS, Grün für DEV/Sandbox). Die Farbe färbt den Rahmen des SQL-Worksheets und der Ergebnis-Tabs sichtbar ein.
+
+??? success "Musterlösung & Erklärung"
+    **Rot** für PROD (Gelb/Orange für TEST/QS, Grün für DEV/Sandbox). Die Farbe färbt den Rahmen des SQL-Worksheets und der Ergebnis-Tabs sichtbar ein.
 
 ### `D007` — Verbindungen exportieren & importieren (JSON, Passwort-Sicherheit & Konflikte)
 - **Lernziel:** Du exportierst ausgewählte Verbindungen als `.json`-Datei mit sicherer Passwort-Option und importierst sie konfliktfrei auf einem zweiten Profil/Rechner *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Rechtsklick auf Verbindungen → Verbindungen exportieren... / Verbindungen importieren...` (`Connections → Export Connections... / Import Connections...`)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche Passwort-Option wählst du beim Export, wenn du eine Verbindungsdatei per Teams oder E-Mail an 5 Kolleg:innen weitergibst: ___?`
-  ??? success "Musterlösung & Erklärung"
-      **Passwörter entfernen** (*Remove passwords*). So erhält jedes Teammitglied exakt dieselben Host-/Port-/Service-Daten, gibt beim ersten Connect aber sein eigenes persönliches Passwort ein.
+
+??? success "Musterlösung & Erklärung"
+    **Passwörter entfernen** (*Remove passwords*). So erhält jedes Teammitglied exakt dieselben Host-/Port-/Service-Daten, gibt beim ersten Connect aber sein eigenes persönliches Passwort ein.
 
 ### `D008` — Zentrale Verbindungsverwaltung mit `tnsnames.ora` & Fehlerdiagnose
 - **Lernziel:** Du bindest eine zentrale `tnsnames.ora` in SQL Developer ein und unterscheidest die häufigsten Verbindungsfehler (`ORA-12154`, `ORA-12514`, `ORA-01017`) *(Bloom: Verstehen)*
 - **Menüpfad / Shortcut (DE / EN):** `Extras → Voreinstellungen → Datenbank → Erweitert → Tnsnames-Verzeichnis` / `Tools → Preferences → Database → Advanced → Tnsnames Directory`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Ordne zu: Welcher Fehler bedeutet „TNS-Alias nicht in tnsnames.ora gefunden“ und welcher „Ungültiger Benutzername/Passwort“ (ORA-12154 vs. ORA-01017)?`
-  ??? success "Musterlösung & Erklärung"
-      `ORA-12154`: TNS-Connect-Identifier konnte nicht aufgelöst werden (Pfad/Tippfehler in `tnsnames.ora`). `ORA-01017`: Invalid username/password (Anmeldedaten falsch).
+
+??? success "Musterlösung & Erklärung"
+    `ORA-12154`: TNS-Connect-Identifier konnte nicht aufgelöst werden (Pfad/Tippfehler in `tnsnames.ora`). `ORA-01017`: Invalid username/password (Anmeldedaten falsch).
 
 ### `D009` — Schemenfilter (`Andere Benutzer`) & Objektfilter anwenden/zurücksetzen
 - **Lernziel:** Du filterst sowohl Schemas unter `Andere Benutzer` als auch Tabellen/Views über `Filter anwenden...` und setzt Filter gezielt wieder zurück *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Rechtsklick auf Andere Benutzer / Tabellen → Filter anwenden...` / `Other Users / Tables → Apply Filter...` bzw. `Filter entfernen` / `Clear Filter`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Du möchtest unter „Tabellen“ nur die Sandbox-Tabellen sehen, die mit SD_ beginnen. Welchen Operator und welches Muster trägst du im Filter-Dialog ein: NAME ___ 'SD_%'?`
-  ??? success "Musterlösung & Erklärung"
-      Operator **`LIKE`** und Muster **`SD_%`** (mit aktivierter Option `Groß-/Kleinschreibung ignorieren` / `Ignore Case`, falls man klein tippt). Der Knoten zeigt danach `Tabellen (SD_%)`.
+
+??? success "Musterlösung & Erklärung"
+    Operator **`LIKE`** und Muster **`SD_%`** (mit aktivierter Option `Groß-/Kleinschreibung ignorieren` / `Ignore Case`, falls man klein tippt). Der Knoten zeigt danach `Tabellen (SD_%)`.
 
 ### `D010` — Modul-2-Lab: Team-Verbindungspaket & Schema-Filter-Workflow
 - **Lernziel:** Du kombinierst Ordner-Gruppierung, sicheren JSON-Export und zweistufige Schema-/Objektfilter in einem durchgängigen Praxis-Workflow *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Verbindungen → Verbindungen exportieren...` + `Andere Benutzer → Filter anwenden...`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Erstelle einen Ordner „Schulung“, exportiere deine Trainingsverbindung ohne Passwörter als JSON und filtere „Andere Benutzer“ auf SCOTT und HR.`
-  ??? success "Musterlösung & Erklärung"
-      Im Export-Assistenten nur die Schulungs-Verbindung anhaken und „Passwörter entfernen“ wählen. Unter `Andere Benutzer → Filter anwenden...` lassen sich mehrere Kriterien mit `OR` (`NAME = 'SCOTT' OR NAME = 'HR'`) kombinieren.
+
+??? success "Musterlösung & Erklärung"
+    Im Export-Assistenten nur die Schulungs-Verbindung anhaken und „Passwörter entfernen“ wählen. Unter `Andere Benutzer → Filter anwenden...` lassen sich mehrere Kriterien mit `OR` (`NAME = 'SCOTT' OR NAME = 'HR'`) kombinieren.
 
 ---
 

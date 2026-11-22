@@ -18,10 +18,11 @@
   SELECT ename FROM scott.emp WHERE UPPER(ename) = 'SMITH'; -- 1 Zeile
   ```
 - **Selbstlern-Aufgabe**: Gib alle Mitarbeiter aus `HR.EMPLOYEES` aus, deren `last_name` kleingeschrieben `'king'` lautet (erwartet: 2 Zeilen).
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT employee_id, first_name, last_name FROM hr.employees WHERE LOWER(last_name) = 'king';
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT employee_id, first_name, last_name FROM hr.employees WHERE LOWER(last_name) = 'king';
+    ```
 
 ### `L044` — `CONCAT` vs. `||` und `LENGTH`
 - **Lernziel**: Du kennst die strikte 2-Argument-Grenze von `CONCAT` und misst Stringlängen mit `LENGTH`. *(Bloom: Anwenden)*
@@ -33,11 +34,12 @@
 ```sql
 SELECT ___(first_name, ___(' ', last_name)) AS full_name, LENGTH(last_name) FROM hr.employees;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT CONCAT(first_name, CONCAT(' ', last_name)) AS full_name, LENGTH(last_name) FROM hr.employees;
-      ```
-      `CONCAT` akzeptiert exakt 2 Argumente; für 3+ Teile ist `||` meist lesbarer.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT CONCAT(first_name, CONCAT(' ', last_name)) AS full_name, LENGTH(last_name) FROM hr.employees;
+    ```
+    `CONCAT` akzeptiert exakt 2 Argumente; für 3+ Teile ist `||` meist lesbarer.
 
 ### `L045` — `TRIM`, `LTRIM`, `RTRIM`
 - **Lernziel**: Du entfernst führende/nachfolgende Zeichen gezielt und kennst die `ORA-30001`-Regel. *(Bloom: Anwenden)*
@@ -51,8 +53,9 @@ SELECT ___(first_name, ___(' ', last_name)) AS full_name, LENGTH(last_name) FROM
     `TRIM(char FROM str)` erlaubt als Trim-Zeichen **nur ein einzelnes Zeichen** (`TRIM('AB' FROM 'ABSMITH')` wirft **`ORA-30001`**). Für mehrere Zeichen nutze `LTRIM('ABSMITH', 'AB')` / `RTRIM`.
 
 - **Selbstlern-Aufgabe:** Was liefert `SELECT TRIM('x' FROM 'xxSQLxx') FROM dual;`?
-  ??? success "Musterlösung & Erklärung"
-      `'SQL'` — `TRIM` entfernt standardmässig von beiden Seiten (`BOTH`). Für nur links nutzt man `LTRIM` oder `TRIM(LEADING 'x' FROM ...)`.
+
+??? success "Musterlösung & Erklärung"
+    `'SQL'` — `TRIM` entfernt standardmässig von beiden Seiten (`BOTH`). Für nur links nutzt man `LTRIM` oder `TRIM(LEADING 'x' FROM ...)`.
 
 ### `L046` — `REPLACE`
 - **Lernziel**: Du ersetzt oder löschst Teilstrings innerhalb eines Textes. *(Bloom: Anwenden)*
@@ -71,11 +74,12 @@ SELECT ___(first_name, ___(' ', last_name)) AS full_name, LENGTH(last_name) FROM
 ```sql
 SELECT ___('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT REPLACE('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
-      ```
-      Ergebnis: `'ORACLE 26ai'`.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT REPLACE('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
+    ```
+    Ergebnis: `'ORACLE 26ai'`.
 
 ### `L047` — `SUBSTR` (Positive Startpositionen – 1-basiert!)
 - **Lernziel**: Du schneidest Teilstrings mit Oracles 1-basierter Indizierung präzise aus. *(Bloom: Anwenden)*
@@ -90,16 +94,18 @@ SELECT ___('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
 - **Beispiel**: `SUBSTR('SALESMAN', 1, 5)` → `'SALES'`, `SUBSTR('SALESMAN', 6)` → `'MAN'`. *(Start `0` wird wie `1` behandelt!)*
 
 - **Selbstlern-Aufgabe:** Welches Ergebnis liefert `SELECT SUBSTR('ORACLE', 2, 3) FROM dual;` (1-basiert!)?
-  ??? success "Musterlösung & Erklärung"
-      `'RAC'` — Position 1 = `O`, Position 2 = `R`, ab dort 3 Zeichen (`R`, `A`, `C`).
+
+??? success "Musterlösung & Erklärung"
+    `'RAC'` — Position 1 = `O`, Position 2 = `R`, ab dort 3 Zeichen (`R`, `A`, `C`).
 
 ### `L048` — `SUBSTR` mit negativen Startpositionen
 - **Lernziel**: Du zählst Startpositionen sicher vom String-Ende rückwärts. *(Bloom: Anwenden)*
 - **Studio-Link**: [Tracker `L048`](https://chatelao.github.io/sql-schulung/#curriculum/L048) · [String Slicer öffnen ↗](https://chatelao.github.io/sql-schulung/#labs/slicer)
 - **Beispiel**: `SELECT SUBSTR('SALESMAN', -3, 2) FROM dual;` → **`'MA'`** (Start `-3` ist `'M'`, dann 2 Zeichen **von links nach rechts**).
 - **Selbstlern-Aufgabe**: Sage das Ergebnis von `SUBSTR('ORACLE23AI', -4, 3)` voraus und prüfe es im String Slicer.
-  ??? success "Musterlösung & Erklärung"
-      Position `-4` ist `'2'` (von hinten: `I=-1, A=-2, 3=-3, 2=-4`). 3 Zeichen nach rechts ergibt **`'23A'`**.
+
+??? success "Musterlösung & Erklärung"
+    Position `-4` ist `'2'` (von hinten: `I=-1, A=-2, 3=-3, 2=-4`). 3 Zeichen nach rechts ergibt **`'23A'`**.
 
 ### `L049` — `INSTR` (Suchen & n-tes Vorkommen)
 - **Lernziel**: Du bestimmst die exakte Position des 1., 2. oder n-ten Vorkommens eines Substrings. *(Bloom: Anwenden)*
@@ -110,11 +116,12 @@ SELECT ___('ORACLE 26ai/23ai', '26ai/23ai', '26ai') FROM dual;
 ```sql
 SELECT ___('BANANA', 'A', 1, ___) FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT INSTR('BANANA', 'A', 1, 2) FROM dual;
-      ```
-      Ergebnis: `4` (erstes `A` auf 2, zweites `A` auf 4).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT INSTR('BANANA', 'A', 1, 2) FROM dual;
+    ```
+    Ergebnis: `4` (erstes `A` auf 2, zweites `A` auf 4).
 
 ### `L050` — `LPAD`, `RPAD` & Verschachtelung von `SUBSTR` + `INSTR`
 - **Lernziel**: Du formatierst Ausgaben mit Padding und liest verschachtelte String-Funktionen von innen nach außen. *(Bloom: Anwenden)*
@@ -133,11 +140,12 @@ SELECT ___('BANANA', 'A', 1, ___) FROM dual;
 ```sql
 SELECT SUBSTR('anna.meier@firma.ch', ___('anna.meier@firma.ch', '@') + 1) FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT SUBSTR('anna.meier@firma.ch', INSTR('anna.meier@firma.ch', '@') + 1) FROM dual;
-      ```
-      `INSTR` liefert `11`, `+ 1` startet bei `12` → `'firma.ch'`.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT SUBSTR('anna.meier@firma.ch', INSTR('anna.meier@firma.ch', '@') + 1) FROM dual;
+    ```
+    `INSTR` liefert `11`, `+ 1` startet bei `12` → `'firma.ch'`.
 
 ### `L051` — `ROUND(number, decimals)`
 - **Lernziel**: Du rundest Zahlen kaufmännisch auf Nachkomma- und Zehner-/Hunderterstellen. *(Bloom: Erschaffen)*
@@ -145,8 +153,9 @@ SELECT SUBSTR('anna.meier@firma.ch', ___('anna.meier@firma.ch', '@') + 1) FROM d
 - **Beispiel**: `ROUND(45.926, 2)` → `45.93` | `ROUND(45.926, 0)` → `46` | `ROUND(45.926, -1)` → `50`.
 
 - **Selbstlern-Aufgabe:** Welches Ergebnis liefert `SELECT ROUND(45.926, 2), ROUND(45.926, -1) FROM dual;`?
-  ??? success "Musterlösung & Erklärung"
-      `45.93` und `50` — negative Nachkommastellen runden links vom Dezimalpunkt (auf Zehner).
+
+??? success "Musterlösung & Erklärung"
+    `45.93` und `50` — negative Nachkommastellen runden links vom Dezimalpunkt (auf Zehner).
 
 ### `L052` — `TRUNC(number, decimals)`
 - **Lernziel**: Du schneidest Ziffern ohne Rundung Richtung Null ab. *(Bloom: Anwenden)*
@@ -154,8 +163,9 @@ SELECT SUBSTR('anna.meier@firma.ch', ___('anna.meier@firma.ch', '@') + 1) FROM d
 - **Beispiel**: `TRUNC(45.926, 2)` → `45.92` | `TRUNC(45.926, 0)` → `45` | `TRUNC(45.926, -1)` → `40`.
 
 - **Selbstlern-Aufgabe:** Welches Ergebnis liefert `SELECT TRUNC(45.926, 1), TRUNC(45.926, -1) FROM dual;`?
-  ??? success "Musterlösung & Erklärung"
-      `45.9` und `40` — `TRUNC` schneidet ab, ohne aufzurunden!
+
+??? success "Musterlösung & Erklärung"
+    `45.9` und `40` — `TRUNC` schneidet ab, ohne aufzurunden!
 
 ### `L053` — `MOD`, `CEIL` & `FLOOR`
 - **Lernziel**: Du berechnest Divisionsreste und rundest strikt auf (`CEIL`) oder ab (`FLOOR`) — auch bei negativen Zahlen. *(Bloom: Anwenden)*
@@ -166,11 +176,12 @@ SELECT SUBSTR('anna.meier@firma.ch', ___('anna.meier@firma.ch', '@') + 1) FROM d
 ```sql
 SELECT ___(7369, 2), ___(4.1), ___(4.9) FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT MOD(7369, 2), CEIL(4.1), FLOOR(4.9) FROM dual;
-      ```
-      Ergebnisse: `1` (ungerade), `5`, `4`.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT MOD(7369, 2), CEIL(4.1), FLOOR(4.9) FROM dual;
+    ```
+    Ergebnisse: `1` (ungerade), `5`, `4`.
 
 ### `L054` — Numeric Practice Clinic auf `SCOTT.EMP`
 - **Lernziel**: Du wendest alle numerischen Funktionen in praxisnahen Berechnungen an. *(Bloom: Anwenden)*
@@ -178,12 +189,13 @@ SELECT ___(7369, 2), ___(4.1), ___(4.9) FROM dual;
 - **Selbstlern-Aufgaben**:
   1. Berechne für `SCOTT.EMP` das auf volle Hunderter **abgeschnittene** Gehalt (`TRUNC`) und den Restbetrag (`MOD(sal, 100)`).
   2. Sage voraus: `SELECT ROUND(156.78, -2), TRUNC(156.78, -2) FROM dual;`
-  ??? success "Musterlösungen zu L054"
-      ```sql
-      -- 1:
-      SELECT ename, sal, TRUNC(sal, -2) AS sal_hundreds, MOD(sal, 100) AS remainder FROM scott.emp;
-      -- 2: 200 | 100
-      ```
+
+??? success "Musterlösungen zu L054"
+    ```sql
+    -- 1:
+    SELECT ename, sal, TRUNC(sal, -2) AS sal_hundreds, MOD(sal, 100) AS remainder FROM scott.emp;
+    -- 2: 200 | 100
+    ```
 
 ---
 
@@ -194,8 +206,9 @@ SELECT ___(7369, 2), ___(4.1), ___(4.9) FROM dual;
 - **Studio-Link**: [Tracker `L055`](https://chatelao.github.io/sql-schulung/#curriculum/L055) · [SQL Ref: SYSDATE](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SYSDATE.html)
 
 - **Selbstlern-Aufgabe:** Warum zeigt `SELECT hiredate FROM scott.emp;` oft kein Uhrzeit-Teil, obwohl `DATE` immer Stunde/Minute/Sekunde speichert?
-  ??? success "Musterlösung & Erklärung"
-      Das Anzeigeformat hängt vom Session-Parameter `NLS_DATE_FORMAT` ab (Standard oft `DD-MON-RR`). Mit `TO_CHAR(hiredate, 'YYYY-MM-DD HH24:MI:SS')` wird die Uhrzeit sichtbar.
+
+??? success "Musterlösung & Erklärung"
+    Das Anzeigeformat hängt vom Session-Parameter `NLS_DATE_FORMAT` ab (Standard oft `DD-MON-RR`). Mit `TO_CHAR(hiredate, 'YYYY-MM-DD HH24:MI:SS')` wird die Uhrzeit sichtbar.
 
 ### `L056` — Date Arithmetic (`+` / `-` Tage)
 - **Lernziel**: Du addierst Tage zu einem Datum und berechnest Tagesdifferenzen. *(Bloom: Anwenden)*
@@ -206,11 +219,12 @@ SELECT ___(7369, 2), ___(4.1), ___(4.9) FROM dual;
 ```sql
 SELECT SYSDATE + ___ FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT SYSDATE + 0.5 FROM dual; -- oder SYSDATE + 12/24
-      ```
-      In Oracle Date Arithmetic entspricht `1` genau einem Tag (24 Stunden).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT SYSDATE + 0.5 FROM dual; -- oder SYSDATE + 12/24
+    ```
+    In Oracle Date Arithmetic entspricht `1` genau einem Tag (24 Stunden).
 
 ### `L057` — `MONTHS_BETWEEN` & `ADD_MONTHS`
 - **Lernziel**: Du berechnest exakte Monatsabstände und addierst Kalendermonate inkl. Monatsende-Logik. *(Bloom: Anwenden)*
@@ -225,11 +239,12 @@ SELECT SYSDATE + ___ FROM dual;
 ```sql
 SELECT ename, TRUNC(___(SYSDATE, hiredate)), ___(hiredate, 6) FROM scott.emp;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, TRUNC(MONTHS_BETWEEN(SYSDATE, hiredate)), ADD_MONTHS(hiredate, 6) FROM scott.emp;
-      ```
-      `MONTHS_BETWEEN(neu, alt)` liefert positive Monate, wenn das erste Argument neuer ist.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, TRUNC(MONTHS_BETWEEN(SYSDATE, hiredate)), ADD_MONTHS(hiredate, 6) FROM scott.emp;
+    ```
+    `MONTHS_BETWEEN(neu, alt)` liefert positive Monate, wenn das erste Argument neuer ist.
 
 ### `L058` — `NEXT_DAY` & `LAST_DAY`
 - **Lernziel**: Du ermittelst den nächsten Wochentag und das Monatsende eines Datums. *(Bloom: Anwenden)*
@@ -240,11 +255,12 @@ SELECT ename, TRUNC(___(SYSDATE, hiredate)), ___(hiredate, 6) FROM scott.emp;
 ```sql
 SELECT ___(SYSDATE) FROM dual;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT LAST_DAY(SYSDATE) FROM dual;
-      ```
-      Für den nächsten Montag nutzt man `NEXT_DAY(SYSDATE, 'MONDAY')` (sprachabhängig nach `NLS_DATE_LANGUAGE`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT LAST_DAY(SYSDATE) FROM dual;
+    ```
+    Für den nächsten Montag nutzt man `NEXT_DAY(SYSDATE, 'MONDAY')` (sprachabhängig nach `NLS_DATE_LANGUAGE`).
 
 ### `L059` — `ROUND(date, fmt)` & `TRUNC(date, fmt)`
 - **Lernziel**: Du rundest und kappst Datumsangaben auf Monats- und Jahresanfänge. *(Bloom: Anwenden)*
@@ -252,8 +268,9 @@ SELECT ___(SYSDATE) FROM dual;
 - **Beispiel**: `ROUND(DATE '1981-07-16', 'MONTH')` → `1981-08-01` (ab Tag 16 aufrunden); `ROUND(DATE '1981-07-01', 'YEAR')` → `1982-01-01` (ab Monat 7 aufrunden).
 
 - **Selbstlern-Aufgabe:** Welches Datum liefert `TRUNC(DATE '2026-05-19', 'MM')` vs. `ROUND(DATE '2026-05-19', 'MM')`?
-  ??? success "Musterlösung & Erklärung"
-      `TRUNC(..., 'MM')` → `2026-05-01`; `ROUND(..., 'MM')` → `2026-06-01` (da der 19. in der zweiten Monatshälfte liegt).
+
+??? success "Musterlösung & Erklärung"
+    `TRUNC(..., 'MM')` → `2026-05-01`; `ROUND(..., 'MM')` → `2026-06-01` (da der 19. in der zweiten Monatshälfte liegt).
 
 ### `L060` — Date-Calculations-Lab auf `SCOTT.EMP` & `HR.EMPLOYEES`
 - **Lernziel**: Du kombinierst Datumsfunktionen für reale HR-Fragestellungen. *(Bloom: Anwenden)*
@@ -261,13 +278,14 @@ SELECT ___(SYSDATE) FROM dual;
 - **Selbstlern-Aufgaben**:
   1. Berechne für `SCOTT.EMP` das Ende der 6-monatigen Probezeit (`probation_end`) und den ersten Zahltag (`LAST_DAY(hiredate)`).
   2. Liste alle Mitarbeiter in `HR.EMPLOYEES` auf, die an einem `1.` eines Monats eingestellt wurden (`TRUNC(hire_date, 'MONTH') = hire_date`).
-  ??? success "Musterlösungen zu L060"
-      ```sql
-      -- 1:
-      SELECT ename, hiredate, ADD_MONTHS(hiredate, 6) AS probation_end, LAST_DAY(hiredate) AS first_payday FROM scott.emp;
-      -- 2:
-      SELECT employee_id, last_name, hire_date FROM hr.employees WHERE TRUNC(hire_date, 'MONTH') = hire_date;
-      ```
+
+??? success "Musterlösungen zu L060"
+    ```sql
+    -- 1:
+    SELECT ename, hiredate, ADD_MONTHS(hiredate, 6) AS probation_end, LAST_DAY(hiredate) AS first_payday FROM scott.emp;
+    -- 2:
+    SELECT employee_id, last_name, hire_date FROM hr.employees WHERE TRUNC(hire_date, 'MONTH') = hire_date;
+    ```
 
 ---
 
@@ -278,8 +296,9 @@ SELECT ___(SYSDATE) FROM dual;
 - **Studio-Link**: [Tracker `L061`](https://chatelao.github.io/sql-schulung/#curriculum/L061) · [Format-Model-Referenz](../cheatsheets/functions-reference.md#date-format-models-to_char-to_date)
 
 - **Selbstlern-Aufgabe:** Warum sollte man bei `WHERE hiredate = '17-DEC-80'` explizite Konvertierung bevorzugen?
-  ??? success "Musterlösung & Erklärung"
-      Implizite Konvertierung hängt von `NLS_DATE_FORMAT` und `NLS_DATE_LANGUAGE` der jeweiligen Session ab. Explizites `DATE '1980-12-17'` oder `TO_DATE(...)` läuft überall gleich.
+
+??? success "Musterlösung & Erklärung"
+    Implizite Konvertierung hängt von `NLS_DATE_FORMAT` und `NLS_DATE_LANGUAGE` der jeweiligen Session ab. Explizites `DATE '1980-12-17'` oder `TO_DATE(...)` läuft überall gleich.
 
 ### `L062` — `TO_CHAR` mit Dates & `fm` Fill Mode
 - **Lernziel**: Du formatierst Datumsangaben lesbar und entfernst überflüssige Leerzeichen mit `fm`. *(Bloom: Anwenden)*
@@ -287,8 +306,9 @@ SELECT ___(SYSDATE) FROM dual;
 - **Beispiel**: `SELECT ename, TO_CHAR(hiredate, 'fmDD Month YYYY') AS hired FROM scott.emp;` → z. B. `'17 December 1980'` (ohne `fm`: `'17 December  1980'`).
 
 - **Selbstlern-Aufgabe:** Was bewirkt das Präfix `fm` in `TO_CHAR(SYSDATE, 'fmDay, DD. Month YYYY')`?
-  ??? success "Musterlösung & Erklärung"
-      `fm` (Fill Mode) entfernt führende Nullen bei Zahlen (`DD` → `5` statt `05`) und überflüssige Leerzeichen nach Monats-/Wochentagsnamen.
+
+??? success "Musterlösung & Erklärung"
+    `fm` (Fill Mode) entfernt führende Nullen bei Zahlen (`DD` → `5` statt `05`) und überflüssige Leerzeichen nach Monats-/Wochentagsnamen.
 
 ### `L063` — `TO_CHAR` mit Numbers & `TO_NUMBER`
 - **Lernziel**: Du formatierst Währungsbeträge und wandelst formatierte Strings sicher zurück in Zahlen. *(Bloom: Anwenden)*
@@ -301,11 +321,12 @@ SELECT ___(SYSDATE) FROM dual;
 ```sql
 SELECT ename, ___(sal, '99,990.00') FROM scott.emp;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, TO_CHAR(sal, '99,990.00') FROM scott.emp;
-      ```
-      `0` erzwingt führende/nachgestellte Nullen (`800.00`), `9` unterdrückt führende Nullen.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, TO_CHAR(sal, '99,990.00') FROM scott.emp;
+    ```
+    `0` erzwingt führende/nachgestellte Nullen (`800.00`), `9` unterdrückt führende Nullen.
 
 ### `L064` — `TO_DATE`, `RR` vs. `YY` & `fx` Exact Match
 - **Lernziel**: Du wendest die `RR`-Jahrhundertregel und den `fx`-Modifier fehlerfrei an. *(Bloom: Analysieren)*
@@ -321,8 +342,9 @@ SELECT ename, ___(sal, '99,990.00') FROM scott.emp;
 ## Null-Handling & Conditional Expressions (`L065`–`L068`)
 
 - **Selbstlern-Aufgabe:** Welches Jahr erzeugt `TO_DATE('15-JAN-95', 'DD-MON-RR')` im Jahr 2026 im Vergleich zu `'DD-MON-YY'`?
-  ??? success "Musterlösung & Erklärung"
-      `RR` liefert **1995** (da `95` in `50..99` und aktuelles Jahr in `00..49`), während `YY` **2095** liefert!
+
+??? success "Musterlösung & Erklärung"
+    `RR` liefert **1995** (da `95` in `50..99` und aktuelles Jahr in `00..49`), während `YY` **2095** liefert!
 
 ### `L065` — `NVL` & `NVL2` (Datentyp-Fallen!)
 - **Lernziel**: Du ersetzt `NULL`-Werte typsicher und vermeidest `ORA-01722`. *(Bloom: Anwenden)*
@@ -336,8 +358,9 @@ SELECT ename, ___(sal, '99,990.00') FROM scott.emp;
   ```
 
 - **Selbstlern-Aufgabe:** Warum wirft `SELECT ename, NVL(comm, 'keine') FROM scott.emp;` einen Fehler?
-  ??? success "Musterlösung & Erklärung"
-      `ORA-01722: invalid number` — das erste Argument (`comm`) ist `NUMBER`, daher versucht Oracle `'keine'` in eine Zahl umzuwandeln. Korrekt: `NVL(TO_CHAR(comm), 'keine')`.
+
+??? success "Musterlösung & Erklärung"
+    `ORA-01722: invalid number` — das erste Argument (`comm`) ist `NUMBER`, daher versucht Oracle `'keine'` in eine Zahl umzuwandeln. Korrekt: `NVL(TO_CHAR(comm), 'keine')`.
 
 ### `L066` — `NULLIF` & `COALESCE`
 - **Lernziel**: Du nutzt `NULLIF` zum Gleichheits-Nulling und `COALESCE` als Short-Circuit-Kette. *(Bloom: Anwenden)*
@@ -348,11 +371,12 @@ SELECT ename, ___(sal, '99,990.00') FROM scott.emp;
 ```sql
 SELECT ename, ___(comm, sal, 0) FROM scott.emp;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, COALESCE(comm, sal, 0) FROM scott.emp;
-      ```
-      `COALESCE` wertet von links nach rechts per Short-Circuit aus (alle Argumente müssen typkompatibel sein).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, COALESCE(comm, sal, 0) FROM scott.emp;
+    ```
+    `COALESCE` wertet von links nach rechts per Short-Circuit aus (alle Argumente müssen typkompatibel sein).
 
 ### `L067` — `CASE` Expressions (Simple vs. Searched)
 - **Lernziel**: Du formulierst bedingte Logik mit ANSI-`CASE` lesbar und typsicher. *(Bloom: Anwenden)*
@@ -372,11 +396,12 @@ SELECT ename, ___(comm, sal, 0) FROM scott.emp;
 ```sql
 SELECT ename, CASE ___ sal >= 3000 ___ 'Hoch' WHEN sal >= 1500 THEN 'Mittel' ___ 'Basis' END FROM scott.emp;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, CASE WHEN sal >= 3000 THEN 'Hoch' WHEN sal >= 1500 THEN 'Mittel' ELSE 'Basis' END FROM scott.emp;
-      ```
-      Ohne `ELSE` liefert `CASE` bei fehlendem Match `NULL`.
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, CASE WHEN sal >= 3000 THEN 'Hoch' WHEN sal >= 1500 THEN 'Mittel' ELSE 'Basis' END FROM scott.emp;
+    ```
+    Ohne `ELSE` liefert `CASE` bei fehlendem Match `NULL`.
 
 ### `L068` — `DECODE` & der `NULL = NULL`-Unterschied
 - **Lernziel**: Du erkennst den Unterschied zwischen `DECODE` und `CASE` beim Prüfen auf `NULL`. *(Bloom: Analysieren)*
@@ -388,8 +413,9 @@ SELECT ename, CASE ___ sal >= 3000 ___ 'Hoch' WHEN sal >= 1500 THEN 'Mittel' ___
 ---
 
 - **Selbstlern-Aufgabe:** Worin unterscheidet sich `DECODE(comm, NULL, 'Leer', 'Vorhanden')` von `CASE comm WHEN NULL THEN 'Leer' ELSE 'Vorhanden' END`?
-  ??? success "Musterlösung & Erklärung"
-      `DECODE` behandelt zwei `NULL`-Werte als **gleich** und liefert `'Leer'`! Simple `CASE` prüft `comm = NULL` (ergibt `UNKNOWN`) und springt ins `ELSE` (`'Vorhanden'`).
+
+??? success "Musterlösung & Erklärung"
+    `DECODE` behandelt zwei `NULL`-Werte als **gleich** und liefert `'Leer'`! Simple `CASE` prüft `comm = NULL` (ergibt `UNKNOWN`) und springt ins `ELSE` (`'Vorhanden'`).
 
 ### Visuelle Orientierung: 1-based Indexing, Zwiebelprinzip & Konvertierung
 

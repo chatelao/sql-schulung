@@ -56,36 +56,41 @@ flowchart LR
 - **Lernziel:** Du ordnest ein, wann der klassische SQL Developer Desktop, die VS Code Extension oder SQL Developer Web am besten geeignet sind *(Bloom: Verstehen)*
 - **Menüpfad / Shortcut (DE / EN):** `Startseite` / `Connections` + `SQL Worksheet` (`Alt+F10`)
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welcher Client bietet den grafischen Abfrage-Generator (Query Builder) und direkten .xlsx-Export aus dem Grid: Classic Desktop oder VS Code Extension?`
-  ??? success "Musterlösung & Erklärung"
-      Der klassische **Oracle SQL Developer (Desktop)** bietet sowohl den grafischen Query Builder als auch den direkten `.xlsx`-Export aus dem Ergebnis-Grid.
+
+??? success "Musterlösung & Erklärung"
+    Der klassische **Oracle SQL Developer (Desktop)** bietet sowohl den grafischen Query Builder als auch den direkten `.xlsx`-Export aus dem Ergebnis-Grid.
 
 ### `D002` — Schachbrett- & Zebramuster, NULL-Markierung & Lesbarkeit im Grid
 - **Lernziel:** Du aktivierst das Schachbrett-/Zebramuster im Ergebnis-Grid, hebst `NULL`-Werte farblich hervor und stellst editor- und präsentationstaugliche Schriftgrössen ein *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Extras → Voreinstellungen → Datenbank → Arbeitsblatt → Raster in Schachbrett- oder Zebramuster` / `Tools → Preferences → Database → Worksheet → Grid in checker board or zebra pattern`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Pfad für das Schachbrettmuster im Grid: Extras → Voreinstellungen → Datenbank → ___ → Raster in Schachbrett- oder Zebramuster.`
-  ??? success "Musterlösung & Erklärung"
-      **Arbeitsblatt** (engl. `Worksheet`). Anschliessend `SELECT * FROM sd_customers;` mit `F9` ausführen: `tax_note` zeigt `NULL`-Werte farbig markiert und die Zeilen wechseln im Zebramuster ab.
+
+??? success "Musterlösung & Erklärung"
+    **Arbeitsblatt** (engl. `Worksheet`). Anschliessend `SELECT * FROM sd_customers;` mit `F9` ausführen: `tax_note` zeigt `NULL`-Werte farbig markiert und die Zeilen wechseln im Zebramuster ab.
 
 ### `D003` — NLS-Einstellungen: ISO-Datum, Dezimaltrennzeichen & Session-Sprache
 - **Lernziel:** Du konfigurierst ISO-Datumsformate (`YYYY-MM-DD HH24:MI:SS`) in den NLS-Voreinstellungen, damit Uhrzeiten nicht stillschweigend abgeschnitten werden *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Extras → Voreinstellungen → Datenbank → NLS` / `Tools → Preferences → Database → NLS`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Welche NLS-Formatmaske zeigt Datum UND Uhrzeit bis auf die Sekunde im 24-Stunden-Format an: DD.MM.RR oder ___?`
-  ??? success "Musterlösung & Erklärung"
-      `YYYY-MM-DD HH24:MI:SS` — damit werden Verwechslungen von Tag/Monat sowie unsichtbare Uhrzeiten (`08:15:30` vs. `00:00:00`) zuverlässig vermieden.
+
+??? success "Musterlösung & Erklärung"
+    `YYYY-MM-DD HH24:MI:SS` — damit werden Verwechslungen von Tag/Monat sowie unsichtbare Uhrzeiten (`08:15:30` vs. `00:00:00`) zuverlässig vermieden.
 
 ### `D004` — Fetch-Size (`F9` vs. `F5`), Ergebnisse anpinnen & Single Record View
 - **Lernziel:** Du unterscheidest `F9` (Grid mit 50-Zeilen-Fetch) und `F5` (Skriptausgabe), pinnst Ergebnis-Tabs an und inspizierst lange Zeilen in der Einzeldatensatz-Ansicht *(Bloom: Analysieren)*
 - **Menüpfad / Shortcut (DE / EN):** `F9` (Statement) vs. `F5` (Script); Pin-Nadel-Icon im Ergebnis-Tab; Rechtsklick im Grid → `Einzeldatensatz-Ansicht` / `Single Record View`
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Führe SELECT tx_id, memo_text FROM sd_transactions ORDER BY tx_id; mit F9 aus. Wie viele Zeilen sind zunächst geladen, bevor du ganz nach unten scrollst?`
-  ??? success "Musterlösung & Erklärung"
-      Standardmässig **50 Zeilen** (erkennbar an „50 Zeilen abgerufen“ in der Grid-Statusleiste), obwohl die Tabelle **65 Zeilen** enthält. Erst beim Herunterscrollen oder `Strg+Ende` werden die restlichen 15 Zeilen nachgeladen.
+
+??? success "Musterlösung & Erklärung"
+    Standardmässig **50 Zeilen** (erkennbar an „50 Zeilen abgerufen“ in der Grid-Statusleiste), obwohl die Tabelle **65 Zeilen** enthält. Erst beim Herunterscrollen oder `Strg+Ende` werden die restlichen 15 Zeilen nachgeladen.
 
 ### `D005` — Modul-1-Lab: Arbeitsplatz produktiv & präsentationstauglich einrichten
 - **Lernziel:** Du richtest deinen SQL Developer vollständig ein (Schachbrettmuster, `NULL`-Farbe, Zeilennummern, ISO-NLS) und verifizierst das Verhalten an `sd_customers` und `sd_transactions` *(Bloom: Anwenden)*
 - **Menüpfad / Shortcut (DE / EN):** `Extras → Voreinstellungen` + `F9` + Pin-Icon
 - **Selbstlern-Aufgabe (Lückentext/Check):** `Pinne das Ergebnis von sd_customers an, führe danach SELECT * FROM sd_transactions mit F9 aus und öffne für tx_id = 1 die Einzeldatensatz-Ansicht.`
-  ??? success "Musterlösung & Erklärung"
-      Durch das Anpinnen (`Pin`) bleibt das erste Grid-Tab erhalten und wird nicht überschrieben. In der Einzeldatensatz-Ansicht von `tx_id = 1` ist auch der zweizeilige `memo_text` (`CHR(10)`) vollständig lesbar.
+
+??? success "Musterlösung & Erklärung"
+    Durch das Anpinnen (`Pin`) bleibt das erste Grid-Tab erhalten und wird nicht überschrieben. In der Einzeldatensatz-Ansicht von `tx_id = 1` ist auch der zweizeilige `memo_text` (`CHR(10)`) vollständig lesbar.
 
 ---
 

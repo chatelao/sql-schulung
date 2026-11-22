@@ -19,8 +19,9 @@
     Schlage während `CP-0` **nichts** nach. Raten ist ausdrücklich erwünscht (erwarteter Score: 10–25 %). So siehst du bis `CP-5` deinen echten Wissenszuwachs.
 
 - **Selbstlern-Aufgabe:** Öffne [CP-0 im Interactive Studio](https://chatelao.github.io/sql-schulung/#checkpoints/CP-0), bearbeite alle 22 Fragen **ohne Nachschlagen** und bewerte in Part C deine Sicherheit (1–5).
-  ??? success "Musterlösung & Erklärung"
-      Erwartet ist ein ehrlicher Ausgangswert von **10–25 %**. Alle Antworten bleiben bis `CP-5` bewusst gesperrt, damit echte Lernfortschritte messbar bleiben.
+
+??? success "Musterlösung & Erklärung"
+    Erwartet ist ein ehrlicher Ausgangswert von **10–25 %**. Alle Antworten bleiben bis `CP-5` bewusst gesperrt, damit echte Lernfortschritte messbar bleiben.
 
 ### `L002` — Baseline-Reflexion & Zielsetzung
 - **Lernziel**: Du wertest deine Start-Prozentsätze aus und legst dein persönliches Wochenpensum fest. *(Bloom: Anwenden)*
@@ -34,8 +35,9 @@
 ## Relational Foundations (`L003`–`L008`)
 
 - **Selbstlern-Aufgabe:** Exportiere nach `CP-0` deinen Snapshot (`.json`) und notiere die 2 Domains mit der grössten Differenz zwischen Confidence und Score.
-  ??? success "Musterlösung & Erklärung"
-      Typische Einsteiger-Lücke: `NULL`-Logik (`WHERE col = NULL`) und `GROUP BY`-Regeln. Dein Reflexions-Log bleibt im Studio gespeichert.
+
+??? success "Musterlösung & Erklärung"
+    Typische Einsteiger-Lücke: `NULL`-Logik (`WHERE col = NULL`) und `GROUP BY`-Regeln. Dein Reflexions-Log bleibt im Studio gespeichert.
 
 ### `L003` — Warum Spreadsheets an Grenzen stoßen
 - **Lernziel**: Du erklärst, warum relationale Datenbanken Daten auf mehrere verknüpfte Tabellen aufteilen statt in einer einzigen Excel-Liste zu speichern. *(Bloom: Analysieren)*
@@ -49,9 +51,10 @@
 | Formeln & Daten sind vermischt | Daten liegen getrennt von Abfragen (`SELECT`) |
 
 - **Selbstlern-Aufgabe**: Nenne 2 Probleme, die entstehen, wenn du in einer einzigen Excel-Tabelle zusätzlich den letzten Mitarbeiter der Abteilung `OPERATIONS` löschst.
-  ??? success "Musterlösung & Erklärung"
-      1. **Lösch-Anomalie**: Mit dem letzten Mitarbeiter gehen auch die Abteilungsnummer `40`, der Name `OPERATIONS` und der Standort `BOSTON` verloren. In `SCOTT.DEPT` bleibt `DEPT 40` dagegen erhalten!
-      2. **Redundanz / Inkonsistenz**: Bei mehreren Mitarbeitern wird der Standort mehrfach gespeichert und kann leicht unterschiedlich geschrieben werden (`Dallas` vs. `DALLAS`).
+
+??? success "Musterlösung & Erklärung"
+    1. **Lösch-Anomalie**: Mit dem letzten Mitarbeiter gehen auch die Abteilungsnummer `40`, der Name `OPERATIONS` und der Standort `BOSTON` verloren. In `SCOTT.DEPT` bleibt `DEPT 40` dagegen erhalten!
+    2. **Redundanz / Inkonsistenz**: Bei mehreren Mitarbeitern wird der Standort mehrfach gespeichert und kann leicht unterschiedlich geschrieben werden (`Dallas` vs. `DALLAS`).
 
 ### `L004` — Tables, Rows, Columns & Primary Keys
 - **Lernziel**: Du identifizierst Tables, Rows (Tupel), Columns (Attribute) und Primary Keys anhand von `SCOTT.DEPT`. *(Bloom: Analysieren)*
@@ -59,16 +62,18 @@
 - **Konzept**: Eine **Table** ist wie ein Aktenschrank für genau eine Objektart (z. B. `DEPT` für Abteilungen). Jede **Row** (Zeile) ist ein konkreter Datensatz, jede **Column** (Spalte) ein Merkmal (`deptno`, `dname`, `loc`). Der **Primary Key (PK)** ist die eindeutige ID jeder Zeile: Er darf **niemals doppelt** vorkommen und **niemals `NULL`** (leer) sein.
 - **Beispiel (`SCOTT.DEPT`)**: `DEPTNO` (`10, 20, 30, 40`) ist der Primary Key; `EMPNO` (`7369`..`7934`) ist der Primary Key in `SCOTT.EMP`.
 - **Selbstlern-Aufgabe**: Prüfe die Datentabelle in [`SCOTT/TIGER`](../schemas/scott-tiger.md): Warum taugt `ENAME` in `SCOTT.EMP` **nicht** als Primary Key, auch wenn aktuell alle 14 Namen verschieden sind?
-  ??? success "Musterlösung & Erklärung"
-      Zwei Mitarbeiter können denselben Nachnamen haben (z. B. ein zweiter `SMITH`). Ein Primary Key muss fachlich und technisch dauerhaft eindeutig sein — daher nutzt man eine künstliche Nummer wie `EMPNO`.
+
+??? success "Musterlösung & Erklärung"
+    Zwei Mitarbeiter können denselben Nachnamen haben (z. B. ein zweiter `SMITH`). Ein Primary Key muss fachlich und technisch dauerhaft eindeutig sein — daher nutzt man eine künstliche Nummer wie `EMPNO`.
 
 ### `L005` — Tables mit Foreign Keys verknüpfen
 - **Lernziel**: Du verstehst, wie ein Foreign Key (FK) zwei Tabellen über einen Primary Key verbindet und ungültige Verweise verhindert. *(Bloom: Verstehen)*
 - **Studio-Link**: [Tracker `L005`](https://chatelao.github.io/sql-schulung/#curriculum/L005) · [SQL Ref: constraint](https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/constraint.html)
 - **Konzept**: `EMP.DEPTNO` ist ein **Foreign Key (FK)**, der auf den Primary Key `DEPT.DEPTNO` zeigt. Oracle garantiert dadurch **Referential Integrity**: Du kannst in `EMP` keinen Mitarbeiter mit `deptno = 99` anlegen, solange `99` nicht in `DEPT` existiert.
 - **Selbstlern-Aufgabe**: Schau in [`SCOTT.EMP`](../schemas/scott-tiger.md#emp-14-rows): Welche zweite Spalte in `EMP` verweist ebenfalls auf einen Mitarbeiter in derselben Tabelle (`EMPNO`)?
-  ??? success "Musterlösung & Erklärung"
-      `MGR` (Manager-ID) verweist auf `EMPNO` des Vorgesetzten (z. B. hat `SMITH` `MGR = 7902`, das ist `FORD`). Nur `KING` hat `MGR = NULL`.
+
+??? success "Musterlösung & Erklärung"
+    `MGR` (Manager-ID) verweist auf `EMPNO` des Vorgesetzten (z. B. hat `SMITH` `MGR = 7902`, das ist `FORD`). Nur `KING` hat `MGR = NULL`.
 
 ### `L006` — Entity-Relationship Diagrams (ERDs) lesen
 - **Lernziel**: Du liest Crow's-Foot-Beziehungen (`1:1`, `1:M`, `M:N`) sicher ab. *(Bloom: Anwenden)*
@@ -82,8 +87,9 @@ erDiagram
   - `||` (links bei `DEPT`): **genau ein** Department.
   - `o{` (rechts bei `EMP`, der „Krähenfuß“ / Crow's Foot): **null, ein oder viele** Employees.
 - **Selbstlern-Aufgabe**: Im [`HR`-ERD](../schemas/hr-schema.md#entity-relationship-diagram-erd) steht `LOCATIONS ||--o{ DEPARTMENTS`. Was bedeutet das fachlich?
-  ??? success "Musterlösung & Erklärung"
-      An einem Standort (`LOCATION`) können 0, 1 oder viele Abteilungen (`DEPARTMENTS`) sitzen; jede Abteilung gehört zu einem Standort.
+
+??? success "Musterlösung & Erklärung"
+    An einem Standort (`LOCATION`) können 0, 1 oder viele Abteilungen (`DEPARTMENTS`) sitzen; jede Abteilung gehört zu einem Standort.
 
 ### `L007` — ERDs auf `SELECT`-Queries abbilden
 - **Lernziel**: Du ordnest Bestandteile eines ERD den passenden Klauseln eines `SELECT`-Statements zu (direktes `1Z0-171`-Prüfungsziel!). *(Bloom: Anwenden)*
@@ -99,11 +105,12 @@ erDiagram
 ```sql
 SELECT ___, ___ FROM scott.___;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, deptno FROM scott.emp;
-      ```
-      `EMP` enthält den Foreign Key `DEPTNO`, der auf `DEPT.DEPTNO` zeigt (14 Zeilen).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, deptno FROM scott.emp;
+    ```
+    `EMP` enthält den Foreign Key `DEPTNO`, der auf `DEPT.DEPTNO` zeigt (14 Zeilen).
 
 ### `L008` — Die vier SQL Statement Families
 - **Lernziel**: Du unterscheidest `DML`, `DDL`, `DCL` und `TCL` inklusive ihres Commit-Verhaltens. *(Bloom: Verstehen)*
@@ -117,8 +124,9 @@ SELECT ___, ___ FROM scott.___;
 | **TCL** | Transaction Control Language | `COMMIT`, `ROLLBACK`, `SAVEPOINT` | Steuert Transaktion |
 
 - **Selbstlern-Aufgabe**: Zu welcher Familie gehört `TRUNCATE TABLE` und warum ist das in der Praxis gefährlich?
-  ??? success "Musterlösung & Erklärung"
-      `TRUNCATE TABLE` gehört zur **DDL** (nicht DML wie `DELETE`!). Es löst ein **implizites `COMMIT`** aus und kann daher nicht mit `ROLLBACK` rückgängig gemacht werden.
+
+??? success "Musterlösung & Erklärung"
+    `TRUNCATE TABLE` gehört zur **DDL** (nicht DML wie `DELETE`!). Es löst ein **implizites `COMMIT`** aus und kann daher nicht mit `ROLLBACK` rückgängig gemacht werden.
 
 ---
 
@@ -132,8 +140,9 @@ SELECT ___, ___ FROM scott.___;
   - **Variante B**: Melde dich bei [freesql.com](https://freesql.com/) an oder klicke oben auf **Phase 1 in FreeSQL öffnen ↗**.
 
 - **Selbstlern-Aufgabe:** Führe den Smoke-Test `SELECT COUNT(*) FROM scott.emp;` in deiner gewählten Umgebung (Variante A oder FreeSQL) aus.
-  ??? success "Musterlösung & Erklärung"
-      Erwartete Ausgabe: `14`. Wenn du `ORA-00942` erhältst, fehlt das `scott.`-Präfix oder der `GRANT SELECT`.
+
+??? success "Musterlösung & Erklärung"
+    Erwartete Ausgabe: `14`. Wenn du `ORA-00942` erhältst, fehlt das `scott.`-Präfix oder der `GRANT SELECT`.
 
 ### `L010` — Dein erstes `SELECT *` & `DESCRIBE`
 - **Lernziel**: Du inspizierst Tabellenstrukturen mit `DESCRIBE` und fragst alle Zeilen mit `SELECT *` ab. *(Bloom: Analysieren)*
@@ -145,8 +154,9 @@ SELECT ___, ___ FROM scott.___;
   ```
   **Erwartete Ausgabe**: 4 Zeilen (`10 ACCOUNTING`, `20 RESEARCH`, `30 SALES`, `40 OPERATIONS`).
 - **Selbstlern-Aufgabe**: Führe `DESCRIBE scott.emp;` und `SELECT * FROM scott.emp;` aus. Wie viele Zeilen und wie viele Spalten hat `SCOTT.EMP`?
-  ??? success "Musterlösung & Erklärung"
-      `14` Zeilen und `8` Spalten (`EMPNO`, `ENAME`, `JOB`, `MGR`, `HIREDATE`, `SAL`, `COMM`, `DEPTNO`).
+
+??? success "Musterlösung & Erklärung"
+    `14` Zeilen und `8` Spalten (`EMPNO`, `ENAME`, `JOB`, `MGR`, `HIREDATE`, `SAL`, `COMM`, `DEPTNO`).
 
 ### `L011` — `ORA-`-Fehlermeldungen gelassen lesen
 - **Lernziel**: Du erkennst die häufigsten Einsteiger-Fehler `ORA-00942` und `ORA-00904` und behebst sie gezielt. *(Bloom: Analysieren)*
@@ -154,9 +164,10 @@ SELECT ___, ___ FROM scott.___;
 - **Selbstlern-Aufgabe (Fehler absichtlich provozieren!)**:
   1. Führe `SELECT * FROM scott.empp;` aus → Lies den genauen Fehlertext.
   2. Führe `SELECT enmae FROM scott.emp;` aus → Lies den genauen Fehlertext.
-  ??? success "Musterlösung & Erklärung"
-      1. `ORA-00942: table or view does not exist` → Tabellenname oder Schema-Prefix falsch.
-      2. `ORA-00904: "ENMAE": invalid identifier` → Spaltenname falsch geschrieben.
+
+??? success "Musterlösung & Erklärung"
+    1. `ORA-00942: table or view does not exist` → Tabellenname oder Schema-Prefix falsch.
+    2. `ORA-00904: "ENMAE": invalid identifier` → Spaltenname falsch geschrieben.
 
 ### `L012` — Einstieg in das `HR`-Schema
 - **Lernziel**: Du skalierst von `SCOTT` auf das größere `HR`-Schema und begrenzt erste Ausgaben. *(Bloom: Anwenden)*
@@ -169,8 +180,9 @@ SELECT ___, ___ FROM scott.___;
   ```
   **Erwartete Ausgabe**: 5 Zeilen (`100 Steven King 24000`, `101 Neena Kochhar 17000`, `102 Lex De Haan 17000`, `103 Alexander Hunold 9000`, `104 Bruce Ernst 6000`).
 - **Selbstlern-Aufgabe**: Wie viele Abteilungen stehen in `HR.DEPARTMENTS`? Schreibe die passende `SELECT`-Abfrage.
-  ??? success "Musterlösung & Erklärung"
-      `SELECT * FROM hr.departments;` liefert **27 Zeilen**.
+
+??? success "Musterlösung & Erklärung"
+    `SELECT * FROM hr.departments;` liefert **27 Zeilen**.
 
 ---
 
@@ -185,10 +197,11 @@ SELECT ___, ___ FROM scott.___;
   ```
   **Erwartete Ausgabe**: 14 Zeilen, aber nur noch 4 statt 8 Spalten.
 - **Selbstlern-Aufgabe**: Gib aus `HR.JOBS` nur `job_id`, `job_title` und `max_salary` aus.
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT job_id, job_title, max_salary FROM hr.jobs; -- 19 Zeilen
-      ```
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT job_id, job_title, max_salary FROM hr.jobs; -- 19 Zeilen
+    ```
 
 ### `L014` — Arithmetische Ausdrücke (`+`, `-`, `*`, `/`)
 - **Lernziel**: Du berechnest abgeleitete Werte direkt in der `SELECT`-Liste, ohne die Tabelle zu verändern. *(Bloom: Anwenden)*
@@ -204,11 +217,12 @@ SELECT ___, ___ FROM scott.___;
 ```sql
 SELECT ename, sal * ___ + ___ AS jahrespaket FROM scott.emp;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, sal * 12 + 500 AS jahrespaket FROM scott.emp;
-      ```
-      Multiplikation hat Vorrang vor Addition (`14 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, sal * 12 + 500 AS jahrespaket FROM scott.emp;
+    ```
+    Multiplikation hat Vorrang vor Addition (`14 Zeilen`).
 
 ### `L015` — Operator Precedence (Punkt vor Strich)
 - **Lernziel**: Du wendest Oracles Auswertungsreihenfolge (`*`, `/` vor `+`, `-`) und Klammern korrekt an. *(Bloom: Anwenden)*
@@ -216,9 +230,10 @@ SELECT ename, sal * ___ + ___ AS jahrespaket FROM scott.emp;
 - **Selbstlern-Aufgabe**: Sage für `SMITH` (`sal = 800`) das Ergebnis beider Ausdrücke voraus, bevor du sie ausführst:
   1. `sal + 200 * 12`
   2. `(sal + 200) * 12`
-  ??? success "Musterlösung & Erklärung"
-      1. `800 + 2400 = 3200` (Multiplikation bindet stärker!)
-      2. `1000 * 12 = 12000` (Klammern erzwingen Addition zuerst).
+
+??? success "Musterlösung & Erklärung"
+    1. `800 + 2400 = 3200` (Multiplikation bindet stärker!)
+    2. `1000 * 12 = 12000` (Klammern erzwingen Addition zuerst).
 
 ### `L016` — Die goldene Regel für `NULL`
 - **Lernziel**: Du unterscheidest `NULL` (unbekannt/leer) sauber von `0` und weißt, warum Arithmetik mit `NULL` immer `NULL` ergibt. *(Bloom: Analysieren)*
@@ -244,11 +259,12 @@ SELECT ename, sal * ___ + ___ AS jahrespaket FROM scott.emp;
 ```sql
 SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename, sal, comm, sal + NVL(comm, 0) AS gesamt FROM scott.emp;
-      ```
-      Ohne `NVL` liefert `sal + comm` für 10 von 14 Mitarbeitenden `NULL`!
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename, sal, comm, sal + NVL(comm, 0) AS gesamt FROM scott.emp;
+    ```
+    Ohne `NVL` liefert `sal + comm` für 10 von 14 Mitarbeitenden `NULL`!
 
 ### `L017` — Column Aliases (`AS` vs. `"Double Quotes"`)
 - **Lernziel**: Du benennst Ausgabespalten lesbar um und vermeidest Quoting-Fehler. *(Bloom: Analysieren)*
@@ -262,8 +278,9 @@ SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
     Aliases ohne Anführungszeichen werden automatisch `UPPERCASE` (`EMPLOYEE_NAME`). Leerzeichen, Sonderzeichen oder erhaltene Groß-/Kleinschreibung erfordern `"Double Quotes"`, **niemals** `'Single Quotes'` (`ORA-00923`).
 
 - **Selbstlern-Aufgabe:** Welcher Unterschied besteht zwischen `AS jahres_gehalt` und `AS "Jahres Gehalt"`?
-  ??? success "Musterlösung & Erklärung"
-      `AS jahres_gehalt` wird im Ergebnis zu `JAHRES_GEHALT` (Grossbuchstaben). Doppelte Anführungszeichen `"Jahres Gehalt"` erzwingen exakte Gross-/Kleinschreibung und erlauben Leerzeichen.
+
+??? success "Musterlösung & Erklärung"
+    `AS jahres_gehalt` wird im Ergebnis zu `JAHRES_GEHALT` (Grossbuchstaben). Doppelte Anführungszeichen `"Jahres Gehalt"` erzwingen exakte Gross-/Kleinschreibung und erlauben Leerzeichen.
 
 ### `L018` — Concatenation (`||`), Literals & Alternative Quotes (`q'[...]'`)
 - **Lernziel**: Du verkettest Spalten mit Textliteralen und gehst sicher mit Apostrophen im Text um. *(Bloom: Anwenden)*
@@ -274,8 +291,9 @@ SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
   SELECT q'[Department's Name: ]' || dname AS label FROM scott.dept;
   ```
 - **Selbstlern-Aufgabe**: Was liefert `SELECT 'Hello ' || NULL || 'World' FROM dual;`? (Tipp: Vergleiche mit `L016`!)
-  ??? success "Musterlösung & Erklärung"
-      `'Hello World'`! Anders als Arithmetik (`+`) ignoriert der Verkettungsoperator `||` ein `NULL` und behandelt es wie einen leeren String.
+
+??? success "Musterlösung & Erklärung"
+    `'Hello World'`! Anders als Arithmetik (`+`) ignoriert der Verkettungsoperator `||` ein `NULL` und behandelt es wie einen leeren String.
 
 ### `L019` — Duplikate entfernen mit `DISTINCT`
 - **Lernziel**: Du entfernst doppelte Ergebniszeilen und kennst die Syntaxregeln von `DISTINCT`. *(Bloom: Erinnern)*
@@ -292,11 +310,12 @@ SELECT ename, sal, comm, sal + ___(comm, 0) AS gesamt FROM scott.emp;
 ```sql
 SELECT ___ deptno, job FROM scott.emp ORDER BY deptno, job;
 ```
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT DISTINCT deptno, job FROM scott.emp ORDER BY deptno, job;
-      ```
-      `DISTINCT` gilt immer für die gesamte Spaltenkombination (`9 Zeilen`).
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT DISTINCT deptno, job FROM scott.emp ORDER BY deptno, job;
+    ```
+    `DISTINCT` gilt immer für die gesamte Spaltenkombination (`9 Zeilen`).
 
 ### `L020` — Die `DUAL`-Tabelle & Phase-1-Review
 - **Lernziel**: Du nutzt `DUAL` für einmalige Berechnungen und prüfst deinen Phase-1-Wissensstand. *(Bloom: Anwenden)*
@@ -307,12 +326,13 @@ SELECT ___ deptno, job FROM scott.emp ORDER BY deptno, job;
   ```
   *(26ai/23ai-Hinweis)*: Oracle 26ai/23ai erlaubt auch `SELECT 24 * 60;`, für `1Z0-171` bleibt `FROM dual` der Prüfungsstandard.
 - **Phase-1-Abschlussaufgabe**: Schreibe eine Query auf `SCOTT.EMP`, die für alle 14 Mitarbeiter den Satz `SMITH (CLERK) earns 800 per month` in einer Spalte `"Employee Summary"` ausgibt.
-  ??? success "Musterlösung & Erklärung"
-      ```sql
-      SELECT ename || ' (' || job || ') earns ' || sal || ' per month' AS "Employee Summary"
-      FROM scott.emp;
-      ```
-      Danach: Wiederhole die [Flashcards D1](https://chatelao.github.io/sql-schulung/#flashcards/D1) und starte Phase 2!
+
+??? success "Musterlösung & Erklärung"
+    ```sql
+    SELECT ename || ' (' || job || ') earns ' || sal || ' per month' AS "Employee Summary"
+    FROM scott.emp;
+    ```
+    Danach: Wiederhole die [Flashcards D1](https://chatelao.github.io/sql-schulung/#flashcards/D1) und starte Phase 2!
 
 ---
 ### Visuelle Orientierung: Statement-Familien & Schema-Beziehung
