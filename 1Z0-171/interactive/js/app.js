@@ -1137,7 +1137,7 @@
       leftSymbol: "crows-zero-many",
       rightSymbol: "one-mandatory",
       lineStyle: "dashed",
-      vennMode: mode === "INTERSECT" ? "INNER" : (mode === "MINUS" ? "RIGHT" : "FULL")
+      vennMode: mode === "INTERSECT" ? "INNER" : (mode === "MINUS" ? "MINUS_RIGHT" : "FULL")
     };
 
     if (badgeEl) badgeEl.textContent = cfg.badge;
@@ -1182,9 +1182,17 @@
       `;
     };
 
+    const isMinusRight = cfg.vennMode === "MINUS_RIGHT";
     const leftFill = cfg.vennMode === "LEFT" || cfg.vennMode === "FULL" ? "#0f6e6e" : "#e5dfd3";
-    const rightFill = cfg.vennMode === "RIGHT" || cfg.vennMode === "FULL" ? "#c74634" : "#e5dfd3";
-    const midFill = ["INNER", "LEFT", "RIGHT", "FULL"].includes(cfg.vennMode) ? "#0f6e6e" : "#e5dfd3";
+    const rightFill = cfg.vennMode === "RIGHT" || cfg.vennMode === "FULL" || isMinusRight ? "#c74634" : "#e5dfd3";
+    const leftOpacity = cfg.vennMode === "LEFT" || cfg.vennMode === "FULL" ? "0.42" : "0.28";
+    const rightOpacity = cfg.vennMode === "RIGHT" || cfg.vennMode === "FULL" || isMinusRight ? "0.48" : "0.28";
+    const midFill = isMinusRight
+      ? "#ffffff"
+      : (["INNER", "LEFT", "RIGHT", "FULL"].includes(cfg.vennMode) ? "#0f6e6e" : "#e5dfd3");
+    const midOpacity = isMinusRight
+      ? "1"
+      : (["INNER", "LEFT", "RIGHT", "FULL"].includes(cfg.vennMode) ? "0.68" : "0.35");
 
     const renderEntityBox = (x, box, borderCol, headFill) => `
       <g>
@@ -1217,9 +1225,11 @@
 
         <!-- Mini Venn & Crow's Foot Legend under relationship line -->
         <g transform="translate(370, 110)">
-          <circle cx="28" cy="20" r="15" fill="${leftFill}" fill-opacity="0.38" stroke="#0f6e6e" stroke-width="1.5" />
-          <circle cx="52" cy="20" r="15" fill="${rightFill}" fill-opacity="0.38" stroke="#c74634" stroke-width="1.5" />
-          <path d="M 40,7 A 15,15 0 0,1 40,33 A 15,15 0 0,1 40,7 Z" fill="${midFill}" fill-opacity="0.65" />
+          <circle cx="28" cy="20" r="15" fill="${leftFill}" fill-opacity="${leftOpacity}" />
+          <circle cx="52" cy="20" r="15" fill="${rightFill}" fill-opacity="${rightOpacity}" />
+          <path d="M 40,11 A 15,15 0 0,1 40,29 A 15,15 0 0,1 40,11 Z" fill="${midFill}" fill-opacity="${midOpacity}" />
+          <circle cx="28" cy="20" r="15" fill="none" stroke="#0f6e6e" stroke-width="1.5" />
+          <circle cx="52" cy="20" r="15" fill="none" stroke="#c74634" stroke-width="1.5" />
         </g>
         <text x="410" y="162" text-anchor="middle" font-size="10" fill="#4e5a6b">Legende: &gt;|&#9675; = 0..N (Krähenfuss) &middot; || = genau 1 &middot; &#9675;| = 0..1</text>
       </svg>
