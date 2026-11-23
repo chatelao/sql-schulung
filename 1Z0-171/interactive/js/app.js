@@ -1208,6 +1208,11 @@
       </g>
     `;
 
+    const relLabelFont = cfg.relLabel.length > 28 ? 9.4 : 10.5;
+    const relSubFont = cfg.relSub.length > 38 ? 9.2 : 10;
+    const pillW = Math.min(254, Math.max(196, Math.ceil(Math.max(cfg.relLabel.length * (relLabelFont * 0.62), cfg.relSub.length * (relSubFont * 0.51))) + 22));
+    const pillX = Math.round(410 - pillW / 2);
+
     erdEl.innerHTML = `
       <svg viewBox="0 0 820 185" role="img" aria-label="ERD mit Krähenfuss-Notation für ${escapeHtml(mode)}" style="width:100%;height:auto;max-height:215px;display:block;">
         ${renderEntityBox(20, cfg.leftBox, cfg.leftBox.active ? "#0f6e6e" : "#9aa5b4", cfg.leftBox.active ? "#e6f3f3" : "#f4f1ea")}
@@ -1219,9 +1224,9 @@
         ${drawRightCrowsFoot(cfg.rightSymbol)}
 
         <!-- Join / Cardinality Pill & Mini-Venn -->
-        <rect x="312" y="28" width="196" height="44" rx="6" fill="#fffdf9" stroke="#d8d1c5" />
-        <text x="410" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="#1a222d">${escapeHtml(cfg.relLabel)}</text>
-        <text x="410" y="62" text-anchor="middle" font-size="10" fill="#4e5a6b">${escapeHtml(cfg.relSub)}</text>
+        <rect x="${pillX}" y="28" width="${pillW}" height="44" rx="6" fill="#fffdf9" stroke="#d8d1c5" />
+        <text x="410" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="${relLabelFont}" font-weight="700" fill="#1a222d">${escapeHtml(cfg.relLabel)}</text>
+        <text x="410" y="62" text-anchor="middle" font-size="${relSubFont}" fill="#4e5a6b">${escapeHtml(cfg.relSub)}</text>
 
         <!-- Mini Venn & Crow's Foot Legend under relationship line -->
         <g transform="translate(370, 110)">
