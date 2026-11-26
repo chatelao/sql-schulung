@@ -769,6 +769,7 @@ textarea {
 .field {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.3rem;
   font-size: 0.82rem;
   font-weight: 600;
